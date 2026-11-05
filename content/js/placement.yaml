@@ -1,0 +1,212 @@
+# Bank soal Final Selection & Lower Moon (pilihan ganda).
+# options[0] SELALU jawaban benar; urutan diacak saat ditampilkan.
+- id: js-f1-1
+  chapter: f1
+  prompt: Apa output kode ini?
+  code: console.log("Halo", "Slayer")
+  options: ["Halo Slayer", "HaloSlayer", "Halo, Slayer", "[ 'Halo', 'Slayer' ]"]
+  explain: console.log memisahkan argumen dengan spasi.
+- id: js-f1-2
+  chapter: f1
+  prompt: Apa output kode ini?
+  code: |
+    const n = 3
+    console.log(`Bab ${n + 1}`)
+  options: ["Bab 4", "Bab 31", "Bab ${n + 1}", "Bab n + 1"]
+  explain: Template literal (backtick) mengevaluasi ekspresi di dalam ${}.
+
+- id: js-f2-1
+  chapter: f2
+  prompt: Apa yang terjadi?
+  code: |
+    const x = 1
+    x = 2
+  options: ["TypeError: assignment to constant", "x menjadi 2", "x tetap 1 tanpa error", "SyntaxError"]
+  explain: const tidak bisa di-assign ulang. Pakai let kalau nilainya berubah.
+- id: js-f2-2
+  chapter: f2
+  prompt: Apa output kode ini?
+  code: console.log(typeof null)
+  options: ['"object"', '"null"', '"undefined"', '"number"']
+  explain: Ini bug historis JavaScript yang dipertahankan demi kompatibilitas.
+
+- id: js-f3-1
+  chapter: f3
+  prompt: Apa output kode ini?
+  code: console.log("1" + 2 + 3)
+  options: ['"123"', "6", '"15"', "Error"]
+  explain: Setelah ketemu string, + menjadi penggabungan dari kiri ke kanan.
+- id: js-f3-2
+  chapter: f3
+  prompt: Apa output kode ini?
+  code: console.log(0 == "0", 0 === "0")
+  options: ["true false", "true true", "false false", "false true"]
+  explain: == mengonversi tipe dulu, === membandingkan tipe juga. Biasakan pakai ===.
+
+- id: js-f4-1
+  chapter: f4
+  prompt: User mengetik 17. Apa typeof umur?
+  code: const umur = prompt("Umur?")
+  options: ['"string"', '"number"', '"object"', '"undefined"']
+  explain: prompt() selalu mengembalikan string (atau null kalau dibatalkan).
+- id: js-f4-2
+  chapter: f4
+  prompt: Cara mengubah string "42" menjadi angka?
+  options: ['Number("42")', '"42".toNumber()', 'int("42")', 'parse("42")']
+  explain: Number() atau parseInt() mengubah string ke number.
+
+- id: js-f5-1
+  chapter: f5
+  prompt: Apa output kode ini?
+  code: |
+    const x = 0
+    console.log(x ? "ya" : "tidak")
+  options: ["tidak", "ya", "0", "undefined"]
+  explain: 0 adalah falsy.
+- id: js-f5-2
+  chapter: f5
+  prompt: Apa output kode ini?
+  code: |
+    switch (2) {
+      case 1: console.log("a")
+      case 2: console.log("b")
+      case 3: console.log("c")
+    }
+  options: ["b lalu c", "b", "a b c", "Tidak ada output"]
+  explain: Tanpa break, eksekusi "jatuh" ke case berikutnya (fallthrough).
+
+- id: js-f6-1
+  chapter: f6
+  prompt: Apa output kode ini?
+  code: |
+    let s = ""
+    for (let i = 0; i < 3; i++) s += i
+    console.log(s)
+  options: ['"012"', "3", '"123"', "0"]
+  explain: s adalah string, jadi angka digabung sebagai teks.
+- id: js-f6-2
+  chapter: f6
+  prompt: Apa output kode ini?
+  code: for (const k in ["x", "y"]) console.log(k)
+  options: ["0 lalu 1", "x lalu y", "undefined", "Error"]
+  explain: for...in mengiterasi kunci (indeks). Pakai for...of untuk nilai.
+
+- id: js-f7-1
+  chapter: f7
+  prompt: Apa output kode ini?
+  code: |
+    const f = (a, b = 2) => a * b
+    console.log(f(3))
+  options: ["6", "NaN", "3", "undefined"]
+  explain: b memakai nilai default 2.
+- id: js-f7-2
+  chapter: f7
+  prompt: Apa output kode ini?
+  code: |
+    function counter() {
+      let n = 0
+      return () => ++n
+    }
+    const c = counter()
+    c()
+    console.log(c())
+  options: ["2", "1", "0", "undefined"]
+  explain: Closure mengingat variabel n di antara pemanggilan.
+
+- id: js-m1-1
+  chapter: m1
+  prompt: Apa output kode ini?
+  code: console.log([1, 2, 3].map(x => x * 2))
+  options: ["[ 2, 4, 6 ]", "[ 1, 2, 3 ]", "12", "6"]
+  explain: map membuat array baru dari hasil fungsi tiap elemen.
+- id: js-m1-2
+  chapter: m1
+  prompt: Apa output kode ini?
+  code: |
+    const a = [1, 2]
+    const b = a
+    b.push(3)
+    console.log(a.length)
+  options: ["3", "2", "Error karena const", "5"]
+  explain: a dan b menunjuk array yang sama. const hanya melarang assign ulang, bukan mengubah isi.
+
+- id: js-m2-1
+  chapter: m2
+  prompt: Apa output kode ini?
+  code: console.log("slayer".slice(1, 4))
+  options: ['"lay"', '"sla"', '"laye"', '"slay"']
+  explain: slice(1, 4) mengambil indeks 1 sampai sebelum 4.
+- id: js-m2-2
+  chapter: m2
+  prompt: Apa output kode ini?
+  code: console.log("a,b,c".split(",").length)
+  options: ["3", "5", "1", "2"]
+  explain: split menghasilkan array ["a", "b", "c"].
+
+- id: js-m3-1
+  chapter: m3
+  prompt: Apa output kode ini?
+  code: |
+    try {
+      JSON.parse("{bad")
+    } catch (e) {
+      console.log(e.name)
+    }
+  options: ["SyntaxError", "TypeError", "JSONError", "undefined"]
+  explain: JSON yang tidak valid melempar SyntaxError.
+- id: js-m3-2
+  chapter: m3
+  prompt: Apa output kode ini?
+  code: |
+    function f() {
+      try { return "A" }
+      finally { console.log("F") }
+    }
+    console.log(f())
+  options: ["F lalu A", "A lalu F", "A saja", "F saja"]
+  explain: finally tetap dijalankan sebelum fungsi benar-benar kembali.
+
+- id: js-m4-1
+  chapter: m4
+  prompt: Di Node.js, apa yang dikembalikan kode ini?
+  code: fs.readFileSync("a.txt", "utf8")
+  options: ["Isi file sebagai string", "Promise", "Buffer", "Array baris"]
+  explain: Dengan encoding "utf8", hasilnya string. Tanpa encoding, hasilnya Buffer.
+- id: js-m4-2
+  chapter: m4
+  prompt: Kenapa perlu await di sini?
+  code: const isi = await fs.promises.readFile("a.txt", "utf8")
+  options: ["readFile versi promises mengembalikan Promise", "Supaya file dikunci", "Supaya isi otomatis di-parse", "Tidak perlu, hasilnya sama"]
+  explain: Tanpa await, isi berisi Promise, bukan teks.
+
+- id: js-m5-1
+  chapter: m5
+  prompt: Pada `import x, { y } from "./m.js"`, x adalah...
+  options: ["export default dari m.js", "Semua export dari m.js", "Export bernama x", "Nama file m.js"]
+  explain: Nama di luar kurung kurawal mengambil export default.
+- id: js-m5-2
+  chapter: m5
+  prompt: Setelah `npm install lodash`, di mana dependency dicatat?
+  options: ["package.json", "node_modules/README", "index.js", ".gitignore"]
+  explain: package.json mencatat dependency; node_modules berisi file-nya.
+
+- id: js-m6-1
+  chapter: m6
+  prompt: Apa output kode ini?
+  code: |
+    class Slayer {
+      constructor(n) { this.n = n }
+      sapa() { return `Aku ${this.n}` }
+    }
+    console.log(new Slayer("Tanjiro").sapa())
+  options: ["Aku Tanjiro", "Aku undefined", "Aku n", "Error"]
+  explain: constructor menyimpan n ke this, lalu dipakai method.
+- id: js-m6-2
+  chapter: m6
+  prompt: Apa output kode ini?
+  code: |
+    class A { nama() { return "A" } }
+    class B extends A { nama() { return super.nama() + "B" } }
+    console.log(new B().nama())
+  options: ['"AB"', '"B"', '"A"', '"BA"']
+  explain: super.nama() memanggil method milik induk.

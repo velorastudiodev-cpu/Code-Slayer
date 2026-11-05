@@ -1,0 +1,79 @@
+lesson:
+- text: Notasi CIDR /n berarti n bit pertama adalah bagian jaringan. /24 = netmask 255.255.255.0. Sisa bit (32 - n) untuk host; jumlah host yang bisa dipakai = 2^(32-n) - 2, karena alamat jaringan dan broadcast
+    tidak dipakai host.
+  code: |
+    n = 26
+    mask = (0xFFFFFFFF << (32 - n)) & 0xFFFFFFFF
+    print(".".join(str(mask >> s & 255) for s in (24, 16, 8, 0)))
+    print(2 ** (32 - n) - 2, "host")
+- text: Alamat jaringan = IP AND netmask. Alamat broadcast = alamat jaringan dengan semua bit host bernilai 1. Dua alamat ada di subnet yang sama kalau alamat jaringannya sama.
+exercises:
+- id: net-f3-mask26
+  type: answer
+  title: Netmask /26
+  difficulty: 2
+  prompt: Tulis netmask dalam notasi desimal bertitik untuk prefix /26.
+  accept:
+  - 255.255.255.192
+  explain: '/26 = 26 bit 1: tiga oktet penuh (24 bit) + 2 bit di oktet terakhir = 11000000 = 192.'
+  hints: |
+    24 bit pertama = 255.255.255.
+    Oktet terakhir punya 2 bit 1 di depan.
+    11000000 biner = 192.
+- id: net-f3-host27
+  type: answer
+  title: Kapasitas Subnet
+  difficulty: 2
+  prompt: Berapa jumlah host yang bisa dipakai dalam subnet /27? Jawab dengan angka.
+  accept:
+  - '30'
+  explain: 32 - 27 = 5 bit host → 2^5 = 32 alamat, dikurangi alamat jaringan & broadcast = 30.
+  hints: |
+    Bit host = 32 - 27.
+    2 pangkat jumlah bit host.
+    Kurangi 2.
+- id: net-f3-cidr
+  type: write
+  title: Batas Wilayah Subnet
+  difficulty: 2
+  prompt: Baca alamat dalam format IP/prefix (misalnya 192.168.1.130/26). Cetak alamat jaringan dan alamat broadcast-nya, dipisah spasi.
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - 192.168.1.130/26
+  - 10.0.0.1/8
+  - 172.16.5.4/30
+  - 192.168.1.200/24
+  hints: |
+    Ubah IP menjadi satu bilangan 32-bit.
+    Netmask = n bit 1 di depan: (0xFFFFFFFF << (32 - n)) & 0xFFFFFFFF.
+    Jaringan = ip & mask; broadcast = jaringan | (~mask & 0xFFFFFFFF).
+  solution: |
+    teks = input().strip()
+    ip, n = teks.split("/")
+    n = int(n)
+    angka = 0
+    for x in ip.split("."):
+        angka = angka * 256 + int(x)
+    mask = (0xFFFFFFFF << (32 - n)) & 0xFFFFFFFF
+    jaringan = angka & mask
+    broadcast = jaringan | (~mask & 0xFFFFFFFF)
+    ke_ip = lambda v: ".".join(str(v >> s & 255) for s in (24, 16, 8, 0))
+    print(ke_ip(jaringan), ke_ip(broadcast))
+- id: net-f3-sama
+  type: quiz
+  title: Satu Desa?
+  difficulty: 2
+  prompt: Apakah 192.168.1.70 dan 192.168.1.130 berada dalam subnet /26 yang sama?
+  options:
+  - 'Tidak: jaringannya 192.168.1.64 dan 192.168.1.128'
+  - 'Ya: keduanya diawali 192.168.1'
+  - 'Ya: /26 mencakup 256 alamat'
+  - 'Tidak: alamat .130 tidak valid'
+  explain: '/26 membagi oktet terakhir per 64: 0-63, 64-127, 128-191, 192-255. .70 ada di blok 64, .130 di blok 128.'
+  hints: |
+    Ukuran blok /26 = 64 alamat.
+    Cari blok tempat .70 dan .130 berada.
+    Bandingkan alamat jaringannya.

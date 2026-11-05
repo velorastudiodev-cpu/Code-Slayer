@@ -1,0 +1,177 @@
+lesson:
+  - text: Fungsi C dideklarasikan dengan tipe hasil, nama, dan parameter bertipe, misalnya int tambah(int a, int b). Fungsi harus dideklarasikan sebelum dipakai, atau ditulis prototipenya di atas. void berarti tidak mengembalikan nilai.
+    code: |
+      #include <stdio.h>
+
+      int kuadrat(int x) { return x * x; }
+      void sapa(const char *nama) { printf("Halo, %s!\n", nama); }
+
+      int main(void) {
+          printf("%d\n", kuadrat(7));
+          sapa("Rengoku");
+          return 0;
+      }
+  - text: Argumen di C dikirim BY VALUE, yaitu fungsi menerima salinan. Untuk mengubah variabel pemanggil, kirim alamatnya (pointer). Fungsi juga boleh rekursif asalkan ada base case.
+    code: |
+      #include <stdio.h>
+
+      void tukar(int *a, int *b) { int t = *a; *a = *b; *b = t; }
+      int faktorial(int n) { return n <= 1 ? 1 : n * faktorial(n - 1); }
+
+      int main(void) {
+          int x = 1, y = 2;
+          tukar(&x, &y);
+          printf("%d %d %d\n", x, y, faktorial(5));
+          return 0;
+      }
+exercises:
+  - id: c-f7-fpb
+    type: write
+    title: FPB Dua Klan
+    difficulty: 2
+    prompt: Tulis fungsi int fpb(int a, int b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.
+    tests: ["12 18", "7 13", "100 75", "0 5"]
+    hints: |
+      fpb(a, b) = fpb(b, a % b), dan berhenti saat b == 0.
+      Bisa ditulis rekursif dalam satu baris.
+      return b == 0 ? a : fpb(b, a % b);
+    solution: |
+      #include <stdio.h>
+
+      int fpb(int a, int b) { return b == 0 ? a : fpb(b, a % b); }
+
+      int main(void) {
+          int a, b;
+          scanf("%d %d", &a, &b);
+          printf("%d\n", fpb(a, b));
+          return 0;
+      }
+  - id: c-f7-tukar
+    type: write
+    title: Tukar Posisi Lewat Pointer
+    difficulty: 2
+    prompt: Lengkapi fungsi tukar(int *a, int *b) sehingga nilai dua variabel benar-benar tertukar. Program membaca dua bilangan lalu mencetaknya setelah ditukar.
+    starter: |
+      #include <stdio.h>
+
+      void tukar(int *a, int *b) {
+          // lengkapi
+      }
+
+      int main(void) {
+          int x, y;
+          scanf("%d %d", &x, &y);
+          tukar(&x, &y);
+          printf("%d %d\n", x, y);
+          return 0;
+      }
+    tests: ["1 2", "5 -5", "7 7"]
+    hints: |
+      *a adalah nilai yang ditunjuk a.
+      Simpan *a di variabel sementara dulu.
+      int t = *a; *a = *b; *b = t;
+    solution: |
+      #include <stdio.h>
+
+      void tukar(int *a, int *b) {
+          int t = *a;
+          *a = *b;
+          *b = t;
+      }
+
+      int main(void) {
+          int x, y;
+          scanf("%d %d", &x, &y);
+          tukar(&x, &y);
+          printf("%d %d\n", x, y);
+          return 0;
+      }
+  - id: c-f7-predict
+    type: predict
+    title: Salinan atau Asli?
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <stdio.h>
+
+      void naik(int x) { x++; }
+      void naikPtr(int *x) { (*x)++; }
+
+      int main(void) {
+          int a = 1;
+          naik(a);
+          printf("%d ", a);
+          naikPtr(&a);
+          naikPtr(&a);
+          printf("%d\n", a);
+          return 0;
+      }
+    hints: |
+      naik menerima SALINAN a.
+      naikPtr menerima alamat a, jadi bisa mengubah aslinya.
+      a naik dua kali lewat pointer.
+    solution: x
+  - id: c-f7-bug
+    type: bughunt
+    title: Faktorial Tanpa Ujung
+    difficulty: 2
+    prompt: faktorial(n) seharusnya mengembalikan n!, tapi program crash untuk semua input. Temukan bug-nya.
+    starter: |
+      #include <stdio.h>
+
+      long long faktorial(int n) {
+          if (n < 0) return 1;
+          return n * faktorial(n - 1);
+      }
+
+      int main(void) {
+          int n;
+          scanf("%d", &n);
+          printf("%lld\n", faktorial(n));
+          return 0;
+      }
+    bug_line: 4
+    tests: ["5", "0", "20"]
+    hints: |
+      Telusuri faktorial(1), lalu faktorial(0). Kapan rekursi berhenti?
+      Saat n = 0, hasilnya 0 * ..., sehingga semuanya menjadi 0 (atau tidak berhenti).
+      if (n <= 1) return 1;
+    solution: |
+      #include <stdio.h>
+
+      long long faktorial(int n) {
+          if (n <= 1) return 1;
+          return n * faktorial(n - 1);
+      }
+
+      int main(void) {
+          int n;
+          scanf("%d", &n);
+          printf("%lld\n", faktorial(n));
+          return 0;
+      }
+  - id: c-f7-review
+    type: review
+    title: Review Fungsi C
+    difficulty: 3
+    prompt: Tandai baris yang berbahaya atau salah di kode ini.
+    code: |
+      #include <stdio.h>
+
+      int *buatSkor(void) {
+          int skor[3] = {90, 75, 80};
+          return skor;
+      }
+
+      int maks(int a, int b) {
+          if (a > b) return a;
+      }
+    issues:
+      - line: 5
+        text: Mengembalikan alamat array lokal. Memorinya hilang setelah fungsi selesai (dangling pointer). Pakai malloc atau kirim array dari pemanggil.
+      - line: 9
+        text: Kalau a <= b tidak ada return, sehingga hasilnya tidak terdefinisi. Tambahkan return b;.
+    hints: |
+      Apa yang terjadi pada variabel lokal setelah fungsi selesai?
+      Apakah semua jalur fungsi int mengembalikan nilai?
+      Ada dua baris berbahaya.

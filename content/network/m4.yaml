@@ -1,0 +1,64 @@
+lesson:
+- text: 'REST memodelkan data sebagai resource yang diakses dengan URL dan method HTTP: GET membaca, POST membuat, PUT/PATCH mengubah, DELETE menghapus. Data biasanya dikirim dalam format JSON.'
+  code: |
+    import json
+
+    teks = '{"slayer": "Tanjiro", "misi": [{"koban": 50}, {"koban": 120}]}'
+    data = json.loads(teks)
+    print(data["slayer"], sum(m["koban"] for m in data["misi"]))
+    print(json.dumps({"ok": True, "total": 170}))
+exercises:
+- id: net-m4-json
+  type: write
+  title: Rekap dari API
+  difficulty: 2
+  prompt: 'Input berisi satu dokumen JSON: daftar objek misi dengan kunci "slayer" (teks) dan "koban" (angka). Cetak setiap slayer dan total koban-nya, "nama total" per baris, urut nama.'
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - '[{"slayer": "Tanjiro", "koban": 50}, {"slayer": "Zenitsu", "koban": 40}, {"slayer": "Tanjiro", "koban": 120}]'
+  - '[{"slayer": "Rengoku", "koban": 250}, {"slayer": "Akaza", "koban": 0}]'
+  - '[{"slayer": "Kanao", "koban": 7}]'
+  hints: |
+    json.loads mengubah teks JSON menjadi list/dict Python.
+    Jumlahkan per nama dengan dict.
+    Urutkan nama dengan sorted.
+  solution: |
+    import json
+    import sys
+
+    total = {}
+    for m in json.loads(sys.stdin.read()):
+        total[m["slayer"]] = total.get(m["slayer"], 0) + m["koban"]
+    for nama in sorted(total):
+        print(nama, total[nama])
+- id: net-m4-delete
+  type: quiz
+  title: Menghapus Resource
+  difficulty: 1
+  prompt: Endpoint REST yang tepat untuk menghapus misi bernomor 7 adalah...
+  options:
+  - DELETE /misi/7
+  - GET /hapusMisi?id=7
+  - POST /misi/7/delete
+  - PUT /misi/delete/7
+  explain: 'REST memakai method HTTP sebagai kata kerja dan URL sebagai kata benda: DELETE pada resource /misi/7.'
+  hints: |
+    Method HTTP adalah kata kerjanya.
+    URL menunjuk resource-nya.
+    Method untuk menghapus.
+- id: net-m4-201
+  type: answer
+  title: Resource Baru
+  difficulty: 2
+  prompt: Status code yang tepat untuk response POST yang berhasil MEMBUAT resource baru adalah...
+  accept:
+  - '201'
+  - 201 created
+  explain: 201 Created, biasanya disertai header Location yang menunjuk resource baru. 200 OK lebih umum untuk respons sukses biasa.
+  hints: |
+    Kelompok 2xx.
+    Bukan 200.
+    Created.

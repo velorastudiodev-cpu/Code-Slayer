@@ -1,0 +1,2018 @@
+{
+ "hash": "7008545ae677",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Shinobu: \"Racun yang sama bisa menyembuhkan atau membunuh.\" Ilmu keamanan siber hanya boleh dipakai pada sistem milikmu sendiri atau yang pemiliknya mengizinkan secara tertulis (dengan batas/scope yang jelas). Di Indonesia, akses ilegal ke sistem elektronik orang lain diatur UU ITE (antara lain Pasal 30 tentang akses ilegal, Pasal 32 tentang mengubah/memindahkan data, dan sanksinya di Pasal 46 & 48). Semua lab di aplikasi ini adalah simulasi milik aplikasi sendiri."
+    },
+    {
+     "text": "Responsible disclosure: bila menemukan celah di sistem nyata, laporkan ke pemiliknya (atau lewat program bug bounty resmi), beri waktu untuk memperbaiki, jangan mengambil/menyebarkan data, dan jangan menguji melebihi yang perlu untuk membuktikan celah."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-f1-izin",
+     "type": "quiz",
+     "title": "Izin Dulu",
+     "difficulty": 1,
+     "prompt": "Kamu menemukan form login sekolah yang sepertinya rentan SQL injection. Apa yang sebaiknya kamu lakukan?",
+     "tests": [],
+     "hints": [
+      "Apakah kamu punya izin?",
+      "Niat baik tidak menghapus pelanggaran.",
+      "Laporkan, jangan uji."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Tidak mengujinya; laporkan dugaanmu ke pengelola sistem sekolah",
+      "Coba injeksi sedikit untuk memastikan",
+      "Ambil satu data siswa sebagai bukti",
+      "Bagikan temuannya di grup agar viral"
+     ],
+     "explain": "Menguji sistem tanpa izin tertulis termasuk akses ilegal, walau niatnya baik. Laporkan dugaan tanpa mengeksploitasi.",
+     "track": "cyber",
+     "chapter": "f1"
+    },
+    {
+     "id": "cy-f1-uu",
+     "type": "quiz",
+     "title": "Payung Hukum",
+     "difficulty": 1,
+     "prompt": "Undang-undang yang mengatur akses ilegal ke sistem elektronik di Indonesia adalah...",
+     "tests": [],
+     "hints": [
+      "Singkatannya tiga huruf.",
+      "Informasi dan Transaksi Elektronik.",
+      "UU ITE."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "UU ITE (Informasi dan Transaksi Elektronik)",
+      "UU Lalu Lintas",
+      "UU Hak Cipta saja",
+      "Tidak ada aturannya"
+     ],
+     "explain": "UU ITE mengatur, antara lain, akses tanpa hak ke sistem elektronik orang lain (Pasal 30) beserta sanksinya.",
+     "track": "cyber",
+     "chapter": "f1"
+    },
+    {
+     "id": "cy-f1-scope",
+     "type": "quiz",
+     "title": "Batas Wilayah",
+     "difficulty": 2,
+     "prompt": "Program bug bounty sebuah toko daring hanya mengizinkan pengujian di app.toko.contoh. Kamu menemukan server lain milik mereka, db.toko.contoh. Bolehkah diuji?",
+     "tests": [],
+     "hints": [
+      "Izin punya batas.",
+      "Baca ketentuan program.",
+      "Di luar scope = tidak diizinkan."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Tidak, karena di luar scope yang diizinkan",
+      "Boleh, karena masih milik perusahaan yang sama",
+      "Boleh asal tidak merusak",
+      "Boleh jika malam hari"
+     ],
+     "explain": "Izin berlaku sesuai scope tertulis. Aset di luar scope harus dilaporkan/ditanyakan dulu, bukan diuji.",
+     "track": "cyber",
+     "chapter": "f1"
+    },
+    {
+     "id": "cy-f1-disclosure",
+     "type": "quiz",
+     "title": "Melapor dengan Benar",
+     "difficulty": 2,
+     "prompt": "Urutan responsible disclosure yang benar adalah...",
+     "tests": [],
+     "hints": [
+      "Siapa yang pertama harus tahu?",
+      "Beri kesempatan memperbaiki.",
+      "Publikasi belakangan."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Laporkan ke pemilik → beri waktu perbaikan → publikasi setelah diperbaiki/disepakati",
+      "Publikasikan dulu agar pemilik cepat bergerak",
+      "Jual celahnya ke pihak lain",
+      "Diamkan saja"
+     ],
+     "explain": "Tujuannya melindungi pengguna: pemilik memperbaiki dulu sebelum detail celah dipublikasikan.",
+     "track": "cyber",
+     "chapter": "f1"
+    },
+    {
+     "id": "cy-f1-white",
+     "type": "answer",
+     "title": "Topi Putih",
+     "difficulty": 1,
+     "prompt": "Sebutan untuk peretas etis yang menguji keamanan dengan izin adalah \"... hat\" (isi satu kata bahasa Inggris).",
+     "tests": [],
+     "hints": [
+      "Warna.",
+      "Lawan dari black.",
+      "white"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "white",
+      "white hat"
+     ],
+     "explain": "White hat bekerja dengan izin untuk memperbaiki keamanan; black hat menyerang tanpa izin.",
+     "track": "cyber",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Tiga pilar keamanan (CIA triad): Confidentiality (hanya yang berhak bisa membaca), Integrity (data tidak diubah tanpa izin), Availability (layanan tersedia saat dibutuhkan). Threat model menjawab: apa yang dilindungi, dari siapa, lewat jalur apa, dan apa dampaknya."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-f2-c",
+     "type": "quiz",
+     "title": "Surat Terbaca",
+     "difficulty": 1,
+     "prompt": "Pesan rahasia gagak dibaca oleh iblis. Pilar CIA mana yang dilanggar?",
+     "tests": [],
+     "hints": [
+      "Dibaca, bukan diubah.",
+      "Kerahasiaan.",
+      "C."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Confidentiality",
+      "Integrity",
+      "Availability",
+      "Accountability"
+     ],
+     "explain": "Kerahasiaan dilanggar ketika pihak tak berhak bisa membaca informasi.",
+     "track": "cyber",
+     "chapter": "f2"
+    },
+    {
+     "id": "cy-f2-i",
+     "type": "quiz",
+     "title": "Pesan Diubah",
+     "difficulty": 1,
+     "prompt": "Isi perintah misi diubah di tengah jalan sehingga regu dikirim ke tempat yang salah. Pilar mana yang dilanggar?",
+     "tests": [],
+     "hints": [
+      "Diubah.",
+      "Keutuhan data.",
+      "I."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Integrity",
+      "Confidentiality",
+      "Availability",
+      "Authentication"
+     ],
+     "explain": "Integritas berarti data tidak dimodifikasi tanpa izin. Hash/MAC/tanda tangan digital melindunginya.",
+     "track": "cyber",
+     "chapter": "f2"
+    },
+    {
+     "id": "cy-f2-a",
+     "type": "quiz",
+     "title": "Markas Tak Terjangkau",
+     "difficulty": 1,
+     "prompt": "Server Markas dibanjiri request sampai tidak bisa melayani slayer. Pilar mana yang terganggu?",
+     "tests": [],
+     "hints": [
+      "Tidak bisa diakses.",
+      "Ketersediaan.",
+      "A."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Availability",
+      "Integrity",
+      "Confidentiality",
+      "Non-repudiation"
+     ],
+     "explain": "Serangan DoS/DDoS menyerang ketersediaan.",
+     "track": "cyber",
+     "chapter": "f2"
+    },
+    {
+     "id": "cy-f2-threat",
+     "type": "quiz",
+     "title": "Model Ancaman",
+     "difficulty": 2,
+     "prompt": "Pertanyaan pertama yang paling tepat saat membuat threat model aplikasi absensi adalah...",
+     "tests": [],
+     "hints": [
+      "Mulai dari yang berharga.",
+      "Apa yang dilindungi?",
+      "Aset."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Aset apa yang perlu dilindungi (mis. data kehadiran & akun)?",
+      "Framework apa yang paling populer?",
+      "Berapa jumlah server?",
+      "Warna tema aplikasinya?"
+     ],
+     "explain": "Threat model dimulai dari aset, lalu penyerang, jalur serangan, dan dampaknya.",
+     "track": "cyber",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Jenis serangan umum: phishing (menipu korban menyerahkan data), malware & ransomware (perangkat lunak jahat / penyandera data), man-in-the-middle (menyadap/mengubah lalu lintas), DoS (membanjiri layanan), dan social engineering (memanipulasi manusia). Manusia sering menjadi titik terlemah."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-f3-phish",
+     "type": "quiz",
+     "title": "Gagak Palsu",
+     "difficulty": 1,
+     "prompt": "Email mengatasnamakan \"Admin Kisatsutai\" meminta kamu login lewat tautan kisatsutai-login.contoh untuk \"verifikasi akun\". Ini kemungkinan...",
+     "tests": [],
+     "hints": [
+      "Perhatikan domainnya.",
+      "Meminta kredensial lewat tautan.",
+      "Phishing."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Phishing",
+      "Ransomware",
+      "DoS",
+      "Patch keamanan resmi"
+     ],
+     "explain": "Domain mirip dan permintaan login mendesak adalah ciri phishing. Buka situs resmi dengan mengetik alamatnya sendiri.",
+     "track": "cyber",
+     "chapter": "f3"
+    },
+    {
+     "id": "cy-f3-ransom",
+     "type": "quiz",
+     "title": "Berkas Tersandera",
+     "difficulty": 1,
+     "prompt": "Semua berkas markas terenkripsi dan ada pesan meminta tebusan. Pertahanan terbaik SEBELUM kejadian adalah...",
+     "tests": [],
+     "hints": [
+      "Apa yang membuat tebusan tidak perlu?",
+      "Salinan data.",
+      "Backup offline."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Backup rutin yang terpisah/offline dan update sistem",
+      "Membayar tebusan secepatnya",
+      "Mematikan antivirus agar cepat",
+      "Memakai satu kata sandi untuk semua akun"
+     ],
+     "explain": "Backup terpisah membuat data bisa dipulihkan tanpa membayar; patch menutup celah masuk.",
+     "track": "cyber",
+     "chapter": "f3"
+    },
+    {
+     "id": "cy-f3-mitm",
+     "type": "quiz",
+     "title": "Penyadap di Tengah",
+     "difficulty": 2,
+     "prompt": "Di Wi-Fi publik, penyerang menyadap login ke situs HTTP. Serangan ini disebut...",
+     "tests": [],
+     "hints": [
+      "Posisi penyerang.",
+      "Di tengah jalur.",
+      "MITM."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Man-in-the-middle",
+      "Brute force",
+      "SQL injection",
+      "Phishing"
+     ],
+     "explain": "Penyerang berada di antara korban dan server. HTTPS (TLS) mencegah penyadapan isi.",
+     "track": "cyber",
+     "chapter": "f3"
+    },
+    {
+     "id": "cy-f3-social",
+     "type": "quiz",
+     "title": "Penelepon Ramah",
+     "difficulty": 2,
+     "prompt": "Seseorang menelepon mengaku teknisi kantor dan meminta kode OTP-mu \"untuk perbaikan\". Ini contoh...",
+     "tests": [],
+     "hints": [
+      "Yang diserang adalah manusianya.",
+      "Manipulasi psikologis.",
+      "Social engineering."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Social engineering",
+      "Buffer overflow",
+      "Cross-site scripting",
+      "Enkripsi end-to-end"
+     ],
+     "explain": "Kode OTP tidak boleh diberikan kepada siapa pun. Verifikasi lewat jalur resmi.",
+     "track": "cyber",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Linux untuk keamanan: file tersembunyi (ls -a), izin berlebih (find -perm), proses mencurigakan (ps aux), dan log (/var/log). Biasakan menyelidiki dengan perintah baca-saja sebelum mengubah apa pun.",
+     "code": "ls -la\nfind / -type f -perm -o=w 2>/dev/null\nps aux\nsudo tail -n 50 /var/log/auth.log\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-for-tersembunyi",
+     "type": "lab",
+     "title": "Berkas Bertitik",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Temukan dan baca catatannya. Isinya di-encode. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "File yang namanya diawali titik tersembunyi.",
+      "ls -la",
+      "base64 -d"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "for-tersembunyi",
+     "track": "cyber",
+     "chapter": "f4"
+    },
+    {
+     "id": "cy-lab-for-perm",
+     "type": "lab",
+     "title": "Laci yang Lupa Dikunci",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Temukan berkas yang bisa dibaca semua user. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "find punya opsi -perm.",
+      "-perm -o=r atau -perm -004",
+      "find /opt/arsip -type f -perm -o=r"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "for-perm",
+     "track": "cyber",
+     "chapter": "f4"
+    },
+    {
+     "id": "cy-lab-for-cari",
+     "type": "lab",
+     "title": "Jarum di Tumpukan Jerami",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Cari flag di seluruh folder laporan. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "grep bisa mencari rekursif.",
+      "grep -r",
+      "grep -r SLAYER laporan/"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "for-cari",
+     "track": "cyber",
+     "chapter": "f4"
+    },
+    {
+     "id": "cy-f4-suid",
+     "type": "write",
+     "title": "Bit Berbahaya",
+     "difficulty": 2,
+     "prompt": "Di direktori bin/, tampilkan berkas yang punya bit SUID (berjalan dengan hak pemiliknya), terurut.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p bin\necho a > bin/ls\necho b > bin/passwd\necho c > bin/aneh\nchmod 755 bin/ls\nchmod 4755 bin/passwd\nchmod 4777 bin/aneh\n",
+     "tests": [
+      {
+       "expected": "bin/aneh\nbin/passwd\n"
+      }
+     ],
+     "hints": [
+      "SUID = bit 4000.",
+      "find -perm -u=s atau -4000.",
+      "find bin -type f -perm -u=s | sort"
+     ],
+     "solutions": [
+      "find bin -type f -perm -u=s | sort\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "f4"
+    },
+    {
+     "id": "cy-f4-least",
+     "type": "quiz",
+     "title": "Hak Paling Sedikit",
+     "difficulty": 1,
+     "prompt": "Prinsip least privilege berarti...",
+     "tests": [],
+     "hints": [
+      "Minimum.",
+      "Kebutuhan saja.",
+      "Least = paling sedikit."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Setiap user/proses hanya diberi hak minimum yang dibutuhkan",
+      "Semua user diberi akses root agar cepat",
+      "Admin tidak boleh punya hak",
+      "Hak diberikan sebanyak-banyaknya lalu dikurangi jika ada masalah"
+     ],
+     "explain": "Semakin sedikit hak, semakin kecil dampak bila akun/proses dibobol.",
+     "track": "cyber",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "Keamanan jaringan: port menandai layanan (22 SSH, 80 HTTP, 443 HTTPS, 3306 MySQL). Firewall memfilter lalu lintas: tutup semua, buka yang perlu saja. Protokol tanpa enkripsi (HTTP, FTP, Telnet) bisa disadap; gunakan versi terenkripsi (HTTPS, SFTP, SSH)."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-pk-basic",
+     "type": "lab",
+     "title": "Kredensial Telanjang",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Temukan kredensialnya. Flag ada di kata sandi. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Filter http.",
+      "Cari header Authorization Basic.",
+      "Decode base64 setelah kata Basic."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "pk-basic",
+     "track": "cyber",
+     "chapter": "f5"
+    },
+    {
+     "id": "cy-f5-port",
+     "type": "quiz",
+     "title": "Port Database Terbuka",
+     "difficulty": 2,
+     "prompt": "Hasil pemindaian server web milikmu menunjukkan port 3306 terbuka ke internet. Risiko & langkahnya adalah...",
+     "tests": [],
+     "hints": [
+      "3306 adalah port MySQL.",
+      "Siapa yang perlu mengaksesnya?",
+      "Batasi dengan firewall."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Database terekspos; batasi ke localhost/jaringan internal lewat firewall",
+      "Tidak masalah, port tinggi aman",
+      "Ganti port ke 3307 sudah cukup",
+      "Matikan HTTPS supaya seimbang"
+     ],
+     "explain": "Database seharusnya tidak bisa dijangkau dari internet. Security through obscurity (ganti port) bukan solusi.",
+     "track": "cyber",
+     "chapter": "f5"
+    },
+    {
+     "id": "cy-f5-telnet",
+     "type": "quiz",
+     "title": "Protokol Telanjang",
+     "difficulty": 1,
+     "prompt": "Protokol mana yang mengirim kata sandi tanpa enkripsi?",
+     "tests": [],
+     "hints": [
+      "Protokol lama.",
+      "Pendahulu SSH.",
+      "Telnet."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Telnet",
+      "SSH",
+      "HTTPS",
+      "SFTP"
+     ],
+     "explain": "Telnet, FTP, dan HTTP mengirim data apa adanya. Pakai SSH/SFTP/HTTPS.",
+     "track": "cyber",
+     "chapter": "f5"
+    },
+    {
+     "id": "cy-f5-firewall",
+     "type": "write",
+     "title": "Penjaga Gerbang",
+     "difficulty": 2,
+     "prompt": "Firewall sederhana: baris pertama berisi aturan \"allow PORT\" dipisah koma (mis. allow 22,443). Baris berikutnya berisi port masuk, satu per baris. Cetak \"IZIN\" atau \"TOLAK\" untuk setiap port (default menolak).",
+     "lang": "python",
+     "starter": "import sys\n\nbaris = sys.stdin.read().split(\"\\n\")\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "allow 22,443\n22\n80\n443\n",
+       "expected": "IZIN\nTOLAK\nIZIN\n"
+      },
+      {
+       "input": "allow 80\n8080\n80\n",
+       "expected": "TOLAK\nIZIN\n"
+      },
+      {
+       "input": "allow 22\n2222\n",
+       "expected": "TOLAK\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ambil daftar port dari baris pertama.",
+      "Simpan di set.",
+      "Default: TOLAK."
+     ],
+     "solutions": [
+      "import sys\n\nbaris = sys.stdin.read().split(\"\\n\")\nizin = set(baris[0].split()[1].split(\",\"))\nfor p in baris[1:]:\n    if p.strip():\n        print(\"IZIN\" if p.strip() in izin else \"TOLAK\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "Encoding (base64, hex) hanya mengubah bentuk dan bisa dibalik siapa saja. Enkripsi memakai kunci: simetris (AES, kunci sama) atau asimetris (RSA, kunci publik/privat). Hashing satu arah (SHA-256) untuk integritas & kata sandi. Cipher klasik seperti Caesar mudah dipecah."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-cr-caesar",
+     "type": "lab",
+     "title": "Surat Kaisar",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Pecahkan sandinya dengan Cipher Playground. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Caesar menggeser setiap huruf sejauh k.",
+      "Ada 25 kemungkinan saja.",
+      "Coba k = 3."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "cr-caesar",
+     "track": "cyber",
+     "chapter": "f6"
+    },
+    {
+     "id": "cy-lab-cr-base64",
+     "type": "lab",
+     "title": "Berlapis-lapis",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Kupas lapisannya satu per satu. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Huruf, angka, + / dan = di akhir: tanda base64.",
+      "Hasil decode pertama masih terlihat seperti base64?",
+      "Decode base64 dua kali lalu ROT13."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "cr-base64",
+     "track": "cyber",
+     "chapter": "f6"
+    },
+    {
+     "id": "cy-f6-caesar",
+     "type": "write",
+     "title": "Mesin Caesar",
+     "difficulty": 2,
+     "prompt": "Baca k lalu satu baris teks. Cetak teks yang huruf-hurufnya digeser maju k (A-Z dan a-z berputar), karakter lain tetap.",
+     "lang": "python",
+     "starter": "k = int(input())\nteks = input()\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "3\nSLAYER{abc}\n",
+       "expected": "VODBHU{def}\n"
+      },
+      {
+       "input": "13\nHello, World!\n",
+       "expected": "Uryyb, Jbeyq!\n"
+      },
+      {
+       "input": "25\nzZ\n",
+       "expected": "yY\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "ord dan chr mengubah huruf ↔ angka.",
+      "Modulo 26 untuk berputar.",
+      "Bedakan huruf besar & kecil."
+     ],
+     "solutions": [
+      "k = int(input())\nteks = input()\nhasil = \"\"\nfor c in teks:\n    if c.isupper():\n        hasil += chr((ord(c) - 65 + k) % 26 + 65)\n    elif c.islower():\n        hasil += chr((ord(c) - 97 + k) % 26 + 97)\n    else:\n        hasil += c\nprint(hasil)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "f6"
+    },
+    {
+     "id": "cy-f6-enc",
+     "type": "quiz",
+     "title": "Encoding atau Enkripsi?",
+     "difficulty": 1,
+     "prompt": "Pernyataan yang BENAR tentang base64 adalah...",
+     "tests": [],
+     "hints": [
+      "Ada kunci?",
+      "Bisa dibalik siapa saja.",
+      "Encoding."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Base64 adalah encoding; siapa pun bisa men-decode tanpa kunci",
+      "Base64 adalah enkripsi yang aman",
+      "Base64 adalah hash satu arah",
+      "Base64 butuh kunci publik"
+     ],
+     "explain": "Jangan pernah \"mengamankan\" rahasia dengan base64.",
+     "track": "cyber",
+     "chapter": "f6"
+    },
+    {
+     "id": "cy-f6-asym",
+     "type": "quiz",
+     "title": "Dua Kunci",
+     "difficulty": 2,
+     "prompt": "Pada enkripsi asimetris (mis. RSA), untuk mengirim pesan rahasia ke Shinobu kamu mengenkripsi dengan...",
+     "tests": [],
+     "hints": [
+      "Kunci yang boleh dibagikan.",
+      "Hanya Shinobu yang bisa membuka.",
+      "Publik penerima."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Kunci publik Shinobu",
+      "Kunci privat Shinobu",
+      "Kunci privatmu",
+      "Kata sandi Shinobu"
+     ],
+     "explain": "Siapa pun boleh memakai kunci publik untuk mengenkripsi; hanya pemilik kunci privat yang bisa membuka.",
+     "track": "cyber",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Kata sandi tidak disimpan apa adanya, melainkan sebagai hash. Hash cepat polos (MD5/SHA-256 tanpa salt) mudah di-crack dengan wordlist atau rainbow table. Gunakan salt unik per user dan algoritma yang sengaja lambat: bcrypt, scrypt, atau argon2."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-cr-md5",
+     "type": "lab",
+     "title": "Kata Sandi Lemah",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Temukan kata sandi asli; flag = SLAYER{katasandi}. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Hash setiap kata di wordlist lalu bandingkan.",
+      "MD5 tanpa salt bisa dicari di tabel.",
+      "Gunakan tombol \"Coba wordlist\"."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "cr-md5",
+     "track": "cyber",
+     "chapter": "f7"
+    },
+    {
+     "id": "cy-lab-cr-sha",
+     "type": "lab",
+     "title": "Sidik Jari Bocor",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Temukan PIN-nya; flag = SLAYER{pin}. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Hanya ada 10.000 kemungkinan PIN.",
+      "Gunakan tombol \"Coba semua PIN 0000–9999\".",
+      "SHA-256 cepat, jadi brute force PIN instan."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "cr-sha",
+     "track": "cyber",
+     "chapter": "f7"
+    },
+    {
+     "id": "cy-f7-salt",
+     "type": "write",
+     "title": "Garam Kata Sandi",
+     "difficulty": 2,
+     "prompt": "Baca salt, kata sandi, dan hash tersimpan (masing-masing satu baris). Hash dihitung sebagai SHA-256 dari salt + kata sandi (hex). Cetak \"COCOK\" atau \"SALAH\".",
+     "lang": "python",
+     "starter": "import hashlib\n\nsalt = input()\nsandi = input()\ntersimpan = input()\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "a9f3\nhinokami\n6c4bbfb7c3b5b08c4fe1d67221639afba17e4e22150ce240120fb9d6e2c18c83\n",
+       "expected": "COCOK\n"
+      },
+      {
+       "input": "a9f3\nhinokam1\n6c4bbfb7c3b5b08c4fe1d67221639afba17e4e22150ce240120fb9d6e2c18c83\n",
+       "expected": "SALAH\n"
+      }
+     ],
+     "hints": [
+      "hashlib.sha256(bytes).hexdigest()",
+      "Gabungkan salt + sandi lalu encode().",
+      "Bandingkan dengan hash tersimpan."
+     ],
+     "solutions": [
+      "import hashlib\n\nsalt = input()\nsandi = input()\ntersimpan = input()\nh = hashlib.sha256((salt + sandi).encode()).hexdigest()\nprint(\"COCOK\" if h == tersimpan else \"SALAH\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "f7"
+    },
+    {
+     "id": "cy-f7-kuat",
+     "type": "write",
+     "title": "Penguji Kekuatan",
+     "difficulty": 2,
+     "prompt": "Baca kata sandi. Cetak \"KUAT\" jika panjangnya ≥ 12 DAN memuat huruf kecil, huruf besar, dan angka; selain itu \"LEMAH\".",
+     "lang": "python",
+     "starter": "sandi = input()\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "Hinokami2026Kagura\n",
+       "expected": "KUAT\n"
+      },
+      {
+       "input": "password\n",
+       "expected": "LEMAH\n"
+      },
+      {
+       "input": "Tanjiro123\n",
+       "expected": "LEMAH\n",
+       "hidden": true
+      },
+      {
+       "input": "semuakecil12345\n",
+       "expected": "LEMAH\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "len() untuk panjang.",
+      "any(c.isupper() for c in s)",
+      "Gabungkan semua syarat dengan and."
+     ],
+     "solutions": [
+      "sandi = input()\nok = len(sandi) >= 12 and any(c.islower() for c in sandi) and any(c.isupper() for c in sandi) and any(c.isdigit() for c in sandi)\nprint(\"KUAT\" if ok else \"LEMAH\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "f7"
+    },
+    {
+     "id": "cy-f7-bcrypt",
+     "type": "quiz",
+     "title": "Lambat itu Bagus",
+     "difficulty": 2,
+     "prompt": "Mengapa bcrypt/argon2 lebih baik daripada SHA-256 polos untuk menyimpan kata sandi?",
+     "tests": [],
+     "hints": [
+      "Kecepatan menguntungkan siapa?",
+      "Penyerang menebak berulang kali.",
+      "Lambat + salt."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Sengaja lambat dan memakai salt, sehingga brute force jauh lebih mahal",
+      "Karena hasilnya lebih pendek",
+      "Karena bisa didekripsi kembali",
+      "Karena tidak butuh CPU"
+     ],
+     "explain": "Pembobol mencoba miliaran tebakan per detik pada hash cepat; algoritma lambat + salt menahan serangan itu.",
+     "track": "cyber",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "l1": {
+   "lesson": [
+    {
+     "text": "Reverse engineering: memahami program tanpa kode sumbernya. Mulai dari strings, lalu baca alur logika (pseudocode/assembly), cari perbandingan kunci, dan balik operasinya (XOR dibalik XOR, + dibalik −)."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-rev-balik",
+     "type": "lab",
+     "title": "Kunci Terbalik",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Baca kodenya dan temukan kunci yang diterima. Flag = SLAYER{kunci}. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Ikuti apa yang dilakukan pada input.",
+      "split-reverse-join membalik string.",
+      "Balik string pembandingnya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "rev-balik",
+     "track": "cyber",
+     "chapter": "l1"
+    },
+    {
+     "id": "cy-lab-rev-xor",
+     "type": "lab",
+     "title": "Gembok Bitwise",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Hitung kunci yang benar. Flag = SLAYER{kunci}. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "XOR bisa dibalik dengan XOR yang sama.",
+      "Untuk setiap angka n, huruf = String.fromCharCode(n ^ 7).",
+      "Hasilnya nama lengkap tokoh utama (huruf kecil, pakai _)."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "rev-xor",
+     "track": "cyber",
+     "chapter": "l1"
+    },
+    {
+     "id": "cy-lab-rev-asm",
+     "type": "lab",
+     "title": "Gulungan Assembly",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Hitung angka kuncinya. Flag = SLAYER{angka}. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Ikuti register: eax = kunci; eax *= 3; eax += 7; eax ^= 0x55.",
+      "Agar hasil akhir 0 maka eax sebelum XOR = 0x55 = 85.",
+      "3k + 7 = 85, jadi k = 26"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "rev-asm",
+     "track": "cyber",
+     "chapter": "l1"
+    },
+    {
+     "id": "cy-lab-cr-xor",
+     "type": "lab",
+     "title": "Satu Byte Rahasia",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Temukan kuncinya (0–255) dan baca pesannya. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Flag selalu diawali SLAYER{.",
+      "S (0x53) XOR kunci = byte pertama (0x35).",
+      "kunci = 0x53 XOR 0x35 = 102"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "cr-xor",
+     "track": "cyber",
+     "chapter": "l1"
+    },
+    {
+     "id": "cy-l1-obf",
+     "type": "predict",
+     "title": "Kode Kabur",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "k = [83, 76, 65, 89, 69, 82]\nprint(\"\".join(chr(x) for x in k))\n",
+     "tests": [
+      {
+       "expected": "SLAYER\n"
+      }
+     ],
+     "hints": [
+      "chr mengubah angka menjadi huruf ASCII.",
+      "65 = A, 83 = S.",
+      "Gabungkan semuanya."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "l1"
+    }
+   ]
+  },
+  "l2": {
+   "lesson": [
+    {
+     "text": "OSINT (Open Source Intelligence): mengumpulkan informasi dari sumber terbuka (situs, media sosial, WHOIS, metadata). Selalu etis & legal: lab ini memakai data fiktif. Jangan melakukan doxing atau mengumpulkan data pribadi orang sungguhan tanpa dasar yang sah."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-os-gagak",
+     "type": "lab",
+     "title": "Gagak Tersesat",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Dari berkas kasus, tentukan nama desa tempat foto terakhir diambil. Flag = SLAYER{nama_desa} (huruf kecil). Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Baca semua postingan.",
+      "Foto terakhir punya metadata.",
+      "Koordinat di EXIF cocok dengan salah satu desa di peta."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "os-gagak",
+     "track": "cyber",
+     "chapter": "l2"
+    },
+    {
+     "id": "cy-lab-os-domain",
+     "type": "lab",
+     "title": "Jejak Pendaftar",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Gunakan berkas WHOIS & arsip fiktif. Flag = SLAYER{nama_organisasi} (huruf kecil, spasi jadi _). Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Baca WHOIS domain penipu.",
+      "Email pendaftar dipakai juga di domain lain.",
+      "Organisasi tercantum di WHOIS domain kedua."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "os-domain",
+     "track": "cyber",
+     "chapter": "l2"
+    },
+    {
+     "id": "cy-l2-etika",
+     "type": "quiz",
+     "title": "Batas OSINT",
+     "difficulty": 1,
+     "prompt": "Mana yang termasuk penggunaan OSINT yang TIDAK etis?",
+     "tests": [],
+     "hints": [
+      "Terbuka ≠ boleh disebar.",
+      "Privasi orang.",
+      "Doxing."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Mengumpulkan alamat rumah & keluarga seseorang lalu menyebarkannya (doxing)",
+      "Memeriksa WHOIS domain phishing untuk dilaporkan",
+      "Mengecek metadata foto milik sendiri sebelum diunggah",
+      "Mempelajari teknik OSINT dengan data fiktif"
+     ],
+     "explain": "Doxing melanggar privasi dan bisa melanggar hukum, walaupun datanya \"terbuka\".",
+     "track": "cyber",
+     "chapter": "l2"
+    }
+   ]
+  },
+  "l3": {
+   "lesson": [
+    {
+     "text": "Analisis log adalah pekerjaan harian tim keamanan (SOC). Pola mencurigakan: banyak 404 dari satu IP (pemindaian direktori), banyak login gagal (brute force), akses ke /admin atau berkas sensitif (.env, backup).",
+     "code": "awk '$9 == 404 { print $1 }' access.log | sort | uniq -c | sort -rn\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-l3-scan",
+     "type": "write",
+     "title": "Pemindai Direktori",
+     "difficulty": 2,
+     "prompt": "Dari access.log, tampilkan IP yang menghasilkan status 404 beserta jumlahnya, urut dari terbanyak, dengan format \"jumlah IP\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > access.log <<'EOF'\n10.0.0.5 - - [05/Nov/2026:10:00:01] \"GET /index.html HTTP/1.1\" 200 512\n10.0.0.66 - - [05/Nov/2026:10:00:02] \"GET /admin HTTP/1.1\" 404 16\n10.0.0.66 - - [05/Nov/2026:10:00:02] \"GET /wp-login.php HTTP/1.1\" 404 16\n10.0.0.66 - - [05/Nov/2026:10:00:03] \"GET /.env HTTP/1.1\" 404 16\n10.0.0.9 - - [05/Nov/2026:10:00:04] \"GET /misi HTTP/1.1\" 200 1024\n10.0.0.66 - - [05/Nov/2026:10:00:04] \"GET /backup.zip HTTP/1.1\" 404 16\n10.0.0.77 - - [05/Nov/2026:10:00:05] \"GET /phpmyadmin HTTP/1.1\" 404 16\n10.0.0.5 - - [05/Nov/2026:10:00:06] \"POST /login HTTP/1.1\" 302 0\nEOF\n",
+     "tests": [
+      {
+       "expected": "4 10.0.0.66\n1 10.0.0.77\n"
+      }
+     ],
+     "hints": [
+      "Status ada di kolom kedua dari akhir.",
+      "Ambil IP-nya ($1).",
+      "sort | uniq -c | sort -rn"
+     ],
+     "solutions": [
+      "awk '$(NF-1) == 404 { print $1 }' access.log | sort | uniq -c | sort -rn | awk '{ print $1, $2 }'\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "l3"
+    },
+    {
+     "id": "cy-l3-sensitif",
+     "type": "write",
+     "title": "Incaran Berkas Sensitif",
+     "difficulty": 2,
+     "prompt": "Tampilkan path yang diminta (tanpa IP) dari access.log yang mengandung .env, backup, atau admin, satu per baris.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > access.log <<'EOF'\n10.0.0.5 - - [05/Nov/2026:10:00:01] \"GET /index.html HTTP/1.1\" 200 512\n10.0.0.66 - - [05/Nov/2026:10:00:02] \"GET /admin HTTP/1.1\" 404 16\n10.0.0.66 - - [05/Nov/2026:10:00:02] \"GET /wp-login.php HTTP/1.1\" 404 16\n10.0.0.66 - - [05/Nov/2026:10:00:03] \"GET /.env HTTP/1.1\" 404 16\n10.0.0.9 - - [05/Nov/2026:10:00:04] \"GET /misi HTTP/1.1\" 200 1024\n10.0.0.66 - - [05/Nov/2026:10:00:04] \"GET /backup.zip HTTP/1.1\" 404 16\n10.0.0.77 - - [05/Nov/2026:10:00:05] \"GET /phpmyadmin HTTP/1.1\" 404 16\n10.0.0.5 - - [05/Nov/2026:10:00:06] \"POST /login HTTP/1.1\" 302 0\nEOF\n",
+     "tests": [
+      {
+       "expected": "/admin\n/.env\n/backup.zip\n/phpmyadmin\n"
+      }
+     ],
+     "hints": [
+      "Ambil bagian \"GET /path\".",
+      "cut kolom ke-2.",
+      "grep -E dengan alternatif |."
+     ],
+     "solutions": [
+      "grep -oE '\"GET [^ ]+' access.log | cut -d' ' -f2 | grep -E '\\.env|backup|admin'\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "l3"
+    },
+    {
+     "id": "cy-l3-py",
+     "type": "write",
+     "title": "Detektor Python",
+     "difficulty": 3,
+     "prompt": "Baca log SSH dari input. Cetak IP yang gagal login ≥ 3 kali, terurut, satu per baris (format log: ... Failed password for USER from IP).",
+     "lang": "python",
+     "starter": "import sys\nfrom collections import Counter\n\nlog = sys.stdin.read().splitlines()\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "a: Failed password for root from 10.6.6.6\nb: Failed password for root from 10.6.6.6\nc: Failed password for x from 10.4.4.4\nd: Failed password for root from 10.6.6.6\n",
+       "expected": "10.6.6.6\n"
+      },
+      {
+       "input": "x: Accepted password for slayer from 10.0.0.5\ny: Failed password for a from 10.1.1.1\ny: Failed password for a from 10.1.1.1\ny: Failed password for a from 10.1.1.1\ny: Failed password for a from 10.2.2.2\ny: Failed password for a from 10.2.2.2\ny: Failed password for a from 10.2.2.2\n",
+       "expected": "10.1.1.1\n10.2.2.2\n"
+      }
+     ],
+     "hints": [
+      "Saring baris \"Failed password\".",
+      "IP = kata terakhir.",
+      "Counter lalu ambil n ≥ 3, urutkan."
+     ],
+     "solutions": [
+      "import sys\nfrom collections import Counter\n\nlog = sys.stdin.read().splitlines()\nc = Counter(b.split()[-1] for b in log if \"Failed password\" in b)\nfor ip in sorted(ip for ip, n in c.items() if n >= 3):\n    print(ip)\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "cyber",
+     "chapter": "l3"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "SQL injection terjadi saat input digabung langsung ke query, sehingga input bisa mengubah struktur query. Dampaknya: lolos login, membaca tabel lain (UNION), bahkan mengubah data. Perbaikannya: prepared statement / parameter terikat (? atau :nama), bukan menyaring karakter.",
+     "code": "# RENTAN\nq = \"SELECT * FROM akun WHERE user = '\" + user + \"'\"\n# AMAN\ncur.execute(\"SELECT * FROM akun WHERE user = ?\", (user,))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-web-sqli-login",
+     "type": "lab",
+     "title": "Gerbang Markas",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Masuk sebagai Oyakata tanpa mengetahui kata sandinya. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Lihat header X-Debug-SQL setelah login gagal.",
+      "Tanda petik ' di input mengakhiri string SQL.",
+      "Coba user = oyakata'-- (komentar -- membuang sisa query)."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "web-sqli-login",
+     "track": "cyber",
+     "chapter": "m1"
+    },
+    {
+     "id": "cy-lab-web-sqli-union",
+     "type": "lab",
+     "title": "Gulungan Terlarang",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Gunakan UNION untuk menampilkan isi tabel gulungan_terlarang lewat pencarian. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Query-nya SELECT nama, napas ... LIKE '%q%'.",
+      "UNION SELECT harus punya jumlah kolom yang sama (2).",
+      "Tutup string dan beri komentar: ' UNION SELECT isi, 1 FROM gulungan_terlarang--"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "web-sqli-union",
+     "track": "cyber",
+     "chapter": "m1"
+    },
+    {
+     "id": "cy-m1-patch",
+     "type": "write",
+     "title": "Patch: Query Terikat",
+     "difficulty": 2,
+     "prompt": "Patch the Bug. Fungsi cariSlayer menyusun SQL dengan sambung string (rentan). Ubah agar mengembalikan objek { sql, params } dengan placeholder ? dan nilai di params. Harness mencetak hasilnya untuk setiap baris input.",
+     "lang": "javascript",
+     "starter": "function cariSlayer(nama) {\n  return { sql: \"SELECT * FROM slayer WHERE nama = '\" + nama + \"'\", params: [] }\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") {\n  const q = cariSlayer(baris)\n  console.log(q.sql + \" | \" + JSON.stringify(q.params))\n}\n",
+     "tests": [
+      {
+       "input": "Tanjiro\n",
+       "expected": "SELECT * FROM slayer WHERE nama = ? | [\"Tanjiro\"]\n"
+      },
+      {
+       "input": "x' OR '1'='1\n",
+       "expected": "SELECT * FROM slayer WHERE nama = ? | [\"x' OR '1'='1\"]\n"
+      },
+      {
+       "input": "'; DROP TABLE slayer;--\n",
+       "expected": "SELECT * FROM slayer WHERE nama = ? | [\"'; DROP TABLE slayer;--\"]\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Nilai input tidak boleh masuk ke string SQL.",
+      "Gunakan placeholder ?.",
+      "params: [nama]"
+     ],
+     "solutions": [
+      "function cariSlayer(nama) {\n  return { sql: \"SELECT * FROM slayer WHERE nama = ?\", params: [nama] }\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") {\n  const q = cariSlayer(baris)\n  console.log(q.sql + \" | \" + JSON.stringify(q.params))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "m1"
+    },
+    {
+     "id": "cy-m1-filter",
+     "type": "quiz",
+     "title": "Cukup Dilarang Petik?",
+     "difficulty": 2,
+     "prompt": "Developer \"memperbaiki\" SQLi dengan menghapus tanda petik dari input. Mengapa ini kurang tepat?",
+     "tests": [],
+     "hints": [
+      "Apakah semua query memakai petik?",
+      "Contoh: WHERE id = 1 OR 1=1",
+      "Prepared statement."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Konteks lain (angka, ORDER BY, encoding) tetap bisa disusupi; perbaikan yang benar adalah prepared statement",
+      "Karena tanda petik dibutuhkan untuk nama",
+      "Karena SQL tidak memakai tanda petik",
+      "Sudah tepat, tidak ada masalah"
+     ],
+     "explain": "Menyaring karakter adalah tambalan rapuh. Parameter terikat memisahkan kode dan data secara tuntas.",
+     "track": "cyber",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "Cross-site scripting (XSS): input user dirender sebagai HTML/JS di halaman orang lain. Reflected (dari URL/form), stored (tersimpan di database), DOM-based (skrip halaman memasang input lewat innerHTML). Perbaikan: escape output sesuai konteks, pakai textContent, sanitizer untuk HTML, dan Content-Security-Policy.",
+     "code": "el.textContent = input        // aman: tampil sebagai teks\nel.innerHTML = input          // RENTAN\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-xss-cari",
+     "type": "lab",
+     "title": "Pantulan Kata Kunci",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Jalankan alert() di halaman korban. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Input masuk langsung ke HTML.",
+      "Tag script ikut dirender.",
+      "<script>alert(1)</script>"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "xss-cari",
+     "track": "cyber",
+     "chapter": "m2"
+    },
+    {
+     "id": "cy-lab-xss-bukutamu",
+     "type": "lab",
+     "title": "Filter Bocor",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Jalankan alert() di buku tamu. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Filter hanya menghapus kemunculan pertama.",
+      "Apa jadinya jika penghapusan justru membentuk tag baru?",
+      "<scr<script>ipt>alert(1)</script>"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "xss-bukutamu",
+     "track": "cyber",
+     "chapter": "m2"
+    },
+    {
+     "id": "cy-lab-xss-dom",
+     "type": "lab",
+     "title": "Bayangan di Fragmen",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Jalankan alert() lewat nama. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "innerHTML tidak mengeksekusi <script>.",
+      "Atribut seperti onerror atau onload dijalankan browser.",
+      "<img src=x onerror=alert(1)>"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "xss-dom",
+     "track": "cyber",
+     "chapter": "m2"
+    },
+    {
+     "id": "cy-m2-patch",
+     "type": "write",
+     "title": "Patch: Escape HTML",
+     "difficulty": 2,
+     "prompt": "Patch the Bug. Fungsi tampilkan memasukkan komentar mentah ke HTML. Perbaiki dengan meng-escape & < > \" ' menjadi &amp; &lt; &gt; &quot; &#39;.",
+     "lang": "javascript",
+     "starter": "function tampilkan(komentar) {\n  return \"<li>\" + komentar + \"</li>\"\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") console.log(tampilkan(baris))\n",
+     "tests": [
+      {
+       "input": "Halo semua\n",
+       "expected": "<li>Halo semua</li>\n"
+      },
+      {
+       "input": "<script>alert(1)</script>\n",
+       "expected": "<li>&lt;script&gt;alert(1)&lt;/script&gt;</li>\n"
+      },
+      {
+       "input": "<img src=x onerror=\"alert('x')\"> & teman\n",
+       "expected": "<li>&lt;img src=x onerror=&quot;alert(&#39;x&#39;)&quot;&gt; &amp; teman</li>\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "& harus di-escape PERTAMA.",
+      "Lima karakter berbahaya.",
+      "replace dengan /g."
+     ],
+     "solutions": [
+      "function escapeHtml(s) {\n  return s.replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\").replace(/\"/g, \"&quot;\").replace(/'/g, \"&#39;\")\n}\nfunction tampilkan(komentar) {\n  return \"<li>\" + escapeHtml(komentar) + \"</li>\"\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") console.log(tampilkan(baris))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "CSRF memanfaatkan browser korban yang sedang login untuk mengirim aksi tanpa sepengetahuannya; cegah dengan token CSRF + cookie SameSite. IDOR terjadi saat aplikasi memakai ID dari user tanpa memeriksa kepemilikan; setiap akses objek harus dicek otorisasinya."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-web-idor",
+     "type": "lab",
+     "title": "Surat yang Salah Alamat",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Baca surat yang ditujukan untuk para Hashira. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Suratmu bernomor 1043 dan 1044.",
+      "Nomor surat berurutan.",
+      "Coba GET /api/surat/1041."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "web-idor",
+     "track": "cyber",
+     "chapter": "m3"
+    },
+    {
+     "id": "cy-lab-csrf-bank",
+     "type": "lab",
+     "title": "Transfer Diam-diam",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Buat halaman jebakan yang otomatis mengirim POST transfer ke akun akatsuki saat dibuka bot korban. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Gunakan form dengan method post ke https://bank.desa/transfer.",
+      "Field: ke=akatsuki, jumlah=1000.",
+      "Kirim otomatis dengan document.forms[0].submit()."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "csrf-bank",
+     "track": "cyber",
+     "chapter": "m3"
+    },
+    {
+     "id": "cy-m3-patch",
+     "type": "write",
+     "title": "Patch: Cek Pemilik",
+     "difficulty": 2,
+     "prompt": "Patch the Bug. Fungsi ambilSurat hanya mengecek login. Baris input: \"<user_login> <id_surat>\". Perbaiki agar menolak (\"403\") jika surat bukan milik user; jika milik user cetak isinya; jika tidak ada \"404\".",
+     "lang": "javascript",
+     "starter": "const SURAT = { 1041: { pemilik: \"oyakata\", isi: \"Rapat Pilar\" }, 1043: { pemilik: \"tanjiro\", isi: \"Jaga Nezuko\" } }\n\nfunction ambilSurat(user, id) {\n  if (!user) return \"401\"\n  const s = SURAT[id]\n  if (!s) return \"404\"\n  return s.isi\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") { const [u, id] = baris.split(\" \"); console.log(ambilSurat(u, id)) }\n",
+     "tests": [
+      {
+       "input": "tanjiro 1043\ntanjiro 1041\n",
+       "expected": "Jaga Nezuko\n403\n"
+      },
+      {
+       "input": "oyakata 1041\ntanjiro 9999\n",
+       "expected": "Rapat Pilar\n404\n"
+      }
+     ],
+     "hints": [
+      "Login ≠ berhak.",
+      "Bandingkan pemilik surat dengan user.",
+      "Kembalikan \"403\" bila berbeda."
+     ],
+     "solutions": [
+      "const SURAT = { 1041: { pemilik: \"oyakata\", isi: \"Rapat Pilar\" }, 1043: { pemilik: \"tanjiro\", isi: \"Jaga Nezuko\" } }\n\nfunction ambilSurat(user, id) {\n  if (!user) return \"401\"\n  const s = SURAT[id]\n  if (!s) return \"404\"\n  if (s.pemilik !== user) return \"403\"\n  return s.isi\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") { const [u, id] = baris.split(\" \"); console.log(ambilSurat(u, id)) }\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "m3"
+    },
+    {
+     "id": "cy-m3-samesite",
+     "type": "quiz",
+     "title": "Cookie Waspada",
+     "difficulty": 2,
+     "prompt": "Atribut cookie yang membantu mencegah CSRF adalah...",
+     "tests": [],
+     "hints": [
+      "Terkait request dari situs lain.",
+      "Bukan HttpOnly.",
+      "SameSite."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "SameSite=Lax atau Strict",
+      "HttpOnly",
+      "Max-Age",
+      "Path=/"
+     ],
+     "explain": "SameSite membuat browser tidak mengirim cookie pada request lintas situs (seperti form jebakan). HttpOnly melindungi dari pembacaan oleh JavaScript (XSS), bukan CSRF.",
+     "track": "cyber",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "Autentikasi & otorisasi yang lemah: data peran disimpan di klien tanpa tanda tangan, JWT dengan alg none, kata sandi bawaan, berkas sensitif yang \"tersembunyi\". SSRF terjadi saat server mau mengambil URL pilihan user, sehingga penyerang bisa menjangkau jaringan internal."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-web-robots",
+     "type": "lab",
+     "title": "Peta yang Tercecer",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Temukan berkas cadangan lama di situs simulasi ini. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Mesin pencari membaca satu berkas standar di akar situs.",
+      "Buka /robots.txt.",
+      "Ikuti direktori yang ditandai \"Disallow\"."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "web-robots",
+     "track": "cyber",
+     "chapter": "m4"
+    },
+    {
+     "id": "cy-lab-web-cookie",
+     "type": "lab",
+     "title": "Haori Pinjaman",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Masuk ke /ruang-pilar. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Decode nilai cookie profil dengan base64.",
+      "Ubah peran menjadi hashira lalu encode ulang.",
+      "Kirim cookie baru ke GET /ruang-pilar."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "web-cookie",
+     "track": "cyber",
+     "chapter": "m4"
+    },
+    {
+     "id": "cy-lab-web-jwt",
+     "type": "lab",
+     "title": "Tanda Tangan Kosong",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Buka /admin. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "JWT = header.payload.signature dalam base64url.",
+      "Ubah header menjadi {\"alg\":\"none\"} dan payload admin true.",
+      "Tanda tangan boleh kosong, tapi titik terakhir tetap ada: header.payload."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "web-jwt",
+     "track": "cyber",
+     "chapter": "m4"
+    },
+    {
+     "id": "cy-lab-web-ssrf",
+     "type": "lab",
+     "title": "Gagak Pengintip",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Baca /rahasia di server intranet. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Cari tahu alamat lain server intranet.",
+      "Pratinjau http://berita.desa/ dulu.",
+      "Pakai alamat IP-nya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "web-ssrf",
+     "track": "cyber",
+     "chapter": "m4"
+    },
+    {
+     "id": "cy-m4-jwt",
+     "type": "quiz",
+     "title": "Tanda Tangan JWT",
+     "difficulty": 2,
+     "prompt": "Apa fungsi bagian signature pada JWT?",
+     "tests": [],
+     "hints": [
+      "Payload bisa di-decode.",
+      "Integritas, bukan kerahasiaan.",
+      "Membuktikan tidak diubah."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Membuktikan header & payload tidak diubah sejak ditandatangani server",
+      "Mengenkripsi payload agar tidak bisa dibaca",
+      "Menyimpan kata sandi user",
+      "Mempercepat login"
+     ],
+     "explain": "Payload JWT hanya base64url, bisa dibaca siapa saja. Signature menjaga integritas; server wajib memverifikasinya dengan algoritma yang diharapkan.",
+     "track": "cyber",
+     "chapter": "m4"
+    }
+   ]
+  },
+  "m5": {
+   "lesson": [
+    {
+     "text": "Secure coding: validasi input dengan allowlist, gunakan API yang aman (prepared statement, subprocess tanpa shell, path yang dinormalisasi), batasi field yang bisa diubah user, dan jangan pernah percaya data dari klien."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-web-path",
+     "type": "lab",
+     "title": "Jalan Mundur",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Ambil kunci.txt dari /srv/rahasia/. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      ".. berarti naik satu direktori.",
+      "Dari /srv/dokumen/ naik ke /srv/.",
+      "file=../rahasia/kunci.txt"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "web-path",
+     "track": "cyber",
+     "chapter": "m5"
+    },
+    {
+     "id": "cy-lab-web-mass",
+     "type": "lab",
+     "title": "Pendaftar Kilat",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Daftarkan akun yang langsung berperan hashira. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Lihat field apa saja yang ada di respons pendaftaran.",
+      "Kamu bisa mengirim field tambahan.",
+      "Body: {\"user\":\"a\",\"pass\":\"b\",\"peran\":\"hashira\"}"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "web-mass",
+     "track": "cyber",
+     "chapter": "m5"
+    },
+    {
+     "id": "cy-lab-web-cmd",
+     "type": "lab",
+     "title": "Ping Terkutuk",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Baca flag.txt lewat parameter host. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Shell menjalankan beberapa perintah yang dipisah titik koma (;).",
+      "Tambahkan perintah kedua setelah alamat.",
+      "host=8.8.8.8;cat flag.txt (encode ; dan spasi menjadi %3B dan %20 bila perlu)"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "web-cmd",
+     "track": "cyber",
+     "chapter": "m5"
+    },
+    {
+     "id": "cy-m5-path",
+     "type": "write",
+     "title": "Patch: Jalur Aman",
+     "difficulty": 2,
+     "prompt": "Patch the Bug. Fungsi unduh menggabungkan nama file ke /srv/dokumen/. Perbaiki: normalisasi path (os.path.normpath) dan tolak dengan mencetak \"DITOLAK\" jika hasilnya keluar dari /srv/dokumen/. Jika aman, cetak path lengkapnya.",
+     "lang": "python",
+     "starter": "import os, sys\n\nBASE = \"/srv/dokumen\"\n\ndef unduh(nama):\n    return os.path.join(BASE, nama)\n\nfor nama in sys.stdin.read().split():\n    print(unduh(nama))\n",
+     "tests": [
+      {
+       "input": "laporan.txt\n../rahasia/kunci.txt\n",
+       "expected": "/srv/dokumen/laporan.txt\nDITOLAK\n"
+      },
+      {
+       "input": "arsip/2024.txt\n../../etc/passwd\n/etc/shadow\n",
+       "expected": "/srv/dokumen/arsip/2024.txt\nDITOLAK\nDITOLAK\n"
+      }
+     ],
+     "hints": [
+      "normpath menyelesaikan .. dan .",
+      "Cek awalan BASE + \"/\".",
+      "Path absolut juga harus ditolak (os.path.join mengabaikan BASE!)."
+     ],
+     "solutions": [
+      "import os, sys\n\nBASE = \"/srv/dokumen\"\n\ndef unduh(nama):\n    p = os.path.normpath(os.path.join(BASE, nama))\n    if not p.startswith(BASE + \"/\"):\n        return \"DITOLAK\"\n    return p\n\nfor nama in sys.stdin.read().split():\n    print(unduh(nama))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "m5"
+    },
+    {
+     "id": "cy-m5-args",
+     "type": "write",
+     "title": "Patch: Tanpa Shell",
+     "difficulty": 3,
+     "prompt": "Patch the Bug. perintah_ping menyusun string perintah shell dari input (rawan command injection). Perbaiki: validasi host (hanya huruf, angka, titik, dan minus) dan kembalikan LIST argumen [\"ping\", \"-c\", \"1\", host]; bila tidak valid cetak \"DITOLAK\".",
+     "lang": "python",
+     "starter": "import sys\n\ndef perintah_ping(host):\n    return \"ping -c 1 \" + host\n\nfor host in sys.stdin.read().split():\n    print(perintah_ping(host))\n",
+     "tests": [
+      {
+       "input": "8.8.8.8\nmarkas.contoh\n",
+       "expected": "['ping', '-c', '1', '8.8.8.8']\n['ping', '-c', '1', 'markas.contoh']\n"
+      },
+      {
+       "input": "8.8.8.8;cat\n$(whoami)\n",
+       "expected": "DITOLAK\nDITOLAK\n"
+      }
+     ],
+     "hints": [
+      "Allowlist karakter dengan regex.",
+      "re.fullmatch",
+      "List argumen tidak lewat shell."
+     ],
+     "solutions": [
+      "import re, sys\n\ndef perintah_ping(host):\n    if not re.fullmatch(r\"[A-Za-z0-9.-]+\", host):\n        return \"DITOLAK\"\n    return [\"ping\", \"-c\", \"1\", host]\n\nfor host in sys.stdin.read().split():\n    print(perintah_ping(host))\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "cyber",
+     "chapter": "m5"
+    },
+    {
+     "id": "cy-m5-allow",
+     "type": "write",
+     "title": "Patch: Allowlist Field",
+     "difficulty": 2,
+     "prompt": "Patch the Bug. daftar menyalin semua field JSON ke akun (mass assignment). Perbaiki agar hanya user dan pass yang diambil, dan peran selalu \"kakushi\".",
+     "lang": "javascript",
+     "starter": "function daftar(body) {\n  return { peran: \"kakushi\", ...body }\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") console.log(JSON.stringify(daftar(JSON.parse(baris))))\n",
+     "tests": [
+      {
+       "input": "{\"user\":\"murata\",\"pass\":\"x\"}\n",
+       "expected": "{\"peran\":\"kakushi\",\"user\":\"murata\",\"pass\":\"x\"}\n"
+      },
+      {
+       "input": "{\"user\":\"a\",\"pass\":\"b\",\"peran\":\"hashira\",\"admin\":true}\n",
+       "expected": "{\"peran\":\"kakushi\",\"user\":\"a\",\"pass\":\"b\"}\n"
+      }
+     ],
+     "hints": [
+      "Jangan spread seluruh body.",
+      "Ambil field yang diizinkan saja.",
+      "peran ditentukan server."
+     ],
+     "solutions": [
+      "function daftar(body) {\n  return { peran: \"kakushi\", user: body.user, pass: body.pass }\n}\n\nlet baris\nwhile ((baris = readline()) !== null && baris !== \"\") console.log(JSON.stringify(daftar(JSON.parse(baris))))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cyber",
+     "chapter": "m5"
+    }
+   ]
+  },
+  "m6": {
+   "lesson": [
+    {
+     "text": "Forensik digital: kumpulkan bukti tanpa mengubahnya, lalu analisis log, metadata, string di berkas biner, persistensi (cron, service), dan artefak lain. Dokumentasikan setiap langkah (chain of custody).",
+     "code": "strings berkas | less\nxxd berkas | head\ngrep -i failed /var/log/auth.log\ncat /etc/crontab\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-for-authlog",
+     "type": "lab",
+     "title": "Pintu Diketuk Berulang",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Analisis /var/log/auth.log. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "grep \"Failed password\"",
+      "Ambil kolom IP dengan awk.",
+      "sort | uniq -c | sort -rn"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "for-authlog",
+     "track": "cyber",
+     "chapter": "m6"
+    },
+    {
+     "id": "cy-lab-for-strings",
+     "type": "lab",
+     "title": "Gambar Bersuara",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Temukan teks tersembunyi di dalam berkas. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "cat menampilkan sampah biner.",
+      "Perintah strings menampilkan rangkaian karakter yang terbaca.",
+      "strings foto.png | grep SLAYER"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "for-strings",
+     "track": "cyber",
+     "chapter": "m6"
+    },
+    {
+     "id": "cy-lab-for-hex",
+     "type": "lab",
+     "title": "Catatan Heksadesimal",
+     "difficulty": 1,
+     "prompt": "Lab sandbox: Ubah kembali menjadi teks. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "xxd bisa membalik hex dump.",
+      "xxd -r -p mengubah hex polos ke byte.",
+      "xxd -r -p dump.hex"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "lab": "for-hex",
+     "track": "cyber",
+     "chapter": "m6"
+    },
+    {
+     "id": "cy-lab-for-cron",
+     "type": "lab",
+     "title": "Jadwal Mencurigakan",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Baca /etc/crontab dan decode muatannya. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "cat /etc/crontab",
+      "Ambil bagian setelah echo.",
+      "Decode dengan base64 -d."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "for-cron",
+     "track": "cyber",
+     "chapter": "m6"
+    },
+    {
+     "id": "cy-m6-brute",
+     "type": "write",
+     "title": "Deteksi Brute Force",
+     "difficulty": 3,
+     "prompt": "Dari auth.log, tampilkan IP yang gagal login LEBIH DARI 3 kali, dengan format \"IP jumlah\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > auth.log <<'EOF'\nNov 5 09:00:01 markas sshd[1]: Failed password for root from 10.6.6.6\nNov 5 09:00:02 markas sshd[2]: Failed password for root from 10.6.6.6\nNov 5 09:00:03 markas sshd[3]: Failed password for admin from 10.4.4.4\nNov 5 09:00:04 markas sshd[4]: Failed password for root from 10.6.6.6\nNov 5 09:00:05 markas sshd[5]: Accepted password for slayer from 10.0.0.5\nNov 5 09:00:06 markas sshd[6]: Failed password for root from 10.6.6.6\nNov 5 09:00:07 markas sshd[7]: Failed password for test from 10.4.4.4\nNov 5 09:00:08 markas sshd[8]: Failed password for root from 10.6.6.6\nEOF\n",
+     "tests": [
+      {
+       "expected": "10.6.6.6 5\n"
+      }
+     ],
+     "hints": [
+      "Saring baris Failed password.",
+      "IP ada di kolom terakhir ($NF).",
+      "Hitung dengan array awk, cetak yang > 3."
+     ],
+     "solutions": [
+      "grep 'Failed password' auth.log | awk '{ n[$NF]++ } END { for (ip in n) if (n[ip] > 3) print ip, n[ip] }'\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "cyber",
+     "chapter": "m6"
+    }
+   ]
+  },
+  "p1": {
+   "lesson": [
+    {
+     "text": "CTF (Capture The Flag) jeopardy: kumpulkan flag dari berbagai kategori. Strategi: baca deskripsi teliti, mulai dari soal berpoin kecil, catat setiap temuan, dan gunakan petunjuk dari pesan error. Semua soal di CTF Arena aplikasi ini adalah sandbox."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-p1-recon",
+     "type": "quiz",
+     "title": "Langkah Pertama",
+     "difficulty": 1,
+     "prompt": "Dalam soal web CTF, langkah pertama yang paling berguna biasanya...",
+     "tests": [],
+     "hints": [
+      "Kumpulkan informasi dulu.",
+      "Apa yang terlihat tanpa menyerang?",
+      "Recon."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Recon: lihat sumber halaman, robots.txt, header, dan pesan error",
+      "Langsung brute force kata sandi",
+      "Menyerang server panitia",
+      "Menebak flag secara acak"
+     ],
+     "explain": "Banyak flag ditemukan dari informasi yang bocor di respons. Menyerang infrastruktur panitia melanggar aturan CTF.",
+     "track": "cyber",
+     "chapter": "p1"
+    },
+    {
+     "id": "cy-p1-format",
+     "type": "answer",
+     "title": "Format Flag",
+     "difficulty": 1,
+     "prompt": "Di Code Slayer, flag selalu berawalan... (tulis enam huruf sebelum kurung kurawal)",
+     "tests": [],
+     "hints": [
+      "Huruf besar semua.",
+      "Nama aplikasinya.",
+      "SLAYER"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "SLAYER"
+     ],
+     "explain": "Format SLAYER{...} memudahkan kamu mengenali flag di output (grep SLAYER).",
+     "track": "cyber",
+     "chapter": "p1"
+    }
+   ]
+  },
+  "p2": {
+   "lesson": [
+    {
+     "text": "Kategori crypto & forensik di CTF sering menggabungkan beberapa lapisan: encoding berlapis, cipher klasik dengan kunci tersembunyi di soal, dan artefak di berkas/proses. Kenali bentuk data: base64 (=), hex (0-9a-f), dan pola flag."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-cr-vigenere",
+     "type": "lab",
+     "title": "Kunci Pernapasan",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Dekripsi dengan Vigenère. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Tanjiro memakai Napas Air (dan Hinokami Kagura).",
+      "Kunci dalam bahasa Indonesia.",
+      "kunci = air"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "cr-vigenere",
+     "track": "cyber",
+     "chapter": "p2"
+    },
+    {
+     "id": "cy-lab-cr-hex-rev",
+     "type": "lab",
+     "title": "Cermin Heksa",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Decode lalu balik. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Hex decode dulu.",
+      "Hasilnya terbaca terbalik.",
+      "Gunakan alat \"Balik string\"."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "cr-hex-rev",
+     "track": "cyber",
+     "chapter": "p2"
+    },
+    {
+     "id": "cy-lab-for-proses",
+     "type": "lab",
+     "title": "Proses Penyusup",
+     "difficulty": 2,
+     "prompt": "Lab sandbox: Temukan token di daftar proses. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "ps aux menampilkan semua proses lengkap dengan argumen.",
+      "Cari yang tidak biasa.",
+      "ps aux | grep -i token"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "lab": "for-proses",
+     "track": "cyber",
+     "chapter": "p2"
+    }
+   ]
+  },
+  "p3": {
+   "lesson": [
+    {
+     "text": "Kategori rev & misc menguji ketelitian: membaca logika program, menyusun potongan data dari lalu lintas jaringan, dan berpikir di luar kebiasaan."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cy-lab-pk-dns",
+     "type": "lab",
+     "title": "Bisikan lewat DNS",
+     "difficulty": 3,
+     "prompt": "Lab sandbox: Gabungkan potongan hex dari kueri ke domain bocor.contoh lalu decode. Temukan flag SLAYER{...} lalu serahkan.",
+     "tests": [],
+     "hints": [
+      "Filter dns.",
+      "Ambil label pertama setiap kueri ke bocor.contoh sesuai urutan.",
+      "Gabungkan lalu Hex decode."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "lab": "pk-dns",
+     "track": "cyber",
+     "chapter": "p3"
+    },
+    {
+     "id": "cy-p3-dns",
+     "type": "quiz",
+     "title": "Saluran Tersembunyi",
+     "difficulty": 2,
+     "prompt": "Mengapa penyerang sering memakai DNS untuk eksfiltrasi data?",
+     "tests": [],
+     "hints": [
+      "Apa yang hampir selalu diizinkan keluar?",
+      "Jarang diawasi.",
+      "Lolos firewall."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Kueri DNS biasanya diizinkan keluar firewall dan jarang diperiksa",
+      "DNS mengenkripsi data secara otomatis",
+      "DNS lebih cepat dari HTTP",
+      "DNS tidak bisa dicatat"
+     ],
+     "explain": "Pantau kueri DNS dengan label panjang/acak dan volume tidak wajar.",
+     "track": "cyber",
+     "chapter": "p3"
+    }
+   ]
+  }
+ }
+}

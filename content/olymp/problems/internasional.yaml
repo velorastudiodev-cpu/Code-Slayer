@@ -1,0 +1,182 @@
+# Soal orisinal gaya IOI: beberapa subtask dengan batasan khusus (partial score).
+- id: ol-i-distinct
+  title: Ragam Iblis di Benteng
+  stage: internasional
+  topics: [fenwick-tree, offline-query]
+  tl: 1500
+  statement: |
+    Benteng Tak Terbatas punya N ruangan berjajar; ruangan ke-i dihuni iblis berjenis C_i. Ada Q pertanyaan (l, r):
+    berapa banyak JENIS iblis berbeda di ruangan l sampai r? Cetak jumlah semua jawaban.
+  input: |
+    Baris pertama N dan Q. Baris kedua C_1 … C_N. Q baris berikutnya berisi l dan r.
+  output: |
+    Jumlah semua jawaban.
+  constraints: |
+    1 ≤ N, Q ≤ 200.000, 1 ≤ C_i ≤ 10^9
+  samples: ["5 3\n1 2 1 3 2\n1 5\n2 4\n3 3\n"]
+  subtasks:
+    - points: 10
+      desc: "N, Q ≤ 2000"
+      tests: [{gen: "const n=2000,q=2000;const L=[];for(let i=0;i<q;i++){const l=R.int(1,n);L.push(l+' '+R.int(l,n))}return n+' '+q+'\\n'+R.arr(n,1,50).join(' ')+'\\n'+L.join('\\n')", seed: 401}]
+    - points: 20
+      desc: "C_i ≤ 20"
+      tests: [{gen: "const n=200000,q=200000;const L=[];for(let i=0;i<q;i++){const l=R.int(1,n);L.push(l+' '+R.int(l,n))}return n+' '+q+'\\n'+R.arr(n,1,20).join(' ')+'\\n'+L.join('\\n')", seed: 402}]
+    - points: 20
+      desc: Semua pertanyaan memiliki l = 1
+      tests: [{gen: "const n=200000,q=200000;const L=[];for(let i=0;i<q;i++)L.push('1 '+R.int(1,n));return n+' '+q+'\\n'+R.arr(n,1,1e9).join(' ')+'\\n'+L.join('\\n')", seed: 403}]
+    - points: 50
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,q=200000;const L=[];for(let i=0;i<q;i++){const l=R.int(1,n);L.push(l+' '+R.int(l,n))}return n+' '+q+'\\n'+R.arr(n,1,1e9).join(' ')+'\\n'+L.join('\\n')", seed: 404}, {gen: "const n=200000,q=200000;const L=[];for(let i=0;i<q;i++){const l=R.int(1,n);L.push(l+' '+R.int(l,n))}return n+' '+q+'\\n'+R.arr(n,1,1000).join(' ')+'\\n'+L.join('\\n')", seed: 405}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int n; vector<int> bit;
+    void add(int i, int x) { for (; i <= n; i += i & -i) bit[i] += x; }
+    int sum(int i) { int s = 0; for (; i > 0; i -= i & -i) s += bit[i]; return s; }
+    int main() {
+        int q; scanf("%d %d", &n, &q); vector<int> c(n + 1); for (int i = 1; i <= n; i++) scanf("%d", &c[i]);
+        vector<array<int,3>> qs(q); for (int i = 0; i < q; i++) { scanf("%d %d", &qs[i][1], &qs[i][0]); qs[i][2] = i; }
+        sort(qs.begin(), qs.end()); // urut berdasarkan r: offline
+        bit.assign(n + 1, 0); unordered_map<int,int> terakhir; terakhir.reserve(2 * n);
+        long long total = 0; int r = 0;
+        for (auto [qr, ql, id] : qs) {
+            while (r < qr) { r++; auto it = terakhir.find(c[r]); if (it != terakhir.end()) add(it->second, -1); terakhir[c[r]] = r; add(r, 1); }
+            total += sum(qr) - sum(ql - 1); // hanya kemunculan TERAKHIR tiap jenis yang bernilai 1
+        }
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 10
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n, q; scanf("%d %d", &n, &q); vector<int> c(n + 1); for (int i = 1; i <= n; i++) scanf("%d", &c[i]);
+          long long t = 0;
+          while (q--) { int l, r; scanf("%d %d", &l, &r); unordered_set<int> s; for (int i = l; i <= r; i++) s.insert(c[i]); t += s.size(); }
+          printf("%lld\n", t);
+      }
+  editorial:
+    hint: "Subtask 2: dengan ≤ 20 jenis, prefix count per jenis cukup. Subtask 3: untuk l = 1, cukup hitung jenis baru saat r bertambah. Untuk umum, bagaimana menghindari menghitung jenis yang sama dua kali?"
+    idea: Jawab pertanyaan secara OFFLINE berurutan menurut r. Saat menambah posisi r, beri nilai 1 hanya pada kemunculan terakhir setiap jenis (hapus nilai di kemunculan sebelumnya). Maka jawaban (l, r) = jumlah nilai di [l, r].
+    solution: Urutkan pertanyaan berdasarkan r, majukan r sambil memperbarui Fenwick tree, lalu jawab dengan query rentang.
+    complexity: O((N + Q) log N)
+
+- id: ol-i-terjauh
+  title: Gema Terjauh
+  stage: internasional
+  topics: [pohon, rerooting, dp-pohon]
+  tl: 1500
+  statement: |
+    Desa berbentuk pohon dengan N rumah dan N−1 jalan berbobot. Dari setiap rumah i, gema terjauh terdengar sampai rumah yang jaraknya paling besar dari i.
+    Hitung F(i) = jarak ke rumah terjauh dari i, lalu cetak ΣF(i).
+  input: |
+    Baris pertama N. N−1 baris berikutnya berisi U, V, W (jalan antara U dan V sepanjang W).
+  output: |
+    Σ F(i).
+  constraints: |
+    2 ≤ N ≤ 200.000, 1 ≤ W ≤ 10^9
+  samples: ["4\n1 2 3\n2 3 4\n2 4 1\n"]
+  subtasks:
+    - points: 20
+      desc: "N ≤ 2000"
+      tests: [{gen: "const n=2000;const L=[];for(let i=2;i<=n;i++)L.push(R.int(1,i-1)+' '+i+' '+R.int(1,1e9));return n+'\\n'+L.join('\\n')", seed: 411}, "2\n1 2 7\n"]
+    - points: 20
+      desc: Pohon berbentuk garis (jalan i menghubungkan i dan i+1)
+      tests: [{gen: "const n=200000;const L=[];for(let i=1;i<n;i++)L.push(i+' '+(i+1)+' '+R.int(1,1e9));return n+'\\n'+L.join('\\n')", seed: 412}]
+    - points: 60
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000;const L=[];for(let i=2;i<=n;i++)L.push(R.int(1,i-1)+' '+i+' '+R.int(1,1e9));return n+'\\n'+L.join('\\n')", seed: 413}, {gen: "const n=200000;const L=[];for(let i=2;i<=n;i++)L.push(R.int(Math.max(1,i-3),i-1)+' '+i+' '+R.int(1,1e9));return n+'\\n'+L.join('\\n')", seed: 414}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    typedef long long ll;
+    int n; vector<vector<pair<int,ll>>> adj;
+    vector<ll> jarakDari(int s) { // pohon: DFS iteratif cukup untuk jarak
+        vector<ll> d(n + 1, -1); d[s] = 0; vector<int> st = {s};
+        while (!st.empty()) { int u = st.back(); st.pop_back(); for (auto [v, w] : adj[u]) if (d[v] < 0) { d[v] = d[u] + w; st.push_back(v); } }
+        return d;
+    }
+    int main() {
+        scanf("%d", &n); adj.resize(n + 1);
+        for (int i = 0; i < n - 1; i++) { int u, v; ll w; scanf("%d %d %lld", &u, &v, &w); adj[u].push_back({v, w}); adj[v].push_back({u, w}); }
+        // Rumah terjauh dari mana pun selalu salah satu ujung diameter (a atau b).
+        auto d1 = jarakDari(1); int a = max_element(d1.begin() + 1, d1.end()) - d1.begin();
+        auto da = jarakDari(a); int b = max_element(da.begin() + 1, da.end()) - da.begin();
+        auto db = jarakDari(b);
+        ll total = 0; for (int i = 1; i <= n; i++) total += max(da[i], db[i]);
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 20
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      typedef long long ll;
+      int main() { // DFS dari setiap rumah: O(N²)
+          int n; scanf("%d", &n); vector<vector<pair<int,ll>>> adj(n + 1);
+          for (int i = 0; i < n - 1; i++) { int u, v; ll w; scanf("%d %d %lld", &u, &v, &w); adj[u].push_back({v, w}); adj[v].push_back({u, w}); }
+          ll total = 0;
+          for (int s = 1; s <= n; s++) { vector<ll> d(n + 1, -1); d[s] = 0; vector<int> st = {s}; ll mx = 0; while (!st.empty()) { int u = st.back(); st.pop_back(); mx = max(mx, d[u]); for (auto [v, w] : adj[u]) if (d[v] < 0) { d[v] = d[u] + w; st.push_back(v); } } total += mx; }
+          printf("%lld\n", total);
+      }
+  editorial:
+    hint: "Subtask 2: pada garis, rumah terjauh selalu salah satu ujung garis. Apakah sifat ini berlaku umum untuk pohon?"
+    idea: Untuk setiap simpul, simpul terjauhnya selalu salah satu ujung DIAMETER pohon. Diameter didapat dengan dua kali DFS (terjauh dari 1 = a, terjauh dari a = b). Alternatif lain adalah DP rerooting.
+    solution: Hitung jarak dari a dan dari b; F(i) = max(dist_a(i), dist_b(i)). Gunakan DFS iteratif agar aman untuk pohon yang dalam.
+    complexity: O(N)
+
+- id: ol-i-matriks
+  title: Lompatan Petir Berulang
+  stage: internasional
+  topics: [matriks, dp, eksponensiasi]
+  tl: 1000
+  statement: |
+    Ada N kuil dan sejumlah jalur petir satu arah (matriks ketetanggaan G: G[i][j] = 1 bila ada jalur dari i ke j).
+    Zenitsu mulai di kuil 1 dan melompat TEPAT K kali, setiap lompatan mengikuti satu jalur. Berapa banyak urutan lompatan berbeda yang berakhir di kuil N?
+    Cetak modulo 1.000.000.007.
+  input: |
+    Baris pertama N dan K. N baris berikutnya berisi matriks G (0/1, dipisah spasi).
+  output: |
+    Banyak urutan modulo 10^9+7.
+  constraints: |
+    1 ≤ N ≤ 50, 0 ≤ K ≤ 10^18
+  samples: ["3 3\n0 1 1\n1 0 1\n1 1 0\n"]
+  subtasks:
+    - points: 30
+      desc: "K ≤ 10^4"
+      tests: [{gen: "const n=50;let s=n+' 10000\\n';for(let i=0;i<n;i++)s+=R.arr(n,0,1).join(' ')+'\\n';return s", seed: 421}, "1 0\n0\n", "2 5\n0 1\n1 0\n"]
+    - points: 70
+      desc: "K ≤ 10^18"
+      tests: [{gen: "const n=50;let s=n+' 1000000000000000000\\n';for(let i=0;i<n;i++)s+=R.arr(n,0,1).join(' ')+'\\n';return s", seed: 422}, {gen: "const n=40;let s=n+' 987654321987654321\\n';for(let i=0;i<n;i++){const r=Array(n).fill(0);r[(i+1)%n]=1;r[(i+3)%n]=1;s+=r.join(' ')+'\\n'}return s", seed: 423}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    typedef long long ll; const ll MOD = 1000000007; int n;
+    typedef vector<vector<ll>> M;
+    M kali(const M &a, const M &b) { M c(n, vector<ll>(n, 0)); for (int i = 0; i < n; i++) for (int k = 0; k < n; k++) if (a[i][k]) for (int j = 0; j < n; j++) c[i][j] = (c[i][j] + a[i][k] * b[k][j]) % MOD; return c; }
+    int main() {
+        ll k; scanf("%d %lld", &n, &k); M g(n, vector<ll>(n));
+        for (auto &r : g) for (auto &x : r) scanf("%lld", &x);
+        M h(n, vector<ll>(n, 0)); for (int i = 0; i < n; i++) h[i][i] = 1; // identitas
+        while (k) { if (k & 1) h = kali(h, g); g = kali(g, g); k >>= 1; }
+        printf("%lld\n", h[0][n - 1]);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      typedef long long ll;
+      int main() { // DP per langkah: O(K·N²)
+          int n; ll k; scanf("%d %lld", &n, &k); vector<vector<int>> g(n, vector<int>(n));
+          for (auto &r : g) for (auto &x : r) scanf("%d", &x);
+          vector<ll> d(n, 0); d[0] = 1;
+          for (ll s = 0; s < k; s++) { vector<ll> e(n, 0); for (int i = 0; i < n; i++) if (d[i]) for (int j = 0; j < n; j++) if (g[i][j]) e[j] = (e[j] + d[i]) % 1000000007; d = e; }
+          printf("%lld\n", d[n - 1]);
+      }
+  editorial:
+    hint: "Satu langkah DP mengubah vektor banyak cara dengan aturan yang SAMA setiap kali: d' = d × G."
+    idea: Setelah K langkah, d = d₀ × G^K. Pangkat matriks dihitung dengan exponentiation by squaring, seperti pangkat bilangan.
+    solution: Kalikan matriks N×N sebanyak O(log K) kali; jawaban = (G^K)[1][N].
+    complexity: O(N³ log K)

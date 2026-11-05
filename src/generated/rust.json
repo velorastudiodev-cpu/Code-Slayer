@@ -1,0 +1,1533 @@
+{
+ "hash": "8ba1855fa2db",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Program Rust dimulai dari fn main(). println! adalah macro (tanda !) yang mencetak lalu newline; print! tanpa newline. {} adalah tempat nilai disisipkan.",
+     "code": "fn main() {\n    println!(\"Pernapasan Batu, {}\", \"Bentuk Pertama\");\n    print!(\"tanpa \");\n    print!(\"newline\\n\");\n}\n"
+    },
+    {
+     "text": "Format: {} nilai biasa, {:.2} desimal 2 angka, {:>5} rata kanan lebar 5. Sejak Rust 2021, nama variabel boleh ditulis langsung di dalam kurung kurawal: {nama}.",
+     "code": "fn main() {\n    let nama = \"Gyomei\";\n    let doa = 108;\n    println!(\"{nama} berdoa {} kali, rata-rata {:.1} per jam\", doa, doa as f64 / 24.0);\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f1-halo",
+     "type": "write",
+     "title": "Salam Pertama",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "rust",
+     "starter": "fn main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "Gunakan fungsi cetak baris bawaan bahasa ini.",
+      "Teks harus persis sama, termasuk koma dan tanda seru.",
+      "Satu baris saja, diakhiri newline."
+     ],
+     "solutions": [
+      "fn main() {\n    println!(\"Halo, Slayer!\");\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f1"
+    },
+    {
+     "id": "rs-f1-format",
+     "type": "write",
+     "title": "Laporan Berformat",
+     "difficulty": 1,
+     "prompt": "Dengan string berformat, cetak \"Rengoku berumur 20 tahun, kekuatan 9.50\" dari variabel nama = \"Rengoku\", umur = 20, dan kekuatan = 9.5.",
+     "lang": "rust",
+     "starter": "fn main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "expected": "Rengoku berumur 20 tahun, kekuatan 9.50\n"
+      }
+     ],
+     "hints": [
+      "Simpan ketiga nilai dalam variabel dulu.",
+      "Pakai format/interpolasi string, bukan menyambung manual.",
+      "Kekuatan dicetak dengan tepat 2 angka di belakang koma."
+     ],
+     "solutions": [
+      "fn main() {\n    let nama = \"Rengoku\";\n    let umur = 20;\n    let kekuatan = 9.5;\n    println!(\"{} berumur {} tahun, kekuatan {:.2}\", nama, umur, kekuatan);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f1"
+    },
+    {
+     "id": "rs-f1-predict",
+     "type": "predict",
+     "title": "Baris yang Tidak Berganti",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn main() {\n    print!(\"Kaa\");\n    print!(\"{}{}\", \"!\", \"!\");\n    println!();\n    println!(\"misi {} selesai\", 3);\n    println!(\"{}+{}={}\", 2, 3, 2 + 3);\n}\n",
+     "tests": [
+      {
+       "expected": "Kaa!!\nmisi 3 selesai\n2+3=5\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan perintah cetak mana yang menambah newline.",
+      "Perintah tanpa newline menyambung ke baris yang sama.",
+      "Hitung spasinya dengan teliti."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f1"
+    },
+    {
+     "id": "rs-f1-bug",
+     "type": "bughunt",
+     "title": "Iblis Pemakan Tanda Kutip",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"Kaa!\" lalu \"Misi!\", tapi gagal dikompilasi. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "fn main() {\n    println!(\"Kaa!\");\n    println!(\"Misi!);\n}\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "expected": "Kaa!\nMisi!\n"
+      }
+     ],
+     "hints": [
+      "Baca pesan error compiler: ia menunjuk nomor baris.",
+      "Setiap string harus dibuka DAN ditutup dengan tanda kutip.",
+      "Tambahkan tanda kutip penutup yang hilang."
+     ],
+     "solutions": [
+      "fn main() {\n    println!(\"Kaa!\");\n    println!(\"Misi!\");\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Variabel dibuat dengan let dan secara bawaan TIDAK bisa diubah. Tambahkan mut kalau nilainya akan berubah. Tipe bilangan menyebut ukurannya: i32, i64, u8, f64.",
+     "code": "fn main() {\n    let nama = \"Tanjiro\";\n    let mut umur: i32 = 15;\n    umur += 1;\n    let tinggi: f64 = 165.5;\n    println!(\"{} {} {}\", nama, umur, tinggi);\n}\n"
+    },
+    {
+     "text": "Konversi angka memakai as: x as f64. Pembagian dua bilangan bulat membuang desimal. Teks diubah menjadi angka dengan parse(), yang mengembalikan Result: berhasil atau error.",
+     "code": "fn main() {\n    let a = 7;\n    let b = 2;\n    println!(\"{} {}\", a / b, a % b);\n    println!(\"{}\", a as f64 / b as f64);\n    let n: i64 = \"3000000000\".parse().unwrap();\n    println!(\"{}\", n * 2);\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Input berisi nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "Tanjiro 15",
+       "expected": "Tanjiro akan berumur 16 tahun\n"
+      },
+      {
+       "input": "Kanao 16",
+       "expected": "Kanao akan berumur 17 tahun\n"
+      },
+      {
+       "input": "Gyomei 27",
+       "expected": "Gyomei akan berumur 28 tahun\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua nilai: teks lalu bilangan bulat.",
+      "Ubah umur menjadi angka sebelum ditambah 1.",
+      "Contoh: \"Tanjiro akan berumur 16 tahun\"."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let nama = it.next().unwrap();\n    let umur: i32 = it.next().unwrap().parse().unwrap();\n    println!(\"{} akan berumur {} tahun\", nama, umur + 1);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f2"
+    },
+    {
+     "id": "rs-f2-besar",
+     "type": "write",
+     "title": "Jarak Antar Bintang",
+     "difficulty": 2,
+     "prompt": "Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "2000000000 2000000000",
+       "expected": "4000000000000000000\n"
+      },
+      {
+       "input": "-5 100000",
+       "expected": "-500000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "2 miliar × 2 miliar = 4 × 10^18.",
+      "Batas int 32-bit sekitar 2,1 miliar.",
+      "Pakai tipe bilangan bulat 64-bit."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i64 = it.next().unwrap().parse().unwrap();\n    let b: i64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}\", a * b);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f2"
+    },
+    {
+     "id": "rs-f2-predict",
+     "type": "predict",
+     "title": "Pembagian Bulat",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn main() {\n    println!(\"{} {}\", 17 / 5, 17 % 5);\n    println!(\"{}\", 17.0 / 5.0);\n    let x = 9;\n    let y = x / 2 * 2;\n    println!(\"{} {}\", y, x - y);\n}\n",
+     "tests": [
+      {
+       "expected": "3 2\n3.4\n8 1\n"
+      }
+     ],
+     "hints": [
+      "Pembagian dua bilangan bulat membuang bagian desimal.",
+      "Sisa bagi memakai operator %.",
+      "Kalau salah satu operand desimal, hasilnya desimal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f2"
+    },
+    {
+     "id": "rs-f2-bug",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 2,
+     "prompt": "Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i32 = it.next().unwrap().parse().unwrap();\n    let b: i32 = it.next().unwrap().parse().unwrap();\n    let c: i32 = it.next().unwrap().parse().unwrap();\n    let rata = ((a + b + c) / 3) as f64;\n    println!(\"{:.2}\", rata);\n}\n",
+     "bug_line": 10,
+     "tests": [
+      {
+       "input": "1 2 4",
+       "expected": "2.33\n"
+      },
+      {
+       "input": "5 5 6",
+       "expected": "5.33\n"
+      },
+      {
+       "input": "3 3 3",
+       "expected": "3.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.",
+      "Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.",
+      "Ubah jumlahnya ke tipe desimal dulu, baru dibagi."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i32 = it.next().unwrap().parse().unwrap();\n    let b: i32 = it.next().unwrap().parse().unwrap();\n    let c: i32 = it.next().unwrap().parse().unwrap();\n    let rata = (a + b + c) as f64 / 3.0;\n    println!(\"{:.2}\", rata);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator aritmetika + - * / % bekerja seperti bahasa lain. Rust tidak punya ++; gunakan += 1. Overflow pada mode debug membuat program panik, jadi pilih tipe yang cukup besar.",
+     "code": "fn main() {\n    let t = 3725;\n    println!(\"{} {} {}\", t / 3600, t % 3600 / 60, t % 60);\n    let mut n = 5;\n    n += 3;\n    n *= 2;\n    println!(\"{}\", n);\n}\n"
+    },
+    {
+     "text": "Perbandingan menghasilkan bool. Logika: && || !. if adalah ekspresi, jadi bisa langsung menghasilkan nilai: let s = if x > 0 { \"positif\" } else { \"bukan\" };",
+     "code": "fn main() {\n    let umur = 16;\n    let pedang = true;\n    println!(\"{}\", umur >= 15 && pedang);\n    let status = if umur >= 18 { \"dewasa\" } else { \"muda\" };\n    println!(\"{}\", status);\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 jam = 3600 detik, 1 menit = 60 detik.",
+      "Jam = t / 3600, menit = (t % 3600) / 60.",
+      "Detik = t % 60."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let t: i64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}:{}:{}\", t / 3600, t % 3600 / 60, t % 60);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f3"
+    },
+    {
+     "id": "rs-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.",
+      "Contoh: 37 menjadi 98.6.",
+      "Format 1 angka di belakang koma."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let c: f64 = it.next().unwrap().parse().unwrap();\n    println!(\"{:.1}\", c * 9.0 / 5.0 + 32.0);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f3"
+    },
+    {
+     "id": "rs-f3-predict",
+     "type": "predict",
+     "title": "Urutan Operasi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn main() {\n    println!(\"{} {}\", 2 + 3 * 4, (2 + 3) * 4);\n    println!(\"{}\", 20 - 6 / 2 % 2);\n    println!(\"{}\", 7 > 3 && 2 > 5 || true);\n}\n",
+     "tests": [
+      {
+       "expected": "14 20\n19\ntrue\n"
+      }
+     ],
+     "hints": [
+      "* / % dikerjakan sebelum + -.",
+      "Operator dengan derajat sama dikerjakan dari kiri.",
+      "Kurung mengubah urutan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f3"
+    },
+    {
+     "id": "rs-f3-bug",
+     "type": "bughunt",
+     "title": "Gerbang yang Salah Jaga",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"masuk\" hanya jika 1 ≤ n ≤ 10, selain itu \"tolak\". Tapi semua angka masuk. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: i32 = it.next().unwrap().parse().unwrap();\n    if n >= 1 || n <= 10 {\n        println!(\"masuk\");\n    } else {\n        println!(\"tolak\");\n    }\n}\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "1",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "10",
+       "expected": "masuk\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "tolak\n",
+       "hidden": true
+      },
+      {
+       "input": "11",
+       "expected": "tolak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Coba n = 11: apakah kedua syarat harus benar?",
+      "|| (atau) cukup salah satu benar.",
+      "Gunakan && (dan)."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: i32 = it.next().unwrap().parse().unwrap();\n    if n >= 1 && n <= 10 {\n        println!(\"masuk\");\n    } else {\n        println!(\"tolak\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Cara praktis membaca input: baca seluruh stdin ke String, lalu pecah dengan split_whitespace(). Setiap token diubah dengan parse(). unwrap() mengambil nilai sukses, atau panik kalau gagal.",
+     "code": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let angka: Vec<i64> = input.split_whitespace().map(|x| x.parse().unwrap()).collect();\n    println!(\"{} angka, jumlah {}\", angka.len(), angka.iter().sum::<i64>());\n}\n"
+    },
+    {
+     "text": "read_line membaca satu baris TERMASUK newline-nya. Bersihkan dengan trim() sebelum parse(). Kalau tidak, \"21\\n\".parse() gagal.",
+     "code": "use std::io;\n\nfn main() {\n    let mut baris = String::new();\n    io::stdin().read_line(&mut baris).unwrap();\n    println!(\"[{}]\", baris.trim());\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat (dalam satu baris), cetak jumlahnya.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua bilangan dari input.",
+      "Ubah teks menjadi angka.",
+      "Cetak a + b."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i64 = it.next().unwrap().parse().unwrap();\n    let b: i64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}\", a + b);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f4"
+    },
+    {
+     "id": "rs-f4-n",
+     "type": "write",
+     "title": "Laporan Berjumlah n",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3\n1 9 2",
+       "expected": "12 9\n"
+      },
+      {
+       "input": "1\n-5",
+       "expected": "-5 -5\n"
+      },
+      {
+       "input": "5\n-1 -2 -3 -4 -5",
+       "expected": "-15 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Nilai terbesar awal = bilangan pertama, bukan 0.",
+      "Ingat bilangan bisa negatif semua.",
+      "Cetak \"<jumlah> <maks>\"."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    let xs: Vec<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();\n    let total: i64 = xs.iter().sum();\n    let maks = xs.iter().max().unwrap();\n    println!(\"{} {}\", total, maks);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f4"
+    },
+    {
+     "id": "rs-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi sejumlah bilangan bulat dipisah spasi atau baris baru (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal), dipisah spasi.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "4 2.50\n"
+      },
+      {
+       "input": "10",
+       "expected": "1 10.00\n"
+      },
+      {
+       "input": "5\n6\n7",
+       "expected": "3 6.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca seluruh input lalu pecah berdasarkan spasi/baris.",
+      "Hitung banyak dan jumlahnya.",
+      "Rata-rata = jumlah / banyak, dalam desimal."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let xs: Vec<i64> = input.split_whitespace().map(|x| x.parse().unwrap()).collect();\n    let total: i64 = xs.iter().sum();\n    println!(\"{} {:.2}\", xs.len(), total as f64 / xs.len() as f64);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f4"
+    },
+    {
+     "id": "rs-f4-bug",
+     "type": "bughunt",
+     "title": "Spasi yang Menyusup",
+     "difficulty": 2,
+     "prompt": "Program membaca satu baris berisi angka lalu mencetak angka itu dikali 2, tapi gagal karena baris input masih membawa karakter newline. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io;\n\nfn main() {\n    let mut baris = String::new();\n    io::stdin().read_line(&mut baris).unwrap();\n    let n: i64 = baris.parse().expect(\"bukan angka\");\n    println!(\"{}\", n * 2);\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "21\n",
+       "expected": "42\n"
+      },
+      {
+       "input": "0\n",
+       "expected": "0\n"
+      },
+      {
+       "input": "-7\n",
+       "expected": "-14\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baris yang dibaca masih berisi \"\\n\" di ujungnya.",
+      "Teks \"21\\n\" tidak bisa diubah langsung menjadi angka.",
+      "Buang spasi/newline di ujung sebelum mengubah ke angka."
+     ],
+     "solutions": [
+      "use std::io;\n\nfn main() {\n    let mut baris = String::new();\n    io::stdin().read_line(&mut baris).unwrap();\n    let n: i64 = baris.trim().parse().expect(\"bukan angka\");\n    println!(\"{}\", n * 2);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if di Rust tidak memakai kurung di sekitar kondisi, dan kondisinya WAJIB bool (angka tidak otomatis jadi bool). Rantai else if bekerja seperti biasa.",
+     "code": "fn main() {\n    let nilai = 78;\n    if nilai >= 85 {\n        println!(\"A\");\n    } else if nilai >= 70 {\n        println!(\"B\");\n    } else {\n        println!(\"C\");\n    }\n}\n"
+    },
+    {
+     "text": "match mencocokkan nilai dengan pola: nilai tunggal, beberapa nilai (a | b), rentang (1..=9), atau penjaga (x if x > 10). Semua kemungkinan harus tertangani, biasanya dengan _ di akhir.",
+     "code": "fn main() {\n    for x in [0, 7, 42] {\n        let s = match x {\n            0 => \"nol\",\n            1..=9 => \"satu digit\",\n            n if n % 2 == 0 => \"genap besar\",\n            _ => \"lainnya\",\n        };\n        println!(\"{} {}\", x, s);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "Cetak satu huruf saja."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: i32 = it.next().unwrap().parse().unwrap();\n    let h = if n >= 85 { \"A\" } else if n >= 70 { \"B\" } else if n >= 55 { \"C\" } else { \"D\" };\n    println!(\"{}\", h);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f5"
+    },
+    {
+     "id": "rs-f5-kabisat",
+     "type": "write",
+     "title": "Tahun Kabisat",
+     "difficulty": 2,
+     "prompt": "Baca tahun. Cetak \"kabisat\" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu \"bukan\".",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Habis dibagi berarti % ... == 0.",
+      "Gabungkan dengan || dan &&.",
+      "(t % 400 == 0) || (t % 4 == 0 && t % 100 != 0)"
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let t: i32 = it.next().unwrap().parse().unwrap();\n    if t % 400 == 0 || (t % 4 == 0 && t % 100 != 0) {\n        println!(\"kabisat\");\n    } else {\n        println!(\"bukan\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f5"
+    },
+    {
+     "id": "rs-f5-predict",
+     "type": "predict",
+     "title": "Cabang Mana yang Dipilih?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn main() {\n    for x in [0, 3, 8, 15] {\n        let s = match x {\n            0 => \"nol\",\n            n if n % 2 == 1 && n > 10 => \"besar-ganjil\",\n            n if n % 2 == 1 => \"ganjil\",\n            _ => \"genap\",\n        };\n        print!(\"{} \", s);\n    }\n    println!();\n}\n",
+     "tests": [
+      {
+       "expected": "nol ganjil genap besar-ganjil\n"
+      }
+     ],
+     "hints": [
+      "Telusuri nilai variabel baris demi baris.",
+      "Hanya satu cabang yang dijalankan per pemeriksaan.",
+      "Perhatikan kasus default/else."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f5"
+    },
+    {
+     "id": "rs-f5-parsons",
+     "type": "parsons",
+     "title": "Tanda Bilangan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak \"positif\", \"negatif\", atau \"nol\".",
+     "lang": "rust",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Deklarasi fungsi utama paling atas.",
+      "Baca n sebelum memeriksanya.",
+      "Kurung tutup paling akhir."
+     ],
+     "solutions": [
+      "use std::io;\nfn main() {\n    let mut s = String::new();\n    io::stdin().read_line(&mut s).unwrap();\n    let n: i32 = s.trim().parse().unwrap();\n    if n > 0 {\n        println!(\"positif\");\n    } else if n < 0 {\n        println!(\"negatif\");\n    } else {\n        println!(\"nol\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "for x in a..b menelusuri a sampai b-1, a..=b sampai b. while untuk kondisi, loop untuk perulangan tanpa akhir yang dihentikan break (break bahkan bisa membawa nilai).",
+     "code": "fn main() {\n    for i in 1..=3 {\n        print!(\"{} \", i);\n    }\n    let mut n = 10;\n    while n > 1 {\n        n /= 2;\n    }\n    println!(\"| {}\", n);\n}\n"
+    },
+    {
+     "text": "Iterator membuat loop ringkas: (1..=n).sum(), .map(), .filter(), .count(). \"*\".repeat(i) membuat teks berulang.",
+     "code": "fn main() {\n    let jumlah: i32 = (1..=10).filter(|x| x % 2 == 0).sum();\n    println!(\"{}\", jumlah);\n    println!(\"{}\", \"*\".repeat(4));\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 1,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Loop i dari 1 sampai n.",
+      "Baris ke-i = \"*\" diulang i kali.",
+      "Setiap baris diakhiri newline."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    for i in 1..=n {\n        println!(\"{}\", \"*\".repeat(i));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f6"
+    },
+    {
+     "id": "rs-f6-prima",
+     "type": "write",
+     "title": "Uji Bilangan Prima",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≤ 10^9). Cetak \"prima\" atau \"bukan\". Cukup periksa pembagi sampai akar n.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "prima\n"
+      },
+      {
+       "input": "1",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "91",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "999999937",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "1000000000",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 bukan prima.",
+      "Loop d mulai 2 selama d * d <= n.",
+      "Pakai tipe 64-bit supaya d * d tidak overflow."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: i64 = it.next().unwrap().parse().unwrap();\n    let mut prima = n > 1;\n    let mut d = 2;\n    while d * d <= n {\n        if n % d == 0 {\n            prima = false;\n            break;\n        }\n        d += 1;\n    }\n    println!(\"{}\", if prima { \"prima\" } else { \"bukan\" });\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f6"
+    },
+    {
+     "id": "rs-f6-predict",
+     "type": "predict",
+     "title": "Loop Berlapis",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn main() {\n    for i in 0..5 {\n        if i == 1 {\n            continue;\n        }\n        if i == 4 {\n            break;\n        }\n        print!(\"{} \", i);\n    }\n    let mut total = 0;\n    for a in 1..=2 {\n        for b in 1..=3 {\n            total += a * b;\n        }\n    }\n    println!(\"| {}\", total);\n}\n",
+     "tests": [
+      {
+       "expected": "0 2 3 | 18\n"
+      }
+     ],
+     "hints": [
+      "continue melompati sisa satu putaran.",
+      "break menghentikan loop sepenuhnya.",
+      "Telusuri nilai i satu per satu."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f6"
+    },
+    {
+     "id": "rs-f6-bug",
+     "type": "bughunt",
+     "title": "Satu Tebasan Hilang",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: i64 = it.next().unwrap().parse().unwrap();\n    let mut total = 0;\n    for i in 1..n {\n        total += i;\n    }\n    println!(\"{}\", total);\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "6\n"
+      },
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apakah n sendiri ikut dijumlah?",
+      "Batas loop berhenti sebelum n.",
+      "Ganti batasnya supaya n ikut."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: i64 = it.next().unwrap().parse().unwrap();\n    let mut total = 0;\n    for i in 1..=n {\n        total += i;\n    }\n    println!(\"{}\", total);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi ditulis fn nama(param: Tipe) -> TipeKembali { }. Baris terakhir tanpa titik koma adalah nilai yang dikembalikan, jadi return jarang diperlukan.",
+     "code": "fn bagi(a: i32, b: i32) -> (i32, i32) {\n    (a / b, a % b)\n}\n\nfn main() {\n    let (h, s) = bagi(17, 5);\n    println!(\"{} {}\", h, s);\n}\n"
+    },
+    {
+     "text": "Angka dikirim sebagai salinan. Untuk mengubah variabel pemanggil, pinjam secara mutable: parameter &mut i32, panggil dengan &mut x, lalu ubah lewat *p.",
+     "code": "fn gandakan(p: &mut i32) {\n    *p *= 2;\n}\n\nfn main() {\n    let mut x = 21;\n    gandakan(&mut x);\n    println!(\"{}\", x);\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "fpb(a, 0) = a.",
+      "fpb(a, b) = fpb(b, a % b).",
+      "Bisa rekursif atau dengan loop."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn fpb(a: i64, b: i64) -> i64 {\n    if b == 0 { a } else { fpb(b, a % b) }\n}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i64 = it.next().unwrap().parse().unwrap();\n    let b: i64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}\", fpb(a, b));\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f7"
+    },
+    {
+     "id": "rs-f7-faktorial",
+     "type": "write",
+     "title": "Faktorial Pernapasan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "20",
+       "expected": "2432902008176640000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "0! = 1 adalah base case.",
+      "n! = n × (n-1)!.",
+      "20! melebihi 32-bit: pakai 64-bit."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn faktorial(n: u64) -> u64 {\n    if n == 0 { 1 } else { n * faktorial(n - 1) }\n}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: u64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}\", faktorial(n));\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f7"
+    },
+    {
+     "id": "rs-f7-predict",
+     "type": "predict",
+     "title": "Salinan atau Asli?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn latih(mut x: i32) -> i32 {\n    x = x * 10;\n    x + 1\n}\n\nfn main() {\n    let a = 3;\n    let b = latih(a);\n    println!(\"{} {}\", a, b);\n    latih(b);\n    println!(\"{}\", b);\n}\n",
+     "tests": [
+      {
+       "expected": "3 31\n31\n"
+      }
+     ],
+     "hints": [
+      "Argumen bilangan dikirim sebagai salinan.",
+      "Mengubah salinan tidak mengubah variabel pemanggil.",
+      "Nilai yang dikembalikan lain cerita."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f7"
+    },
+    {
+     "id": "rs-f7-bug",
+     "type": "bughunt",
+     "title": "Rekursi Tanpa Ujung",
+     "difficulty": 2,
+     "prompt": "pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn pangkat(a: i64, n: i64) -> i64 {\n    if n == -1 {\n        return 1;\n    }\n    a * pangkat(a, n - 1)\n}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i64 = it.next().unwrap().parse().unwrap();\n    let n: i64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}\", pangkat(a, n));\n}\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "2 10",
+       "expected": "1024\n"
+      },
+      {
+       "input": "3 0",
+       "expected": "1\n"
+      },
+      {
+       "input": "5 3",
+       "expected": "125\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Setiap rekursi butuh base case.",
+      "Kapan rekursi harus berhenti?",
+      "Saat n == 0, kembalikan 1."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn pangkat(a: i64, n: i64) -> i64 {\n    if n == 0 {\n        return 1;\n    }\n    a * pangkat(a, n - 1)\n}\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a: i64 = it.next().unwrap().parse().unwrap();\n    let n: i64 = it.next().unwrap().parse().unwrap();\n    println!(\"{}\", pangkat(a, n));\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "Vec<T> adalah daftar yang bisa bertambah: vec![3, 1, 2], push, len(). Saat sebuah Vec diberikan ke variabel lain, kepemilikannya PINDAH (move); pakai .clone() kalau butuh salinan, atau &v untuk meminjam.",
+     "code": "fn main() {\n    let mut v = vec![3, 1, 2];\n    v.push(9);\n    let salinan = v.clone();\n    v.sort();\n    println!(\"{:?} {:?} {}\", v, salinan, v.len());\n}\n"
+    },
+    {
+     "text": "HashMap menyimpan pasangan kunci-nilai; BTreeMap sama tapi kuncinya selalu terurut. entry(k).or_insert(0) membuat nilai awal kalau kunci belum ada, cocok untuk menghitung.",
+     "code": "use std::collections::BTreeMap;\n\nfn main() {\n    let mut m = BTreeMap::new();\n    for k in [\"b\", \"a\", \"b\"] {\n        *m.entry(k).or_insert(0) += 1;\n    }\n    for (k, v) in &m {\n        println!(\"{} {}\", k, v);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-m1-balik",
+     "type": "write",
+     "title": "Barisan Terbalik",
+     "difficulty": 1,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "5\n1 2 3 4 5",
+       "expected": "5 4 3 2 1\n"
+      },
+      {
+       "input": "1\n42",
+       "expected": "42\n"
+      },
+      {
+       "input": "3\n-1 0 -1",
+       "expected": "-1 0 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan semua bilangan ke array/list.",
+      "Telusuri dari indeks terakhir ke 0.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    let xs: Vec<&str> = (0..n).map(|_| it.next().unwrap()).collect();\n    let balik: Vec<&str> = xs.into_iter().rev().collect();\n    println!(\"{}\", balik.join(\" \"));\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "m1"
+    },
+    {
+     "id": "rs-m1-frekuensi",
+     "type": "write",
+     "title": "Sensus Kata",
+     "difficulty": 2,
+     "prompt": "Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, \"kata jumlah\" per baris, urut abjad.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "iblis slayer iblis bulan",
+       "expected": "bulan 1\niblis 2\nslayer 1\n"
+      },
+      {
+       "input": "a",
+       "expected": "a 1\n"
+      },
+      {
+       "input": "b a b\na c b",
+       "expected": "a 2\nb 3\nc 1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai map/dictionary: kata → jumlah.",
+      "Ambil semua kunci lalu urutkan.",
+      "Cetak \"kata jumlah\"."
+     ],
+     "solutions": [
+      "use std::collections::BTreeMap;\nuse std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut jumlah: BTreeMap<&str, usize> = BTreeMap::new();\n    for k in input.split_whitespace() {\n        *jumlah.entry(k).or_insert(0) += 1;\n    }\n    for (k, v) in &jumlah {\n        println!(\"{} {}\", k, v);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m1"
+    },
+    {
+     "id": "rs-m1-unik",
+     "type": "write",
+     "title": "Pasukan Tanpa Kembar",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "6\n3 1 3 2 1 3",
+       "expected": "1 2 3\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7\n"
+      },
+      {
+       "input": "4\n-2 5 -2 0",
+       "expected": "-2 0 5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Set/himpunan otomatis membuang duplikat.",
+      "Urutkan hasilnya.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "use std::collections::BTreeSet;\nuse std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    let set: BTreeSet<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();\n    let out: Vec<String> = set.iter().map(|x| x.to_string()).collect();\n    println!(\"{}\", out.join(\" \"));\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m1"
+    },
+    {
+     "id": "rs-m1-diatas",
+     "type": "write",
+     "title": "Di Atas Rata-rata",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "5\n10 20 30 40 50",
+       "expected": "2\n"
+      },
+      {
+       "input": "3\n5 5 5",
+       "expected": "0\n"
+      },
+      {
+       "input": "4\n1 1 1 9",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung rata-rata dulu (desimal).",
+      "Lalu hitung nilai > rata-rata.",
+      "Butuh dua kali menelusuri data."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    let xs: Vec<f64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();\n    let rata = xs.iter().sum::<f64>() / n as f64;\n    println!(\"{}\", xs.iter().filter(|&&x| x > rata).count());\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m1"
+    },
+    {
+     "id": "rs-m1-predict",
+     "type": "predict",
+     "title": "Koleksi Berbagi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn tambah(v: &mut Vec<i32>, x: i32) {\n    v.push(x);\n}\n\nfn main() {\n    let mut a = vec![1, 2, 3];\n    let mut b = a.clone();\n    b[0] = 9;\n    tambah(&mut a, 4);\n    println!(\"{:?} {:?}\", a, b);\n    let pertama = a[0];\n    a[0] = 7;\n    println!(\"{} {} {}\", pertama, a[0], a.len());\n}\n",
+     "tests": [
+      {
+       "expected": "[1, 2, 3, 4] [9, 2, 3]\n1 7 4\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan apakah koleksi disalin atau dibagi (referensi).",
+      "Mengubah lewat referensi terlihat dari nama lain.",
+      "Telusuri isi koleksi setelah tiap perubahan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m1"
+    },
+    {
+     "id": "rs-m1-bug",
+     "type": "bughunt",
+     "title": "Indeks Melewati Batas",
+     "difficulty": 2,
+     "prompt": "Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    let xs: Vec<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();\n    let mut total = 0;\n    for i in 0..=xs.len() {\n        total += xs[i];\n    }\n    println!(\"{}\", total);\n}\n",
+     "bug_line": 10,
+     "tests": [
+      {
+       "input": "3\n1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "1\n5",
+       "expected": "5\n"
+      },
+      {
+       "input": "4\n2 2 2 2",
+       "expected": "8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Indeks terakhir = panjang - 1.",
+      "Kondisi loop memakai <=.",
+      "Gunakan < panjang."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let n: usize = it.next().unwrap().parse().unwrap();\n    let xs: Vec<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();\n    let mut total = 0;\n    for i in 0..xs.len() {\n        total += xs[i];\n    }\n    println!(\"{}\", total);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "Rust punya dua tipe teks: String (dimiliki, bisa tumbuh) dan &str (pinjaman). Teks UTF-8, jadi tidak bisa diindeks s[0]; pakai .chars() untuk menelusuri karakter, atau .as_bytes() untuk ASCII.",
+     "code": "fn main() {\n    let s = String::from(\"Kimetsu no Yaiba\");\n    println!(\"{} {}\", s.to_uppercase(), s.len());\n    let kata: Vec<&str> = s.split_whitespace().collect();\n    println!(\"{} {}\", kata.len(), kata.join(\"-\"));\n}\n"
+    },
+    {
+     "text": "char bisa diubah ke angka dengan as u8 dan kembali dengan as char. Iterator .rev() membalik urutan, .collect::<String>() menyusun kembali menjadi String.",
+     "code": "fn main() {\n    let s = \"abc\";\n    let besar: String = s.chars().map(|c| ((c as u8) - b'a' + b'A') as char).collect();\n    let balik: String = s.chars().rev().collect();\n    println!(\"{} {} {}\", besar, balik, b'z' - b'a');\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "rs-m2-palindrom",
+     "type": "write",
+     "title": "Kata Cermin",
+     "difficulty": 1,
+     "prompt": "Baca satu kata. Cetak \"palindrom\" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu \"bukan\".",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "Katak",
+       "expected": "palindrom\n"
+      },
+      {
+       "input": "slayer",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "a",
+       "expected": "palindrom\n",
+       "hidden": true
+      },
+      {
+       "input": "Malam",
+       "expected": "palindrom\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah ke huruf kecil dulu.",
+      "Bandingkan dengan versi terbaliknya.",
+      "Atau bandingkan karakter i dengan n-1-i."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let s = it.next().unwrap().to_lowercase();\n    let balik: String = s.chars().rev().collect();\n    println!(\"{}\", if s == balik { \"palindrom\" } else { \"bukan\" });\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "m2"
+    },
+    {
+     "id": "rs-m2-vokal",
+     "type": "write",
+     "title": "Hitung Napas Vokal",
+     "difficulty": 1,
+     "prompt": "Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "Kimetsu no Yaiba",
+       "expected": "7\n"
+      },
+      {
+       "input": "xyz",
+       "expected": "0\n"
+      },
+      {
+       "input": "AIUEO aiueo",
+       "expected": "10\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Telusuri setiap karakter.",
+      "Ubah ke huruf kecil supaya cukup satu pengecekan.",
+      "Cek apakah karakter ada di \"aiueo\"."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let c = input.to_lowercase().chars().filter(|ch| \"aiueo\".contains(*ch)).count();\n    println!(\"{}\", c);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "rust",
+     "chapter": "m2"
+    },
+    {
+     "id": "rs-m2-kapital",
+     "type": "write",
+     "title": "Nama Bergelar",
+     "difficulty": 2,
+     "prompt": "Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "kamado tanjiro",
+       "expected": "Kamado Tanjiro\n"
+      },
+      {
+       "input": "rengoku kyojuro sang hashira api",
+       "expected": "Rengoku Kyojuro Sang Hashira Api\n"
+      },
+      {
+       "input": "x",
+       "expected": "X\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pecah baris menjadi kata.",
+      "Kapitalkan karakter pertama tiap kata.",
+      "Gabungkan kembali dengan spasi."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let kata: Vec<String> = it\n        .map(|k| {\n            let mut cs = k.chars();\n            let a = cs.next().unwrap().to_uppercase().collect::<String>();\n            a + cs.as_str()\n        })\n        .collect();\n    println!(\"{}\", kata.join(\" \"));\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m2"
+    },
+    {
+     "id": "rs-m2-caesar",
+     "type": "write",
+     "title": "Sandi Gagak",
+     "difficulty": 2,
+     "prompt": "Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3\nslayer",
+       "expected": "vodbhu\n"
+      },
+      {
+       "input": "1\nzaz",
+       "expected": "aba\n"
+      },
+      {
+       "input": "13\nkaa kaa",
+       "expected": "xnn xnn\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf ke-i dari a = c - 'a'.",
+      "Geser: (i + k) % 26.",
+      "Spasi dicetak apa adanya."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut baris = input.lines();\n    let k: u8 = baris.next().unwrap().trim().parse().unwrap();\n    let pesan = baris.next().unwrap_or(\"\");\n    let hasil: String = pesan\n        .chars()\n        .map(|c| if c.is_ascii_lowercase() { (b'a' + (c as u8 - b'a' + k) % 26) as char } else { c })\n        .collect();\n    println!(\"{}\", hasil);\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m2"
+    },
+    {
+     "id": "rs-m2-predict",
+     "type": "predict",
+     "title": "Potongan Teks",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "rust",
+     "code": "fn main() {\n    let s = \"Hashira\";\n    println!(\"{} {} {}\", s.len(), &s[0..4], &s[4..]);\n    println!(\"{:?} {}\", s.find('i'), s.matches('a').count());\n    println!(\"{}\", s.replacen(\"a\", \"A\", 1));\n}\n",
+     "tests": [
+      {
+       "expected": "7 Hash ira\nSome(4) 2\nHAshira\n"
+      }
+     ],
+     "hints": [
+      "Indeks string mulai dari 0.",
+      "Potongan [a, b) mengambil a sampai b-1.",
+      "Panjang dihitung per karakter ASCII di sini."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m2"
+    },
+    {
+     "id": "rs-m2-bug",
+     "type": "bughunt",
+     "title": "Perbandingan yang Menipu",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"sama\" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu \"beda\". Tapi \"Tanjiro\" dan \"tanjiro\" dianggap beda. Temukan baris yang salah.",
+     "lang": "rust",
+     "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a = it.next().unwrap();\n    let b = it.next().unwrap();\n    if a == b {\n        println!(\"sama\");\n    } else {\n        println!(\"beda\");\n    }\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "Tanjiro tanjiro",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Nezuko nezuko",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Giyu Sabito",
+       "expected": "beda\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf besar dan kecil adalah karakter berbeda.",
+      "Samakan dulu bentuknya sebelum dibandingkan.",
+      "Ubah keduanya ke huruf kecil."
+     ],
+     "solutions": [
+      "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut it = input.split_whitespace();\n    let a = it.next().unwrap();\n    let b = it.next().unwrap();\n    if a.to_lowercase() == b.to_lowercase() {\n        println!(\"sama\");\n    } else {\n        println!(\"beda\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "rust",
+     "chapter": "m2"
+    }
+   ]
+  }
+ }
+}

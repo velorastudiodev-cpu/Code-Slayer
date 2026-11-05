@@ -1,0 +1,96 @@
+lesson:
+  - text: String bisa diakses per karakter (s[0], s.at(-1)) dan dipotong dengan slice. String tidak bisa diubah, jadi setiap method menghasilkan string baru. Method yang sering dipakai adalah toUpperCase, toLowerCase, trim, includes, replaceAll, padStart, dan repeat.
+    code: |
+      const s = "Kimetsu"
+      console.log(s[0], s.at(-1), s.slice(2, 5), s.length)
+      console.log(s.toUpperCase(), "7".padStart(3, "0"), "ab".repeat(3))
+  - text: split memecah string menjadi array, dan join menggabungkannya kembali. Untuk membalik string pakai [...s].reverse().join(""). Pencarian pola yang lebih rumit bisa memakai regular expression.
+    code: |
+      const kata = "  air api petir  ".trim().split(" ")
+      console.log(kata, kata.join("-"))
+      console.log([..."Nezuko"].reverse().join(""))
+      console.log("Kamado Tanjiro".match(/[aiueo]/gi).length)
+exercises:
+  - id: js-m2-vokal
+    type: write
+    title: Napas Vokal
+    difficulty: 1
+    prompt: Baca satu baris teks. Cetak banyaknya huruf vokal (aiueo), tanpa membedakan huruf besar dan kecil.
+    tests: ["Kamado Tanjiro", "xyz", "AIUEO aiueo"]
+    hints: |
+      Ulangi setiap karakter dengan for...of.
+      "aiueo".includes(c.toLowerCase())
+      Atau pakai regex dengan (s.match(/[aiueo]/gi) ?? []).length.
+    solution: console.log((readline().match(/[aiueo]/gi) ?? []).length)
+  - id: js-m2-kapital
+    type: write
+    title: Nama Resmi
+    difficulty: 1
+    prompt: Baca nama (huruf kecil). Cetak dengan huruf pertama setiap kata dikapitalkan.
+    tests: ["kamado tanjiro", "nezuko"]
+    hints: |
+      Pecah menjadi kata dengan split.
+      k[0].toUpperCase() + k.slice(1)
+      Gabungkan lagi dengan join(" ").
+    solution: console.log(readline().split(" ").map(k => k[0].toUpperCase() + k.slice(1)).join(" "))
+  - id: js-m2-predict
+    type: predict
+    title: Membedah Kimetsu
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const s = "Kimetsu"
+      console.log(s[0], s.at(-1), s.slice(2, 5), s.slice(-3))
+      console.log(s.indexOf("e"), s.includes("tsu"), "5".padStart(3, "*"))
+    hints: |
+      slice(2, 5) mengambil indeks 2, 3, 4.
+      slice(-3) mengambil 3 karakter terakhir.
+      indexOf memberi posisi pertama, dimulai dari 0.
+    solution: x
+  - id: js-m2-bug-palindrom
+    type: bughunt
+    title: Cermin Retak
+    difficulty: 2
+    prompt: Pemeriksa palindrom (tanpa membedakan huruf besar/kecil) menganggap "Kodok" bukan palindrom. Temukan bug-nya.
+    starter: |
+      const s = readline()
+      const t = s.toLowerCase()
+      console.log(s === [...t].reverse().join("") ? "ya" : "tidak")
+    bug_line: 3
+    tests: ["Kodok", "abc", "Ana"]
+    hints: |
+      Variabel mana yang sudah huruf kecil?
+      s masih mengandung huruf besar.
+      Bandingkan t dengan kebalikannya.
+    solution: |
+      const s = readline()
+      const t = s.toLowerCase()
+      console.log(t === [...t].reverse().join("") ? "ya" : "tidak")
+  - id: js-m2-rle
+    type: write
+    title: Sandi Gagak
+    difficulty: 3
+    prompt: 'Run-length encoding, yaitu kelompok huruf sama berurutan ditulis sebagai huruf + jumlahnya. Contoh: aaabcc menjadi a3b1c2.'
+    tests: ["aaabcc", "a", "zzzzzz", "abab"]
+    hints: |
+      Lacak huruf dan jumlah berturut-turutnya.
+      Regex /(.)\1*/g menangkap setiap kelompok.
+      s.match(/(.)\1*/g).map(g => g[0] + g.length).join("")
+    solution: |
+      const s = readline()
+      console.log(s.match(/(.)\1*/g).map(g => g[0] + g.length).join(""))
+  - id: js-m2-parsons
+    type: parsons
+    title: Kalimat Terbalik
+    difficulty: 1
+    prompt: Susun program yang mencetak jumlah kata, lalu kalimat dengan urutan kata dibalik.
+    tests: ["air api petir", "satu"]
+    hints: |
+      trim lalu split.
+      Jumlah kata dicetak lebih dulu.
+      reverse lalu join.
+    solution: |
+      const kalimat = readline().trim()
+      const kata = kalimat.split(" ")
+      console.log(kata.length)
+      console.log(kata.reverse().join(" "))

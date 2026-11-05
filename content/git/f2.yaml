@@ -1,0 +1,93 @@
+lesson:
+- text: 'git status menunjukkan keadaan file. Versi ringkas git status --short memakai dua kolom: kolom kiri = staging area, kolom kanan = working tree. "A " file baru di-stage, "M " diubah & di-stage,
+    " M" diubah belum di-stage, "??" belum dilacak.'
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo a > a.txt
+    git add a.txt
+    git commit -q -m awal
+    echo ubah >> a.txt
+    echo baru > b.txt
+    git status --short
+    git add a.txt
+    git status --short
+- text: git diff memperlihatkan perubahan yang BELUM di-stage; git diff --staged memperlihatkan yang SUDAH di-stage (yang akan masuk commit).
+exercises:
+- id: git-f2-status
+  type: predict
+  title: Membaca Dua Kolom
+  difficulty: 2
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    echo ubah >> a.txt
+    echo baru > c.txt
+    git add a.txt
+    echo lagi >> b.txt
+    git status --short
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo a > a.txt
+    echo b > b.txt
+    git add .
+    git commit -q -m awal
+  hints: |
+    a.txt diubah lalu di-stage: kolom kiri.
+    b.txt diubah tapi belum di-stage: kolom kanan.
+    File baru yang belum di-add ditandai ??.
+  solution: x
+- id: git-f2-pilih
+  type: write
+  title: Pilih yang Dikirim
+  difficulty: 1
+  prompt: a.txt dan b.txt sama-sama sudah diubah. Stage HANYA a.txt (jangan commit dulu).
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo a > a.txt
+    echo b > b.txt
+    git add .
+    git commit -q -m awal
+    echo a2 >> a.txt
+    echo b2 >> b.txt
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Stage satu file saja.
+    Jangan pakai git add .
+    git add a.txt
+  solution: |
+    git add a.txt
+- id: git-f2-tanda
+  type: quiz
+  title: Tanda Tanya Ganda
+  difficulty: 1
+  prompt: Arti "?? catatan.txt" di git status --short adalah...
+  options:
+  - catatan.txt belum dilacak Git (untracked)
+  - catatan.txt mengalami konflik
+  - catatan.txt sudah di-stage
+  - catatan.txt sudah dihapus
+  explain: '"??" berarti Git belum pernah melacak file itu. Jalankan git add agar mulai dilacak.'
+  hints: |
+    File baru yang belum pernah di-add.
+    Konflik ditandai UU.
+    Untracked.
+- id: git-f2-staged
+  type: answer
+  title: Mengintip Isi Commit
+  difficulty: 2
+  prompt: Opsi git diff untuk melihat perubahan yang SUDAH di-stage adalah... (tulis opsinya saja)
+  accept:
+  - --staged
+  - --cached
+  - git diff --staged
+  - git diff --cached
+  explain: git diff --staged (sinonim --cached) membandingkan staging area dengan commit terakhir.
+  hints: |
+    Tanpa opsi, git diff menampilkan yang belum di-stage.
+    Opsinya diawali --.
+    --staged

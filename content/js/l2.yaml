@@ -1,0 +1,110 @@
+lang: typescript
+lesson:
+  - text: TypeScript adalah JavaScript dengan tipe. Kamu menambah anotasi seperti nama - string pada variabel, parameter, dan nilai kembalian. Compiler (tsc) mendeteksi kesalahan tipe SEBELUM program dijalankan. Setelah dikompilasi, tipe dihapus dan yang tersisa JavaScript biasa.
+    code: |
+      function luas(p: number, l: number): number {
+        return p * l
+      }
+      const nama: string = "Tanjiro"
+      console.log(nama, luas(3, 4))
+  - text: interface atau type mendeskripsikan bentuk objek. Union (A | B) berarti salah satu tipe. Generic <T> membuat fungsi bekerja untuk tipe apa pun sambil tetap menjaga tipenya. Di aplikasi ini kode TS dijalankan setelah tipenya dihapus, jadi fokuslah pada sintaksnya.
+    code: |
+      interface Slayer { nama: string; rank: "Mizunoto" | "Hashira"; umur?: number }
+      const giyu: Slayer = { nama: "Giyu", rank: "Hashira" }
+      function pertama<T>(arr: T[]): T | undefined { return arr[0] }
+      console.log(giyu.nama, pertama([10, 20]), pertama<string>([]))
+exercises:
+  - id: ts-l2-anotasi
+    type: write
+    title: Fungsi Bertipe
+    difficulty: 1
+    prompt: 'Tulis fungsi rataRata(nilai: number[]): number, baca deretan bilangan, lalu cetak rata-ratanya dengan 2 desimal.'
+    tests: ["2 4 6", "5", "1 2"]
+    hints: |
+      Anotasi parameter ditulis setelah titik dua, yaitu (nilai: number[]).
+      reduce menjumlahkan, lalu dibagi length.
+      .toFixed(2)
+    solution: |
+      function rataRata(nilai: number[]): number {
+        return nilai.reduce((s, x) => s + x, 0) / nilai.length
+      }
+      const data: number[] = readline()!.split(" ").map(Number)
+      console.log(rataRata(data).toFixed(2))
+  - id: ts-l2-interface
+    type: write
+    title: Data Pasukan Bertipe
+    difficulty: 2
+    prompt: 'Definisikan interface Slayer { nama: string; umur: number }. Baris pertama n, lalu n baris "nama umur". Cetak nama slayer termuda dan rata-rata umur (1 desimal).'
+    tests: ["3\nTanjiro 15\nGiyu 21\nKanao 16", "1\nRengoku 20"]
+    hints: |
+      Buat array Slayer[] dari input.
+      reduce untuk mencari yang termuda.
+      Pakai tanda ! setelah readline() karena tipenya string | null.
+    solution: |
+      interface Slayer { nama: string; umur: number }
+      const n = Number(readline())
+      const data: Slayer[] = []
+      for (let i = 0; i < n; i++) {
+        const [nama, umur] = readline()!.split(" ")
+        data.push({ nama, umur: Number(umur) })
+      }
+      console.log(data.reduce((a, b) => (b.umur < a.umur ? b : a)).nama)
+      console.log((data.reduce((s, d) => s + d.umur, 0) / n).toFixed(1))
+  - id: ts-l2-predict
+    type: predict
+    title: Tipe yang Menghilang
+    difficulty: 2
+    prompt: Tipe TS dihapus saat dijalankan. Tulis output persis dari kode berikut.
+    code: |
+      type Rank = "Mizunoto" | "Hashira"
+      function naik(r: Rank): Rank { return r === "Mizunoto" ? "Hashira" : r }
+      const x: number = 5
+      console.log(naik("Mizunoto"), typeof x, typeof naik)
+    hints: |
+      Tipe Rank hanya ada saat kompilasi.
+      naik("Mizunoto") mengembalikan "Hashira".
+      typeof fungsi adalah "function".
+    solution: x
+  - id: ts-l2-generic
+    type: write
+    title: Kotak Generik
+    difficulty: 3
+    prompt: 'Tulis fungsi generik kelompokkan<T>(arr: T[], kunci: (x: T) => string): Record<string, T[]>. Baca deretan kata, kelompokkan menurut huruf pertamanya, lalu cetak "<huruf>: <kata-kata dipisah koma>" urut menurut huruf.'
+    tests: ["air api batu bunga awan", "zebra"]
+    hints: |
+      Record<string, T[]> adalah object berisi array.
+      (hasil[k] ??= []).push(x)
+      Object.keys(hasil).sort()
+    solution: |
+      function kelompokkan<T>(arr: T[], kunci: (x: T) => string): Record<string, T[]> {
+        const hasil: Record<string, T[]> = {}
+        for (const x of arr) (hasil[kunci(x)] ??= []).push(x)
+        return hasil
+      }
+      const g = kelompokkan(readline()!.split(" "), k => k[0])
+      for (const h of Object.keys(g).sort()) console.log(`${h}: ${g[h].join(",")}`)
+  - id: ts-l2-bug-union
+    type: bughunt
+    title: Union yang Tidak Dipersempit
+    difficulty: 2
+    prompt: 'Fungsi panjang(x: string | number) harus mengembalikan jumlah karakter untuk string dan jumlah digit untuk number. Untuk angka, hasilnya undefined. Temukan bug-nya.'
+    starter: |
+      function panjang(x: string | number): number {
+        if (typeof x === "string") return x.length
+        return (x as any).length
+      }
+      const v = readline()!
+      console.log(panjang(/^\d+$/.test(v) ? Number(v) : v))
+    bug_line: 3
+    tests: ["slayer", "12345", "7"]
+    hints: |
+      Setelah if, TypeScript tahu x pasti number.
+      number tidak punya .length, dan as any hanya membungkam compiler.
+      return String(x).length
+    solution: |
+      function panjang(x: string | number): number {
+        if (typeof x === "string") return x.length
+        return String(x).length
+      }
+      const v = readline()!
+      console.log(panjang(/^\d+$/.test(v) ? Number(v) : v))

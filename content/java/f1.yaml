@@ -1,0 +1,105 @@
+lesson:
+  - text: Setiap program Java berada di dalam class. Di aplikasi ini, nama class-nya harus Main. Eksekusi dimulai dari method public static void main(String[] args). System.out.println mencetak lalu pindah baris, sedangkan System.out.print tidak pindah baris.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.println("Halo, Slayer!");
+              System.out.print("Napas Ular, ");
+              System.out.println("bentuk " + 1);
+          }
+      }
+  - text: System.out.printf memformat output seperti di C, misalnya %d, %.2f, dan %s, dengan %n untuk baris baru. String.format menghasilkan string dengan aturan yang sama. Java ketat terhadap tipe, dan setiap pernyataan diakhiri titik koma.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.printf("%s berumur %d, kekuatan %.2f%n", "Obanai", 21, 9.5);
+          }
+      }
+exercises:
+  - id: java-halo
+    type: write
+    title: Salam Napas Ular
+    difficulty: 1
+    prompt: Cetak tepat satu baris "Halo, Slayer!".
+    starter: |
+      public class Main {
+          public static void main(String[] args) {
+              // tulis kodemu di sini
+          }
+      }
+    hints: |
+      System.out.println mencetak satu baris.
+      Teks diapit kutip ganda, dan pernyataan diakhiri ;.
+      System.out.println("Halo, Slayer!");
+    solution: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.println("Halo, Slayer!");
+          }
+      }
+  - id: java-f1-printf
+    type: write
+    title: Laporan Berformat
+    difficulty: 1
+    prompt: 'Dengan printf, cetak "Obanai berumur 21 tahun, kekuatan 9.50" memakai %s, %d, dan %.2f.'
+    hints: |
+      System.out.printf(format, nilai...)
+      %n untuk baris baru.
+      System.out.printf("%s berumur %d tahun, kekuatan %.2f%n", "Obanai", 21, 9.5);
+    solution: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.printf("%s berumur %d tahun, kekuatan %.2f%n", "Obanai", 21, 9.5);
+          }
+      }
+  - id: java-f1-predict
+    type: predict
+    title: Print atau Println
+    difficulty: 1
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.print("A");
+              System.out.println("B" + 1 + 2);
+              System.out.println(1 + 2 + "C");
+          }
+      }
+    hints: |
+      print tidak pindah baris.
+      Begitu ada String, + menjadi penggabungan dari kiri ke kanan.
+      1 + 2 dihitung dulu karena keduanya angka.
+    solution: x
+  - id: java-f1-bug
+    type: bughunt
+    title: Kurung yang Tertukar
+    difficulty: 1
+    prompt: Program gagal dikompilasi. Temukan baris yang salah.
+    starter: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.println("Kaa!";
+          }
+      }
+    bug_line: 3
+    hints: |
+      Hitung pasangan kurung buka dan tutup.
+      println( dibuka tapi tidak ditutup sebelum ;.
+      System.out.println("Kaa!");
+    solution: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.println("Kaa!");
+          }
+      }
+  - id: java-f1-typing
+    type: typing
+    title: Ketik Program Java Pertama
+    difficulty: 1
+    prompt: Ketik ulang program Java berikut. Akurasi minimal 95%.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              System.out.println("Halo!");
+          }
+      }

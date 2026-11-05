@@ -1,0 +1,105 @@
+lesson:
+  - text: C++ dibangun di atas C dengan pustaka standar yang jauh lebih kaya. Output memakai std::cout dengan operator <<, dan baris baru ditulis "\n" atau std::endl. Program tetap dimulai dari main, dan kodenya dikompilasi sebelum dijalankan.
+    code: |
+      #include <iostream>
+
+      int main() {
+          std::cout << "Halo, Slayer!\n";
+          std::cout << "Napas Kabut, bentuk " << 7 << "\n";
+      }
+  - text: 'using namespace std; membuat kita bisa menulis cout tanpa std::. Ini umum di kode kompetisi, tapi sebaiknya dihindari di proyek besar. Untuk angka desimal, fixed dan setprecision(n) dari <iomanip> mengatur banyaknya digit.'
+    code: |
+      #include <iomanip>
+      #include <iostream>
+      using namespace std;
+
+      int main() {
+          cout << fixed << setprecision(2) << 3.14159 << " " << 10.0 / 4 << "\n";
+      }
+exercises:
+  - id: cpp-halo
+    type: write
+    title: Salam Napas Kabut
+    difficulty: 1
+    prompt: Cetak tepat satu baris "Halo, Slayer!".
+    starter: |
+      #include <iostream>
+
+      int main() {
+          // tulis kodemu di sini
+      }
+    hints: |
+      std::cout << ...
+      Akhiri dengan "\n".
+      std::cout << "Halo, Slayer!\n";
+    solution: |
+      #include <iostream>
+
+      int main() {
+          std::cout << "Halo, Slayer!\n";
+      }
+  - id: cpp-f1-presisi
+    type: write
+    title: Presisi Kabut
+    difficulty: 1
+    prompt: Cetak nilai 22.0 / 7 dengan tepat 3 angka di belakang koma.
+    hints: |
+      #include <iomanip>
+      std::fixed << std::setprecision(3)
+      std::cout << std::fixed << std::setprecision(3) << 22.0 / 7 << "\n";
+    solution: |
+      #include <iomanip>
+      #include <iostream>
+
+      int main() {
+          std::cout << std::fixed << std::setprecision(3) << 22.0 / 7 << "\n";
+      }
+  - id: cpp-f1-predict
+    type: predict
+    title: Aliran Keluaran
+    difficulty: 1
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <iostream>
+
+      int main() {
+          std::cout << "A" << 1 + 2 << "B";
+          std::cout << "\n" << 7 / 2 << " " << 7 % 2 << "\n";
+      }
+    hints: |
+      << menyambung semua bagian tanpa spasi.
+      1 + 2 dihitung dulu menjadi 3.
+      7 / 2 dengan int menghasilkan 3.
+    solution: x
+  - id: cpp-f1-bug
+    type: bughunt
+    title: Namespace yang Hilang
+    difficulty: 1
+    prompt: Program gagal dikompilasi dengan pesan "cout was not declared". Temukan baris yang salah.
+    starter: |
+      #include <iostream>
+
+      int main() {
+          cout << "Kaa!\n";
+      }
+    bug_line: 4
+    hints: |
+      cout berada di namespace std.
+      Tulis nama lengkapnya.
+      std::cout << "Kaa!\n";
+    solution: |
+      #include <iostream>
+
+      int main() {
+          std::cout << "Kaa!\n";
+      }
+  - id: cpp-f1-typing
+    type: typing
+    title: Ketik Program C++ Pertama
+    difficulty: 1
+    prompt: Ketik ulang program C++ berikut. Akurasi minimal 95%.
+    code: |
+      #include <iostream>
+      int main() {
+          std::cout << "Halo!\n";
+      }

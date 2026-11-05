@@ -1,0 +1,222 @@
+lesson:
+  - text: Pesan error JS menyebut jenis error (TypeError, ReferenceError) dan penjelasannya. Di browser atau Node, stack trace menunjukkan file dan baris asalnya. Teknik dasarnya adalah console.log nilai variabel di titik penting, atau memakai debugger (breakpoint) di DevTools.
+    code: |
+      const data = { misi: null }
+      try {
+        console.log(data.misi.nama)
+      } catch (e) {
+        console.log(e.name + ":", e.message)
+      }
+      console.log(data.misi?.nama ?? "belum ada misi")
+  - text: Bug klasik JS antara lain var di dalam loop yang dibagi bersama oleh callback, sort() yang membandingkan teks, 0.1 + 0.2 yang tidak tepat 0.3, == yang mengonversi tipe, dan mutasi objek lewat referensi. Kenali polanya supaya cepat menebasnya.
+    code: |
+      for (var i = 0; i < 3; i++) setTimeout(() => console.log("var:", i))
+      for (let j = 0; j < 3; j++) setTimeout(() => console.log("let:", j))
+exercises:
+  - id: js-l4-bug-var
+    type: bughunt
+    title: Gema yang Sama
+    difficulty: 3
+    prompt: Setiap callback seharusnya mencetak indeksnya sendiri (0, 1, 2), tapi semuanya mencetak 3. Temukan bug-nya.
+    starter: |
+      const n = Number(readline())
+      for (var i = 0; i < n; i++) {
+        setTimeout(() => console.log("tebasan", i))
+      }
+    bug_line: 2
+    tests: ["3", "1"]
+    hints: |
+      var tidak membuat variabel baru untuk setiap putaran.
+      Semua callback berbagi i yang sama, yang nilainya sudah n saat dijalankan.
+      Ganti var dengan let.
+    solution: |
+      const n = Number(readline())
+      for (let i = 0; i < n; i++) {
+        setTimeout(() => console.log("tebasan", i))
+      }
+  - id: js-l4-bug-mutasi
+    type: bughunt
+    title: Template yang Ikut Berubah
+    difficulty: 2
+    prompt: Setiap slayer baru seharusnya punya salinan default sendiri, tapi mengubah satu ikut mengubah template. Temukan bug-nya.
+    starter: |
+      const DEFAULT = { rank: "Mizunoto", misi: 0 }
+      function buat(nama) {
+        const s = DEFAULT
+        s.nama = nama
+        return s
+      }
+      const a = buat(readline())
+      a.misi = 5
+      console.log(a.nama, a.misi, DEFAULT.misi)
+    bug_line: 3
+    tests: ["Tanjiro", "Kanao"]
+    hints: |
+      const s = DEFAULT tidak menyalin objek.
+      Spread membuat salinan dangkal.
+      const s = { ...DEFAULT }
+    solution: |
+      const DEFAULT = { rank: "Mizunoto", misi: 0 }
+      function buat(nama) {
+        const s = { ...DEFAULT }
+        s.nama = nama
+        return s
+      }
+      const a = buat(readline())
+      a.misi = 5
+      console.log(a.nama, a.misi, DEFAULT.misi)
+  - id: js-l4-bug-optional
+    type: bughunt
+    title: Misi yang Belum Ada
+    difficulty: 1
+    prompt: 'Untuk slayer tanpa misi, program harus mencetak "-", tapi malah crash. Input berisi nama slayer.'
+    starter: |
+      const misi = { Tanjiro: { lokasi: "Natagumo" }, Zenitsu: null }
+      const nama = readline()
+      console.log(misi[nama].lokasi ?? "-")
+    bug_line: 3
+    tests: ["Tanjiro", "Zenitsu", "Giyu"]
+    hints: |
+      misi[nama] bisa null atau undefined.
+      Mengakses .lokasi dari null melempar TypeError.
+      Optional chaining, yaitu misi[nama]?.lokasi
+    solution: |
+      const misi = { Tanjiro: { lokasi: "Natagumo" }, Zenitsu: null }
+      const nama = readline()
+      console.log(misi[nama]?.lokasi ?? "-")
+  - id: js-l4-predict
+    type: predict
+    title: Keanehan yang Harus Dikenal
+    difficulty: 3
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      console.log([10, 9, 1].sort())
+      console.log(0.1 + 0.2 === 0.3, (0.1 + 0.2).toFixed(2) === "0.30")
+      console.log(JSON.stringify([] + []), typeof ([] + {}))
+    hints: |
+      sort() default membandingkan sebagai teks.
+      toFixed menghasilkan string yang sudah dibulatkan.
+      Array + array diubah menjadi string terlebih dahulu.
+    solution: x
+  - id: js-l4-dua-bug
+    type: write
+    title: Dua Iblis Sekaligus
+    difficulty: 2
+    prompt: Fungsi rataRata di bawah punya DUA bug. Perbaiki sampai rata-rata (dibulatkan 2 desimal dengan toFixed) tercetak benar.
+    starter: |
+      function rataRata(nilai) {
+        let total = 0
+        for (let i = 1; i < nilai.length; i++) total += i
+        return total / nilai.length
+      }
+      console.log(rataRata(readline().split(" ").map(Number)).toFixed(2))
+    tests: ["2 4 6", "5", "1 2"]
+    hints: |
+      Apakah elemen pertama (indeks 0) ikut?
+      Yang dijumlah indeks i, bukan nilainya.
+      for (const x of nilai) total += x
+    solution: |
+      function rataRata(nilai) {
+        let total = 0
+        for (const x of nilai) total += x
+        return total / nilai.length
+      }
+      console.log(rataRata(readline().split(" ").map(Number)).toFixed(2))
+  - id: js-l4-review-rata
+    type: review
+    title: Review Rata-rata
+    difficulty: 2
+    prompt: Tandai baris yang bermasalah pada fungsi ini.
+    code: |
+      function rataRata(arr) {
+        var total = 0
+        for (var i = 0; i <= arr.length; i++) total += arr[i]
+        return total / arr.length
+      }
+    issues:
+      - line: 2
+        text: Pakai let/const, bukan var.
+      - line: 3
+        text: i <= arr.length membaca arr[length] (undefined) sehingga total menjadi NaN. Pakai <, dan let.
+    hints: |
+      Apa nilai arr[arr.length]?
+      undefined + angka = NaN.
+      Perhatikan juga gaya deklarasi variabel.
+  - id: js-l4-review-async
+    type: review
+    title: Review Pengambil Data
+    difficulty: 3
+    prompt: Fungsi ini selalu mengembalikan array kosong. Tandai baris penyebabnya.
+    code: |
+      async function ambilSemua(ids) {
+        const hasil = []
+        ids.forEach(async id => {
+          hasil.push(await ambil(id))
+        })
+        return hasil
+      }
+    issues:
+      - line: 3
+        text: forEach tidak menunggu callback async. Pakai for...of dengan await, atau Promise.all(ids.map(ambil)).
+      - line: 6
+        text: hasil dikembalikan sebelum push di dalam callback sempat terjadi.
+    hints: |
+      Apakah forEach menunggu Promise?
+      Kapan return dijalankan dibanding push?
+      Ada dua baris terkait.
+  - id: js-l4-readerror-undefined
+    type: readerror
+    title: Misi Kosong
+    difficulty: 1
+    prompt: Baca pesan error-nya lalu tentukan perbaikannya.
+    code: |
+      const data = { misi: [] }
+      console.log(data.misi[0].lokasi)
+    options:
+      - data.misi[0] adalah undefined karena array kosong. Periksa panjangnya atau pakai data.misi[0]?.lokasi.
+      - Object tidak boleh berisi array.
+      - Properti lokasi harus dideklarasikan dengan let.
+      - console.log tidak bisa mencetak properti bersarang.
+    explain: TypeError Cannot read properties of undefined berarti ada nilai undefined yang diakses propertinya.
+    hints: |
+      Apa isi data.misi?
+      Elemen pertama array kosong adalah undefined.
+      Optional chaining ?. mencegah crash.
+  - id: js-l4-readerror-typo
+    type: readerror
+    title: Nama yang Salah Ketik
+    difficulty: 1
+    prompt: Baca pesan error-nya lalu tentukan perbaikannya.
+    code: |
+      let total = 0
+      for (const x of [1, 2, 3]) total += x
+      console.log(tota)
+    options:
+      - Salah ketik, tota seharusnya total.
+      - total harus dideklarasikan dengan var.
+      - for...of tidak bisa dipakai untuk array.
+      - console.log hanya menerima string.
+    explain: ReferenceError karena nama tota tidak pernah dideklarasikan.
+    hints: |
+      Baca nama variabel di pesan error.
+      Bandingkan dengan nama yang dideklarasikan.
+      Satu huruf hilang.
+  - id: js-l4-readerror-map
+    type: readerror
+    title: String Bukan Array
+    difficulty: 2
+    prompt: Dengan input "1 2 3", program crash. Baca pesan error-nya.
+    code: |
+      const angka = readline()
+      console.log(angka.map(Number))
+    tests: ["1 2 3"]
+    options:
+      - readline() menghasilkan string, dan .map hanya ada di array. Pecah dulu dengan .split(" ").
+      - Number tidak boleh dikirim sebagai argumen.
+      - readline() harus dipanggil dua kali.
+      - map hanya bekerja untuk angka genap.
+    explain: TypeError angka.map is not a function, karena string tidak punya method map.
+    hints: |
+      Apa tipe hasil readline()?
+      Method map milik array.
+      split mengubah string menjadi array.

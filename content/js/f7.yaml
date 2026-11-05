@@ -1,0 +1,145 @@
+lesson:
+  - text: Fungsi dibuat dengan function nama(param) { ... } atau sebagai arrow function const nama = (param) => ekspresi. return mengembalikan nilai, dan fungsi tanpa return mengembalikan undefined. Parameter bisa diberi nilai default.
+    code: |
+      function luas(s) {
+        return s * s
+      }
+      const sapa = (nama, salam = "Halo") => `${salam}, ${nama}!`
+      console.log(luas(4), sapa("Tanjiro"), sapa("Gagak", "Kaa"))
+  - text: Fungsi di JS adalah nilai, jadi bisa disimpan, dikirim ke fungsi lain, atau dikembalikan. Fungsi yang dikembalikan tetap mengingat variabel di sekitarnya. Inilah yang disebut closure.
+    code: |
+      function pembuatPenghitung() {
+        let n = 0
+        return () => ++n
+      }
+      const hitung = pembuatPenghitung()
+      hitung(); hitung()
+      console.log(hitung())
+exercises:
+  - id: js-bug-max
+    type: bughunt
+    title: Iblis Bayangan Nol
+    difficulty: 2
+    story: Laporan kekuatan iblis yang semuanya negatif selalu tercatat 0. Ada yang aneh.
+    prompt: Program membaca deretan bilangan bulat dalam satu baris dan harus mencetak nilai terbesarnya. Temukan bug-nya, lalu perbaiki.
+    starter: |
+      const a = readline().split(" ").map(Number)
+      let m = 0
+      for (const x of a) if (x > m) m = x
+      console.log(m)
+    bug_line: 2
+    tests: ["3 9 2", "-5 -2 -9", "-1"]
+    hints: |
+      Telusuri dengan input "-5 -2 -9". Apakah ada x yang lebih besar dari m?
+      Nilai awal m tidak boleh lebih besar dari semua elemen.
+      Mulai dari elemen pertama dengan let m = a[0], atau pakai -Infinity.
+    solution: |
+      const a = readline().split(" ").map(Number)
+      let m = a[0]
+      for (const x of a) if (x > m) m = x
+      console.log(m)
+  - id: js-f7-fpb
+    type: write
+    title: FPB Dua Klan
+    difficulty: 2
+    prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan dan cetak FPB-nya.
+    tests: ["12 18", "7 13", "100 75", "0 5"]
+    hints: |
+      Rumusnya fpb(a, b) = fpb(b, a % b), dan berhenti saat b === 0.
+      Bisa ditulis rekursif.
+      const fpb = (a, b) => b === 0 ? a : fpb(b, a % b)
+    solution: |
+      const fpb = (a, b) => (b === 0 ? a : fpb(b, a % b))
+      const [a, b] = readline().split(" ").map(Number)
+      console.log(fpb(a, b))
+  - id: js-f7-palindrom
+    type: write
+    title: Kata Cermin
+    difficulty: 1
+    prompt: Tulis fungsi palindrom(s). Baca satu kata (huruf kecil), cetak "ya" atau "tidak".
+    tests: ["katak", "slayer", "a", "ab"]
+    hints: |
+      Membalik string bisa dengan [...s].reverse().join("").
+      Bandingkan dengan s.
+      return s === [...s].reverse().join("")
+    solution: |
+      const palindrom = s => s === [...s].reverse().join("")
+      console.log(palindrom(readline()) ? "ya" : "tidak")
+  - id: js-f7-predict
+    type: predict
+    title: Default dan Closure
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const f = (x, y = 10) => x + y
+      function counter() {
+        let n = 0
+        return () => ++n
+      }
+      const c = counter()
+      c()
+      console.log(f(1), f(1, 2), c(), counter()())
+    hints: |
+      y bernilai 10 kalau tidak diisi.
+      c sudah dipanggil sekali sebelum console.log.
+      counter()() membuat penghitung baru.
+    solution: x
+  - id: js-f7-fib
+    type: write
+    title: Spiral Fibonacci
+    difficulty: 2
+    prompt: Tulis fungsi fib(n) dengan fib(0) = 0 dan fib(1) = 1. Baca n (≤ 50) dan cetak fib(n).
+    tests: ["0", "1", "10", "50"]
+    hints: |
+      Rekursi biasa terlalu lambat untuk n = 50.
+      Pakai loop dengan dua variabel.
+      [a, b] = [b, a + b]
+    solution: |
+      function fib(n) {
+        let [a, b] = [0, 1]
+        for (let i = 0; i < n; i++) [a, b] = [b, a + b]
+        return a
+      }
+      console.log(fib(Number(readline())))
+  - id: js-f7-parsons
+    type: parsons
+    title: Faktorial Rekursif
+    difficulty: 2
+    prompt: Susun fungsi faktorial rekursif, lalu baca n dan cetak n!.
+    tests: ["5", "0", "10"]
+    hints: |
+      Base case diperiksa paling awal di dalam fungsi.
+      Kurung kurawal penutup fungsi sebelum pemanggilan.
+      console.log paling akhir.
+    solution: |
+      function faktorial(n) {
+        if (n <= 1) return 1
+        return n * faktorial(n - 1)
+      }
+      const n = Number(readline())
+      console.log(faktorial(n))
+  - id: js-f7-translate
+    type: translate
+    title: Terjemahkan FPB
+    difficulty: 2
+    prompt: Tulis ulang fungsi Python ini dalam JavaScript.
+    from_lang: python
+    from_code: |
+      def fpb(a, b):
+          while b:
+              a, b = b, a % b
+          return a
+      a, b = map(int, input().split())
+      print(fpb(a, b))
+    tests: ["12 18", "7 13", "0 5"]
+    hints: |
+      def menjadi function.
+      a, b = b, a % b menjadi [a, b] = [b, a % b].
+      while (b) bekerja karena 0 falsy.
+    solution: |
+      function fpb(a, b) {
+        while (b) [a, b] = [b, a % b]
+        return a
+      }
+      const [a, b] = readline().split(" ").map(Number)
+      console.log(fpb(a, b))

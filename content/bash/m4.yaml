@@ -1,0 +1,53 @@
+lesson:
+- text: 'cron menjalankan perintah terjadwal. Format crontab: menit jam tgl bulan hari perintah. */5 * * * * = setiap 5 menit. 0 2 * * 1 = Senin jam 02:00. crontab -e menyunting, crontab -l melihat.'
+  code: |
+    # m h dom mon dow perintah
+    */5 * * * * /home/slayer/cek.sh
+    0 2 * * 1 /home/slayer/backup.sh
+exercises:
+- id: bash-m4-cron
+  type: quiz
+  title: Jadwal Patroli
+  difficulty: 1
+  prompt: Baris crontab "30 6 * * *" berarti...
+  options:
+  - Setiap hari pukul 06:30
+  - Setiap 30 menit selama 6 jam
+  - Tanggal 30 bulan 6
+  - Setiap 6 menit lewat 30 detik
+  explain: 'Urutan: menit jam tanggal bulan hari-minggu.'
+  hints: |
+    Kolom pertama menit.
+    Kolom kedua jam.
+    menit 30, jam 6.
+- id: bash-m4-5
+  type: answer
+  title: Setiap Lima Menit
+  difficulty: 2
+  prompt: Tulis 5 kolom jadwal crontab untuk "setiap 5 menit".
+  accept:
+  - '*/5 * * * *'
+  explain: '*/5 pada kolom menit berarti setiap kelipatan 5 menit.'
+  hints: |
+    Hanya kolom menit yang berubah.
+    Sintaks langkah: */N.
+    */5 * * * *
+- id: bash-m4-cronparse
+  type: write
+  title: Membaca Crontab
+  difficulty: 2
+  prompt: 'Dari input berformat crontab (abaikan baris komentar #), cetak perintah (kolom 6 dst) yang dijalankan setiap jam pada menit 0.'
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    # jadwal
+    0 * * * * /bin/cek-gagak
+    30 2 * * * /bin/backup
+    0 * * * * /bin/hitung iblis
+  hints: |
+    Buang komentar dengan grep -v.
+    Menit 0 dan jam *.
+    Kosongkan 5 kolom pertama lalu cetak sisanya.
+  solution: |
+    grep -v '^#' | awk '$1 == "0" && $2 == "*" { $1=$2=$3=$4=$5=""; sub(/^ +/, ""); print }'

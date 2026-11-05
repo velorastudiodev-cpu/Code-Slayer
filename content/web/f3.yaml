@@ -1,0 +1,143 @@
+lesson:
+- text: '<img src="..." alt="..."> menampilkan gambar. alt WAJIB: dibaca screen reader dan muncul saat gambar gagal dimuat. Gambar dekoratif cukup alt="" (kosong).'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <img src="pedang.png" alt="Pedang Nichirin hitam milik Tanjiro" width="200">
+    </body>
+    </html>
+- text: <figure> membungkus gambar beserta keterangannya <figcaption>. <video> dan <audio> dengan atribut controls menampilkan tombol putar.
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <figure>
+        <img src="gagak.png" alt="Gagak Kasugai">
+        <figcaption>Gagak pembawa pesan</figcaption>
+      </figure>
+    </body>
+    </html>
+exercises:
+- id: web-f3-img
+  type: write
+  title: Potret Pedang
+  difficulty: 1
+  prompt: Tampilkan gambar pedang.png dengan teks alternatif "Pedang Nichirin hitam".
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: img
+    count: 1
+  - sel: img
+    attr: src
+    value: pedang.png
+  - sel: img
+    attr: alt
+    value: Pedang Nichirin hitam
+  hints: |
+    Tag img tidak punya tag penutup.
+    src = alamat gambar.
+    alt = deskripsi untuk yang tidak bisa melihat.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <img src="pedang.png" alt="Pedang Nichirin hitam">
+    </body>
+    </html>
+- id: web-f3-figure
+  type: write
+  title: Bingkai Kenangan
+  difficulty: 2
+  prompt: Bungkus gambar gagak.png (alt "Gagak Kasugai") dalam <figure> dengan keterangan "Gagak pembawa pesan".
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: figure > img
+    count: 1
+  - sel: figure > img
+    alt: true
+  - sel: figure > figcaption
+    text: Gagak pembawa pesan
+  hints: |
+    figure membungkus img dan figcaption.
+    figcaption = keterangan.
+    Jangan lupa alt.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <figure>
+        <img src="gagak.png" alt="Gagak Kasugai">
+        <figcaption>Gagak pembawa pesan</figcaption>
+      </figure>
+    </body>
+    </html>
+- id: web-f3-alt
+  type: quiz
+  title: Untuk Siapa alt?
+  difficulty: 1
+  prompt: Fungsi utama atribut alt pada <img> adalah...
+  options:
+  - Memberi deskripsi bagi screen reader dan saat gambar gagal dimuat
+  - Mengatur ukuran gambar
+  - Menampilkan tooltip saat kursor di atas gambar
+  - Mempercepat pemuatan gambar
+  explain: alt adalah teks pengganti. Tooltip berasal dari atribut title, bukan alt.
+  hints: |
+    Pengguna tunanetra tidak melihat gambar.
+    Juga muncul saat gambar rusak.
+    Teks pengganti.
+- id: web-f3-attr
+  type: answer
+  title: Atribut Sumber
+  difficulty: 1
+  prompt: Atribut <img> yang berisi alamat file gambar adalah...
+  accept:
+  - src
+  explain: 'src = source. Contoh: <img src="pedang.png" alt="...">.'
+  hints: |
+    source
+    Tiga huruf.
+    src

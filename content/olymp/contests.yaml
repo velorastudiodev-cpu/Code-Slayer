@@ -1,0 +1,54 @@
+# Virtual contest: simulasi ujian dengan timer. Soalnya ORISINAL setara (bisa dinilai langsung di aplikasi).
+# Durasi mengikuti format umum kompetisinya. Ambang medali adalah APROKSIMASI kita (persentase skor maksimum),
+# bukan batas medali resmi tahun tertentu; untuk kontes aslinya, lihat tautan `real`.
+- id: sim-osnk
+  name: Simulasi OSN-K (objektif)
+  stage: kabupaten
+  kind: objective
+  minutes: 90
+  count: 25
+  topics: [aritmetika, logika, algoritmika]
+  scoring: { right: 4, wrong: -1, blank: 0 }
+  medals: { emas: 80, perak: 65, perunggu: 50 }
+  real: https://tlx.toki.id/problems?archiveSlug=osk
+  note: Benar +4, salah −1, kosong 0. Menebak asal-asalan tidak menguntungkan.
+- id: sim-osnp
+  name: Simulasi OSN-P (pemrograman)
+  stage: provinsi
+  kind: programming
+  minutes: 180
+  problems: [ol-p-terdekat, ol-p-gagak, ol-p-tumpukan, ol-p-huruf]
+  medals: { emas: 85, perak: 60, perunggu: 40 }
+  real: https://tlx.toki.id/problems/osnp-2024
+- id: sim-osn-1
+  name: Simulasi OSN — Hari 1
+  stage: nasional
+  kind: programming
+  minutes: 300
+  problems: [ol-n-lis, ol-n-dijkstra, ol-n-edit]
+  medals: { emas: 80, perak: 55, perunggu: 35 }
+  real: https://tlx.toki.id/problems/osn-2019
+- id: sim-osn-2
+  name: Simulasi OSN — Hari 2
+  stage: nasional
+  kind: programming
+  minutes: 300
+  problems: [ol-n-mst, ol-n-kombinasi, ol-n-dag]
+  medals: { emas: 80, perak: 55, perunggu: 35 }
+  real: https://tlx.toki.id/problems/osn-2019
+- id: sim-pelatnas
+  name: Simulasi Pelatnas TOKI
+  stage: pelatnas
+  kind: programming
+  minutes: 300
+  problems: [ol-t-segtree, ol-t-tsp, ol-t-lca]
+  medals: { emas: 80, perak: 55, perunggu: 35 }
+  real: https://tlx.toki.id/problems?archiveSlug=toki
+- id: sim-ioi
+  name: Simulasi IOI (gaya subtask)
+  stage: internasional
+  kind: programming
+  minutes: 300
+  problems: [ol-i-distinct, ol-i-terjauh, ol-i-matriks]
+  medals: { emas: 75, perak: 55, perunggu: 35 }
+  real: https://tlx.toki.id/problems/ioi-2024

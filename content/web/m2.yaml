@@ -1,0 +1,209 @@
+lesson:
+- text: 'CSS Grid membagi area menjadi baris dan kolom. grid-template-columns: repeat(3, 1fr) membuat tiga kolom sama lebar (fr = bagian dari sisa ruang). Item bisa melebar dengan grid-column: span 2.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+exercises:
+- id: web-m2-tiga
+  type: write
+  title: Galeri Tiga Kolom
+  difficulty: 2
+  prompt: Jadikan .galeri grid dengan tiga kolom sama lebar (repeat(3, 1fr)) dan gap 12px.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .galeri
+    css: display
+    value: grid
+  - sel: .galeri
+    css: grid-template-columns
+    value: repeat(3, 1fr)
+  - sel: .galeri
+    css: row-gap
+    value: 12px
+  hints: |
+    display: grid.
+    grid-template-columns menentukan kolom.
+    repeat(3, 1fr).
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+- id: web-m2-span
+  type: write
+  title: Pahlawan Utama
+  difficulty: 2
+  prompt: Dalam grid tiga kolom (sudah disediakan), buat item pertama (.item:first-child) melebar dua kolom.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri { display: grid; grid-template-columns: repeat(3, 1fr); }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .item:first-child
+    css: grid-column
+    value: span 2
+  - sel: .galeri
+    css: display
+    value: grid
+  hints: |
+    Atur di item, bukan di galeri.
+    grid-column: span n.
+    span 2.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .item:first-child { grid-column: span 2; }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+- id: web-m2-dua
+  type: write
+  title: Kolom Samping
+  difficulty: 2
+  prompt: 'Buat .tata letak grid dua kolom: kolom pertama 200px, kolom kedua mengisi sisa ruang (1fr), gap 20px.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <div class="tata">
+        <aside>Menu</aside>
+        <main>Isi</main>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .tata
+    css: display
+    value: grid
+  - sel: .tata
+    css: grid-template-columns
+    value: 200px 1fr
+  - sel: .tata
+    css: column-gap
+    value: 20px
+  hints: |
+    Dua nilai = dua kolom.
+    Kolom tetap: 200px.
+    Sisa ruang: 1fr.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .tata {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 20px;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="tata">
+        <aside>Menu</aside>
+        <main>Isi</main>
+      </div>
+    </body>
+    </html>

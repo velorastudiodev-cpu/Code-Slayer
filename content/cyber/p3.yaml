@@ -1,0 +1,28 @@
+lesson:
+- text: 'Kategori rev & misc menguji ketelitian: membaca logika program, menyusun potongan data dari lalu lintas jaringan, dan berpikir di luar kebiasaan.'
+exercises:
+- id: cy-lab-pk-dns
+  type: lab
+  title: Bisikan lewat DNS
+  difficulty: 3
+  prompt: 'Lab sandbox: Gabungkan potongan hex dari kueri ke domain bocor.contoh lalu decode. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: pk-dns
+  hints: |
+    Filter dns.
+    Ambil label pertama setiap kueri ke bocor.contoh sesuai urutan.
+    Gabungkan lalu Hex decode.
+- id: cy-p3-dns
+  type: quiz
+  title: Saluran Tersembunyi
+  difficulty: 2
+  prompt: Mengapa penyerang sering memakai DNS untuk eksfiltrasi data?
+  options:
+  - Kueri DNS biasanya diizinkan keluar firewall dan jarang diperiksa
+  - DNS mengenkripsi data secara otomatis
+  - DNS lebih cepat dari HTTP
+  - DNS tidak bisa dicatat
+  explain: Pantau kueri DNS dengan label panjang/acak dan volume tidak wajar.
+  hints: |
+    Apa yang hampir selalu diizinkan keluar?
+    Jarang diawasi.
+    Lolos firewall.

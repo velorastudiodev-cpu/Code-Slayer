@@ -1,0 +1,76 @@
+lesson:
+- text: 'Linux untuk keamanan: file tersembunyi (ls -a), izin berlebih (find -perm), proses mencurigakan (ps aux), dan log (/var/log). Biasakan menyelidiki dengan perintah baca-saja sebelum mengubah apa
+    pun.'
+  code: |
+    ls -la
+    find / -type f -perm -o=w 2>/dev/null
+    ps aux
+    sudo tail -n 50 /var/log/auth.log
+exercises:
+- id: cy-lab-for-tersembunyi
+  type: lab
+  title: Berkas Bertitik
+  difficulty: 1
+  prompt: 'Lab sandbox: Temukan dan baca catatannya. Isinya di-encode. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-tersembunyi
+  hints: |
+    File yang namanya diawali titik tersembunyi.
+    ls -la
+    base64 -d
+- id: cy-lab-for-perm
+  type: lab
+  title: Laci yang Lupa Dikunci
+  difficulty: 2
+  prompt: 'Lab sandbox: Temukan berkas yang bisa dibaca semua user. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-perm
+  hints: |
+    find punya opsi -perm.
+    -perm -o=r atau -perm -004
+    find /opt/arsip -type f -perm -o=r
+- id: cy-lab-for-cari
+  type: lab
+  title: Jarum di Tumpukan Jerami
+  difficulty: 1
+  prompt: 'Lab sandbox: Cari flag di seluruh folder laporan. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-cari
+  hints: |
+    grep bisa mencari rekursif.
+    grep -r
+    grep -r SLAYER laporan/
+- id: cy-f4-suid
+  type: write
+  title: Bit Berbahaya
+  difficulty: 2
+  prompt: Di direktori bin/, tampilkan berkas yang punya bit SUID (berjalan dengan hak pemiliknya), terurut.
+  lang: bash
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p bin
+    echo a > bin/ls
+    echo b > bin/passwd
+    echo c > bin/aneh
+    chmod 755 bin/ls
+    chmod 4755 bin/passwd
+    chmod 4777 bin/aneh
+  hints: |
+    SUID = bit 4000.
+    find -perm -u=s atau -4000.
+    find bin -type f -perm -u=s | sort
+  solution: |
+    find bin -type f -perm -u=s | sort
+- id: cy-f4-least
+  type: quiz
+  title: Hak Paling Sedikit
+  difficulty: 1
+  prompt: Prinsip least privilege berarti...
+  options:
+  - Setiap user/proses hanya diberi hak minimum yang dibutuhkan
+  - Semua user diberi akses root agar cepat
+  - Admin tidak boleh punya hak
+  - Hak diberikan sebanyak-banyaknya lalu dikurangi jika ada masalah
+  explain: Semakin sedikit hak, semakin kecil dampak bila akun/proses dibobol.
+  hints: |
+    Minimum.
+    Kebutuhan saja.
+    Least = paling sedikit.

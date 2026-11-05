@@ -1,0 +1,197 @@
+lesson:
+- text: Method (fungsi) ditulis static TipeKembali Nama(Tipe param) di dalam class. Method yang tidak mengembalikan nilai bertipe void. Method boleh memanggil dirinya sendiri (rekursi).
+  code: |
+    using System;
+
+    class Program
+    {
+        static int Kuadrat(int x)
+        {
+            return x * x;
+        }
+
+        static void Main()
+        {
+            Console.WriteLine(Kuadrat(9));
+        }
+    }
+- text: Bilangan dikirim sebagai salinan. Kata kunci ref mengirim variabelnya sendiri, sehingga method bisa mengubah variabel pemanggil.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Gandakan(ref int x)
+        {
+            x *= 2;
+        }
+
+        static void Main()
+        {
+            int a = 21;
+            Gandakan(ref a);
+            Console.WriteLine(a);
+        }
+    }
+exercises:
+- id: cs-f7-fpb
+  type: write
+  title: FPB Dua Klan
+  difficulty: 2
+  prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - 12 18
+  - 7 13
+  - 100 75
+  - 0 5
+  hints: |
+    fpb(a, 0) = a.
+    fpb(a, b) = fpb(b, a % b).
+    Bisa rekursif atau dengan loop.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static long Fpb(long a, long b)
+        {
+            return b == 0 ? a : Fpb(b, a % b);
+        }
+
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long a = long.Parse(t[0]), b = long.Parse(t[1]);
+            Console.WriteLine(Fpb(a, b));
+        }
+    }
+- id: cs-f7-faktorial
+  type: write
+  title: Faktorial Pernapasan
+  difficulty: 2
+  prompt: Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '5'
+  - '0'
+  - '20'
+  hints: |
+    0! = 1 adalah base case.
+    n! = n × (n-1)!.
+    20! melebihi 32-bit: pakai 64-bit.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static long Faktorial(long n)
+        {
+            return n == 0 ? 1 : n * Faktorial(n - 1);
+        }
+
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long n = long.Parse(t[0]);
+            Console.WriteLine(Faktorial(n));
+        }
+    }
+- id: cs-f7-predict
+  type: predict
+  title: Salinan atau Asli?
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static int Latih(int x)
+        {
+            x = x * 10;
+            return x + 1;
+        }
+
+        static void Main()
+        {
+            int a = 3;
+            int b = Latih(a);
+            Console.WriteLine($"{a} {b}");
+            Latih(b);
+            Console.WriteLine(b);
+        }
+    }
+  hints: |
+    Argumen bilangan dikirim sebagai salinan.
+    Mengubah salinan tidak mengubah variabel pemanggil.
+    Nilai yang dikembalikan lain cerita.
+  solution: x
+- id: cs-f7-bug
+  type: bughunt
+  title: Rekursi Tanpa Ujung
+  difficulty: 2
+  prompt: pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static long Pangkat(long a, long n)
+        {
+            if (n == -1) return 1;
+            return a * Pangkat(a, n - 1);
+        }
+
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long a = long.Parse(t[0]), n = long.Parse(t[1]);
+            Console.WriteLine(Pangkat(a, n));
+        }
+    }
+  bug_line: 7
+  tests:
+  - 2 10
+  - 3 0
+  - 5 3
+  hints: |
+    Setiap rekursi butuh base case.
+    Kapan rekursi harus berhenti?
+    Saat n == 0, kembalikan 1.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static long Pangkat(long a, long n)
+        {
+            if (n == 0) return 1;
+            return a * Pangkat(a, n - 1);
+        }
+
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long a = long.Parse(t[0]), n = long.Parse(t[1]);
+            Console.WriteLine(Pangkat(a, n));
+        }
+    }

@@ -1,0 +1,208 @@
+id: kasir
+title: Kas Korps Pemburu
+track: java
+lang: java
+requires: f7
+emoji: 💰
+story: Bendahara korps mencatat Koban setiap anggota. Buat sistem kas baris perintah; setiap baris input satu perintah.
+starter: |
+  import java.util.*;
+
+  public class Main {
+      public static void main(String[] args) {
+          Scanner in = new Scanner(System.in);
+          while (in.hasNextLine()) {
+              String[] b = in.nextLine().trim().split(" ");
+              // tulis kodemu di sini
+          }
+      }
+  }
+stages:
+- title: Buka & saldo
+  prompt: '"buka <nama> <saldo>" membuat akun; "saldo <nama>" mencetak saldonya atau "akun tidak ada".'
+  tests:
+  - |-
+    buka tanjiro 300
+    buka zenitsu 50
+    saldo tanjiro
+    saldo inosuke
+  - |-
+    buka a 0
+    saldo a
+  hints: |
+    Map<String, Long> untuk akun.
+    Long.parseLong untuk angka.
+    containsKey sebelum get.
+  solution: |
+    import java.util.*;
+
+    public class Main {
+        public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
+            Map<String, Long> akun = new HashMap<>();
+            while (in.hasNextLine()) {
+                String[] b = in.nextLine().trim().split(" ");
+                switch (b[0]) {
+                    case "buka" -> akun.put(b[1], Long.parseLong(b[2]));
+                    case "saldo" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : "akun tidak ada");
+                    default -> { }
+                }
+            }
+        }
+    }
+- title: Setor & tarik
+  prompt: '"setor <nama> <x>" menambah; "tarik <nama> <x>" mengurangi, atau mencetak "saldo kurang" kalau tidak cukup. Akun tak dikenal → "akun tidak ada".'
+  tests:
+  - |-
+    buka tanjiro 100
+    setor tanjiro 50
+    tarik tanjiro 500
+    tarik tanjiro 30
+    saldo tanjiro
+    setor nezuko 5
+  - |-
+    buka a 10
+    tarik a 10
+    saldo a
+  hints: |
+    Periksa akun dulu, lalu saldo.
+    Ubah nilai dengan put.
+    Saldo tidak boleh negatif.
+  solution: |
+    import java.util.*;
+
+    public class Main {
+        public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
+            Map<String, Long> akun = new HashMap<>();
+            while (in.hasNextLine()) {
+                String[] b = in.nextLine().trim().split(" ");
+                switch (b[0]) {
+                    case "buka" -> akun.put(b[1], Long.parseLong(b[2]));
+                    case "saldo" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : "akun tidak ada");
+                    case "setor" -> {
+                        if (!akun.containsKey(b[1])) System.out.println("akun tidak ada");
+                        else akun.put(b[1], akun.get(b[1]) + Long.parseLong(b[2]));
+                    }
+                    case "tarik" -> {
+                        long x = Long.parseLong(b[2]);
+                        if (!akun.containsKey(b[1])) System.out.println("akun tidak ada");
+                        else if (akun.get(b[1]) < x) System.out.println("saldo kurang");
+                        else akun.put(b[1], akun.get(b[1]) - x);
+                    }
+                    default -> { }
+                }
+            }
+        }
+    }
+- title: Transfer
+  prompt: '"transfer <a> <b> <x>" memindahkan x dari a ke b secara utuh: kalau salah satu akun tidak ada atau saldo a kurang, tidak ada yang berubah.'
+  tests:
+  - |-
+    buka tanjiro 100
+    buka zenitsu 20
+    transfer tanjiro zenitsu 70
+    transfer zenitsu tanjiro 500
+    transfer tanjiro nezuko 1
+    saldo tanjiro
+    saldo zenitsu
+  - |-
+    buka a 5
+    buka b 5
+    transfer a b 5
+    saldo b
+  hints: |
+    Periksa SEMUA syarat sebelum mengubah apa pun.
+    Kurangi a, tambah b.
+    Pesan error sama seperti tarik.
+  solution: |
+    import java.util.*;
+
+    public class Main {
+        public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
+            Map<String, Long> akun = new HashMap<>();
+            while (in.hasNextLine()) {
+                String[] b = in.nextLine().trim().split(" ");
+                switch (b[0]) {
+                    case "buka" -> akun.put(b[1], Long.parseLong(b[2]));
+                    case "saldo" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : "akun tidak ada");
+                    case "setor" -> {
+                        if (!akun.containsKey(b[1])) System.out.println("akun tidak ada");
+                        else akun.put(b[1], akun.get(b[1]) + Long.parseLong(b[2]));
+                    }
+                    case "tarik" -> {
+                        long x = Long.parseLong(b[2]);
+                        if (!akun.containsKey(b[1])) System.out.println("akun tidak ada");
+                        else if (akun.get(b[1]) < x) System.out.println("saldo kurang");
+                        else akun.put(b[1], akun.get(b[1]) - x);
+                    }
+                    case "transfer" -> {
+                        long x = Long.parseLong(b[3]);
+                        if (!akun.containsKey(b[1]) || !akun.containsKey(b[2])) System.out.println("akun tidak ada");
+                        else if (akun.get(b[1]) < x) System.out.println("saldo kurang");
+                        else {
+                            akun.put(b[1], akun.get(b[1]) - x);
+                            akun.put(b[2], akun.get(b[2]) + x);
+                        }
+                    }
+                    default -> { }
+                }
+            }
+        }
+    }
+- title: Laporan
+  prompt: '"laporan" mencetak "nama saldo" semua akun, urut saldo terbesar; kalau sama, urut nama.'
+  tests:
+  - |-
+    buka tanjiro 100
+    buka zenitsu 300
+    buka inosuke 100
+    laporan
+  - |-
+    buka a 1
+    setor a 1
+    laporan
+  hints: |
+    Ambil entrySet lalu urutkan.
+    Bandingkan saldo menurun, lalu nama menaik.
+    Cetak dengan forEach.
+  solution: |
+    import java.util.*;
+
+    public class Main {
+        public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
+            Map<String, Long> akun = new HashMap<>();
+            while (in.hasNextLine()) {
+                String[] b = in.nextLine().trim().split(" ");
+                switch (b[0]) {
+                    case "buka" -> akun.put(b[1], Long.parseLong(b[2]));
+                    case "saldo" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : "akun tidak ada");
+                    case "setor" -> {
+                        if (!akun.containsKey(b[1])) System.out.println("akun tidak ada");
+                        else akun.put(b[1], akun.get(b[1]) + Long.parseLong(b[2]));
+                    }
+                    case "tarik" -> {
+                        long x = Long.parseLong(b[2]);
+                        if (!akun.containsKey(b[1])) System.out.println("akun tidak ada");
+                        else if (akun.get(b[1]) < x) System.out.println("saldo kurang");
+                        else akun.put(b[1], akun.get(b[1]) - x);
+                    }
+                    case "transfer" -> {
+                        long x = Long.parseLong(b[3]);
+                        if (!akun.containsKey(b[1]) || !akun.containsKey(b[2])) System.out.println("akun tidak ada");
+                        else if (akun.get(b[1]) < x) System.out.println("saldo kurang");
+                        else {
+                            akun.put(b[1], akun.get(b[1]) - x);
+                            akun.put(b[2], akun.get(b[2]) + x);
+                        }
+                    }
+                    case "laporan" -> akun.entrySet().stream()
+                        .sorted((p, q) -> !p.getValue().equals(q.getValue()) ? Long.compare(q.getValue(), p.getValue()) : p.getKey().compareTo(q.getKey()))
+                        .forEach(e -> System.out.println(e.getKey() + " " + e.getValue()));
+                    default -> { }
+                }
+            }
+        }
+    }

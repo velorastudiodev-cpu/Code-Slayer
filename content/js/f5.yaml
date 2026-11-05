@@ -1,0 +1,140 @@
+lesson:
+  - text: 'if (kondisi) { ... } menjalankan blok kalau kondisinya bernilai true. else if memeriksa kondisi berikutnya, dan else menangkap sisanya. Operator ternary kondisi ? a : b adalah if-else versi pendek yang menghasilkan nilai.'
+    code: |
+      const nilai = 78
+      if (nilai >= 85) console.log("A")
+      else if (nilai >= 70) console.log("B")
+      else console.log("C")
+      console.log(nilai >= 75 ? "lulus" : "ulang")
+  - text: Nilai falsy di JS adalah false, 0, "", null, undefined, dan NaN. Selain itu semuanya truthy, termasuk "0" dan []. switch cocok untuk mencocokkan satu nilai dengan banyak kemungkinan. Jangan lupa break.
+    code: |
+      for (const v of [0, "0", "", [], null]) console.log(JSON.stringify(v), v ? "truthy" : "falsy")
+      switch ("api") {
+        case "air": console.log("Tomioka"); break
+        case "api": console.log("Rengoku"); break
+        default: console.log("?")
+      }
+exercises:
+  - id: js-f5-nilai
+    type: write
+    title: Rapor Kisatsutai
+    difficulty: 1
+    prompt: Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.
+    tests: ["90", "85", "70", "69", "55", "10"]
+    hints: |
+      Periksa dari syarat tertinggi.
+      Pakai rantai if / else if / else.
+      Hanya cabang pertama yang benar yang dijalankan.
+    solution: |
+      const n = Number(readline())
+      if (n >= 85) console.log("A")
+      else if (n >= 70) console.log("B")
+      else if (n >= 55) console.log("C")
+      else console.log("D")
+  - id: js-f5-genap
+    type: write
+    title: Genap atau Ganjil
+    difficulty: 1
+    prompt: Baca bilangan bulat. Cetak "genap" atau "ganjil" (bilangan negatif juga harus benar).
+    tests: ["4", "7", "0", "-3", "-8"]
+    hints: |
+      Gunakan operator sisa bagi %.
+      Di JS, -3 % 2 adalah -1, bukan 1.
+      n % 2 === 0 ? "genap" : "ganjil"
+    solution: |
+      const n = Number(readline())
+      console.log(n % 2 === 0 ? "genap" : "ganjil")
+  - id: js-f5-kabisat
+    type: write
+    title: Tahun Kabisat
+    difficulty: 2
+    prompt: Baca tahun. Cetak "kabisat" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu "bukan".
+    tests: ["2024", "1900", "2000", "2023"]
+    hints: |
+      Habis dibagi berarti % ... === 0.
+      Gabungkan dengan || dan &&.
+      t % 400 === 0 || (t % 4 === 0 && t % 100 !== 0)
+    solution: |
+      const t = Number(readline())
+      console.log(t % 400 === 0 || (t % 4 === 0 && t % 100 !== 0) ? "kabisat" : "bukan")
+  - id: js-f5-predict
+    type: predict
+    title: Jatuh Tanpa Break
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const x = "0"
+      if (x) console.log("A")
+      switch (2) {
+        case 1: console.log("satu")
+        case 2: console.log("dua")
+        case 3: console.log("tiga"); break
+        case 4: console.log("empat")
+      }
+    hints: |
+      "0" adalah string tidak kosong, jadi truthy.
+      Tanpa break, eksekusi berlanjut ke case berikutnya.
+      break di case 3 menghentikannya.
+    solution: x
+  - id: js-f5-bug-sama
+    type: bughunt
+    title: Pengubah Diam-diam
+    difficulty: 2
+    prompt: Program harus mencetak "rahasia terbongkar" hanya jika input sama dengan 42, tapi selalu tercetak. Temukan bug-nya.
+    starter: |
+      let kode = Number(readline())
+      if (kode = 42) console.log("rahasia terbongkar")
+      else console.log("salah")
+    bug_line: 2
+    tests: ["42", "7", "0"]
+    hints: |
+      = adalah assignment, bukan perbandingan.
+      kode = 42 mengisi kode lalu bernilai 42 (truthy).
+      if (kode === 42)
+    solution: |
+      let kode = Number(readline())
+      if (kode === 42) console.log("rahasia terbongkar")
+      else console.log("salah")
+  - id: js-f5-parsons
+    type: parsons
+    title: Tanda Bilangan
+    difficulty: 1
+    prompt: Susun program yang mencetak "positif", "negatif", atau "nol".
+    tests: ["5", "-3", "0"]
+    hints: |
+      Baca n dulu.
+      Urutannya if, else if, else.
+      Setiap cabang punya console.log sendiri.
+    solution: |
+      const n = Number(readline())
+      if (n > 0) {
+        console.log("positif")
+      } else if (n < 0) {
+        console.log("negatif")
+      } else {
+        console.log("nol")
+      }
+  - id: js-f5-translate
+    type: translate
+    title: Terjemahkan Rapor
+    difficulty: 1
+    prompt: Tulis ulang program Python ini dalam JavaScript.
+    from_lang: python
+    from_code: |
+      n = int(input())
+      if n >= 85:
+          print("A")
+      elif n >= 70:
+          print("B")
+      else:
+          print("C")
+    tests: ["90", "70", "10"]
+    hints: |
+      input() menjadi readline(), dan int() menjadi Number().
+      elif menjadi else if.
+      print menjadi console.log.
+    solution: |
+      const n = Number(readline())
+      if (n >= 85) console.log("A")
+      else if (n >= 70) console.log("B")
+      else console.log("C")

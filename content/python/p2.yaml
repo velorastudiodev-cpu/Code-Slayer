@@ -1,0 +1,158 @@
+lesson:
+  - text: Kode "pythonic" memakai fitur bahasa secara wajar. enumerate untuk indeks dan nilai, zip untuk mengiterasi beberapa list bersamaan, unpacking a, *b = ..., comprehension, serta any dan all. Kode seperti ini lebih pendek dan lebih mudah dibaca.
+    code: |
+      nama = ["Tanjiro", "Zenitsu"]
+      skor = [90, 75]
+      for i, (n, s) in enumerate(zip(nama, skor), 1):
+          print(i, n, s)
+      pertama, *sisa = [1, 2, 3, 4]
+      print(pertama, sisa, any(x > 3 for x in sisa))
+  - text: Prinsip lain adalah EAFP, yaitu lebih mudah minta maaf daripada izin (coba dulu, tangani exception). Pakai nama yang jelas, buat fungsi kecil yang fokus, dan manfaatkan pustaka standar sebelum menulis sendiri.
+    code: |
+      data = {"Tanjiro": 15}
+      try:
+          print(data["Giyu"])
+      except KeyError:
+          print("tidak ada")
+      print(max(["air", "petir", "api"], key=len))
+exercises:
+  - id: py-p2-enumerate
+    type: write
+    title: Daftar Bernomor
+    difficulty: 1
+    prompt: Baca satu baris kata. Cetak setiap kata dengan format "<nomor>. <kata>" mulai dari 1, memakai enumerate.
+    tests: ["air api petir", "kaa"]
+    hints: |
+      enumerate(daftar, 1) mulai dari 1.
+      for i, k in enumerate(...)
+      print(f"{i}. {k}")
+    solution: |
+      for i, k in enumerate(input().split(), 1):
+          print(f"{i}. {k}")
+  - id: py-p2-zip
+    type: write
+    title: Papan Skor
+    difficulty: 2
+    prompt: 'Baris 1 berisi nama-nama, baris 2 berisi skor masing-masing. Cetak "<nama>: <skor>" urut dari skor tertinggi. Jika skor seri, urut menurut nama.'
+    tests: ["Tanjiro Zenitsu Inosuke\n90 75 90", "A\n1"]
+    hints: |
+      zip menggabungkan nama dan skor menjadi pasangan.
+      sorted dengan key=lambda p: (-p[1], p[0]).
+      Ubah skor ke int dulu.
+    solution: |
+      nama = input().split()
+      skor = map(int, input().split())
+      for n, s in sorted(zip(nama, skor), key=lambda p: (-p[1], p[0])):
+          print(f"{n}: {s}")
+  - id: py-p2-predict
+    type: predict
+    title: Bongkar Muatan
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      a, *b, c = [1, 2, 3, 4, 5]
+      print(a, b, c)
+      print(any(x > 4 for x in b), all(x > 1 for x in b))
+    hints: |
+      a mengambil yang pertama, c yang terakhir.
+      *b mengambil sisanya sebagai list.
+      b berisi 2, 3, 4.
+    solution: x
+  - id: py-p2-parsons
+    type: parsons
+    title: Akumulasi Poin
+    difficulty: 2
+    prompt: Baris pertama berisi n, lalu n baris "nama poin". Susun program yang menjumlahkan poin per nama dan mencetaknya urut menurut nama.
+    tests: ["4\nTanjiro 5\nZenitsu 3\nTanjiro 2\nInosuke 4", "1\nA 1"]
+    hints: |
+      Siapkan dict kosong sebelum loop.
+      Di dalam loop, pecah baris lalu tambahkan poinnya.
+      Loop pencetakan ada di akhir.
+    solution: |
+      n = int(input())
+      skor = {}
+      for _ in range(n):
+          nama, nilai = input().split()
+          skor[nama] = skor.get(nama, 0) + int(nilai)
+      for nama, total in sorted(skor.items()):
+          print(nama, total)
+  - id: py-p2-terpanjang
+    type: write
+    title: Satu Baris yang Bersih
+    difficulty: 1
+    prompt: Baca satu baris kata. Cetak kata terpanjang (yang muncul pertama jika seri). Coba selesaikan dalam satu ekspresi dengan max(..., key=...).
+    tests: ["air api petir", "aa bb", "nezuko kamado tanjiro"]
+    hints: |
+      max bisa menerima key.
+      key=len membandingkan panjangnya.
+      print(max(input().split(), key=len))
+    solution: print(max(input().split(), key=len))
+  - id: py-p2-refactor-enumerate
+    type: refactor
+    title: Refactor Penomoran
+    difficulty: 1
+    prompt: Kode ini benar tapi tidak pythonic. Refactor memakai enumerate tanpa penghitung manual. Output harus tetap sama.
+    starter: |
+      kata = input().split()
+      i = 0
+      for k in kata:
+          print(str(i + 1) + ". " + k)
+          i = i + 1
+    rules:
+      - text: Memakai enumerate
+        require: 'enumerate\('
+      - text: Tanpa penghitung manual (i = i + 1)
+        forbid: 'i\s*=\s*i\s*\+'
+    tests: ["air api petir", "kaa"]
+    hints: |
+      enumerate(daftar, 1) mulai dari 1.
+      for i, k in enumerate(...)
+      Gunakan f-string.
+    solution: |
+      for i, k in enumerate(input().split(), 1):
+          print(f"{i}. {k}")
+  - id: py-p2-refactor-comprehension
+    type: refactor
+    title: Refactor ke Comprehension
+    difficulty: 2
+    prompt: Ringkas kode ini menjadi list comprehension. Output harus tetap sama.
+    starter: |
+      angka = list(map(int, input().split()))
+      hasil = []
+      for x in angka:
+          if x % 2 == 0:
+              hasil.append(x * x)
+      print(hasil)
+    rules:
+      - text: Maksimal 2 baris kode
+        max_lines: 2
+      - text: Tanpa .append
+        forbid: '\.append\('
+    tests: ["1 2 3 4", "1 3", "10"]
+    hints: |
+      Bentuknya [ekspresi for x in data if syarat].
+      Ekspresinya x * x dengan syarat x % 2 == 0.
+      print([...]) langsung.
+    solution: |
+      angka = list(map(int, input().split()))
+      print([x * x for x in angka if x % 2 == 0])
+  - id: py-p2-review
+    type: review
+    title: Review Gaya Kode
+    difficulty: 1
+    prompt: Kode ini berjalan benar tapi tidak sesuai best practice Python. Tandai baris yang perlu diperbaiki.
+    code: |
+      def Hitung_Total(L):
+          t = 0
+          for i in range(len(L)):
+              t = t + L[i]
+          return t
+    issues:
+      - line: 1
+        text: Nama fungsi sebaiknya snake_case (hitung_total), dan parameter L tidak deskriptif.
+      - line: 3
+        text: Loop indeks tidak perlu. Seluruh fungsi cukup return sum(daftar).
+    hints: |
+      Lihat konvensi penamaan PEP 8.
+      Apakah ada fungsi bawaan untuk menjumlahkan?
+      Ada dua baris.

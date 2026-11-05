@@ -1,0 +1,165 @@
+lesson:
+- text: 'Warna bisa ditulis dengan nama (crimson), hex (#b3122e), atau rgb(). Tipografi: font-family (pilih cadangan, misalnya sans-serif), font-size, font-weight, line-height (jarak baris, 1.5–1.7 nyaman
+    dibaca), text-align.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    body { font-family: Georgia, serif; line-height: 1.6; }
+    h1 { color: #b3122e; }
+      </style>
+    </head>
+    <body>
+      <h1>Korps</h1>
+      <p>Teks yang nyaman dibaca punya jarak baris cukup.</p>
+    </body>
+    </html>
+- text: Pastikan kontras teks dan latar cukup (minimal 4.5:1 untuk teks biasa). Teks abu-abu muda di atas putih sulit dibaca, terutama di layar HP di bawah matahari.
+exercises:
+- id: web-f7-tipografi
+  type: write
+  title: Gaya Surat Korps
+  difficulty: 1
+  prompt: 'Atur body memakai font-family sans-serif dan line-height 1.6, lalu h1 berwarna #b3122e.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <h1>Surat Korps</h1>
+      <p>Misi berikutnya di Desa Penempa.</p>
+    </body>
+    </html>
+  checks:
+  - sel: p
+    css: font-family
+    value: sans-serif
+  - sel: p
+    css: line-height
+    value: '1.6'
+  - sel: h1
+    css: color
+    value: '#b3122e'
+  hints: |
+    font-family dan line-height diwariskan ke anak.
+    Cukup pasang di body.
+    h1 { color: #b3122e; }
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    body { font-family: sans-serif; line-height: 1.6; }
+    h1 { color: #b3122e; }
+      </style>
+    </head>
+    <body>
+      <h1>Surat Korps</h1>
+      <p>Misi berikutnya di Desa Penempa.</p>
+    </body>
+    </html>
+- id: web-f7-footer
+  type: write
+  title: Kaki Halaman
+  difficulty: 1
+  prompt: 'Buat footer: teks rata tengah, tebal, dan berwarna gray.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <main><p>Isi</p></main>
+      <footer>Hak cipta Korps</footer>
+    </body>
+    </html>
+  checks:
+  - sel: footer
+    css: text-align
+    value: center
+  - sel: footer
+    css: font-weight
+    value: bold
+  - sel: footer
+    css: color
+    value: gray
+  hints: |
+    text-align untuk perataan.
+    font-weight: bold.
+    color: gray.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    footer { text-align: center; font-weight: bold; color: gray; }
+      </style>
+    </head>
+    <body>
+      <main><p>Isi</p></main>
+      <footer>Hak cipta Korps</footer>
+    </body>
+    </html>
+- id: web-f7-bug
+  type: bughunt
+  title: Warna Ejaan Inggris
+  difficulty: 1
+  prompt: Judul seharusnya merah tua, tapi tetap hitam karena nama properti salah. Temukan baris yang salah.
+  starter: |
+    <!doctype html>
+    <style>
+      h1 {
+        colour: darkred;
+      }
+    </style>
+    <h1>Korps</h1>
+  bug_line: 4
+  checks:
+  - sel: h1
+    css: color
+    value: darkred
+  hints: |
+    CSS memakai ejaan Amerika.
+    Properti yang tidak dikenal diabaikan diam-diam.
+    color, bukan colour.
+  solution: |
+    <!doctype html>
+    <style>
+      h1 {
+        color: darkred;
+      }
+    </style>
+    <h1>Korps</h1>
+- id: web-f7-kontras
+  type: quiz
+  title: Mudah Dibaca?
+  difficulty: 1
+  prompt: Kombinasi mana yang PALING mudah dibaca untuk paragraf panjang?
+  options:
+  - 'Teks #222 di atas latar #fafafa'
+  - 'Teks #ccc di atas latar #fff'
+  - Teks kuning di atas latar putih
+  - Teks merah di atas latar hijau
+  explain: Kontras tinggi (gelap di atas terang) membuat teks mudah dibaca. Abu-abu muda di atas putih dan kuning di atas putih punya kontras rendah; merah-hijau menyulitkan orang buta warna.
+  hints: |
+    Cari kontras paling tinggi.
+    Gelap di atas terang.
+    Hindari merah-hijau.

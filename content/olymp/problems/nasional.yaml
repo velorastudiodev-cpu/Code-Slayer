@@ -1,0 +1,621 @@
+# Soal orisinal setara OSN (nasional): DP, graph, shortest path, MST, DSU, teori bilangan, kombinatorika.
+- id: ol-n-ransel
+  title: Ransel Perbekalan
+  stage: nasional
+  topics: [dp, knapsack]
+  tl: 1000
+  statement: |
+    Sebelum misi ke Gunung Natagumo, Tanjiro bisa membawa barang dengan total berat paling banyak W. Ada N barang;
+    barang ke-i berbobot w_i dan bernilai v_i. Setiap barang hanya ada satu. Berapa total nilai maksimum yang bisa dibawa?
+  input: |
+    Baris pertama N dan W. N baris berikutnya berisi w_i dan v_i.
+  output: |
+    Total nilai maksimum.
+  constraints: |
+    1 ≤ N ≤ 200, 1 ≤ W ≤ 100.000, 1 ≤ w_i ≤ W, 1 ≤ v_i ≤ 10^9
+  samples: ["4 7\n3 4\n4 5\n2 3\n5 8\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 18"
+      tests: [{gen: "const n=18;let s=n+' 1000\\n';for(let i=0;i<n;i++)s+=R.int(1,200)+' '+R.int(1,1e9)+'\\n';return s", seed: 101}, "1 1\n1 5\n", "2 3\n4 9\n3 1\n"]
+    - points: 70
+      desc: "N ≤ 200, W ≤ 100.000"
+      tests: [{gen: "const n=200,W=100000;let s=n+' '+W+'\\n';for(let i=0;i<n;i++)s+=R.int(1,W/20)+' '+R.int(1,1e9)+'\\n';return s", seed: 102}, {gen: "const n=200,W=99991;let s=n+' '+W+'\\n';for(let i=0;i<n;i++)s+=R.int(1,W)+' '+R.int(1,1e9)+'\\n';return s", seed: 103}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n, W; scanf("%d %d", &n, &W);
+        vector<long long> dp(W + 1, 0);
+        for (int i = 0; i < n; i++) {
+            int w; long long v; scanf("%d %lld", &w, &v);
+            for (int c = W; c >= w; c--) dp[c] = max(dp[c], dp[c - w] + v); // mundur: setiap barang sekali
+        }
+        printf("%lld\n", dp[W]);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n, W; scanf("%d %d", &n, &W);
+          vector<long long> w(n), v(n); for (int i = 0; i < n; i++) scanf("%lld %lld", &w[i], &v[i]);
+          long long best = 0;
+          for (long long m = 0; m < (1LL << min(n, 62)); m++) { long long tw = 0, tv = 0; for (int i = 0; i < n; i++) if (m >> i & 1) { tw += w[i]; tv += v[i]; } if (tw <= W) best = max(best, tv); }
+          printf("%lld\n", best);
+      }
+  editorial:
+    hint: Mencoba semua himpunan barang butuh 2^N langkah. Kapasitas W cukup kecil; bisakah dijadikan dimensi DP?
+    idea: dp[c] = nilai maksimum dengan kapasitas c memakai barang-barang yang sudah diproses.
+    solution: Untuk setiap barang, perbarui dp dari c = W turun ke w_i (agar barang tidak dipakai dua kali).
+    complexity: O(N·W)
+
+- id: ol-n-lis
+  title: Formasi Naik
+  stage: nasional
+  topics: [dp, binary-search]
+  tl: 1000
+  statement: |
+    N slayer berbaris dengan tinggi H_1 … H_N. Pilih sebanyak mungkin slayer (urutan barisan tetap) sehingga tinggi mereka NAIK KETAT.
+    Cetak banyak slayer maksimum.
+  input: |
+    Baris pertama N. Baris kedua H_1 … H_N.
+  output: |
+    Panjang subbarisan naik ketat terpanjang.
+  constraints: |
+    1 ≤ N ≤ 200.000, 1 ≤ H_i ≤ 10^9
+  samples: ["6\n3 1 4 1 5 9\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 5000"
+      tests: [{gen: "const n=5000;return n+'\\n'+R.arr(n,1,1e9).join(' ')", seed: 111}, {gen: "const n=5000;return n+'\\n'+R.arr(n,1,5).join(' ')", seed: 112}, "1\n7\n"]
+    - points: 60
+      desc: "N ≤ 200.000"
+      tests: [{gen: "const n=200000;return n+'\\n'+R.arr(n,1,1e9).join(' ')", seed: 113}, {gen: "const n=200000;return n+'\\n'+Array.from({length:n},(_, i)=>i+1).join(' ')", seed: 114}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; scanf("%d", &n);
+        vector<int> ujung; // ujung[k] = tinggi terkecil yang mengakhiri barisan naik sepanjang k+1
+        for (int i = 0; i < n; i++) {
+            int h; scanf("%d", &h);
+            auto it = lower_bound(ujung.begin(), ujung.end(), h);
+            if (it == ujung.end()) ujung.push_back(h); else *it = h;
+        }
+        printf("%zu\n", ujung.size());
+    }
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n; scanf("%d", &n); vector<int> h(n), dp(n, 1);
+          for (auto &x : h) scanf("%d", &x);
+          int best = 0;
+          for (int i = 0; i < n; i++) { for (int j = 0; j < i; j++) if (h[j] < h[i]) dp[i] = max(dp[i], dp[j] + 1); best = max(best, dp[i]); }
+          printf("%d\n", best);
+      }
+  editorial:
+    hint: DP O(N²) membandingkan setiap pasangan. Informasi apa yang cukup disimpan untuk setiap panjang barisan?
+    idea: Untuk setiap panjang k, simpan nilai akhir terkecil dari barisan naik sepanjang k. Array ini selalu terurut.
+    solution: Untuk setiap H_i, ganti elemen lower_bound(H_i) dengan H_i, atau tambahkan di akhir. Panjang array = jawaban.
+    complexity: O(N log N)
+
+- id: ol-n-hutan
+  title: Keluar dari Hutan Iblis
+  stage: nasional
+  topics: [graph, bfs]
+  tl: 1000
+  statement: |
+    Hutan digambarkan sebagai grid R×C: '.' jalan, '#' pohon, 'S' posisi Nezuko, 'E' pintu keluar. Setiap langkah berpindah ke petak
+    atas/bawah/kiri/kanan yang bukan pohon. Berapa langkah minimum dari S ke E? Cetak -1 jika tidak mungkin.
+  input: |
+    Baris pertama R dan C. R baris berikutnya berisi grid.
+  output: |
+    Langkah minimum, atau -1.
+  constraints: |
+    1 ≤ R, C ≤ 1000, tepat satu S dan satu E
+  samples: ["3 4\nS..#\n.#..\n...E\n"]
+  subtasks:
+    - points: 20
+      desc: "R, C ≤ 4"
+      tests: ["4 4\nS...\n.##.\n.#..\n...E\n", "2 2\nS#\n#E\n", "1 2\nSE\n", "4 4\nS.#.\n..#.\n.#..\n...E\n"]
+    - points: 80
+      desc: "R, C ≤ 1000"
+      tests: [{gen: "const r=1000,c=1000;const g=[];for(let i=0;i<r;i++){let row='';for(let j=0;j<c;j++)row+=R.int(0,99)<25?'#':'.';g.push(row.split(''))}g[0][0]='S';g[r-1][c-1]='E';return r+' '+c+'\\n'+g.map(x=>x.join('')).join('\\n')", seed: 121}, {gen: "const r=1000,c=1000;const g=[];for(let i=0;i<r;i++){const row=Array(c).fill('.');if(i%2==1){for(let j=0;j<c;j++)row[j]='#';row[(i%4==1)?c-1:0]='.'}g.push(row)}g[0][0]='S';g[r-1][0]='E';return r+' '+c+'\\n'+g.map(x=>x.join('')).join('\\n')", seed: 122}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int r, c; scanf("%d %d", &r, &c);
+        vector<string> g(r); char buf[1005];
+        int sr = 0, sc = 0;
+        for (int i = 0; i < r; i++) { scanf("%s", buf); g[i] = buf; for (int j = 0; j < c; j++) if (g[i][j] == 'S') sr = i, sc = j; }
+        vector<vector<int>> d(r, vector<int>(c, -1));
+        queue<pair<int,int>> q; q.push({sr, sc}); d[sr][sc] = 0;
+        int dr[] = {1, -1, 0, 0}, dc[] = {0, 0, 1, -1};
+        while (!q.empty()) {
+            auto [i, j] = q.front(); q.pop();
+            if (g[i][j] == 'E') { printf("%d\n", d[i][j]); return 0; }
+            for (int k = 0; k < 4; k++) {
+                int a = i + dr[k], b = j + dc[k];
+                if (a < 0 || b < 0 || a >= r || b >= c || g[a][b] == '#' || d[a][b] != -1) continue;
+                d[a][b] = d[i][j] + 1; q.push({a, b});
+            }
+        }
+        printf("-1\n");
+    }
+  naive:
+    score: 20
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int r, c, best = INT_MAX; vector<string> g; vector<vector<bool>> vis;
+      void dfs(int i, int j, int d) { // coba semua jalur sederhana
+          if (g[i][j] == 'E') { best = min(best, d); return; }
+          int dr[] = {1, -1, 0, 0}, dc[] = {0, 0, 1, -1};
+          for (int k = 0; k < 4; k++) { int a = i + dr[k], b = j + dc[k]; if (a < 0 || b < 0 || a >= r || b >= c || g[a][b] == '#' || vis[a][b]) continue; vis[a][b] = true; dfs(a, b, d + 1); vis[a][b] = false; }
+      }
+      int main() {
+          scanf("%d %d", &r, &c); g.resize(r); vis.assign(r, vector<bool>(c)); char buf[1005];
+          int sr = 0, sc = 0;
+          for (int i = 0; i < r; i++) { scanf("%s", buf); g[i] = buf; for (int j = 0; j < c; j++) if (g[i][j] == 'S') sr = i, sc = j; }
+          vis[sr][sc] = true; dfs(sr, sc, 0);
+          printf("%d\n", best == INT_MAX ? -1 : best);
+      }
+  editorial:
+    hint: Menelusuri semua jalur dengan DFS meledak secara eksponensial. Semua langkah berbiaya sama (1).
+    idea: BFS dari S mengunjungi petak dalam urutan jarak yang tidak menurun, sehingga kunjungan pertama ke E adalah jarak minimum.
+    solution: BFS dengan antrean, simpan jarak setiap petak, abaikan pohon dan petak yang sudah dikunjungi.
+    complexity: O(R·C)
+
+- id: ol-n-dijkstra
+  title: Rute Gagak Tercepat
+  stage: nasional
+  topics: [graph, shortest-path]
+  tl: 1000
+  statement: |
+    Ada N desa dan M jalur gagak dua arah; jalur ke-i menghubungkan U_i dan V_i dengan waktu terbang T_i.
+    Berapa waktu tercepat dari desa 1 ke desa N? Cetak -1 jika tidak terhubung.
+  input: |
+    Baris pertama N dan M. M baris berikutnya berisi U_i, V_i, T_i.
+  output: |
+    Waktu tercepat, atau -1.
+  constraints: |
+    2 ≤ N ≤ 200.000, 1 ≤ M ≤ 300.000, 1 ≤ T_i ≤ 10^9
+  samples: ["4 4\n1 2 5\n2 4 1\n1 3 2\n3 4 7\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 2000, M ≤ 5000"
+      tests: [{gen: "const n=2000,m=5000;let s=n+' '+m+'\\n';for(let i=0;i<m;i++)s+=R.int(1,n)+' '+R.int(1,n)+' '+R.int(1,1e9)+'\\n';return s", seed: 131}, "2 1\n1 1 5\n"]
+    - points: 60
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,m=300000;const L=[];for(let i=1;i<n;i++)L.push(i+' '+(i+1)+' '+R.int(1,1e9));for(let i=n-1;i<m;i++)L.push(R.int(1,n)+' '+R.int(1,n)+' '+R.int(1,1e9));return n+' '+m+'\\n'+L.join('\\n')", seed: 132}, {gen: "const n=200000,m=300000;const L=[];for(let i=0;i<m;i++)L.push(R.int(1,n)+' '+R.int(1,n)+' '+R.int(1,100));return n+' '+m+'\\n'+L.join('\\n')", seed: 133}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n, m; scanf("%d %d", &n, &m);
+        vector<vector<pair<int,long long>>> adj(n + 1);
+        for (int i = 0; i < m; i++) { int u, v; long long t; scanf("%d %d %lld", &u, &v, &t); adj[u].push_back({v, t}); adj[v].push_back({u, t}); }
+        vector<long long> d(n + 1, LLONG_MAX); d[1] = 0;
+        priority_queue<pair<long long,int>, vector<pair<long long,int>>, greater<>> pq; pq.push({0, 1});
+        while (!pq.empty()) {
+            auto [du, u] = pq.top(); pq.pop();
+            if (du != d[u]) continue;
+            for (auto [v, t] : adj[u]) if (du + t < d[v]) { d[v] = du + t; pq.push({d[v], v}); }
+        }
+        printf("%lld\n", d[n] == LLONG_MAX ? -1 : d[n]);
+    }
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() { // Dijkstra O(N²) tanpa heap
+          int n, m; scanf("%d %d", &n, &m);
+          vector<vector<pair<int,long long>>> adj(n + 1);
+          for (int i = 0; i < m; i++) { int u, v; long long t; scanf("%d %d %lld", &u, &v, &t); adj[u].push_back({v, t}); adj[v].push_back({u, t}); }
+          vector<long long> d(n + 1, LLONG_MAX); vector<bool> done(n + 1); d[1] = 0;
+          for (int it = 0; it < n; it++) {
+              int u = -1; for (int i = 1; i <= n; i++) if (!done[i] && d[i] != LLONG_MAX && (u == -1 || d[i] < d[u])) u = i;
+              if (u == -1) break; done[u] = true;
+              for (auto [v, t] : adj[u]) d[v] = min(d[v], d[u] + t);
+          }
+          printf("%lld\n", d[n] == LLONG_MAX ? -1 : d[n]);
+      }
+  editorial:
+    hint: Bobot jalur berbeda-beda, jadi BFS biasa tidak cukup. Bagaimana cara cepat memilih desa dengan jarak sementara terkecil?
+    idea: Dijkstra dengan min-heap. Entri heap yang usang (jaraknya sudah lebih baik) dilewati.
+    solution: Mulai dari desa 1, relaksasi tetangga dan masukkan ke heap; total waktu bisa melebihi int, pakai long long.
+    complexity: O((N + M) log M)
+
+- id: ol-n-mst
+  title: Jaringan Kabel Desa
+  stage: nasional
+  topics: [graph, mst, dsu]
+  tl: 1000
+  statement: |
+    Kepala Desa ingin menghubungkan N rumah dengan kabel. Ada M kemungkinan kabel; kabel ke-i menghubungkan U_i dan V_i dengan biaya C_i.
+    Pilih kabel agar semua rumah terhubung dengan total biaya minimum. Cetak -1 bila mustahil.
+  input: |
+    Baris pertama N dan M. M baris berikutnya berisi U_i, V_i, C_i.
+  output: |
+    Total biaya minimum, atau -1.
+  constraints: |
+    1 ≤ N ≤ 200.000, 0 ≤ M ≤ 300.000, 1 ≤ C_i ≤ 10^9
+  samples: ["4 5\n1 2 3\n2 3 1\n3 4 4\n1 4 2\n1 3 5\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 2000, M ≤ 5000"
+      tests: [{gen: "const n=2000,m=5000;const L=[];for(let i=2;i<=n;i++)L.push(R.int(1,i-1)+' '+i+' '+R.int(1,1e9));for(let i=n-1;i<m;i++)L.push(R.int(1,n)+' '+R.int(1,n)+' '+R.int(1,1e9));return n+' '+m+'\\n'+L.join('\\n')", seed: 141}, "3 1\n1 2 5\n", "1 0\n"]
+    - points: 60
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,m=300000;const L=[];for(let i=2;i<=n;i++)L.push(R.int(1,i-1)+' '+i+' '+R.int(1,1e9));for(let i=n-1;i<m;i++)L.push(R.int(1,n)+' '+R.int(1,n)+' '+R.int(1,1e9));return n+' '+m+'\\n'+L.join('\\n')", seed: 142}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    vector<int> p;
+    int cari(int x) { while (p[x] != x) x = p[x] = p[p[x]]; return x; }
+    int main() {
+        int n, m; scanf("%d %d", &n, &m);
+        vector<array<long long,3>> e(m);
+        for (auto &x : e) scanf("%lld %lld %lld", &x[1], &x[2], &x[0]);
+        sort(e.begin(), e.end());
+        p.resize(n + 1); iota(p.begin(), p.end(), 0);
+        long long total = 0; int pakai = 0;
+        for (auto [c, u, v] : e) { int a = cari(u), b = cari(v); if (a != b) { p[a] = b; total += c; pakai++; } }
+        printf("%lld\n", pakai == n - 1 ? total : -1);
+    }
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() { // Kruskal dengan cek keterhubungan lewat BFS setiap kali: O(M·(N+M))
+          int n, m; scanf("%d %d", &n, &m);
+          vector<array<long long,3>> e(m);
+          for (auto &x : e) scanf("%lld %lld %lld", &x[1], &x[2], &x[0]);
+          sort(e.begin(), e.end());
+          vector<vector<int>> adj(n + 1); long long total = 0; int pakai = 0;
+          for (auto [c, u, v] : e) {
+              vector<bool> vis(n + 1); queue<int> q; q.push(u); vis[u] = true;
+              while (!q.empty()) { int x = q.front(); q.pop(); for (int y : adj[x]) if (!vis[y]) { vis[y] = true; q.push(y); } }
+              if (!vis[v]) { adj[u].push_back(v); adj[v].push_back(u); total += c; pakai++; }
+          }
+          printf("%lld\n", pakai == n - 1 ? total : -1);
+      }
+  editorial:
+    hint: Kabel termurah yang menghubungkan dua kelompok berbeda selalu aman diambil (sifat potong / cut property).
+    idea: Kruskal. Urutkan kabel dari termurah; ambil kabel jika kedua ujungnya belum terhubung. Cek keterhubungan cepat dengan Disjoint Set Union.
+    solution: DSU dengan path compression; hitung kabel yang diambil, jika kurang dari N−1 berarti tidak terhubung.
+    complexity: O(M log M)
+
+- id: ol-n-dsu
+  title: Aliansi Pilar
+  stage: nasional
+  topics: [dsu]
+  tl: 1000
+  statement: |
+    Ada N slayer. Q kejadian datang berurutan:
+    "1 a b": slayer a dan b membentuk aliansi (aliansi mereka bergabung).
+    "2 a b": apakah a dan b sudah satu aliansi?
+    Cetak banyak pertanyaan tipe 2 yang jawabannya YA.
+  input: |
+    Baris pertama N dan Q. Q baris berikutnya berisi kejadian.
+  output: |
+    Banyak jawaban YA.
+  constraints: |
+    1 ≤ N, Q ≤ 200.000
+  samples: ["4 5\n1 1 2\n2 1 2\n2 1 3\n1 2 3\n2 1 3\n"]
+  subtasks:
+    - points: 30
+      desc: "N, Q ≤ 2000"
+      tests: [{gen: "const n=2000,q=2000;const L=[];for(let i=0;i<q;i++)L.push(R.int(1,2)+' '+R.int(1,n)+' '+R.int(1,n));return n+' '+q+'\\n'+L.join('\\n')", seed: 151}]
+    - points: 70
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,q=200000;const L=[];for(let i=1;i<n&&L.length<q/2;i++)L.push('1 '+i+' '+(i+1));while(L.length<q)L.push('2 '+R.int(1,n)+' '+R.int(1,n));return n+' '+q+'\\n'+L.join('\\n')", seed: 152}, {gen: "const n=200000,q=200000;const L=[];for(let i=0;i<q;i++)L.push(R.int(1,2)+' '+R.int(1,n)+' '+R.int(1,n));return n+' '+q+'\\n'+L.join('\\n')", seed: 153}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    vector<int> p, sz;
+    int cari(int x) { while (p[x] != x) x = p[x] = p[p[x]]; return x; }
+    void gabung(int a, int b) { a = cari(a); b = cari(b); if (a == b) return; if (sz[a] < sz[b]) swap(a, b); p[b] = a; sz[a] += sz[b]; }
+    int main() {
+        int n, q; scanf("%d %d", &n, &q);
+        p.resize(n + 1); sz.assign(n + 1, 1); iota(p.begin(), p.end(), 0);
+        int ya = 0;
+        while (q--) { int t, a, b; scanf("%d %d %d", &t, &a, &b); if (t == 1) gabung(a, b); else ya += cari(a) == cari(b); }
+        printf("%d\n", ya);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() { // simpan graf, jawab dengan BFS setiap pertanyaan
+          int n, q; scanf("%d %d", &n, &q);
+          vector<vector<int>> adj(n + 1); int ya = 0;
+          while (q--) {
+              int t, a, b; scanf("%d %d %d", &t, &a, &b);
+              if (t == 1) { adj[a].push_back(b); adj[b].push_back(a); continue; }
+              vector<bool> vis(n + 1); queue<int> qq; qq.push(a); vis[a] = true;
+              while (!qq.empty()) { int x = qq.front(); qq.pop(); for (int y : adj[x]) if (!vis[y]) { vis[y] = true; qq.push(y); } }
+              ya += vis[b];
+          }
+          printf("%d\n", ya);
+      }
+  editorial:
+    hint: Aliansi hanya bergabung, tidak pernah pecah. Kita hanya perlu tahu "ketua" aliansi setiap slayer.
+    idea: Disjoint Set Union dengan path compression + union by size; setiap operasi hampir O(1).
+    solution: Tipe 1 → gabung(a, b); tipe 2 → bandingkan cari(a) dan cari(b).
+    complexity: O((N + Q) α(N))
+
+- id: ol-n-phi
+  title: Sahabat Sejati
+  stage: nasional
+  topics: [teori-bilangan, sieve]
+  tl: 1500
+  statement: |
+    Bilangan x dan y bersahabat sejati jika FPB(x, y) = 1. Untuk setiap pertanyaan X, hitung banyak bilangan y di [1, X] yang bersahabat sejati dengan X
+    (fungsi Euler φ(X)). Cetak jumlah semua jawaban.
+  input: |
+    Baris pertama Q. Baris kedua X_1 … X_Q.
+  output: |
+    Σ φ(X_i).
+  constraints: |
+    1 ≤ Q ≤ 300.000, 1 ≤ X_i ≤ 10^7
+  samples: ["3\n1 6 10\n"]
+  subtasks:
+    - points: 30
+      desc: "Q ≤ 1000"
+      tests: [{gen: "const q=1000;return q+'\\n'+R.arr(q,1,1e7).join(' ')", seed: 161}, "1\n9999991\n"]
+    - points: 70
+      desc: "Q ≤ 300.000"
+      tests: [{gen: "const P=[];for(let x=2000;x<=3162;x++){let ok=true;for(let d=2;d*d<=x;d++)if(x%d==0){ok=false;break}if(ok)P.push(x)}const q=300000;const X=[];for(let i=0;i<q;i++)X.push(R.pick(P)*R.pick(P));return q+'\\n'+X.join(' ')", seed: 162}, {gen: "const q=300000;return q+'\\n'+R.arr(q,9e6,1e7).join(' ')", seed: 163}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int q; scanf("%d", &q);
+        vector<int> x(q); int mx = 1;
+        for (auto &v : x) { scanf("%d", &v); mx = max(mx, v); }
+        vector<int> phi(mx + 1);
+        iota(phi.begin(), phi.end(), 0);
+        for (int i = 2; i <= mx; i++) if (phi[i] == i) for (int j = i; j <= mx; j += i) phi[j] -= phi[j] / i;
+        long long total = 0; for (int v : x) total += phi[v];
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      int main() { // faktorkan setiap X dengan pembagian percobaan
+          int q; scanf("%d", &q); long long total = 0;
+          while (q--) { long long x; scanf("%lld", &x); long long r = x; for (long long p = 2; p * p <= x; p++) if (x % p == 0) { while (x % p == 0) x /= p; r -= r / p; } if (x > 1) r -= r / x; total += r; }
+          printf("%lld\n", total);
+      }
+  editorial:
+    hint: "φ(X) = X · Π (1 − 1/p) untuk setiap prima p yang membagi X. Memfaktorkan sejuta bilangan satu per satu terlalu lambat."
+    idea: Hitung φ untuk semua bilangan sampai max(X) sekaligus dengan saringan, seperti Eratosthenes.
+    solution: phi[i] = i; untuk setiap prima p (phi[p] masih p), kurangi phi[j] dengan phi[j]/p untuk setiap kelipatan j.
+    complexity: O(V log log V) dengan V = max X, lalu O(1) per pertanyaan
+
+- id: ol-n-kombinasi
+  title: Memilih Regu
+  stage: nasional
+  topics: [kombinatorika, modular]
+  tl: 1000
+  statement: |
+    Ada Q pertanyaan; setiap pertanyaan (n, r) menanyakan banyak cara memilih r slayer dari n slayer, yaitu C(n, r) mod 1.000.000.007.
+    Cetak jumlah semua jawaban (mod 1.000.000.007).
+  input: |
+    Baris pertama Q. Q baris berikutnya berisi n dan r.
+  output: |
+    (Σ C(n_i, r_i)) mod 10^9+7.
+  constraints: |
+    1 ≤ Q ≤ 200.000, 0 ≤ r ≤ n ≤ 10^6
+  samples: ["3\n5 2\n10 0\n6 3\n"]
+  subtasks:
+    - points: 30
+      desc: "n ≤ 2000"
+      tests: [{gen: "const q=200000;const L=[];for(let i=0;i<q;i++){const n=R.int(0,2000);L.push(n+' '+R.int(0,n))}return q+'\\n'+L.join('\\n')", seed: 171}, "1\n0 0\n"]
+    - points: 70
+      desc: "n ≤ 10^6"
+      tests: [{gen: "const q=200000;const L=[];for(let i=0;i<q;i++){const n=R.int(9e5,1e6);L.push(n+' '+R.int(0,n))}return q+'\\n'+L.join('\\n')", seed: 172}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    const long long MOD = 1000000007;
+    long long pw(long long a, long long b) { long long r = 1; a %= MOD; while (b) { if (b & 1) r = r * a % MOD; a = a * a % MOD; b >>= 1; } return r; }
+    int main() {
+        const int N = 1000000;
+        vector<long long> f(N + 1), inv(N + 1);
+        f[0] = 1; for (int i = 1; i <= N; i++) f[i] = f[i - 1] * i % MOD;
+        inv[N] = pw(f[N], MOD - 2); // Fermat: a^(p-2) = a^-1 mod p
+        for (int i = N; i > 0; i--) inv[i - 1] = inv[i] * i % MOD;
+        int q; scanf("%d", &q); long long total = 0;
+        while (q--) { int n, r; scanf("%d %d", &n, &r); total = (total + f[n] * inv[r] % MOD * inv[n - r]) % MOD; }
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() { // segitiga Pascal sampai n maksimum
+          int q; scanf("%d", &q); vector<pair<int,int>> qs(q); int mx = 0;
+          for (auto &x : qs) { scanf("%d %d", &x.first, &x.second); mx = max(mx, x.first); }
+          const long long MOD = 1000000007;
+          vector<vector<int>> c(mx + 1);
+          for (int n = 0; n <= mx; n++) { c[n].assign(n + 1, 1); for (int r = 1; r < n; r++) c[n][r] = (c[n - 1][r - 1] + c[n - 1][r]) % MOD; }
+          long long t = 0; for (auto [n, r] : qs) t = (t + c[n][r]) % MOD;
+          printf("%lld\n", t);
+      }
+  editorial:
+    hint: "C(n, r) = n! / (r! (n−r)!). Pembagian dalam modulo prima bisa diganti perkalian dengan invers."
+    idea: Prakomputasi faktorial dan invers faktorial sampai 10^6; invers didapat dari teorema kecil Fermat.
+    solution: inv[N] = f[N]^(p−2), lalu inv[i−1] = inv[i] × i. Jawaban per pertanyaan O(1).
+    complexity: O(N + Q)
+
+- id: ol-n-edit
+  title: Menyalin Gulungan
+  stage: nasional
+  topics: [dp, string]
+  tl: 1000
+  statement: |
+    Gulungan A harus diubah menjadi gulungan B. Satu operasi bisa menyisipkan, menghapus, atau mengganti satu huruf.
+    Berapa operasi minimum?
+  input: |
+    Baris pertama A, baris kedua B (huruf kecil, tidak kosong).
+  output: |
+    Jarak edit minimum.
+  constraints: |
+    1 ≤ |A|, |B| ≤ 3000
+  samples: ["kamado\nkamaboko\n"]
+  subtasks:
+    - points: 20
+      desc: "|A|, |B| ≤ 8"
+      tests: ["abcdefgh\nhgfedcba\n", "a\nb\n", "tanjiro\nnezuko\n", "aaaa\naaaaaaaa\n"]
+    - points: 80
+      desc: "|A|, |B| ≤ 3000"
+      tests: [{gen: "return R.str(3000,'abc')+'\\n'+R.str(3000,'abc')", seed: 181}, {gen: "return R.str(3000)+'\\n'+R.str(2500)", seed: 182}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        static char sa[3005], sb[3005]; scanf("%s %s", sa, sb);
+        int n = strlen(sa), m = strlen(sb);
+        vector<int> prev(m + 1), cur(m + 1);
+        iota(prev.begin(), prev.end(), 0);
+        for (int i = 1; i <= n; i++) {
+            cur[0] = i;
+            for (int j = 1; j <= m; j++) cur[j] = min({prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (sa[i - 1] != sb[j - 1])});
+            swap(prev, cur);
+        }
+        printf("%d\n", prev[m]);
+    }
+  naive:
+    score: 20
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      string a, b;
+      int f(int i, int j) { if (i == (int)a.size()) return b.size() - j; if (j == (int)b.size()) return a.size() - i; return min({f(i + 1, j) + 1, f(i, j + 1) + 1, f(i + 1, j + 1) + (a[i] != b[j])}); }
+      int main() { char x[3005], y[3005]; scanf("%s %s", x, y); a = x; b = y; printf("%d\n", f(0, 0)); }
+  editorial:
+    hint: Rekursi tiga cabang menghitung ulang pasangan (i, j) yang sama berkali-kali.
+    idea: dp[i][j] = jarak edit antara prefiks A sepanjang i dan prefiks B sepanjang j.
+    solution: dp[i][j] = min(dp[i−1][j] + 1, dp[i][j−1] + 1, dp[i−1][j−1] + [A_i ≠ B_j]); cukup simpan dua baris.
+    complexity: O(|A|·|B|) waktu, O(|B|) memori
+
+- id: ol-n-dag
+  title: Jalur Misi Terpanjang
+  stage: nasional
+  topics: [graph, dp, topological-sort]
+  tl: 1000
+  statement: |
+    Ada N pos dan M jalur SATU ARAH (tidak ada siklus). Jalur ke-i dari U_i ke V_i bernilai pengalaman E_i.
+    Mulai dari pos mana saja, berapa total pengalaman maksimum dari satu perjalanan?
+  input: |
+    Baris pertama N dan M. M baris berikutnya berisi U_i, V_i, E_i.
+  output: |
+    Total pengalaman maksimum (0 jika tidak ada jalur).
+  constraints: |
+    1 ≤ N ≤ 200.000, 0 ≤ M ≤ 300.000, 1 ≤ E_i ≤ 10^9, graf tanpa siklus
+  samples: ["4 4\n1 2 3\n2 3 4\n1 3 5\n3 4 1\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 15, M ≤ 30"
+      tests: [{gen: "const n=15,m=30;const L=[];for(let i=0;i<m;i++){const u=R.int(1,n-1);L.push(u+' '+R.int(u+1,n)+' '+R.int(1,1e9))}return n+' '+m+'\\n'+L.join('\\n')", seed: 191}, "1 0\n"]
+    - points: 70
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,m=300000;const p=R.perm(n);const L=[];for(let i=0;i<m;i++){let a=R.int(1,n-1),b=R.int(a+1,Math.min(n,a+5));L.push(p[a-1]+' '+p[b-1]+' '+R.int(1,1e9))}return n+' '+m+'\\n'+L.join('\\n')", seed: 192}, {gen: "const n=60,m=59*2;const L=[];for(let i=1;i<n;i++){L.push(i+' '+(i+1)+' 1');L.push(i+' '+(i+1)+' 2')}return n+' '+m+'\\n'+L.join('\\n')", seed: 193}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n, m; scanf("%d %d", &n, &m);
+        vector<vector<pair<int,long long>>> adj(n + 1); vector<int> masuk(n + 1);
+        for (int i = 0; i < m; i++) { int u, v; long long e; scanf("%d %d %lld", &u, &v, &e); adj[u].push_back({v, e}); masuk[v]++; }
+        queue<int> q; for (int i = 1; i <= n; i++) if (!masuk[i]) q.push(i);
+        vector<long long> best(n + 1, 0); long long jawab = 0;
+        while (!q.empty()) { // urutan topologis (Kahn)
+            int u = q.front(); q.pop(); jawab = max(jawab, best[u]);
+            for (auto [v, e] : adj[u]) { best[v] = max(best[v], best[u] + e); if (--masuk[v] == 0) q.push(v); }
+        }
+        printf("%lld\n", jawab);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int n, m; vector<vector<pair<int,long long>>> adj;
+      long long jelajah(int u) { long long b = 0; for (auto [v, e] : adj[u]) b = max(b, e + jelajah(v)); return b; } // tanpa memo
+      int main() {
+          scanf("%d %d", &n, &m); adj.resize(n + 1);
+          for (int i = 0; i < m; i++) { int u, v; long long e; scanf("%d %d %lld", &u, &v, &e); adj[u].push_back({v, e}); }
+          long long j = 0; for (int i = 1; i <= n; i++) j = max(j, jelajah(i));
+          printf("%lld\n", j);
+      }
+  editorial:
+    hint: Menjelajah semua jalur dari setiap pos bisa eksponensial (lihat graf dengan jalur paralel berlapis).
+    idea: Pada DAG, proses simpul dalam urutan topologis; nilai terbaik yang berakhir di v hanya bergantung pada pendahulunya.
+    solution: Algoritma Kahn untuk urutan topologis, lalu best[v] = max(best[u] + E) untuk setiap jalur u → v.
+    complexity: O(N + M)
+
+- id: ol-n-grid
+  title: Jalan Pulang Berbatu
+  stage: nasional
+  topics: [dp, kombinatorika]
+  tl: 1000
+  statement: |
+    Peta R×C berisi '.' (jalan) dan '#' (batu). Dari pojok kiri atas, kamu hanya boleh bergerak ke KANAN atau ke BAWAH tanpa menginjak batu.
+    Berapa banyak jalur berbeda ke pojok kanan bawah? Cetak modulo 1.000.000.007.
+  input: |
+    Baris pertama R dan C. R baris berikutnya berisi peta.
+  output: |
+    Banyak jalur modulo 10^9+7.
+  constraints: |
+    1 ≤ R, C ≤ 2000
+  samples: ["3 3\n...\n.#.\n...\n"]
+  subtasks:
+    - points: 25
+      desc: "R + C ≤ 22"
+      tests: ["11 11\n...........\n...........\n...........\n...#.......\n...........\n.......#...\n...........\n...........\n..#........\n...........\n...........\n", "1 1\n.\n", "2 2\n.#\n#.\n"]
+    - points: 75
+      desc: "R, C ≤ 2000"
+      tests: [{gen: "const r=2000,c=2000;const g=[];for(let i=0;i<r;i++){let s='';for(let j=0;j<c;j++)s+=(i+j>0&&i+j<r+c-2&&R.int(0,99)<5)?'#':'.';g.push(s)}return r+' '+c+'\\n'+g.join('\\n')", seed: 201}, {gen: "const r=2000,c=2000;return r+' '+c+'\\n'+Array(r).fill('.'.repeat(c)).join('\\n')", seed: 202}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int r, c; scanf("%d %d", &r, &c);
+        const int MOD = 1000000007;
+        vector<string> g(r); static char buf[2005];
+        for (auto &s : g) { scanf("%s", buf); s = buf; }
+        vector<int> dp(c, 0);
+        for (int i = 0; i < r; i++) for (int j = 0; j < c; j++) {
+            if (g[i][j] == '#') { dp[j] = 0; continue; }
+            if (i == 0 && j == 0) { dp[j] = 1; continue; }
+            if (j > 0) dp[j] = (dp[j] + dp[j - 1]) % MOD;
+        }
+        printf("%d\n", dp[c - 1]);
+    }
+  naive:
+    score: 25
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int r, c; vector<string> g;
+      long long jalan(int i, int j) { if (i >= r || j >= c || g[i][j] == '#') return 0; if (i == r - 1 && j == c - 1) return 1; return (jalan(i + 1, j) + jalan(i, j + 1)) % 1000000007; }
+      int main() { scanf("%d %d", &r, &c); g.resize(r); static char b[2005]; for (auto &s : g) { scanf("%s", b); s = b; } printf("%lld\n", jalan(0, 0)); }
+  editorial:
+    hint: Banyak jalur ke petak (i, j) hanya bergantung pada petak di atas dan di kirinya.
+    idea: dp[i][j] = dp[i−1][j] + dp[i][j−1], nol untuk batu. Rekursi tanpa memo eksponensial.
+    solution: Isi dp baris per baris dengan satu array berukuran C (nilai lama dp[j] = dari atas).
+    complexity: O(R·C)

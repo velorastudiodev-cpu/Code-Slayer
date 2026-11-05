@@ -1,0 +1,127 @@
+lesson:
+  - text: Project nyata dibangun bertahap. Mulai dari versi terkecil yang berjalan, lalu tambah fitur sambil memastikan fitur lama tetap benar. Bab ini membangun aplikasi to-do CLI, inventaris, dan analis teks dengan JavaScript.
+    code: |
+      const tugas = []
+      for (const perintah of ["tambah latihan", "tambah misi", "lihat"]) {
+        const [aksi, ...isi] = perintah.split(" ")
+        if (aksi === "tambah") tugas.push(isi.join(" "))
+        else if (aksi === "lihat") tugas.forEach((t, i) => console.log(`${i + 1}. ${t}`))
+      }
+  - text: Pisahkan logika murni (fungsi yang menerima state dan perintah lalu mengembalikan state baru) dari I/O (membaca perintah dan mencetak). Logika murni mudah diuji, dan pola ini mirip reducer di React.
+    code: |
+      const reducer = (state, aksi) => (aksi.tipe === "tambah" ? [...state, aksi.isi] : state)
+      console.log([{ tipe: "tambah", isi: "a" }, { tipe: "tambah", isi: "b" }].reduce(reducer, []))
+exercises:
+  - id: js-p4-todo1
+    type: write
+    title: "To-do Tahap 1: Tambah & Lihat"
+    difficulty: 2
+    prompt: '"tambah <teks>" menambah tugas. "lihat" mencetak semua tugas "<no>. <teks>", atau "(kosong)" jika belum ada.'
+    tests: ["lihat\ntambah latihan napas\ntambah misi Natagumo\nlihat", "tambah a\nlihat"]
+    hints: |
+      Baca baris sampai null.
+      const [aksi, ...isi] = baris.split(" ")
+      isi.join(" ") mengembalikan teks utuh.
+    solution: |
+      const tugas = []
+      let baris
+      while ((baris = readline()) !== null) {
+        const [aksi, ...isi] = baris.split(" ")
+        if (aksi === "tambah") tugas.push(isi.join(" "))
+        else if (aksi === "lihat") {
+          if (!tugas.length) console.log("(kosong)")
+          tugas.forEach((t, i) => console.log(`${i + 1}. ${t}`))
+        }
+      }
+  - id: js-p4-todo2
+    type: write
+    title: "To-do Tahap 2: Tandai Selesai"
+    difficulty: 2
+    prompt: 'Lanjutkan tahap 1. "selesai <no>" menandai tugas. "lihat" mencetak "<no>. [x] <teks>" atau "<no>. [ ] <teks>".'
+    tests: ["tambah latihan\ntambah misi\nselesai 2\nlihat", "lihat\ntambah a\nselesai 1\nlihat"]
+    hints: |
+      Simpan tugas sebagai objek { teks, selesai }.
+      Nomor dimulai 1, indeks dimulai 0.
+      t.selesai ? "x" : " "
+    solution: |
+      const tugas = []
+      let baris
+      while ((baris = readline()) !== null) {
+        const [aksi, ...isi] = baris.split(" ")
+        if (aksi === "tambah") tugas.push({ teks: isi.join(" "), selesai: false })
+        else if (aksi === "selesai") tugas[Number(isi[0]) - 1].selesai = true
+        else if (aksi === "lihat") {
+          if (!tugas.length) console.log("(kosong)")
+          tugas.forEach((t, i) => console.log(`${i + 1}. [${t.selesai ? "x" : " "}] ${t.teks}`))
+        }
+      }
+  - id: js-p4-todo3
+    type: write
+    title: "To-do Tahap 3: Hapus & Ringkas"
+    difficulty: 3
+    prompt: 'Lanjutkan tahap 2. Tambahkan "hapus <no>" dan "ringkas" yang mencetak "<s> selesai dari <n>". Untuk selesai/hapus dengan nomor di luar jangkauan, cetak "nomor tidak valid".'
+    tests: ["tambah a\ntambah b\ntambah c\nselesai 1\nhapus 2\nlihat\nringkas\nhapus 9", "ringkas\nselesai 1\ntambah x\nlihat"]
+    hints: |
+      Validasi dengan 1 <= no && no <= tugas.length.
+      splice(no - 1, 1) menghapus item.
+      filter(t => t.selesai).length
+    solution: |
+      const tugas = []
+      let baris
+      while ((baris = readline()) !== null) {
+        const [aksi, ...isi] = baris.split(" ")
+        const no = Number(isi[0])
+        if (aksi === "tambah") tugas.push({ teks: isi.join(" "), selesai: false })
+        else if (aksi === "selesai" || aksi === "hapus") {
+          if (!(no >= 1 && no <= tugas.length)) console.log("nomor tidak valid")
+          else if (aksi === "selesai") tugas[no - 1].selesai = true
+          else tugas.splice(no - 1, 1)
+        } else if (aksi === "lihat") {
+          if (!tugas.length) console.log("(kosong)")
+          tugas.forEach((t, i) => console.log(`${i + 1}. [${t.selesai ? "x" : " "}] ${t.teks}`))
+        } else if (aksi === "ringkas") console.log(`${tugas.filter(t => t.selesai).length} selesai dari ${tugas.length}`)
+      }
+  - id: js-p4-inventaris
+    type: write
+    title: Inventaris Desa Penempa
+    difficulty: 3
+    prompt: '"beli <item> <qty>" menambah stok. "jual <item> <qty>" mengurangi stok, dan jika stok kurang cetak "stok <item> kurang". "laporan" mencetak "<item> <stok>" untuk stok > 0 urut menurut nama, atau "(gudang kosong)".'
+    tests: ["beli pedang 5\nbeli haori 2\njual pedang 3\njual haori 5\nlaporan", "laporan\nbeli a 1\njual a 1\nlaporan"]
+    hints: |
+      Pakai Map item → stok.
+      Periksa (stok.get(item) ?? 0) < qty sebelum menjual.
+      [...stok].filter(...).sort()
+    solution: |
+      const stok = new Map()
+      let baris
+      while ((baris = readline()) !== null) {
+        const [aksi, item, q] = baris.split(" ")
+        const qty = Number(q)
+        if (aksi === "beli") stok.set(item, (stok.get(item) ?? 0) + qty)
+        else if (aksi === "jual") {
+          if ((stok.get(item) ?? 0) < qty) console.log(`stok ${item} kurang`)
+          else stok.set(item, stok.get(item) - qty)
+        } else if (aksi === "laporan") {
+          const ada = [...stok].filter(([, v]) => v > 0).sort()
+          if (!ada.length) console.log("(gudang kosong)")
+          for (const [k, v] of ada) console.log(k, v)
+        }
+      }
+  - id: js-p4-analisis
+    type: write
+    title: Analis Gulungan
+    difficulty: 3
+    prompt: 'Baca seluruh teks. Ubah ke huruf kecil, ganti semua karakter selain huruf a-z dan spasi menjadi spasi, lalu cetak 3 kata paling sering "<kata> <jumlah>". Jika seri, urut menurut abjad.'
+    tests: ["Air, api! Air... petir? Api api.", "Kaa kaa KAA\ngagak gagak burung"]
+    hints: |
+      Kumpulkan semua baris lalu join("\n").
+      replace(/[^a-z\s]/g, " ") lalu split(/\s+/).filter(Boolean)
+      sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 3)
+    solution: |
+      const baris = []
+      let b
+      while ((b = readline()) !== null) baris.push(b)
+      const kata = baris.join("\n").toLowerCase().replace(/[^a-z\s]/g, " ").split(/\s+/).filter(Boolean)
+      const c = new Map()
+      for (const k of kata) c.set(k, (c.get(k) ?? 0) + 1)
+      ;[...c].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 3).forEach(([k, v]) => console.log(k, v))

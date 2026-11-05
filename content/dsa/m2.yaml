@@ -1,0 +1,92 @@
+lesson:
+  - text: Stack bersifat LIFO, yaitu yang terakhir masuk keluar pertama. Di Python cukup list dengan append dan pop. Stack dipakai untuk mencocokkan kurung, undo, dan evaluasi ekspresi. Queue bersifat FIFO, dan Python menyediakan collections.deque dengan append dan popleft O(1). Queue dipakai di BFS dan simulasi antrean.
+    code: |
+      from collections import deque
+      st = [1, 2]
+      st.append(3)
+      print(st.pop(), st)
+      q = deque([1, 2])
+      q.append(3)
+      print(q.popleft(), list(q))
+exercises:
+  - id: dsa-m2-kurung
+    type: write
+    title: Segel Kurung
+    difficulty: 2
+    prompt: Baca satu baris berisi kurung ()[]{}. Cetak "seimbang" jika setiap kurung tertutup oleh pasangan yang benar dengan urutan yang benar, selain itu "rusak".
+    tests: ["([]{})", "([)]", "((", "[]", "}{"]
+    hints: |
+      Kurung buka masuk ke stack.
+      Kurung tutup harus cocok dengan puncak stack.
+      Di akhir, stack harus kosong.
+    solution: |
+      s = input()
+      pasangan = {")": "(", "]": "[", "}": "{"}
+      st = []
+      ok = True
+      for c in s:
+          if c in "([{":
+              st.append(c)
+          elif not st or st.pop() != pasangan[c]:
+              ok = False
+              break
+      print("seimbang" if ok and not st else "rusak")
+  - id: dsa-m2-josephus
+    type: write
+    title: Lingkaran Final Selection
+    difficulty: 3
+    prompt: 'n kadet (bernomor 1..n) duduk melingkar. Mulai dari kadet 1, hitung k orang, dan orang ke-k keluar. Hitungan dilanjutkan dari orang berikutnya. Baca "n k", cetak urutan keluarnya.'
+    tests: ["7 3", "1 1", "5 1", "6 7"]
+    hints: |
+      Pakai deque berisi 1..n.
+      Putar k-1 orang ke belakang dengan rotate(-(k-1)).
+      popleft() adalah orang yang keluar.
+    solution: |
+      from collections import deque
+      n, k = map(int, input().split())
+      q = deque(range(1, n + 1))
+      out = []
+      while q:
+          q.rotate(-(k - 1))
+          out.append(q.popleft())
+      print(*out)
+  - id: dsa-m2-fill-postfix
+    type: fill
+    title: Kalkulator Postfix
+    difficulty: 2
+    prompt: 'Lengkapi evaluator notasi postfix, misalnya "3 4 + 2 *" = 14. Operan dibaca ke stack, dan operator memakai dua operan teratas.'
+    code: |
+      st = []
+      for t in input().split():
+          if t in ("+", "-", "*"):
+              b = st.pop()
+              a = ⟦st.pop()⟧
+              st.append(a + b if t == "+" else a - b if t == "-" else a * b)
+          else:
+              st.⟦append(int(t))⟧
+      print(st[-1])
+    tests: ["3 4 + 2 *", "5 1 2 + 4 * + 3 -", "7"]
+    hints: |
+      Operan kedua (b) di-pop lebih dulu.
+      Lalu pop operan pertama (a).
+      Angka dimasukkan ke stack sebagai int.
+  - id: dsa-m2-trace-stack
+    type: trace
+    title: Kedalaman Kurung
+    difficulty: 2
+    prompt: Isi nilai c dan dalam setiap kali baris 8 selesai dijalankan.
+    code: |
+      s = "(()())"
+      st = []
+      for c in s:
+          if c == "(":
+              st.append(c)
+          else:
+              st.pop()
+          dalam = len(st)
+    line: 8
+    vars: [c, dalam]
+    hints: |
+      ( menambah isi stack, ) mengurangi.
+      dalam adalah banyaknya isi stack.
+      Nilainya adalah 1, 2, 1, 2, 1, 0.

@@ -1,0 +1,115 @@
+id: toko
+title: Toko Perlengkapan Korps
+track: sql
+lang: sql
+requires: f7
+emoji: 🏪
+regression: false
+story: Toko perlengkapan korps butuh database. Kodemu adalah satu skrip SQL yang tumbuh setiap tahap; pemeriksa menjalankan query setelah skripmu.
+starter: |
+  -- tulis skrip SQL-mu di sini
+stages:
+- title: Tabel produk
+  prompt: 'Buat tabel produk: id (INTEGER PRIMARY KEY), nama (TEXT, wajib, unik), harga (INTEGER, wajib, > 0), stok (INTEGER, wajib, bawaan 0). Pemeriksa mencoba data valid dan tidak valid.'
+  tests:
+  - ''
+  hints: |
+    NOT NULL UNIQUE untuk nama.
+    CHECK (harga > 0).
+    DEFAULT 0 untuk stok.
+  solution: |
+    CREATE TABLE produk (
+      id INTEGER PRIMARY KEY,
+      nama TEXT NOT NULL UNIQUE,
+      harga INTEGER NOT NULL CHECK (harga > 0),
+      stok INTEGER NOT NULL DEFAULT 0
+    );
+  after: |
+    INSERT OR IGNORE INTO produk (nama, harga) VALUES ('Tes', 10), ('Tes', 20), ('Gratis', 0), (NULL, 5);
+    SELECT nama, harga, stok FROM produk;
+- title: Isi rak
+  prompt: 'Tambahkan 5 produk: Pedang Nichirin (500, stok 3), Haori (120, 10), Onigiri (5, 50), Topeng Rubah (40, 7), Racun Wisteria (80, 0), dengan urutan itu.'
+  tests:
+  - ''
+  hints: |
+    Satu INSERT dengan beberapa baris VALUES.
+    Teks diapit kutip tunggal.
+    Urutan kolom: nama, harga, stok.
+  solution: |
+    CREATE TABLE produk (
+      id INTEGER PRIMARY KEY,
+      nama TEXT NOT NULL UNIQUE,
+      harga INTEGER NOT NULL CHECK (harga > 0),
+      stok INTEGER NOT NULL DEFAULT 0
+    );
+    INSERT INTO produk (nama, harga, stok) VALUES
+      ('Pedang Nichirin', 500, 3),
+      ('Haori', 120, 10),
+      ('Onigiri', 5, 50),
+      ('Topeng Rubah', 40, 7),
+      ('Racun Wisteria', 80, 0);
+  after: |
+    SELECT COUNT(*), SUM(stok), MAX(harga) FROM produk;
+    SELECT nama FROM produk WHERE stok = 0;
+- title: Catat penjualan
+  prompt: 'Buat tabel penjualan: id, produk_id (wajib, merujuk produk), jumlah (wajib, > 0), lalu catat penjualan: produk 1 ×1, produk 3 ×12, produk 2 ×2, produk 3 ×8, produk 4 ×1.'
+  tests:
+  - ''
+  hints: |
+    REFERENCES produk(id) untuk relasi.
+    CHECK (jumlah > 0).
+    Lima baris penjualan.
+  solution: |
+    CREATE TABLE produk (
+      id INTEGER PRIMARY KEY,
+      nama TEXT NOT NULL UNIQUE,
+      harga INTEGER NOT NULL CHECK (harga > 0),
+      stok INTEGER NOT NULL DEFAULT 0
+    );
+    INSERT INTO produk (nama, harga, stok) VALUES
+      ('Pedang Nichirin', 500, 3),
+      ('Haori', 120, 10),
+      ('Onigiri', 5, 50),
+      ('Topeng Rubah', 40, 7),
+      ('Racun Wisteria', 80, 0);
+    CREATE TABLE penjualan (
+      id INTEGER PRIMARY KEY,
+      produk_id INTEGER NOT NULL REFERENCES produk(id),
+      jumlah INTEGER NOT NULL CHECK (jumlah > 0)
+    );
+    INSERT INTO penjualan (produk_id, jumlah) VALUES (1, 1), (3, 12), (2, 2), (3, 8), (4, 1);
+  after: |
+    SELECT p.nama, SUM(j.jumlah) FROM penjualan j JOIN produk p ON p.id = j.produk_id GROUP BY p.id ORDER BY p.id;
+- title: Laporan
+  prompt: Buat VIEW laporan berisi nama produk, total terjual (terjual), dan pendapatan (jumlah × harga) per produk yang pernah terjual.
+  tests:
+  - ''
+  hints: |
+    CREATE VIEW laporan AS SELECT ...
+    JOIN penjualan dengan produk.
+    GROUP BY produk.
+  solution: |
+    CREATE TABLE produk (
+      id INTEGER PRIMARY KEY,
+      nama TEXT NOT NULL UNIQUE,
+      harga INTEGER NOT NULL CHECK (harga > 0),
+      stok INTEGER NOT NULL DEFAULT 0
+    );
+    INSERT INTO produk (nama, harga, stok) VALUES
+      ('Pedang Nichirin', 500, 3),
+      ('Haori', 120, 10),
+      ('Onigiri', 5, 50),
+      ('Topeng Rubah', 40, 7),
+      ('Racun Wisteria', 80, 0);
+    CREATE TABLE penjualan (
+      id INTEGER PRIMARY KEY,
+      produk_id INTEGER NOT NULL REFERENCES produk(id),
+      jumlah INTEGER NOT NULL CHECK (jumlah > 0)
+    );
+    INSERT INTO penjualan (produk_id, jumlah) VALUES (1, 1), (3, 12), (2, 2), (3, 8), (4, 1);
+    CREATE VIEW laporan AS
+    SELECT p.nama, SUM(j.jumlah) AS terjual, SUM(j.jumlah * p.harga) AS pendapatan
+    FROM penjualan j JOIN produk p ON p.id = j.produk_id
+    GROUP BY p.id;
+  after: |
+    SELECT nama, terjual, pendapatan FROM laporan ORDER BY pendapatan DESC;

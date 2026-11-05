@@ -1,0 +1,237 @@
+id: pemindai
+title: Mata Gagak (Port Scanner Etis)
+track: python
+lang: python
+requires: m1
+emoji: 🛰️
+story: 'Shinobu ingin memeriksa jaringan markas SENDIRI. Pemindai ini bekerja pada peta jaringan simulasi dari input: baris 1 "izin <jaringan/prefix>", lalu baris "ip port,port" (port terbuka), lalu perintah.
+  Tidak ada koneksi jaringan sungguhan, dan alat ini menolak target di luar izin.'
+starter: |
+  import sys
+
+  baris = sys.stdin.read().splitlines()
+  # tulis kodemu di sini
+stages:
+- title: Pindai satu host
+  prompt: 'Perintah "scan <ip>" mencetak "<ip>: port/layanan ..." (port urut menaik; layanan: 21 ftp, 22 ssh, 25 smtp, 53 dns, 80 http, 443 https, 3306 mysql, lainnya ?) atau "<ip>: tidak ada port terbuka".
+    Abaikan baris izin dulu.'
+  tests:
+  - |-
+    izin 192.168.10.0/24
+    192.168.10.5 80,22,443
+    192.168.10.9 3306
+    10.0.0.1 22
+    scan 192.168.10.5
+    scan 192.168.10.7
+  - |-
+    izin 192.168.10.0/24
+    192.168.10.5 80,22,443
+    192.168.10.9 3306
+    10.0.0.1 22
+    scan 192.168.10.9
+    10.9.9.9 8080
+  hints: |
+    Simpan peta ip → daftar port, dan tabel layanan dalam dict.
+    Urutkan port sebagai angka.
+    Format f"{p}/{LAYANAN.get(p, '?')}".
+  solution: |
+    import sys
+
+    baris = sys.stdin.read().splitlines()
+    LAYANAN = {21: "ftp", 22: "ssh", 25: "smtp", 53: "dns", 80: "http", 443: "https", 3306: "mysql"}
+    host = {}
+    perintah = []
+    for b in baris[1:]:
+        kata = b.split()
+        if kata[0] in ("scan", "laporan"):
+            perintah.append(kata)
+        else:
+            host[kata[0]] = sorted(int(p) for p in kata[1].split(","))
+    for kata in perintah:
+        ip = kata[1]
+        terbuka = host.get(ip, [])
+        if not terbuka:
+            print(f"{ip}: tidak ada port terbuka")
+        else:
+            print(f"{ip}: " + " ".join(f"{p}/{LAYANAN.get(p, '?')}" for p in terbuka))
+- title: Hanya dengan izin
+  prompt: 'Target di luar jaringan izin dicetak "DITOLAK <ip>: di luar izin" dan tidak dipindai. Memindai jaringan orang lain tanpa izin melanggar hukum (UU ITE).'
+  tests:
+  - |-
+    izin 192.168.10.0/24
+    192.168.10.5 80,22,443
+    192.168.10.9 3306
+    10.0.0.1 22
+    scan 10.0.0.1
+    scan 192.168.10.5
+  - |-
+    izin 10.0.0.0/8
+    10.1.2.3 22
+    scan 10.1.2.3
+    scan 11.0.0.1
+  hints: |
+    Ubah IP jadi bilangan 32-bit.
+    Bandingkan ip & mask dengan jaringan & mask.
+    Periksa sebelum mencari di peta.
+  solution: |
+    import sys
+
+    baris = sys.stdin.read().splitlines()
+
+
+    def angka(ip):
+        n = 0
+        for x in ip.split("."):
+            n = n * 256 + int(x)
+        return n
+
+
+    jaringan, prefix = baris[0].split()[1].split("/")
+    mask = (0xFFFFFFFF << (32 - int(prefix))) & 0xFFFFFFFF
+    LAYANAN = {21: "ftp", 22: "ssh", 25: "smtp", 53: "dns", 80: "http", 443: "https", 3306: "mysql"}
+    host = {}
+    perintah = []
+    for b in baris[1:]:
+        kata = b.split()
+        if kata[0] in ("scan", "laporan"):
+            perintah.append(kata)
+        else:
+            host[kata[0]] = sorted(int(p) for p in kata[1].split(","))
+    for kata in perintah:
+        ip = kata[1]
+        if angka(ip) & mask != angka(jaringan) & mask:
+            print(f"DITOLAK {ip}: di luar izin")
+            continue
+        terbuka = host.get(ip, [])
+        if not terbuka:
+            print(f"{ip}: tidak ada port terbuka")
+        else:
+            print(f"{ip}: " + " ".join(f"{p}/{LAYANAN.get(p, '?')}" for p in terbuka))
+- title: Rentang port
+  prompt: '"scan <ip> <awal>-<akhir>" hanya melaporkan port terbuka di rentang itu (termasuk kedua ujung). Tanpa rentang, perilakunya tetap seperti sebelumnya.'
+  tests:
+  - |-
+    izin 192.168.10.0/24
+    192.168.10.5 80,22,443
+    192.168.10.9 3306
+    10.0.0.1 22
+    scan 192.168.10.5 1-100
+    scan 192.168.10.5 400-500
+    scan 192.168.10.9 1-1000
+  - |-
+    izin 10.0.0.0/8
+    10.0.0.7 8080,53
+    scan 10.0.0.7 53-53
+  hints: |
+    Kata ketiga (kalau ada) berisi "a-b".
+    map(int, ...split("-")).
+    Saring dengan a <= p <= b.
+  solution: |
+    import sys
+
+    baris = sys.stdin.read().splitlines()
+
+
+    def angka(ip):
+        n = 0
+        for x in ip.split("."):
+            n = n * 256 + int(x)
+        return n
+
+
+    jaringan, prefix = baris[0].split()[1].split("/")
+    mask = (0xFFFFFFFF << (32 - int(prefix))) & 0xFFFFFFFF
+    LAYANAN = {21: "ftp", 22: "ssh", 25: "smtp", 53: "dns", 80: "http", 443: "https", 3306: "mysql"}
+    host = {}
+    perintah = []
+    for b in baris[1:]:
+        kata = b.split()
+        if kata[0] in ("scan", "laporan"):
+            perintah.append(kata)
+        else:
+            host[kata[0]] = sorted(int(p) for p in kata[1].split(","))
+    for kata in perintah:
+        ip = kata[1]
+        if angka(ip) & mask != angka(jaringan) & mask:
+            print(f"DITOLAK {ip}: di luar izin")
+            continue
+        terbuka = host.get(ip, [])
+        if len(kata) > 2:
+            a, b = map(int, kata[2].split("-"))
+            terbuka = [p for p in terbuka if a <= p <= b]
+        if not terbuka:
+            print(f"{ip}: tidak ada port terbuka")
+        else:
+            print(f"{ip}: " + " ".join(f"{p}/{LAYANAN.get(p, '?')}" for p in terbuka))
+- title: Laporan
+  prompt: '"laporan" mencetak "N host dipindai, M port terbuka, terbanyak <ip> (k)" untuk host yang SUDAH dipindai (hasil scan terakhir per host; host ditolak tidak dihitung; seri → ip terkecil secara teks).
+    Kalau belum ada: "0 host dipindai".'
+  tests:
+  - |-
+    izin 192.168.10.0/24
+    192.168.10.5 80,22,443
+    192.168.10.9 3306
+    10.0.0.1 22
+    laporan
+    scan 192.168.10.5
+    scan 192.168.10.9
+    scan 10.0.0.1
+    laporan
+  - |-
+    izin 10.0.0.0/8
+    10.0.0.2 22
+    10.0.0.1 80
+    scan 10.0.0.2
+    scan 10.0.0.1
+    laporan
+  hints: |
+    Catat hasil setiap scan yang diizinkan.
+    Pakai dict ip → port.
+    max(sorted(...), key=...) memilih yang terbanyak, seri → urutan teks.
+  solution: |
+    import sys
+
+    baris = sys.stdin.read().splitlines()
+
+
+    def angka(ip):
+        n = 0
+        for x in ip.split("."):
+            n = n * 256 + int(x)
+        return n
+
+
+    jaringan, prefix = baris[0].split()[1].split("/")
+    mask = (0xFFFFFFFF << (32 - int(prefix))) & 0xFFFFFFFF
+    LAYANAN = {21: "ftp", 22: "ssh", 25: "smtp", 53: "dns", 80: "http", 443: "https", 3306: "mysql"}
+    host = {}
+    perintah = []
+    for b in baris[1:]:
+        kata = b.split()
+        if kata[0] in ("scan", "laporan"):
+            perintah.append(kata)
+        else:
+            host[kata[0]] = sorted(int(p) for p in kata[1].split(","))
+    dipindai = {}
+    for kata in perintah:
+        if kata[0] == "laporan":
+            total = sum(len(v) for v in dipindai.values())
+            if dipindai:
+                ip_top = max(sorted(dipindai), key=lambda i: len(dipindai[i]))
+                print(f"{len(dipindai)} host dipindai, {total} port terbuka, terbanyak {ip_top} ({len(dipindai[ip_top])})")
+            else:
+                print("0 host dipindai")
+            continue
+        ip = kata[1]
+        if angka(ip) & mask != angka(jaringan) & mask:
+            print(f"DITOLAK {ip}: di luar izin")
+            continue
+        terbuka = host.get(ip, [])
+        if len(kata) > 2:
+            a, b = map(int, kata[2].split("-"))
+            terbuka = [p for p in terbuka if a <= p <= b]
+        dipindai[ip] = terbuka
+        if not terbuka:
+            print(f"{ip}: tidak ada port terbuka")
+        else:
+            print(f"{ip}: " + " ".join(f"{p}/{LAYANAN.get(p, '?')}" for p in terbuka))

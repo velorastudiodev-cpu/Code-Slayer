@@ -1,0 +1,104 @@
+lesson:
+  - text: Operator C++ sama dengan C, yaitu + - * / %, ++ --, perbandingan, dan logika && || !. std::abs, std::max, dan std::min (dari <algorithm> dan <cstdlib>) sering dipakai. std::pow dari <cmath> menghasilkan double.
+    code: |
+      #include <algorithm>
+      #include <cmath>
+      #include <iostream>
+
+      int main() {
+          std::cout << std::max(3, 9) << " " << std::abs(-7) << " " << std::pow(2, 10) << "\n";
+      }
+  - text: Hati-hati dengan % pada bilangan negatif, karena hasilnya mengikuti tanda pembilang, -7 % 3 adalah -1. Untuk modulo yang selalu positif, pakai ((a % m) + m) % m. Pola ini sering muncul di soal kompetisi.
+    code: |
+      #include <iostream>
+
+      int main() {
+          int a = -7, m = 3;
+          std::cout << a % m << " " << ((a % m) + m) % m << "\n";
+      }
+exercises:
+  - id: cpp-f3-detik
+    type: write
+    title: Jam Pertarungan
+    difficulty: 2
+    prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+    tests: ["3725", "59", "86399", "0"]
+    hints: |
+      Jam adalah t / 3600.
+      Menit adalah t % 3600 / 60.
+      Detik adalah t % 60.
+    solution: |
+      #include <iostream>
+
+      int main() {
+          int t;
+          std::cin >> t;
+          std::cout << t / 3600 << ":" << t % 3600 / 60 << ":" << t % 60 << "\n";
+      }
+  - id: cpp-f3-modulo
+    type: write
+    title: Jam Melingkar
+    difficulty: 2
+    prompt: Sekarang jam h (0-23). Baca h dan k (k boleh negatif atau sangat besar). Cetak jam setelah k jam berlalu (0-23).
+    tests: ["10 5", "22 3", "1 -3", "0 -49", "5 1000000"]
+    hints: |
+      Jam berputar setiap 24.
+      % bisa negatif di C++.
+      ((h + k) % 24 + 24) % 24
+    solution: |
+      #include <iostream>
+
+      int main() {
+          long long h, k;
+          std::cin >> h >> k;
+          std::cout << ((h + k) % 24 + 24) % 24 << "\n";
+      }
+  - id: cpp-f3-predict
+    type: predict
+    title: Tanda Sisa Bagi
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <algorithm>
+      #include <iostream>
+
+      int main() {
+          int x = 5;
+          std::cout << -7 % 3 << " " << 7 % -3 << " " << std::min(x++, 4) << " " << x << "\n";
+      }
+    hints: |
+      Tanda hasil % mengikuti pembilang (bilangan yang dibagi).
+      x++ memberi nilai lama (5) ke std::min.
+      Setelah itu x sudah menjadi 6.
+    solution: x
+  - id: cpp-f3-bug
+    type: bughunt
+    title: Rata-rata Terpotong
+    difficulty: 1
+    prompt: Rata-rata dua bilangan bulat harus dicetak dengan 1 desimal, tapi desimalnya selalu .0. Temukan bug-nya.
+    starter: |
+      #include <iomanip>
+      #include <iostream>
+
+      int main() {
+          int a, b;
+          std::cin >> a >> b;
+          double r = (a + b) / 2;
+          std::cout << std::fixed << std::setprecision(1) << r << "\n";
+      }
+    bug_line: 7
+    tests: ["3 4", "1 2", "6 6"]
+    hints: |
+      (a + b) / 2 adalah pembagian int.
+      Desimal hilang sebelum disimpan ke double.
+      (a + b) / 2.0
+    solution: |
+      #include <iomanip>
+      #include <iostream>
+
+      int main() {
+          int a, b;
+          std::cin >> a >> b;
+          double r = (a + b) / 2.0;
+          std::cout << std::fixed << std::setprecision(1) << r << "\n";
+      }

@@ -1,0 +1,66 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: 'ORDER BY mengurutkan hasil; ASC menaik (bawaan), DESC menurun. Beberapa kolom: urut kolom pertama dulu, lalu kolom kedua untuk nilai yang sama.'
+  code: |
+    SELECT nama, pernapasan, umur FROM slayer ORDER BY pernapasan, umur DESC;
+- text: LIMIT n membatasi jumlah baris; OFFSET k melewati k baris pertama. Selalu pasangkan dengan ORDER BY supaya hasilnya pasti.
+  code: |
+    SELECT nama, umur FROM slayer ORDER BY umur DESC, nama LIMIT 2 OFFSET 1;
+exercises:
+- id: sql-f3-termuda
+  type: write
+  title: Tiga Termuda
+  difficulty: 1
+  prompt: Tampilkan nama dan umur 3 slayer termuda. Kalau umurnya sama, urut nama.
+  tests: &id001
+  - ''
+  - INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);
+  samples: 1
+  hints: |
+    Urutkan dari umur terkecil.
+    Tambahkan nama sebagai kunci kedua.
+    LIMIT 3.
+  solution: |
+    SELECT nama, umur FROM slayer ORDER BY umur, nama LIMIT 3;
+- id: sql-f3-ganda
+  type: write
+  title: Barisan per Aliran
+  difficulty: 2
+  prompt: 'Tampilkan pernapasan, nama, dan umur semua slayer: urut pernapasan (A-Z), lalu umur dari yang TERTUA, lalu nama.'
+  tests: *id001
+  samples: 1
+  hints: |
+    ORDER BY boleh berisi beberapa kolom.
+    DESC hanya berlaku untuk kolom yang ditulisinya.
+    ORDER BY pernapasan, umur DESC, nama
+  solution: |
+    SELECT pernapasan, nama, umur FROM slayer ORDER BY pernapasan, umur DESC, nama;
+- id: sql-f3-offset
+  type: predict
+  title: Melewati Barisan
+  difficulty: 2
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    SELECT nama FROM slayer ORDER BY umur DESC, nama LIMIT 2 OFFSET 2;
+  hints: |
+    Urutkan dulu dari umur tertua.
+    OFFSET 2 melewati dua baris pertama.
+    LIMIT 2 mengambil dua baris berikutnya.
+  solution: x

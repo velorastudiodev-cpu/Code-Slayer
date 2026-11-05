@@ -1,0 +1,119 @@
+lesson:
+  - text: if, else if, dan else bekerja seperti di C, tapi kondisinya harus bertipe boolean (if (x) dengan int tidak diizinkan). Ternary kondisi ? a - b memilih nilai. Java 14+ punya switch expression dengan panah -> yang tidak butuh break.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int nilai = 78;
+              String grade = nilai >= 85 ? "A" : nilai >= 70 ? "B" : "C";
+              String napas = "ular";
+              String mentor = switch (napas) {
+                  case "air" -> "Giyu";
+                  case "ular" -> "Obanai";
+                  default -> "?";
+              };
+              System.out.println(grade + " " + mentor);
+          }
+      }
+exercises:
+  - id: java-f5-nilai
+    type: write
+    title: Rapor Kisatsutai
+    difficulty: 1
+    prompt: Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.
+    tests: ["90", "85", "70", "69", "55", "10"]
+    hints: |
+      Periksa dari syarat tertinggi.
+      Rantai if / else if / else.
+      System.out.println("A");
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int n = new Scanner(System.in).nextInt();
+              if (n >= 85) System.out.println("A");
+              else if (n >= 70) System.out.println("B");
+              else if (n >= 55) System.out.println("C");
+              else System.out.println("D");
+          }
+      }
+  - id: java-f5-switch
+    type: write
+    title: Mentor Pernapasan
+    difficulty: 1
+    prompt: Baca nama pernapasan (air, api, petir, ular, atau lainnya). Cetak nama mentornya, yaitu Giyu, Rengoku, Zenitsu, Obanai, atau "tidak dikenal". Gunakan switch expression.
+    tests: ["air", "ular", "petir", "batu"]
+    hints: |
+      String mentor = switch (napas) { case "air" -> "Giyu"; ... };
+      default -> "tidak dikenal";
+      Jangan lupa ; setelah kurung kurawal penutup switch.
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              String napas = new Scanner(System.in).next();
+              String mentor = switch (napas) {
+                  case "air" -> "Giyu";
+                  case "api" -> "Rengoku";
+                  case "petir" -> "Zenitsu";
+                  case "ular" -> "Obanai";
+                  default -> "tidak dikenal";
+              };
+              System.out.println(mentor);
+          }
+      }
+  - id: java-f5-predict
+    type: predict
+    title: Switch Lama Tanpa Break
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int x = 2;
+              switch (x) {
+                  case 1: System.out.print("satu ");
+                  case 2: System.out.print("dua ");
+                  case 3: System.out.print("tiga "); break;
+                  default: System.out.print("lain ");
+              }
+              System.out.println(x > 1 ? "besar" : "kecil");
+          }
+      }
+    hints: |
+      switch gaya lama (dengan :) jatuh ke case berikutnya tanpa break.
+      break di case 3 menghentikannya.
+      Lalu ternary dicetak di baris yang sama.
+    solution: x
+  - id: java-f5-bug
+    type: bughunt
+    title: Kabisat yang Keliru
+    difficulty: 2
+    prompt: Program menentukan tahun kabisat, tapi 1900 dianggap kabisat. Temukan bug-nya.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int t = new Scanner(System.in).nextInt();
+              boolean kabisat = t % 4 == 0 || t % 100 != 0 && t % 400 == 0;
+              System.out.println(kabisat ? "kabisat" : "bukan");
+          }
+      }
+    bug_line: 6
+    tests: ["2024", "1900", "2000", "2023"]
+    hints: |
+      && dikerjakan sebelum ||.
+      Syaratnya adalah (habis 4 DAN tidak habis 100) ATAU habis 400.
+      t % 400 == 0 || (t % 4 == 0 && t % 100 != 0)
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int t = new Scanner(System.in).nextInt();
+              boolean kabisat = t % 400 == 0 || (t % 4 == 0 && t % 100 != 0);
+              System.out.println(kabisat ? "kabisat" : "bukan");
+          }
+      }

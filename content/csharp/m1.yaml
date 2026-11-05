@@ -1,0 +1,285 @@
+lesson:
+- text: 'List<T> adalah daftar yang bisa bertambah (Add, Count, indeks [i]). Array berukuran tetap: new int[5]. List dan array adalah tipe referensi: dua variabel bisa menunjuk objek yang sama.'
+  code: |
+    using System;
+    using System.Collections.Generic;
+
+    class Program
+    {
+        static void Main()
+        {
+            var a = new List<int> { 3, 1, 2 };
+            var b = a;
+            b.Add(9);
+            a.Sort();
+            Console.WriteLine(string.Join(",", a) + " " + a.Count);
+        }
+    }
+- text: Dictionary<K,V> memetakan kunci ke nilai. SortedDictionary menjaga kunci tetap terurut. TryGetValue atau ContainsKey dipakai sebelum membaca kunci yang mungkin belum ada.
+  code: |
+    using System;
+    using System.Collections.Generic;
+
+    class Program
+    {
+        static void Main()
+        {
+            var m = new SortedDictionary<string, int>();
+            foreach (var k in new[] { "b", "a", "b" })
+                m[k] = m.ContainsKey(k) ? m[k] + 1 : 1;
+            foreach (var kv in m) Console.WriteLine($"{kv.Key} {kv.Value}");
+        }
+    }
+exercises:
+- id: cs-m1-balik
+  type: write
+  title: Barisan Terbalik
+  difficulty: 1
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - |-
+    5
+    1 2 3 4 5
+  - |-
+    1
+    42
+  - |-
+    3
+    -1 0 -1
+  hints: |
+    Simpan semua bilangan ke array/list.
+    Telusuri dari indeks terakhir ke 0.
+    Gabungkan dengan spasi.
+  solution: |
+    using System;
+    using System.Linq;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            var xs = t.Skip(1).Take(n).Reverse();
+            Console.WriteLine(string.Join(" ", xs));
+        }
+    }
+- id: cs-m1-frekuensi
+  type: write
+  title: Sensus Kata
+  difficulty: 2
+  prompt: Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, "kata jumlah" per baris, urut abjad.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - iblis slayer iblis bulan
+  - a
+  - |-
+    b a b
+    a c b
+  hints: |
+    Pakai map/dictionary: kata → jumlah.
+    Ambil semua kunci lalu urutkan.
+    Cetak "kata jumlah".
+  solution: |
+    using System;
+    using System.Collections.Generic;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            var m = new SortedDictionary<string, int>(StringComparer.Ordinal);
+            foreach (var k in t) m[k] = m.ContainsKey(k) ? m[k] + 1 : 1;
+            foreach (var kv in m) Console.WriteLine($"{kv.Key} {kv.Value}");
+        }
+    }
+- id: cs-m1-unik
+  type: write
+  title: Pasukan Tanpa Kembar
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - |-
+    6
+    3 1 3 2 1 3
+  - |-
+    1
+    7
+  - |-
+    4
+    -2 5 -2 0
+  hints: |
+    Set/himpunan otomatis membuang duplikat.
+    Urutkan hasilnya.
+    Gabungkan dengan spasi.
+  solution: |
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            var set = new SortedSet<long>(t.Skip(1).Take(n).Select(long.Parse));
+            Console.WriteLine(string.Join(" ", set));
+        }
+    }
+- id: cs-m1-diatas
+  type: write
+  title: Di Atas Rata-rata
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - |-
+    5
+    10 20 30 40 50
+  - |-
+    3
+    5 5 5
+  - |-
+    4
+    1 1 1 9
+  hints: |
+    Hitung rata-rata dulu (desimal).
+    Lalu hitung nilai > rata-rata.
+    Butuh dua kali menelusuri data.
+  solution: |
+    using System;
+    using System.Linq;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            var xs = t.Skip(1).Take(n).Select(double.Parse).ToList();
+            double rata = xs.Average();
+            Console.WriteLine(xs.Count(x => x > rata));
+        }
+    }
+- id: cs-m1-predict
+  type: predict
+  title: Koleksi Berbagi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+    using System.Collections.Generic;
+
+    class Program
+    {
+        static void Main()
+        {
+            var a = new List<int> { 1, 2, 3 };
+            var b = a;
+            b[0] = 9;
+            var c = new List<int>(a);
+            c[1] = 7;
+            Console.WriteLine($"{string.Join(",", a)} {string.Join(",", c)}");
+            int[] d = { 5, 6 };
+            int[] e = d;
+            e[1] = 0;
+            Console.WriteLine($"{d[1]} {d.Length}");
+        }
+    }
+  hints: |
+    Perhatikan apakah koleksi disalin atau dibagi (referensi).
+    Mengubah lewat referensi terlihat dari nama lain.
+    Telusuri isi koleksi setelah tiap perubahan.
+  solution: x
+- id: cs-m1-bug
+  type: bughunt
+  title: Indeks Melewati Batas
+  difficulty: 2
+  prompt: Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.
+  starter: |
+    using System;
+    using System.Linq;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            long[] xs = t.Skip(1).Take(n).Select(long.Parse).ToArray();
+            long total = 0;
+            for (int i = 0; i <= xs.Length; i++) total += xs[i];
+            Console.WriteLine(total);
+        }
+    }
+  bug_line: 12
+  tests:
+  - |-
+    3
+    1 2 3
+  - |-
+    1
+    5
+  - |-
+    4
+    2 2 2 2
+  hints: |
+    Indeks terakhir = panjang - 1.
+    Kondisi loop memakai <=.
+    Gunakan < panjang.
+  solution: |
+    using System;
+    using System.Linq;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            long[] xs = t.Skip(1).Take(n).Select(long.Parse).ToArray();
+            long total = 0;
+            for (int i = 0; i < xs.Length; i++) total += xs[i];
+            Console.WriteLine(total);
+        }
+    }

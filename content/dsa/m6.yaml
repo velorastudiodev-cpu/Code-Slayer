@@ -1,0 +1,84 @@
+lesson:
+  - text: Heap adalah pohon di mana induk ≤ anak (min-heap), disimpan dalam array. Minimum selalu di akar (O(1)), sedangkan sisip dan ambil minimum bernilai O(log n). Python menyediakan heapq (min-heap). Heap dipakai untuk antrean prioritas, k terkecil, dan Dijkstra.
+    code: |
+      import heapq
+      h = []
+      for x in [5, 1, 8, 3]:
+          heapq.heappush(h, x)
+      print(h[0], heapq.heappop(h), heapq.nsmallest(2, [9, 4, 7, 1]))
+exercises:
+  - id: dsa-m6-k-terkecil
+    type: write
+    title: k Iblis Terlemah
+    difficulty: 2
+    prompt: Baris 1 berisi k, baris 2 berisi bilangan. Cetak k bilangan terkecil secara terurut naik, memakai heapq.
+    tests: ["3\n5 1 8 3 9 2", "1\n7", "2\n4 4 4"]
+    hints: |
+      import heapq
+      heapq.nsmallest(k, data) sudah terurut.
+      Atau push semua lalu pop k kali.
+    solution: |
+      import heapq
+      k = int(input())
+      print(*heapq.nsmallest(k, map(int, input().split())))
+  - id: dsa-m6-gabung-k
+    type: write
+    title: Gabung k Barisan
+    difficulty: 3
+    prompt: Baris 1 berisi k, lalu k baris yang masing-masing berisi bilangan terurut naik. Gabungkan semuanya menjadi satu urutan terurut memakai heap (simpan elemen terdepan setiap barisan).
+    tests: ["3\n1 4 7\n2 5 8\n3 6 9", "2\n1 1\n1", "1\n5 6"]
+    hints: |
+      Heap berisi (nilai, nomor_barisan, indeks).
+      Pop yang terkecil, lalu push elemen berikutnya dari barisan yang sama.
+      Ulangi sampai heap kosong.
+    solution: |
+      import heapq
+      k = int(input())
+      bar = [list(map(int, input().split())) for _ in range(k)]
+      h = [(b[0], i, 0) for i, b in enumerate(bar) if b]
+      heapq.heapify(h)
+      out = []
+      while h:
+          v, i, j = heapq.heappop(h)
+          out.append(v)
+          if j + 1 < len(bar[i]):
+              heapq.heappush(h, (bar[i][j + 1], i, j + 1))
+      print(*out)
+  - id: dsa-m6-median
+    type: write
+    title: Kekuatan Tengah Berjalan
+    difficulty: 4
+    prompt: Bilangan datang satu per satu. Setelah setiap bilangan, cetak median sejauh ini (untuk jumlah genap, cetak yang lebih kecil dari dua tengah). Gunakan dua heap.
+    tests: ["5 15 1 3", "1", "2 2 2"]
+    hints: |
+      Max-heap untuk separuh kecil (simpan negatif), min-heap untuk separuh besar.
+      Jaga ukuran supaya selisihnya ≤ 1 dan max-heap boleh lebih besar.
+      Median adalah puncak max-heap.
+    solution: |
+      import heapq
+      kecil, besar = [], []
+      out = []
+      for x in map(int, input().split()):
+          heapq.heappush(kecil, -x)
+          heapq.heappush(besar, -heapq.heappop(kecil))
+          if len(besar) > len(kecil):
+              heapq.heappush(kecil, -heapq.heappop(besar))
+          out.append(-kecil[0])
+      print(*out)
+  - id: dsa-m6-complexity
+    type: complexity
+    title: Kompleksitas Heap Sort
+    difficulty: 2
+    prompt: Berapa kompleksitas waktu kode ini terhadap n = len(a)?
+    code: |
+      import heapq
+      h = []
+      for x in a:
+          heapq.heappush(h, x)
+      hasil = [heapq.heappop(h) for _ in range(len(h))]
+    answer: O(n log n)
+    explain: n kali push dan n kali pop, masing-masing O(log n).
+    hints: |
+      Biaya satu heappush adalah O(log n).
+      Ada n push dan n pop.
+      2n × log n.

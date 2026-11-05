@@ -1,0 +1,225 @@
+# Bank soal Final Selection & Lower Moon (pilihan ganda).
+# options[0] SELALU jawaban benar; urutan diacak saat ditampilkan.
+- id: py-f1-1
+  chapter: f1
+  prompt: Apa output kode ini?
+  code: print("Halo", "Slayer")
+  options: ["Halo Slayer", "HaloSlayer", "Halo, Slayer", "('Halo', 'Slayer')"]
+  explain: print() memisahkan beberapa argumen dengan satu spasi.
+- id: py-f1-2
+  chapter: f1
+  prompt: Apa output kode ini?
+  code: print("a", "b", sep="-")
+  options: ["a-b", "a b", "ab", "a-b-"]
+  explain: sep mengganti pemisah default (spasi).
+
+- id: py-f2-1
+  chapter: f2
+  prompt: Apa hasil type(3.0)?
+  code: print(type(3.0))
+  options: ["<class 'float'>", "<class 'int'>", "<class 'double'>", "<class 'str'>"]
+  explain: Angka dengan titik desimal adalah float.
+- id: py-f2-2
+  chapter: f2
+  prompt: Apa output kode ini?
+  code: |
+    x = "5"
+    y = 2
+    print(x * y)
+  options: ["55", "10", "TypeError", "52"]
+  explain: String dikali int berarti diulang, "5" * 2 = "55".
+
+- id: py-f3-1
+  chapter: f3
+  prompt: Apa output kode ini?
+  code: print(7 // 2, 7 % 2)
+  options: ["3 1", "3.5 1", "4 1", "3 0.5"]
+  explain: // adalah pembagian bulat ke bawah, % adalah sisa bagi.
+- id: py-f3-2
+  chapter: f3
+  prompt: Apa output kode ini?
+  code: print(2 ** 3 ** 2)
+  options: ["512", "64", "36", "18"]
+  explain: "Operator ** dievaluasi dari kanan, jadi 2 ** (3 ** 2) = 2 ** 9."
+
+- id: py-f4-1
+  chapter: f4
+  prompt: User mengetik 5 lalu Enter. Apa tipe n?
+  code: n = input()
+  options: ["str", "int", "float", "None"]
+  explain: input() selalu mengembalikan string. Ubah dengan int() kalau perlu angka.
+- id: py-f4-2
+  chapter: f4
+  prompt: Baris input berisi "3 4". Cara paling tepat menyimpannya ke dua variabel int?
+  options: ["a, b = map(int, input().split())", "a, b = int(input())", "a, b = input().int()", "a, b = split(int(input()))"]
+  explain: split() memecah per spasi, map(int, ...) mengubah tiap potongan ke int.
+
+- id: py-f5-1
+  chapter: f5
+  prompt: Apa output kode ini?
+  code: |
+    x = 15
+    if x > 10:
+        print("A")
+    elif x > 5:
+        print("B")
+    else:
+        print("C")
+  options: ["A", "B", "A lalu B", "C"]
+  explain: Cabang pertama yang benar dijalankan, sisanya dilewati.
+- id: py-f5-2
+  chapter: f5
+  prompt: Apa output kode ini?
+  code: print(bool(""), bool("0"))
+  options: ["False True", "False False", "True True", "True False"]
+  explain: Hanya string kosong yang falsy; "0" berisi satu karakter.
+
+- id: py-f6-1
+  chapter: f6
+  prompt: Apa output kode ini?
+  code: |
+    for i in range(1, 10, 3):
+        print(i, end=" ")
+  options: ["1 4 7", "1 4 7 10", "1 3 6 9", "0 3 6 9"]
+  explain: range(start, stop, step) berhenti sebelum stop.
+- id: py-f6-2
+  chapter: f6
+  prompt: Apa output kode ini?
+  code: |
+    i = total = 0
+    while i < 5:
+        i += 1
+        if i == 3:
+            continue
+        total += i
+    print(total)
+  options: ["12", "15", "10", "9"]
+  explain: continue melewati i == 3, jadi 1 + 2 + 4 + 5.
+
+- id: py-f7-1
+  chapter: f7
+  prompt: Apa output kode ini?
+  code: |
+    def f(a, b=2):
+        return a * b
+    print(f(3), f(3, 3))
+  options: ["6 9", "6 6", "9 9", "Error"]
+  explain: b memakai default 2 kalau tidak diisi.
+- id: py-f7-2
+  chapter: f7
+  prompt: Apa output kode ini?
+  code: |
+    def add(x, lst=[]):
+        lst.append(x)
+        return lst
+    add(1)
+    print(add(2))
+  options: ["[1, 2]", "[2]", "[1]", "Error"]
+  explain: Default mutable dibuat sekali saja dan dipakai bersama. Pakai lst=None lalu buat list baru.
+
+- id: py-m1-1
+  chapter: m1
+  prompt: Apa output kode ini?
+  code: |
+    a = [1, 2, 3]
+    b = a
+    b.append(4)
+    print(len(a))
+  options: ["4", "3", "Error", "7"]
+  explain: b = a tidak menyalin; keduanya menunjuk list yang sama.
+- id: py-m1-2
+  chapter: m1
+  prompt: Apa output kode ini?
+  code: |
+    d = {"a": 1}
+    print(d.get("b", 0))
+  options: ["0", "None", "KeyError", "b"]
+  explain: get() mengembalikan nilai default kalau kunci tidak ada.
+
+- id: py-m2-1
+  chapter: m2
+  prompt: Apa output kode ini?
+  code: |
+    s = "slayer"
+    print(s[1:4])
+  options: ["lay", "sla", "laye", "slay"]
+  explain: Slice [1:4] mengambil indeks 1, 2, 3.
+- id: py-m2-2
+  chapter: m2
+  prompt: Apa output kode ini?
+  code: print("-".join(["a", "b", "c"]))
+  options: ["a-b-c", "-a-b-c", "abc", "['a', 'b', 'c']"]
+  explain: join menyisipkan pemisah di antara elemen.
+
+- id: py-m3-1
+  chapter: m3
+  prompt: Apa output kode ini?
+  code: |
+    try:
+        int("x")
+    except ValueError:
+        print("V")
+    finally:
+        print("F")
+  options: ["V lalu F", "F saja", "V saja", "ValueError"]
+  explain: except menangkap error, finally selalu dijalankan.
+- id: py-m3-2
+  chapter: m3
+  prompt: Exception apa yang muncul dari kode ini?
+  code: '{}["k"]'
+  options: ["KeyError", "IndexError", "ValueError", "NameError"]
+  explain: Mengakses kunci dict yang tidak ada → KeyError.
+
+- id: py-m4-1
+  chapter: m4
+  prompt: Apa keuntungan utama `with open("a.txt") as f:`?
+  options: ["File otomatis ditutup walau terjadi error", "File dibaca lebih cepat", "File otomatis dibuat kalau belum ada", "Isi file otomatis jadi list"]
+  explain: with memanggil f.close() saat blok selesai, termasuk saat error.
+- id: py-m4-2
+  chapter: m4
+  prompt: Mode open() apa yang menambah teks di akhir file tanpa menghapus isi lama?
+  options: ['"a"', '"w"', '"r"', '"x"']
+  explain: '"a" = append. "w" mengosongkan file dulu.'
+
+- id: py-m5-1
+  chapter: m5
+  prompt: Apa output kode ini?
+  code: |
+    from math import sqrt
+    print(sqrt(16))
+  options: ["4.0", "4", "16", "Error"]
+  explain: math.sqrt selalu mengembalikan float.
+- id: py-m5-2
+  chapter: m5
+  prompt: Apa fungsi `if __name__ == "__main__":`?
+  options: ["Kode di dalamnya hanya jalan saat file dijalankan langsung, bukan saat di-import", "Wajib ada di setiap file Python", "Membuat fungsi main otomatis", "Mempercepat eksekusi"]
+  explain: Saat di-import, __name__ berisi nama modul, bukan "__main__".
+
+- id: py-m6-1
+  chapter: m6
+  prompt: Apa output kode ini?
+  code: |
+    class A:
+        def __init__(self):
+            self.n = 0
+        def inc(self):
+            self.n += 1
+            return self
+    a = A()
+    a.inc().inc()
+    print(a.n)
+  options: ["2", "1", "0", "Error"]
+  explain: inc mengembalikan self, jadi pemanggilan bisa dirantai.
+- id: py-m6-2
+  chapter: m6
+  prompt: Apa output kode ini?
+  code: |
+    class Hewan:
+        def suara(self):
+            return "..."
+    class Gagak(Hewan):
+        def suara(self):
+            return "Kaa!"
+    print(Gagak().suara())
+  options: ["Kaa!", "...", "...Kaa!", "Error"]
+  explain: Method di subclass meng-override method induk.

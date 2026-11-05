@@ -1,0 +1,223 @@
+lesson:
+- text: 'Flexbox menyusun anak-anak elemen dalam satu baris (atau kolom): display: flex pada induknya. justify-content mengatur sumbu utama (start, center, space-between), align-items sumbu silang, gap
+    jarak antar item.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    nav ul {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      list-style: none;
+      padding: 0;
+    }
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+    </body>
+    </html>
+exercises:
+- id: web-m1-nav
+  type: write
+  title: Menu Sebaris
+  difficulty: 2
+  prompt: 'Jadikan nav ul flex container dengan item tersebar (space-between) dan tanpa bullet (list-style: none).'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+    </body>
+    </html>
+  checks:
+  - sel: nav ul
+    css: display
+    value: flex
+  - sel: nav ul
+    css: justify-content
+    value: space-between
+  - sel: nav ul
+    css: list-style
+    value: none
+  hints: |
+    display: flex pada ul (induk li).
+    justify-content mengatur penyebaran.
+    list-style: none menghapus bullet.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    nav ul {
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+    }
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+    </body>
+    </html>
+- id: web-m1-tengah
+  type: write
+  title: Tepat di Tengah
+  difficulty: 2
+  prompt: Buat .panggung menjadi flex container yang menaruh isinya tepat di tengah (horizontal & vertikal), dengan tinggi 200px.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <div class="panggung">
+        <p>Iblis tertebas!</p>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .panggung
+    css: display
+    value: flex
+  - sel: .panggung
+    css: justify-content
+    value: center
+  - sel: .panggung
+    css: align-items
+    value: center
+  - sel: .panggung
+    css: height
+    value: 200px
+  hints: |
+    justify-content = horizontal (sumbu utama).
+    align-items = vertikal (sumbu silang).
+    Keduanya center.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .panggung {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="panggung">
+        <p>Iblis tertebas!</p>
+      </div>
+    </body>
+    </html>
+- id: web-m1-wrap
+  type: write
+  title: Kartu yang Membungkus
+  difficulty: 2
+  prompt: 'Buat .galeri flex container yang membungkus item ke baris berikutnya (flex-wrap: wrap) dengan gap 16px, dan setiap .item tumbuh rata (flex: 1).'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .galeri
+    css: display
+    value: flex
+  - sel: .galeri
+    css: flex-wrap
+    value: wrap
+  - sel: .galeri
+    css: column-gap
+    value: 16px
+  - sel: .item
+    css: flex-grow
+    value: '1'
+  hints: |
+    flex-wrap: wrap mengizinkan baris baru.
+    gap memberi jarak.
+    flex: 1 pada item.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .item {
+      flex: 1;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>

@@ -1,0 +1,125 @@
+lesson:
+- text: 'readLine() membaca satu baris tanpa newline dan mengembalikan String? (bisa null kalau input habis). !! memaksa nilainya bukan null; ?: memberi nilai cadangan.'
+  code: |
+    fun main() {
+        val baris: String? = "3 4"
+        val (a, b) = baris!!.split(" ").map { it.toInt() }
+        println(a + b)
+        val kosong: String? = null
+        println(kosong ?: "input habis")
+    }
+- text: 'Membaca seluruh input sekaligus: System.`in`.bufferedReader().readText(), lalu pecah dengan split(Regex("\\s+")). trim() membuang spasi dan newline di ujung.'
+  code: |
+    fun main() {
+        val teks = "  1 2\n3  "
+        val angka = teks.trim().split(Regex("\\s+")).map { it.toInt() }
+        println("${angka.size} ${angka.sum()}")
+    }
+exercises:
+- id: kt-f4-jumlah
+  type: write
+  title: Menjumlah Dua Bilah
+  difficulty: 1
+  prompt: Baca dua bilangan bulat (dalam satu baris), cetak jumlahnya.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - 3 4
+  - 10 -2
+  - 0 0
+  hints: |
+    Baca dua bilangan dari input.
+    Ubah teks menjadi angka.
+    Cetak a + b.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        println(t[0].toLong() + t[1].toLong())
+    }
+- id: kt-f4-n
+  type: write
+  title: Laporan Berjumlah n
+  difficulty: 2
+  prompt: Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    3
+    1 9 2
+  - |-
+    1
+    -5
+  - |-
+    5
+    -1 -2 -3 -4 -5
+  hints: |
+    Nilai terbesar awal = bilangan pertama, bukan 0.
+    Ingat bilangan bisa negatif semua.
+    Cetak "<jumlah> <maks>".
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val n = t[0].toInt()
+        val xs = t.drop(1).take(n).map { it.toLong() }
+        println("${xs.sum()} ${xs.max()}")
+    }
+- id: kt-f4-eof
+  type: write
+  title: Sampai Gulungan Habis
+  difficulty: 2
+  prompt: Input berisi sejumlah bilangan bulat dipisah spasi atau baris baru (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal), dipisah spasi.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - 1 2 3 4
+  - '10'
+  - |-
+    5
+    6
+    7
+  hints: |
+    Baca seluruh input lalu pecah berdasarkan spasi/baris.
+    Hitung banyak dan jumlahnya.
+    Rata-rata = jumlah / banyak, dalam desimal.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val xs = t.map { it.toLong() }
+        println("${xs.size} ${"%.2f".format(xs.sum().toDouble() / xs.size)}")
+    }
+- id: kt-f4-bug
+  type: bughunt
+  title: Spasi yang Menyusup
+  difficulty: 2
+  prompt: Program membaca satu baris berisi angka lalu mencetak angka itu dikali 2, tapi gagal karena baris input masih membawa karakter newline. Temukan baris yang salah.
+  starter: |
+    fun main() {
+        val teks = System.`in`.bufferedReader().readText()
+        val n = teks.toInt()
+        println(n * 2)
+    }
+  bug_line: 3
+  tests:
+  - |
+    21
+  - |
+    0
+  - |
+    -7
+  hints: |
+    Baris yang dibaca masih berisi "\n" di ujungnya.
+    Teks "21\n" tidak bisa diubah langsung menjadi angka.
+    Buang spasi/newline di ujung sebelum mengubah ke angka.
+  solution: |
+    fun main() {
+        val teks = System.`in`.bufferedReader().readText()
+        val n = teks.trim().toInt()
+        println(n * 2)
+    }

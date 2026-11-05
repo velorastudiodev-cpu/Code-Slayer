@@ -1,0 +1,231 @@
+id: brankas
+title: Brankas Desa Penempa
+track: rust
+lang: rust
+requires: f7
+emoji: 🔐
+story: Haganezuka menyimpan kata sandi bengkel di kertas tempel. Buat password manager baris perintah yang aman dari salah ketik. (Untuk latihan; jangan dipakai menyimpan sandi sungguhan.)
+starter: |
+  use std::io::{self, Read};
+
+  fn main() {
+      let mut input = String::new();
+      io::stdin().read_to_string(&mut input).unwrap();
+      for baris in input.lines() {
+          // tulis kodemu di sini
+      }
+  }
+stages:
+- title: Simpan & ambil
+  prompt: '"simpan <situs> <sandi>" menyimpan (menimpa kalau sudah ada); "ambil <situs>" mencetak sandinya atau "tidak ada".'
+  tests:
+  - |-
+    simpan korps.id kaa123
+    ambil korps.id
+    ambil iblis.id
+    simpan korps.id baru
+    ambil korps.id
+  - ambil x
+  hints: |
+    BTreeMap<String, String> sebagai brankas.
+    match b.as_slice() dengan pola ["simpan", situs, sandi].
+    get mengembalikan Option.
+  solution: |
+    use std::collections::BTreeMap;
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut brankas: BTreeMap<String, String> = BTreeMap::new();
+        for baris in input.lines() {
+            let b: Vec<&str> = baris.split_whitespace().collect();
+            match b.as_slice() {
+                ["simpan", situs, sandi] => {
+                    brankas.insert(situs.to_string(), sandi.to_string());
+                }
+                ["ambil", situs] => match brankas.get(*situs) {
+                    Some(s) => println!("{}", s),
+                    None => println!("tidak ada"),
+                },
+                _ => {}
+            }
+        }
+    }
+- title: Daftar & hapus
+  prompt: '"daftar" mencetak semua situs urut abjad (satu per baris); "hapus <situs>" menghapusnya.'
+  tests:
+  - |-
+    simpan zeta.id a
+    simpan alfa.id b
+    simpan mid.id c
+    hapus mid.id
+    daftar
+  - |-
+    daftar
+    simpan a b
+    daftar
+  hints: |
+    BTreeMap sudah terurut menurut kunci.
+    keys() untuk menelusuri situs.
+    remove untuk menghapus.
+  solution: |
+    use std::collections::BTreeMap;
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut brankas: BTreeMap<String, String> = BTreeMap::new();
+        for baris in input.lines() {
+            let b: Vec<&str> = baris.split_whitespace().collect();
+            match b.as_slice() {
+                ["simpan", situs, sandi] => {
+                    brankas.insert(situs.to_string(), sandi.to_string());
+                }
+                ["ambil", situs] => match brankas.get(*situs) {
+                    Some(s) => println!("{}", s),
+                    None => println!("tidak ada"),
+                },
+                ["daftar"] => {
+                    for k in brankas.keys() {
+                        println!("{}", k);
+                    }
+                }
+                ["hapus", situs] => {
+                    brankas.remove(*situs);
+                }
+                _ => {}
+            }
+        }
+    }
+- title: Kunci master
+  prompt: '"master <kata>" memasang kata kunci dan MENGUNCI brankas. Selama terkunci, "ambil" mencetak "terkunci". "buka <kata>" mencetak "terbuka" kalau benar (lalu ambil boleh) atau "salah". Tanpa master,
+    brankas selalu terbuka.'
+  tests:
+  - |-
+    simpan korps.id kaa
+    master nichirin
+    ambil korps.id
+    buka salah
+    ambil korps.id
+    buka nichirin
+    ambil korps.id
+  - |-
+    simpan a 1
+    ambil a
+  hints: |
+    Simpan master dalam Option<String>.
+    Variabel bool terbuka.
+    Cabang ambil yang terkunci diletakkan sebelum cabang ambil biasa.
+  solution: |
+    use std::collections::BTreeMap;
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut brankas: BTreeMap<String, String> = BTreeMap::new();
+        let mut kunci_master: Option<String> = None;
+        let mut terbuka = true;
+        for baris in input.lines() {
+            let b: Vec<&str> = baris.split_whitespace().collect();
+            match b.as_slice() {
+                ["simpan", situs, sandi] => {
+                    brankas.insert(situs.to_string(), sandi.to_string());
+                }
+                ["ambil", situs] if !terbuka => {
+                    let _ = situs;
+                    println!("terkunci");
+                }
+                ["ambil", situs] => match brankas.get(*situs) {
+                    Some(s) => println!("{}", s),
+                    None => println!("tidak ada"),
+                },
+                ["daftar"] => {
+                    for k in brankas.keys() {
+                        println!("{}", k);
+                    }
+                }
+                ["hapus", situs] => {
+                    brankas.remove(*situs);
+                }
+                ["master", kata] => {
+                    kunci_master = Some(kata.to_string());
+                    terbuka = false;
+                }
+                ["buka", kata] => {
+                    terbuka = kunci_master.as_deref() == Some(*kata);
+                    println!("{}", if terbuka { "terbuka" } else { "salah" });
+                }
+                _ => {}
+            }
+        }
+    }
+- title: Ekspor terenkripsi
+  prompt: '"ekspor" mencetak setiap entri "situs:hex" urut abjad, dengan hex = setiap byte sandi di-XOR byte kunci master yang diulang (kunci "slayer" kalau belum ada master), ditulis 2 digit hex huruf
+    kecil.'
+  tests:
+  - |-
+    simpan korps.id kaa
+    simpan a.id zz
+    ekspor
+  - |-
+    master kunci
+    simpan x.id rahasia
+    ekspor
+  hints: |
+    bytes().zip(kunci.bytes().cycle()).
+    a ^ k untuk XOR.
+    format!("{:02x}", ...).
+  solution: |
+    use std::collections::BTreeMap;
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut brankas: BTreeMap<String, String> = BTreeMap::new();
+        let mut kunci_master: Option<String> = None;
+        let mut terbuka = true;
+        for baris in input.lines() {
+            let b: Vec<&str> = baris.split_whitespace().collect();
+            match b.as_slice() {
+                ["simpan", situs, sandi] => {
+                    brankas.insert(situs.to_string(), sandi.to_string());
+                }
+                ["ambil", situs] if !terbuka => {
+                    let _ = situs;
+                    println!("terkunci");
+                }
+                ["ambil", situs] => match brankas.get(*situs) {
+                    Some(s) => println!("{}", s),
+                    None => println!("tidak ada"),
+                },
+                ["daftar"] => {
+                    for k in brankas.keys() {
+                        println!("{}", k);
+                    }
+                }
+                ["hapus", situs] => {
+                    brankas.remove(*situs);
+                }
+                ["master", kata] => {
+                    kunci_master = Some(kata.to_string());
+                    terbuka = false;
+                }
+                ["buka", kata] => {
+                    terbuka = kunci_master.as_deref() == Some(*kata);
+                    println!("{}", if terbuka { "terbuka" } else { "salah" });
+                }
+                ["ekspor"] => {
+                    let kunci = kunci_master.clone().unwrap_or_else(|| "slayer".to_string());
+                    for (situs, sandi) in &brankas {
+                        let hex: String = sandi.bytes().zip(kunci.bytes().cycle()).map(|(a, k)| format!("{:02x}", a ^ k)).collect();
+                        println!("{}:{}", situs, hex);
+                    }
+                }
+                _ => {}
+            }
+        }
+    }

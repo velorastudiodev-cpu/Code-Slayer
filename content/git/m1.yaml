@@ -1,0 +1,92 @@
+lesson:
+- text: 'git rebase main memindahkan commit-commit branch-mu seolah dibuat di atas ujung main terbaru. Hasilnya riwayat lurus tanpa merge commit. Aturan emas: jangan rebase commit yang sudah di-push dan
+    dipakai orang lain.'
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    printf "Tanjiro\nZenitsu\nInosuke\n" > regu.txt
+    git add regu.txt
+    git commit -q -m "Bentuk regu"
+    git switch -q -c latihan
+    echo "Kanao" >> regu.txt
+    git commit -q -am "Tambah Kanao"
+    git switch -q main
+    echo "lokasi: Gunung Natagumo" > misi.txt
+    git add misi.txt
+    git commit -q -m "Catat lokasi"
+    git switch -q latihan
+    git rebase main
+    git log --format=%s
+exercises:
+- id: git-m1-rebase
+  type: write
+  title: Meluruskan Jalan
+  difficulty: 2
+  prompt: Kamu di main; branch latihan bercabang sebelum commit "Catat lokasi". Pindah ke latihan, lalu rebase ke atas main.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    printf "Tanjiro\nZenitsu\nInosuke\n" > regu.txt
+    git add regu.txt
+    git commit -q -m "Bentuk regu"
+    git switch -q -c latihan
+    echo "Kanao" >> regu.txt
+    git commit -q -am "Tambah Kanao"
+    git switch -q main
+    echo "lokasi: Gunung Natagumo" > misi.txt
+    git add misi.txt
+    git commit -q -m "Catat lokasi"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Rebase dijalankan DARI branch yang ingin dipindahkan.
+    git switch latihan dulu.
+    git rebase main
+  solution: |
+    git switch latihan
+    git rebase main
+- id: git-m1-log
+  type: predict
+  title: Riwayat Setelah Rebase
+  difficulty: 2
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    git switch -q latihan
+    git rebase -q main
+    git log --format=%s
+    git log --merges --format=%s | wc -l
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    printf "Tanjiro\nZenitsu\nInosuke\n" > regu.txt
+    git add regu.txt
+    git commit -q -m "Bentuk regu"
+    git switch -q -c latihan
+    echo "Kanao" >> regu.txt
+    git commit -q -am "Tambah Kanao"
+    git switch -q main
+    echo "lokasi: Gunung Natagumo" > misi.txt
+    git add misi.txt
+    git commit -q -m "Catat lokasi"
+  hints: |
+    Commit latihan dipindah ke atas ujung main.
+    Rebase tidak membuat merge commit.
+    Urutan: terbaru di atas.
+  solution: x
+- id: git-m1-beda
+  type: quiz
+  title: Merge atau Rebase?
+  difficulty: 2
+  prompt: Perbedaan utama hasil rebase dibanding merge adalah...
+  options:
+  - Riwayat menjadi lurus, commit lama diganti salinan baru
+  - Rebase tidak pernah konflik
+  - Rebase menghapus commit milik branch lain
+  - Rebase hanya bisa dilakukan di main
+  explain: Rebase membuat ulang commit (hash baru) di atas basis baru sehingga riwayat lurus. Merge mempertahankan commit asli dan menambah merge commit.
+  hints: |
+    Perhatikan bentuk riwayatnya.
+    Commit yang di-rebase mendapat hash baru.
+    Lurus vs bercabang.

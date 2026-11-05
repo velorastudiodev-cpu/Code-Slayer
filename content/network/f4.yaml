@@ -1,0 +1,78 @@
+lesson:
+- text: 'Port membedakan layanan di satu alamat IP. Port terkenal: 22 SSH, 25 SMTP, 53 DNS, 80 HTTP, 443 HTTPS, 3306 MySQL. Kombinasi IP + port (misalnya 10.0.0.5:443) disebut socket.'
+  code: |
+    port = {22: "ssh", 53: "dns", 80: "http", 443: "https"}
+    for p in (443, 22, 8080):
+        print(p, port.get(p, "tidak dikenal"))
+exercises:
+- id: net-f4-https
+  type: answer
+  title: Pintu Aman
+  difficulty: 1
+  prompt: Port default untuk HTTPS adalah...
+  accept:
+  - '443'
+  explain: HTTP memakai port 80, HTTPS 443.
+  hints: |
+    Bukan 80.
+    Tiga digit.
+    4-4-3.
+- id: net-f4-ssh
+  type: answer
+  title: Pintu Admin
+  difficulty: 1
+  prompt: Port default untuk SSH (login jarak jauh yang terenkripsi) adalah...
+  accept:
+  - '22'
+  explain: SSH memakai port 22. Telnet (tidak terenkripsi) memakai 23.
+  hints: |
+    Dua digit.
+    Sebelum Telnet (23).
+    2-2.
+- id: net-f4-smtp
+  type: quiz
+  title: Mengirim Surat
+  difficulty: 1
+  prompt: Protokol yang dipakai untuk MENGIRIM email antar server adalah...
+  options:
+  - SMTP
+  - IMAP
+  - FTP
+  - DNS
+  explain: SMTP (port 25/587) untuk mengirim. IMAP/POP3 untuk membaca email dari kotak surat.
+  hints: |
+    Simple Mail ... Protocol.
+    IMAP untuk membaca.
+    S-M-T-P.
+- id: net-f4-lookup
+  type: write
+  title: Buku Port Gagak
+  difficulty: 1
+  prompt: 'Setiap baris input berisi satu nomor port. Cetak nama layanannya dari tabel berikut, atau "tidak dikenal": 21 ftp, 22 ssh, 25 smtp, 53 dns, 80 http, 443 https, 3306 mysql.'
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    22
+    80
+    9999
+  - |-
+    443
+    53
+  - |-
+    3306
+    21
+    25
+    1
+  hints: |
+    Simpan tabel dalam dict.
+    Pakai .get(port, "tidak dikenal").
+    Ubah input menjadi int sebelum mencari.
+  solution: |
+    import sys
+
+    LAYANAN = {21: "ftp", 22: "ssh", 25: "smtp", 53: "dns", 80: "http", 443: "https", 3306: "mysql"}
+    for baris in sys.stdin.read().split():
+        print(LAYANAN.get(int(baris), "tidak dikenal"))

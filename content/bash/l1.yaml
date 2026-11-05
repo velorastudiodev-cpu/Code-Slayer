@@ -1,0 +1,93 @@
+lesson:
+- text: 'Pengolahan teks lanjut: cut -d -f (kolom), tr (ganti/hapus karakter), sort -t, -k (urut per kolom), uniq -c, paste, dan awk dengan array asosiatif untuk mengelompokkan.'
+  code: |
+    cut -d, -f1 regu.csv
+    tr 'a-z' 'A-Z' < regu.txt
+    sort -t, -k3 -n regu.csv
+    awk -F, '{ n[$2]++ } END { for (k in n) print k, n[k] }' data.csv
+exercises:
+- id: bash-l1-cut
+  type: write
+  title: Ambil Nama
+  difficulty: 1
+  prompt: Tampilkan kolom nama dari regu.csv tanpa header.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > regu.csv <<'EOF'
+    nama,napas,misi
+    Tanjiro,Air,12
+    Zenitsu,Petir,9
+    Inosuke,Binatang,11
+    Kanao,Bunga,15
+    Genya,Senjata,7
+    EOF
+  hints: |
+    tail -n +2 mulai baris 2.
+    cut -d, -f1
+    Gabungkan dengan pipa.
+  solution: |
+    tail -n +2 regu.csv | cut -d, -f1
+- id: bash-l1-sortk
+  type: write
+  title: Peringkat Misi
+  difficulty: 2
+  prompt: Tampilkan baris regu.csv (tanpa header) terurut menurut jumlah misi dari terbesar.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > regu.csv <<'EOF'
+    nama,napas,misi
+    Tanjiro,Air,12
+    Zenitsu,Petir,9
+    Inosuke,Binatang,11
+    Kanao,Bunga,15
+    Genya,Senjata,7
+    EOF
+  hints: |
+    Lewati header.
+    Pemisah koma: -t,
+    Kolom 3, angka, terbalik: -k3 -rn
+  solution: |
+    tail -n +2 regu.csv | sort -t, -k3 -rn
+- id: bash-l1-tr
+  type: write
+  title: Teriakan Inosuke
+  difficulty: 1
+  prompt: Ubah input menjadi huruf besar semua.
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    babi hutan menyerang!
+  - |
+    Gomen
+  hints: |
+    tr menerjemahkan karakter.
+    Rentang a-z ke A-Z.
+    tr 'a-z' 'A-Z'
+  solution: |
+    tr 'a-z' 'A-Z'
+- id: bash-l1-group
+  type: write
+  title: Kelompok Status
+  difficulty: 3
+  prompt: Dari akses.log, hitung jumlah request per kode status. Cetak "status jumlah" terurut menurut status.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > akses.log <<'EOF'
+    10.0.0.5 - - [05/Nov/2026:10:00:01] "GET / HTTP/1.1" 200 512
+    10.0.0.9 - - [05/Nov/2026:10:00:03] "GET /misi HTTP/1.1" 200 1024
+    10.0.0.5 - - [05/Nov/2026:10:00:07] "POST /login HTTP/1.1" 401 64
+    10.6.6.6 - - [05/Nov/2026:10:00:08] "GET /admin HTTP/1.1" 403 32
+    10.6.6.6 - - [05/Nov/2026:10:00:09] "GET /admin HTTP/1.1" 403 32
+    10.0.0.9 - - [05/Nov/2026:10:00:12] "GET /regu HTTP/1.1" 200 2048
+    10.6.6.6 - - [05/Nov/2026:10:00:15] "GET /../etc/passwd HTTP/1.1" 404 16
+    EOF
+  hints: |
+    Status ada di kolom kedua dari akhir: $(NF-1).
+    Array asosiatif menghitung.
+    Urutkan hasil akhir.
+  solution: |
+    awk '{ n[$(NF-1)]++ } END { for (s in n) print s, n[s] }' akses.log | sort

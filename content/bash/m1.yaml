@@ -1,0 +1,97 @@
+lesson:
+- text: 'Trio pengolah teks: grep (cari baris), sed (sunting aliran: s/lama/baru/g), awk (olah kolom: -F pemisah, $1 kolom pertama, NR nomor baris, blok END untuk ringkasan).'
+  code: |
+    grep -i iblis laporan.txt
+    sed 's/Oni/Iblis/g' laporan.txt
+    awk -F, '{ total += $3 } END { print total }' regu.csv
+exercises:
+- id: bash-m1-grep
+  type: write
+  title: Akses Terlarang
+  difficulty: 1
+  prompt: Dari akses.log, tampilkan baris dengan status 403.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > akses.log <<'EOF'
+    10.0.0.5 - - [05/Nov/2026:10:00:01] "GET / HTTP/1.1" 200 512
+    10.0.0.9 - - [05/Nov/2026:10:00:03] "GET /misi HTTP/1.1" 200 1024
+    10.0.0.5 - - [05/Nov/2026:10:00:07] "POST /login HTTP/1.1" 401 64
+    10.6.6.6 - - [05/Nov/2026:10:00:08] "GET /admin HTTP/1.1" 403 32
+    10.6.6.6 - - [05/Nov/2026:10:00:09] "GET /admin HTTP/1.1" 403 32
+    10.0.0.9 - - [05/Nov/2026:10:00:12] "GET /regu HTTP/1.1" 200 2048
+    10.6.6.6 - - [05/Nov/2026:10:00:15] "GET /../etc/passwd HTTP/1.1" 404 16
+    EOF
+  hints: |
+    Status ada setelah tanda kutip penutup request.
+    grep pola file
+    grep '" 403 ' akses.log
+  solution: |
+    grep '" 403 ' akses.log
+- id: bash-m1-awk
+  type: write
+  title: Total Misi
+  difficulty: 2
+  prompt: Dari regu.csv (ada header), cetak total kolom misi.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > regu.csv <<'EOF'
+    nama,napas,misi
+    Tanjiro,Air,12
+    Zenitsu,Petir,9
+    Inosuke,Binatang,11
+    Kanao,Bunga,15
+    Genya,Senjata,7
+    EOF
+  hints: |
+    Pemisah koma: -F,
+    Lewati header dengan NR > 1.
+    Jumlahkan $3 lalu cetak di END.
+  solution: |
+    awk -F, 'NR > 1 { t += $3 } END { print t }' regu.csv
+- id: bash-m1-sed
+  type: write
+  title: Ganti Napas
+  difficulty: 2
+  prompt: Tampilkan regu.csv dengan semua kata "Air" diganti menjadi "Air (Mizu)".
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > regu.csv <<'EOF'
+    nama,napas,misi
+    Tanjiro,Air,12
+    Zenitsu,Petir,9
+    Inosuke,Binatang,11
+    Kanao,Bunga,15
+    Genya,Senjata,7
+    EOF
+  hints: |
+    sed s/lama/baru/g
+    Tanda kurung tidak perlu di-escape di sed biasa.
+    sed 's/Air/Air (Mizu)/g' regu.csv
+  solution: |
+    sed 's/Air/Air (Mizu)/g' regu.csv
+- id: bash-m1-top
+  type: write
+  title: Penyerang Teratas
+  difficulty: 3
+  prompt: Dari akses.log, cetak IP yang paling sering muncul beserta jumlahnya dalam format "3 10.6.6.6".
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > akses.log <<'EOF'
+    10.0.0.5 - - [05/Nov/2026:10:00:01] "GET / HTTP/1.1" 200 512
+    10.0.0.9 - - [05/Nov/2026:10:00:03] "GET /misi HTTP/1.1" 200 1024
+    10.0.0.5 - - [05/Nov/2026:10:00:07] "POST /login HTTP/1.1" 401 64
+    10.6.6.6 - - [05/Nov/2026:10:00:08] "GET /admin HTTP/1.1" 403 32
+    10.6.6.6 - - [05/Nov/2026:10:00:09] "GET /admin HTTP/1.1" 403 32
+    10.0.0.9 - - [05/Nov/2026:10:00:12] "GET /regu HTTP/1.1" 200 2048
+    10.6.6.6 - - [05/Nov/2026:10:00:15] "GET /../etc/passwd HTTP/1.1" 404 16
+    EOF
+  hints: |
+    Ambil kolom pertama.
+    sort | uniq -c menghitung.
+    Urutkan menurun dan ambil teratas.
+  solution: |
+    awk '{ print $1 }' akses.log | sort | uniq -c | sort -rn | head -1 | awk '{ print $1, $2 }'

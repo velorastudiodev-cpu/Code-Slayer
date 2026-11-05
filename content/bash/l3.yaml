@@ -1,0 +1,45 @@
+lesson:
+- text: 'Hardening dasar: matikan login root via SSH, pakai kunci bukan kata sandi, update rutin, firewall (ufw allow 22; ufw enable), izin file minimal, dan audit file yang bisa ditulis semua orang (find
+    / -perm -o+w).'
+  code: |
+    sudo ufw allow 22/tcp
+    sudo ufw enable
+    sudo sed -i "s/^PermitRootLogin.*/PermitRootLogin no/" /etc/ssh/sshd_config
+    find / -type f -perm -o+w 2>/dev/null
+exercises:
+- id: bash-l3-world
+  type: write
+  title: Audit Tulis Bebas
+  difficulty: 2
+  prompt: Di direktori data/, tampilkan file (bukan direktori) yang bisa DITULIS oleh semua orang, terurut.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p data/a
+    echo x > data/aman.txt
+    echo y > data/bahaya.txt
+    echo z > data/a/juga-bahaya.txt
+    chmod 644 data/aman.txt
+    chmod 666 data/bahaya.txt
+    chmod 646 data/a/juga-bahaya.txt
+  hints: |
+    find punya -perm.
+    Bit tulis others: -o=w (atau -002).
+    Urutkan hasilnya.
+  solution: |
+    find data -type f -perm -o=w | sort
+- id: bash-l3-root
+  type: quiz
+  title: Pintu Depan
+  difficulty: 1
+  prompt: Konfigurasi sshd yang disarankan untuk server publik adalah...
+  options:
+  - PermitRootLogin no dan PasswordAuthentication no
+  - PermitRootLogin yes agar admin mudah
+  - Port 22 dibuka tanpa firewall
+  - Memakai kata sandi pendek agar cepat
+  explain: Login root langsung dan kata sandi adalah sasaran brute force favorit. Pakai user biasa + sudo + kunci SSH.
+  hints: |
+    Root jangan login langsung.
+    Kata sandi mudah ditebak.
+    Matikan keduanya.

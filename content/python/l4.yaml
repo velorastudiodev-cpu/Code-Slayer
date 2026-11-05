@@ -1,0 +1,222 @@
+lesson:
+  - text: Membaca traceback dimulai dari BAWAH. Baris terakhir menyebut jenis error dan pesannya, dan baris di atasnya menunjukkan letaknya di kodemu. Cocokkan nomor baris, lalu periksa nilai variabel di titik itu.
+    code: |
+      def bagi(a, b):
+          return a / b
+      try:
+          bagi(1, 0)
+      except ZeroDivisionError as e:
+          print(type(e).__name__, "-", e)
+  - text: Teknik debugging paling sederhana adalah print nilai variabel di titik-titik penting, atau menelusuri kode baris per baris di kepala (trace table). Bug klasik antara lain off-by-one pada range, pembagian bulat yang tidak disengaja, default argumen mutable, dan mengubah list saat sedang diiterasi.
+    code: |
+      total = 0
+      for i in range(1, 4):
+          total += i
+          print(f"i={i} total={total}")
+exercises:
+  - id: py-l4-bug-mutable
+    type: bughunt
+    title: Kantong Bersama
+    difficulty: 3
+    prompt: Setiap pemanggilan tambah(k) seharusnya mengembalikan list baru berisi satu item, tapi list-nya terus bertambah. Temukan baris penyebabnya.
+    starter: |
+      def tambah(x, daftar=[]):
+          daftar = daftar
+          daftar.append(x)
+          return daftar
+      for k in input().split():
+          print(tambah(k))
+    bug_line: 2
+    tests: ["a b c", "x"]
+    hints: |
+      Default argumen [] dibuat SEKALI saja, lalu dipakai bersama oleh semua pemanggilan.
+      daftar = daftar tidak membuat salinan.
+      daftar = list(daftar) membuat salinan baru setiap kali.
+    solution: |
+      def tambah(x, daftar=[]):
+          daftar = list(daftar)
+          daftar.append(x)
+          return daftar
+      for k in input().split():
+          print(tambah(k))
+  - id: py-l4-bug-offbyone
+    type: bughunt
+    title: Satu Langkah Kurang
+    difficulty: 1
+    prompt: Program harus mencetak setiap kata dengan nomor urut mulai 1, tapi kata pertama hilang. Temukan bug-nya.
+    starter: |
+      kata = input().split()
+      for i in range(1, len(kata)):
+          print(i + 1, kata[i])
+    bug_line: 2
+    tests: ["air api petir", "satu"]
+    hints: |
+      Indeks list dimulai dari 0.
+      range(1, ...) melewatkan indeks 0.
+      for i in range(len(kata)):
+    solution: |
+      kata = input().split()
+      for i in range(len(kata)):
+          print(i + 1, kata[i])
+  - id: py-l4-bug-bagi
+    type: bughunt
+    title: Rata-rata Terpotong
+    difficulty: 1
+    prompt: Rata-rata seharusnya punya 2 desimal yang benar, tapi selalu berakhir .00. Temukan bug-nya.
+    starter: |
+      n = int(input())
+      nilai = list(map(int, input().split()))
+      rata = sum(nilai) // n
+      print(f"{rata:.2f}")
+    bug_line: 3
+    tests: ["3\n1 2 4", "2\n5 6", "1\n7"]
+    hints: |
+      Apa beda / dan //?
+      // membuang bagian desimal.
+      rata = sum(nilai) / n
+    solution: |
+      n = int(input())
+      nilai = list(map(int, input().split()))
+      rata = sum(nilai) / n
+      print(f"{rata:.2f}")
+  - id: py-l4-predict
+    type: predict
+    title: List yang Menyusut
+    difficulty: 3
+    prompt: Bug klasik, yaitu menghapus item saat sedang mengulang list yang sama. Tulis output persis dari kode berikut.
+    code: |
+      x = [1, 2, 3]
+      for i in x:
+          x.remove(i)
+      print(x)
+    hints: |
+      Loop memakai posisi indeks yang terus bertambah.
+      Setelah 1 dihapus, 2 bergeser ke indeks 0.
+      Putaran kedua mengambil indeks 1, yaitu angka 3.
+    solution: x
+  - id: py-l4-dua-bug
+    type: write
+    title: Dua Iblis Sekaligus
+    difficulty: 2
+    prompt: Fungsi rata_rata di bawah punya DUA bug. Perbaiki sampai rata-rata yang dibulatkan 2 desimal tercetak benar.
+    starter: |
+      def rata_rata(nilai):
+          total = 0
+          for i in range(1, len(nilai)):
+              total += i
+          return total / len(nilai)
+      nilai = list(map(int, input().split()))
+      print(round(rata_rata(nilai), 2))
+    tests: ["2 4 6", "5", "1 2", "10 20 30 40"]
+    hints: |
+      Elemen mana saja yang dijumlah? Apakah indeks 0 ikut?
+      Yang dijumlah indeks i, bukan nilai[i].
+      for x in nilai: total += x
+    solution: |
+      def rata_rata(nilai):
+          total = 0
+          for x in nilai:
+              total += x
+          return total / len(nilai)
+      nilai = list(map(int, input().split()))
+      print(round(rata_rata(nilai), 2))
+  - id: py-l4-review-cari
+    type: review
+    title: Review Fungsi Pencari
+    difficulty: 2
+    prompt: Fungsi ini seharusnya mengembalikan indeks x atau -1. Tandai baris yang bermasalah.
+    code: |
+      def cari_index(daftar, x):
+          for i in range(len(daftar)):
+              if daftar[i] == x:
+                  return i
+              else:
+                  return -1
+    issues:
+      - line: 5
+        text: else di dalam loop tidak diperlukan.
+      - line: 6
+        text: return -1 di dalam loop membuat pencarian berhenti setelah elemen pertama. Pindahkan ke luar loop.
+    hints: |
+      Kapan fungsi ini berhenti?
+      Telusuri dengan x berada di indeks 2.
+      Ada dua baris yang terkait.
+  - id: py-l4-review-typo
+    type: review
+    title: Review Kode Tugas
+    difficulty: 3
+    prompt: Tandai semua baris yang mengandung bug.
+    code: |
+      def tambah_tugas(tugas, daftar=[]):
+          daftar.append(tugas)
+          return daftar
+      total = 0
+      for x in range(10):
+          total =+ x
+      print(total)
+    issues:
+      - line: 1
+        text: Default argumen mutable [] dipakai bersama semua pemanggilan. Pakai daftar=None.
+      - line: 6
+        text: "=+ adalah assignment nilai +x, bukan penambahan. Seharusnya +=."
+    hints: |
+      Ada bug klasik di parameter default.
+      Perhatikan urutan simbol = dan +.
+      Ada dua baris bermasalah.
+  - id: py-l4-readerror-str
+    type: readerror
+    title: Teks Bertemu Angka
+    difficulty: 1
+    prompt: Program ini crash dengan input 15. Baca pesan error-nya.
+    code: |
+      umur = input()
+      print("Tahun depan: " + umur + 1)
+    tests: ["15"]
+    options:
+      - umur bertipe str. Ubah dengan int(umur), lalu cetak dengan f-string atau str().
+      - print tidak bisa mencetak angka.
+      - Tanda + tidak boleh dipakai lebih dari sekali dalam satu baris.
+      - input() harus diberi teks pertanyaan.
+    explain: TypeError karena menggabung str dengan int. input() selalu menghasilkan str.
+    hints: |
+      Baca jenis error di baris terakhir.
+      Apa tipe hasil input()?
+      str + int tidak diizinkan.
+  - id: py-l4-readerror-index
+    type: readerror
+    title: Satu Langkah Terlalu Jauh
+    difficulty: 1
+    prompt: Baca pesan error-nya lalu tentukan perbaikannya.
+    code: |
+      skor = [90, 75, 80]
+      for i in range(len(skor) + 1):
+          print(skor[i])
+    options:
+      - range(len(skor) + 1) menghasilkan indeks 3 yang tidak ada. Pakai range(len(skor)) atau for s in skor.
+      - List tidak boleh berisi angka lebih dari 50.
+      - print harus dipanggil di luar loop.
+      - skor harus diubah menjadi tuple.
+    explain: IndexError. Indeks valid 0 sampai len - 1.
+    hints: |
+      Berapa indeks terakhir yang valid?
+      len(skor) = 3, jadi indeks maksimal 2.
+      Periksa batas range.
+  - id: py-l4-readerror-attr
+    type: readerror
+    title: Method yang Tidak Ada
+    difficulty: 1
+    prompt: Baca pesan error-nya lalu tentukan perbaikannya.
+    code: |
+      pasukan = "Tanjiro"
+      pasukan.append("Zenitsu")
+      print(pasukan)
+    options:
+      - pasukan adalah str, bukan list. Buat list dengan pasukan = ["Tanjiro"] lalu append.
+      - append harus ditulis Append.
+      - Nama di dalam kutip tidak boleh lebih dari 5 huruf.
+      - print tidak bisa mencetak list.
+    explain: AttributeError, karena str tidak punya method append. Hanya list yang punya.
+    hints: |
+      Apa tipe pasukan?
+      Method append milik list.
+      Pesan menyebut 'str' object.

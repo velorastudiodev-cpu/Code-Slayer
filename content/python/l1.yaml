@@ -1,0 +1,94 @@
+lesson:
+  - text: Comprehension adalah cara ringkas membuat list, dict, atau set dari urutan lain, misalnya [ekspresi for x in data if syarat]. Hasilnya sama dengan loop + append, tapi lebih pendek dan lebih cepat.
+    code: |
+      angka = range(1, 11)
+      print([x * x for x in angka if x % 2 == 0])
+      print({x: x * x for x in range(4)})
+  - text: Generator menghasilkan nilai satu per satu saat dibutuhkan, jadi hemat memori. Fungsi dengan yield otomatis menjadi generator. Generator expression ditulis seperti comprehension, tapi memakai kurung biasa.
+    code: |
+      def hitung_mundur(n):
+          while n > 0:
+              yield n
+              n -= 1
+      print(list(hitung_mundur(3)))
+      print(sum(x * x for x in range(1_000_000)))
+exercises:
+  - id: py-l1-kuadrat
+    type: write
+    title: Kuadrat Genap
+    difficulty: 1
+    prompt: Baca n. Cetak list kuadrat bilangan genap dari 1 sampai n (format list Python), memakai list comprehension.
+    tests: ["6", "1", "10"]
+    hints: |
+      Bentuknya [x * x for x in ... if ...].
+      range(1, n + 1) memberi 1 sampai n.
+      print([x * x for x in range(1, n + 1) if x % 2 == 0])
+    solution: |
+      n = int(input())
+      print([x * x for x in range(1, n + 1) if x % 2 == 0])
+  - id: py-l1-dict
+    type: write
+    title: Kamus Panjang Kata
+    difficulty: 2
+    prompt: Baca satu baris kata. Buat dict kata ke panjangnya dengan dict comprehension, lalu cetak "<kata>:<panjang>" urut menurut abjad.
+    tests: ["air api petir", "nezuko", "b a b"]
+    hints: |
+      {k: len(k) for k in kata}
+      sorted(d.items()) mengurutkan menurut kunci.
+      print(f"{k}:{v}")
+    solution: |
+      d = {k: len(k) for k in input().split()}
+      for k, v in sorted(d.items()):
+          print(f"{k}:{v}")
+  - id: py-l1-predict
+    type: predict
+    title: Tiga Bentuk Ringkas
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      print([x * 2 for x in range(4)], sum(x for x in range(5)), {k: k * k for k in range(3)})
+    hints: |
+      range(4) adalah 0, 1, 2, 3.
+      sum dari 0 sampai 4.
+      dict comprehension mencetak {kunci: nilai, ...}.
+    solution: x
+  - id: py-l1-generator
+    type: write
+    title: Generator Fibonacci
+    difficulty: 2
+    prompt: Tulis generator fib(n) yang menghasilkan n bilangan Fibonacci pertama (0, 1, 1, 2, ...). Baca n, cetak hasilnya dipisah spasi.
+    tests: ["7", "1", "2", "12"]
+    hints: |
+      Pakai yield di dalam loop.
+      a, b = 0, 1 lalu yield a, kemudian a, b = b, a + b.
+      print(*fib(n))
+    solution: |
+      def fib(n):
+          a, b = 0, 1
+          for _ in range(n):
+              yield a
+              a, b = b, a + b
+      print(*fib(int(input())))
+  - id: py-l1-bug-yield
+    type: bughunt
+    title: Generator yang Pulang Duluan
+    difficulty: 2
+    prompt: genap(n) seharusnya menghasilkan semua bilangan genap di bawah n, tapi programnya error. Temukan bug-nya.
+    starter: |
+      def genap(n):
+          for i in range(n):
+              if i % 2 == 0:
+                  return i
+      print(list(genap(int(input()))))
+    bug_line: 4
+    tests: ["5", "1", "10"]
+    hints: |
+      return menghentikan fungsi dan hanya mengembalikan satu nilai.
+      Generator memakai kata kunci lain.
+      yield i
+    solution: |
+      def genap(n):
+          for i in range(n):
+              if i % 2 == 0:
+                  yield i
+      print(list(genap(int(input()))))

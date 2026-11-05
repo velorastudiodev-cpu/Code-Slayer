@@ -1,0 +1,31 @@
+lesson:
+- text: 'CTF (Capture The Flag) jeopardy: kumpulkan flag dari berbagai kategori. Strategi: baca deskripsi teliti, mulai dari soal berpoin kecil, catat setiap temuan, dan gunakan petunjuk dari pesan error.
+    Semua soal di CTF Arena aplikasi ini adalah sandbox.'
+exercises:
+- id: cy-p1-recon
+  type: quiz
+  title: Langkah Pertama
+  difficulty: 1
+  prompt: Dalam soal web CTF, langkah pertama yang paling berguna biasanya...
+  options:
+  - 'Recon: lihat sumber halaman, robots.txt, header, dan pesan error'
+  - Langsung brute force kata sandi
+  - Menyerang server panitia
+  - Menebak flag secara acak
+  explain: Banyak flag ditemukan dari informasi yang bocor di respons. Menyerang infrastruktur panitia melanggar aturan CTF.
+  hints: |
+    Kumpulkan informasi dulu.
+    Apa yang terlihat tanpa menyerang?
+    Recon.
+- id: cy-p1-format
+  type: answer
+  title: Format Flag
+  difficulty: 1
+  prompt: Di Code Slayer, flag selalu berawalan... (tulis enam huruf sebelum kurung kurawal)
+  accept:
+  - SLAYER
+  explain: Format SLAYER{...} memudahkan kamu mengenali flag di output (grep SLAYER).
+  hints: |
+    Huruf besar semua.
+    Nama aplikasinya.
+    SLAYER

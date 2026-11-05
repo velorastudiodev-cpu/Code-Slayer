@@ -1,0 +1,110 @@
+lesson:
+  - text: Operator aritmetika C adalah + - * / dan % (sisa bagi, hanya untuk bilangan bulat). Operator ++ dan -- menambah atau mengurangi 1. Operator gabungan seperti += dan *= adalah singkatan, misalnya x += 2 sama dengan x = x + 2.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int x = 10;
+          x += 5;
+          x++;
+          printf("%d %d %d\n", x, x / 3, x % 3);
+          return 0;
+      }
+  - text: Perbandingan (== != < > <= >=) menghasilkan 1 (benar) atau 0 (salah). Operator logika adalah && (dan), || (atau), dan ! (tidak). Di C, nilai 0 berarti salah dan selain 0 berarti benar.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n = 15;
+          printf("%d %d %d\n", n > 10, n % 2 == 0, n > 10 && n < 20);
+          return 0;
+      }
+exercises:
+  - id: c-f3-detik
+    type: write
+    title: Jam Pertarungan
+    difficulty: 2
+    prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+    tests: ["3725", "59", "86399", "0"]
+    hints: |
+      Pembagian int / sudah membulatkan ke bawah untuk bilangan positif.
+      Gunakan % untuk sisa.
+      printf("%d:%d:%d\n", t / 3600, t % 3600 / 60, t % 60);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int t;
+          scanf("%d", &t);
+          printf("%d:%d:%d\n", t / 3600, t % 3600 / 60, t % 60);
+          return 0;
+      }
+  - id: c-f3-suhu
+    type: write
+    title: Suhu Napas Api
+    difficulty: 1
+    prompt: Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).
+    tests: ["100", "0", "-40", "37"]
+    hints: |
+      c * 9 / 5 dengan int membuang desimal.
+      Pakai 9.0 / 5 atau ubah c ke double.
+      printf("%.1f\n", c * 9.0 / 5 + 32);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int c;
+          scanf("%d", &c);
+          printf("%.1f\n", c * 9.0 / 5 + 32);
+          return 0;
+      }
+  - id: c-f3-predict
+    type: predict
+    title: Benar Itu Satu
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int x = 5;
+          int y = x++ + 10;
+          printf("%d %d %d %d\n", x, y, x > 3 && x < 6, !x);
+          return 0;
+      }
+    hints: |
+      x++ memakai nilai lama dulu, baru menambah.
+      Jadi y = 5 + 10, lalu x menjadi 6.
+      Benar bernilai 1, salah bernilai 0, dan !6 bernilai 0.
+    solution: x
+  - id: c-f3-bug
+    type: bughunt
+    title: Gerbang yang Selalu Terbuka
+    difficulty: 2
+    prompt: Program harus mencetak "masuk" hanya jika kode = 7, tapi selalu mencetak "masuk". Temukan bug-nya.
+    starter: |
+      #include <stdio.h>
+
+      int main(void) {
+          int kode;
+          scanf("%d", &kode);
+          if (kode = 7) printf("masuk\n");
+          else printf("ditolak\n");
+          return 0;
+      }
+    bug_line: 6
+    tests: ["7", "3", "0"]
+    hints: |
+      = adalah assignment, == adalah perbandingan.
+      kode = 7 mengisi kode lalu bernilai 7 (benar).
+      if (kode == 7)
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int kode;
+          scanf("%d", &kode);
+          if (kode == 7) printf("masuk\n");
+          else printf("ditolak\n");
+          return 0;
+      }

@@ -1,0 +1,93 @@
+lesson:
+  - text: input() membaca satu baris dari pengguna dan SELALU mengembalikan string. Untuk mendapat angka, bungkus dengan int() atau float(). Di aplikasi ini, input dibaca dari kotak input tes, sama seperti judge di TOKI atau Codeforces.
+    code: |
+      teks = "42"
+      print(teks + teks)
+      print(int(teks) + int(teks))
+  - text: Kalau satu baris berisi beberapa nilai, pecah dengan .split(). Hasilnya list string. map(int, ...) mengubah semua bagiannya menjadi int sekaligus, lalu nilainya bisa dibongkar ke beberapa variabel.
+    code: |
+      baris = "3 4 5"
+      a, b, c = map(int, baris.split())
+      print(a + b + c)
+      print(baris.split())
+exercises:
+  - id: py-jumlah
+    type: write
+    title: Menjumlah Dua Bilah
+    difficulty: 1
+    story: Dua pedang Nichirin baru ditempa. Berapa total bobotnya?
+    prompt: Input berisi dua bilangan bulat a dan b dalam satu baris, dipisah spasi. Cetak a + b.
+    starter: |
+      a, b = input().split()
+      # ubah ke int lalu cetak jumlahnya
+    tests: ["3 4", "10 -2", "0 0", "100000 23"]
+    hints: ['input() selalu menghasilkan string. "3" + "4" = "34", bukan 7.', Ubah tiap bagian dengan int(...)., 'a, b = map(int, input().split()) lalu print(a + b)']
+    solution: |
+      a, b = map(int, input().split())
+      print(a + b)
+  - id: py-f4-sapa
+    type: write
+    title: Sapaan Gagak
+    difficulty: 1
+    prompt: Baca sebuah nama, lalu cetak "Halo, <nama>!".
+    tests: ["Tanjiro", "Zenitsu", "Nezuko"]
+    hints: [Simpan hasil input() ke variabel., Gabungkan dengan f-string., 'print(f"Halo, {nama}!")']
+    solution: |
+      nama = input()
+      print(f"Halo, {nama}!")
+  - id: py-f4-tiga-baris
+    type: write
+    title: Tiga Laporan
+    difficulty: 1
+    prompt: Input berisi tiga baris, masing-masing satu bilangan bulat. Cetak jumlah ketiganya.
+    tests: ["1\n2\n3", "10\n-5\n0", "100\n200\n300"]
+    hints: [Satu input() membaca satu baris., Panggil input() tiga kali., int(input()) + int(input()) + int(input())]
+    solution: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      print(a + b + c)
+  - id: py-f4-predict
+    type: predict
+    title: Teks atau Angka?
+    difficulty: 1
+    prompt: Dengan input di bawah, tulis output persis dari kode ini.
+    code: |
+      a, b = input().split()
+      print(a + b)
+      print(int(a) + int(b))
+    tests: ["5 7"]
+    hints: |
+      split() menghasilkan string.
+      String + string berarti digabung.
+      Setelah int(), + menjadi penjumlahan.
+    solution: x
+  - id: py-f4-bug-kali
+    type: bughunt
+    title: Perkalian yang Gagal
+    difficulty: 1
+    prompt: Program membaca dua bilangan dalam satu baris lalu mencetak hasil kalinya. Temukan bug-nya.
+    starter: |
+      a, b = input().split()
+      print(a * b)
+    bug_line: 1
+    tests: ["3 4", "5 0", "-2 6"]
+    hints: |
+      Baca pesan error-nya: tipe apa yang sedang dikali?
+      String tidak bisa dikali string.
+      a, b = map(int, input().split())
+    solution: |
+      a, b = map(int, input().split())
+      print(a * b)
+  - id: py-f4-parsons
+    type: parsons
+    title: Terkuat dan Terlemah
+    difficulty: 2
+    prompt: Baris pertama berisi n, baris kedua berisi n bilangan. Susun program yang mencetak nilai terbesar lalu nilai terkecil.
+    tests: ["3\n5 1 9", "1\n7", "4\n-1 -5 -3 -2"]
+    hints: [Baca n dulu karena baris pertama berisi n., Daftar angka dibaca dari baris kedua., max dicetak sebelum min.]
+    solution: |
+      n = int(input())
+      angka = list(map(int, input().split()))
+      print(max(angka))
+      print(min(angka))

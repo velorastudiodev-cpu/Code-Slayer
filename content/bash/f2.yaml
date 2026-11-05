@@ -1,0 +1,80 @@
+lesson:
+- text: 'Membuat & mengelola file: mkdir (direktori, -p sekaligus induknya), touch (file kosong), cp (salin, -r untuk folder), mv (pindah/ganti nama), rm (hapus, -r folder). Tidak ada tempat sampah: rm
+    itu permanen!'
+  code: |
+    mkdir -p proyek/src
+    touch proyek/README.md
+    cp proyek/README.md proyek/CATATAN.md
+    mv proyek/CATATAN.md proyek/docs.md
+    rm proyek/docs.md
+exercises:
+- id: bash-f2-mkdir
+  type: write
+  title: Membangun Pos
+  difficulty: 1
+  prompt: Buat direktori pos/utara/menara (sekaligus semua induknya), lalu tampilkan pohonnya dengan find pos.
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    Perlu membuat beberapa tingkat sekaligus.
+    mkdir punya opsi -p.
+    mkdir -p pos/utara/menara lalu find pos
+  solution: |
+    mkdir -p pos/utara/menara
+    find pos
+- id: bash-f2-cp
+  type: write
+  title: Gandakan Laporan
+  difficulty: 1
+  prompt: Salin markas/regu.txt menjadi markas/regu-cadangan.txt, lalu tampilkan isi cadangannya.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    cp sumber tujuan
+    Lalu cat hasilnya.
+    cp markas/regu.txt markas/regu-cadangan.txt
+  solution: |
+    cp markas/regu.txt markas/regu-cadangan.txt
+    cat markas/regu-cadangan.txt
+- id: bash-f2-mv
+  type: write
+  title: Ganti Nama Arsip
+  difficulty: 2
+  prompt: Ganti nama semua file di markas/arsip dari .log menjadi .txt (ada 2 file), lalu tampilkan isi direktorinya.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    mv bisa mengganti nama.
+    Loop for untuk setiap *.log.
+    ${f%.log} membuang akhiran .log
+  solution: |
+    cd markas/arsip
+    for f in *.log; do mv "$f" "${f%.log}.txt"; done
+    ls
+- id: bash-f2-rm
+  type: quiz
+  title: Tanpa Tempat Sampah
+  difficulty: 1
+  prompt: Apa yang terjadi setelah rm -r proyek/ di terminal Linux?
+  options:
+  - Folder dan isinya terhapus permanen (tidak ke tempat sampah)
+  - Folder dipindah ke Trash
+  - Hanya folder kosong yang terhapus
+  - Linux meminta konfirmasi lewat GUI
+  explain: rm langsung menghapus. Biasakan cek dengan ls dulu, dan hati-hati dengan rm -rf.
+  hints: |
+    rm tidak mengenal Trash.
+    -r = rekursif.
+    Permanen.

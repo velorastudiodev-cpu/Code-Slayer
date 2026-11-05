@@ -1,0 +1,1533 @@
+{
+ "hash": "2a3249f9e1ef",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Program Kotlin cukup fun main() { }. println mencetak lalu newline, print tanpa newline. Titik koma di akhir baris tidak diperlukan.",
+     "code": "fun main() {\n    println(\"Pernapasan Cinta, Bentuk Pertama\")\n    print(\"tanpa \")\n    print(\"newline\\n\")\n}\n"
+    },
+    {
+     "text": "String template menyisipkan nilai: \"$nama\" atau \"${ekspresi}\". Untuk desimal berformat, pakai \"%.2f\".format(x).",
+     "code": "fun main() {\n    val nama = \"Mitsuri\"\n    val sakura = 8\n    println(\"$nama makan ${sakura * 3} mochi, rata-rata ${\"%.1f\".format(sakura / 3.0)} per jam\")\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f1-halo",
+     "type": "write",
+     "title": "Salam Pertama",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "Gunakan fungsi cetak baris bawaan bahasa ini.",
+      "Teks harus persis sama, termasuk koma dan tanda seru.",
+      "Satu baris saja, diakhiri newline."
+     ],
+     "solutions": [
+      "fun main() {\n    println(\"Halo, Slayer!\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f1"
+    },
+    {
+     "id": "kt-f1-format",
+     "type": "write",
+     "title": "Laporan Berformat",
+     "difficulty": 1,
+     "prompt": "Dengan string berformat, cetak \"Rengoku berumur 20 tahun, kekuatan 9.50\" dari variabel nama = \"Rengoku\", umur = 20, dan kekuatan = 9.5.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "expected": "Rengoku berumur 20 tahun, kekuatan 9.50\n"
+      }
+     ],
+     "hints": [
+      "Simpan ketiga nilai dalam variabel dulu.",
+      "Pakai format/interpolasi string, bukan menyambung manual.",
+      "Kekuatan dicetak dengan tepat 2 angka di belakang koma."
+     ],
+     "solutions": [
+      "fun main() {\n    val nama = \"Rengoku\"\n    val umur = 20\n    val kekuatan = 9.5\n    println(\"$nama berumur $umur tahun, kekuatan ${\"%.2f\".format(kekuatan)}\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f1"
+    },
+    {
+     "id": "kt-f1-predict",
+     "type": "predict",
+     "title": "Baris yang Tidak Berganti",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    print(\"Kaa\")\n    print(\"!\" + \"!\")\n    println()\n    println(\"misi \" + 3 + \" selesai\")\n    println(\"${2}+${3}=${2 + 3}\")\n    println(\"1\" + 2 + 3)\n}\n",
+     "tests": [
+      {
+       "expected": "Kaa!!\nmisi 3 selesai\n2+3=5\n123\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan perintah cetak mana yang menambah newline.",
+      "Perintah tanpa newline menyambung ke baris yang sama.",
+      "Hitung spasinya dengan teliti."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f1"
+    },
+    {
+     "id": "kt-f1-bug",
+     "type": "bughunt",
+     "title": "Iblis Pemakan Tanda Kutip",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"Kaa!\" lalu \"Misi!\", tapi gagal dikompilasi. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    println(\"Kaa!\")\n    println(\"Misi!)\n}\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "expected": "Kaa!\nMisi!\n"
+      }
+     ],
+     "hints": [
+      "Baca pesan error compiler: ia menunjuk nomor baris.",
+      "Setiap string harus dibuka DAN ditutup dengan tanda kutip.",
+      "Tambahkan tanda kutip penutup yang hilang."
+     ],
+     "solutions": [
+      "fun main() {\n    println(\"Kaa!\")\n    println(\"Misi!\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "val membuat nilai yang tidak bisa diubah, var yang bisa diubah. Kotlin menebak tipe (Int, Long, Double, String, Boolean), tapi kita boleh menulisnya: val umur: Int = 15.",
+     "code": "fun main() {\n    val nama = \"Tanjiro\"\n    var umur: Int = 15\n    umur += 1\n    val besar: Long = 3_000_000_000L\n    println(\"$nama $umur ${besar * 2}\")\n}\n"
+    },
+    {
+     "text": "Konversi angka eksplisit: toDouble(), toInt(), toLong(). Teks menjadi angka: \"41\".toInt(). Pembagian Int / Int membuang desimal.",
+     "code": "fun main() {\n    val a = 7\n    val b = 2\n    println(\"${a / b} ${a % b}\")\n    println(a.toDouble() / b)\n    println(\"41\".toInt() + 1)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Input berisi nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "Tanjiro 15",
+       "expected": "Tanjiro akan berumur 16 tahun\n"
+      },
+      {
+       "input": "Kanao 16",
+       "expected": "Kanao akan berumur 17 tahun\n"
+      },
+      {
+       "input": "Gyomei 27",
+       "expected": "Gyomei akan berumur 28 tahun\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua nilai: teks lalu bilangan bulat.",
+      "Ubah umur menjadi angka sebelum ditambah 1.",
+      "Contoh: \"Tanjiro akan berumur 16 tahun\"."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val nama = t[0]\n    val umur = t[1].toInt()\n    println(\"$nama akan berumur ${umur + 1} tahun\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f2"
+    },
+    {
+     "id": "kt-f2-besar",
+     "type": "write",
+     "title": "Jarak Antar Bintang",
+     "difficulty": 2,
+     "prompt": "Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "2000000000 2000000000",
+       "expected": "4000000000000000000\n"
+      },
+      {
+       "input": "-5 100000",
+       "expected": "-500000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "2 miliar × 2 miliar = 4 × 10^18.",
+      "Batas int 32-bit sekitar 2,1 miliar.",
+      "Pakai tipe bilangan bulat 64-bit."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val a = t[0].toLong()\n    val b = t[1].toLong()\n    println(a * b)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f2"
+    },
+    {
+     "id": "kt-f2-predict",
+     "type": "predict",
+     "title": "Pembagian Bulat",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    println(\"${17 / 5} ${17 % 5}\")\n    println(17.0 / 5)\n    val x = 9\n    val y = x / 2 * 2\n    println(\"$y ${x - y}\")\n}\n",
+     "tests": [
+      {
+       "expected": "3 2\n3.4\n8 1\n"
+      }
+     ],
+     "hints": [
+      "Pembagian dua bilangan bulat membuang bagian desimal.",
+      "Sisa bagi memakai operator %.",
+      "Kalau salah satu operand desimal, hasilnya desimal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f2"
+    },
+    {
+     "id": "kt-f2-bug",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 2,
+     "prompt": "Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val (a, b, c) = t.take(3).map { it.toInt() }\n    val rata = ((a + b + c) / 3).toDouble()\n    println(\"%.2f\".format(rata))\n}\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "1 2 4",
+       "expected": "2.33\n"
+      },
+      {
+       "input": "5 5 6",
+       "expected": "5.33\n"
+      },
+      {
+       "input": "3 3 3",
+       "expected": "3.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.",
+      "Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.",
+      "Ubah jumlahnya ke tipe desimal dulu, baru dibagi."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val (a, b, c) = t.take(3).map { it.toInt() }\n    val rata = (a + b + c) / 3.0\n    println(\"%.2f\".format(rata))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator aritmetika: + - * / %, juga += ++ --. Di Kotlin, operator juga bisa ditulis sebagai fungsi: a.rem(b) sama dengan a % b.",
+     "code": "fun main() {\n    val t = 3725\n    println(\"${t / 3600} ${t % 3600 / 60} ${t % 60}\")\n    var n = 5\n    n += 3\n    n++\n    println(n)\n}\n"
+    },
+    {
+     "text": "Perbandingan menghasilkan Boolean; logika && || !. if di Kotlin adalah ekspresi: val s = if (x > 0) \"positif\" else \"bukan\".",
+     "code": "fun main() {\n    val umur = 16\n    val pedang = true\n    println(umur >= 15 && pedang)\n    val status = if (umur >= 18) \"dewasa\" else \"muda\"\n    println(status)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 jam = 3600 detik, 1 menit = 60 detik.",
+      "Jam = t / 3600, menit = (t % 3600) / 60.",
+      "Detik = t % 60."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val d = t[0].toLong()\n    println(\"${d / 3600}:${d % 3600 / 60}:${d % 60}\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f3"
+    },
+    {
+     "id": "kt-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.",
+      "Contoh: 37 menjadi 98.6.",
+      "Format 1 angka di belakang koma."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val c = t[0].toDouble()\n    println(\"%.1f\".format(c * 9 / 5 + 32))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f3"
+    },
+    {
+     "id": "kt-f3-predict",
+     "type": "predict",
+     "title": "Urutan Operasi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    println(\"${2 + 3 * 4} ${(2 + 3) * 4}\")\n    println(20 - 6 / 2 % 2)\n    println(7 > 3 && 2 > 5 || true)\n}\n",
+     "tests": [
+      {
+       "expected": "14 20\n19\ntrue\n"
+      }
+     ],
+     "hints": [
+      "* / % dikerjakan sebelum + -.",
+      "Operator dengan derajat sama dikerjakan dari kiri.",
+      "Kurung mengubah urutan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f3"
+    },
+    {
+     "id": "kt-f3-bug",
+     "type": "bughunt",
+     "title": "Gerbang yang Salah Jaga",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"masuk\" hanya jika 1 ≤ n ≤ 10, selain itu \"tolak\". Tapi semua angka masuk. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    if (n >= 1 || n <= 10) println(\"masuk\") else println(\"tolak\")\n}\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "1",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "10",
+       "expected": "masuk\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "tolak\n",
+       "hidden": true
+      },
+      {
+       "input": "11",
+       "expected": "tolak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Coba n = 11: apakah kedua syarat harus benar?",
+      "|| (atau) cukup salah satu benar.",
+      "Gunakan && (dan)."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    if (n >= 1 && n <= 10) println(\"masuk\") else println(\"tolak\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "readLine() membaca satu baris tanpa newline dan mengembalikan String? (bisa null kalau input habis). !! memaksa nilainya bukan null; ?: memberi nilai cadangan.",
+     "code": "fun main() {\n    val baris: String? = \"3 4\"\n    val (a, b) = baris!!.split(\" \").map { it.toInt() }\n    println(a + b)\n    val kosong: String? = null\n    println(kosong ?: \"input habis\")\n}\n"
+    },
+    {
+     "text": "Membaca seluruh input sekaligus: System.`in`.bufferedReader().readText(), lalu pecah dengan split(Regex(\"\\\\s+\")). trim() membuang spasi dan newline di ujung.",
+     "code": "fun main() {\n    val teks = \"  1 2\\n3  \"\n    val angka = teks.trim().split(Regex(\"\\\\s+\")).map { it.toInt() }\n    println(\"${angka.size} ${angka.sum()}\")\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat (dalam satu baris), cetak jumlahnya.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua bilangan dari input.",
+      "Ubah teks menjadi angka.",
+      "Cetak a + b."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    println(t[0].toLong() + t[1].toLong())\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f4"
+    },
+    {
+     "id": "kt-f4-n",
+     "type": "write",
+     "title": "Laporan Berjumlah n",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3\n1 9 2",
+       "expected": "12 9\n"
+      },
+      {
+       "input": "1\n-5",
+       "expected": "-5 -5\n"
+      },
+      {
+       "input": "5\n-1 -2 -3 -4 -5",
+       "expected": "-15 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Nilai terbesar awal = bilangan pertama, bukan 0.",
+      "Ingat bilangan bisa negatif semua.",
+      "Cetak \"<jumlah> <maks>\"."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    val xs = t.drop(1).take(n).map { it.toLong() }\n    println(\"${xs.sum()} ${xs.max()}\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f4"
+    },
+    {
+     "id": "kt-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi sejumlah bilangan bulat dipisah spasi atau baris baru (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal), dipisah spasi.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "4 2.50\n"
+      },
+      {
+       "input": "10",
+       "expected": "1 10.00\n"
+      },
+      {
+       "input": "5\n6\n7",
+       "expected": "3 6.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca seluruh input lalu pecah berdasarkan spasi/baris.",
+      "Hitung banyak dan jumlahnya.",
+      "Rata-rata = jumlah / banyak, dalam desimal."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val xs = t.map { it.toLong() }\n    println(\"${xs.size} ${\"%.2f\".format(xs.sum().toDouble() / xs.size)}\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f4"
+    },
+    {
+     "id": "kt-f4-bug",
+     "type": "bughunt",
+     "title": "Spasi yang Menyusup",
+     "difficulty": 2,
+     "prompt": "Program membaca satu baris berisi angka lalu mencetak angka itu dikali 2, tapi gagal karena baris input masih membawa karakter newline. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    val teks = System.`in`.bufferedReader().readText()\n    val n = teks.toInt()\n    println(n * 2)\n}\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "21\n",
+       "expected": "42\n"
+      },
+      {
+       "input": "0\n",
+       "expected": "0\n"
+      },
+      {
+       "input": "-7\n",
+       "expected": "-14\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baris yang dibaca masih berisi \"\\n\" di ujungnya.",
+      "Teks \"21\\n\" tidak bisa diubah langsung menjadi angka.",
+      "Buang spasi/newline di ujung sebelum mengubah ke angka."
+     ],
+     "solutions": [
+      "fun main() {\n    val teks = System.`in`.bufferedReader().readText()\n    val n = teks.trim().toInt()\n    println(n * 2)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if / else if / else seperti bahasa C, dan karena if adalah ekspresi, hasilnya bisa langsung disimpan ke variabel.",
+     "code": "fun main() {\n    val nilai = 78\n    val huruf = if (nilai >= 85) \"A\" else if (nilai >= 70) \"B\" else \"C\"\n    println(huruf)\n}\n"
+    },
+    {
+     "text": "when adalah switch yang lebih kuat: mencocokkan nilai, beberapa nilai (1, 2 ->), rentang (in 1..9), atau kondisi bebas kalau ditulis tanpa argumen. Tidak perlu break.",
+     "code": "fun main() {\n    for (x in listOf(0, 7, 42)) {\n        val s = when (x) {\n            0 -> \"nol\"\n            in 1..9 -> \"satu digit\"\n            else -> if (x % 2 == 0) \"genap besar\" else \"lainnya\"\n        }\n        println(\"$x $s\")\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "Cetak satu huruf saja."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    println(when {\n        n >= 85 -> \"A\"\n        n >= 70 -> \"B\"\n        n >= 55 -> \"C\"\n        else -> \"D\"\n    })\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f5"
+    },
+    {
+     "id": "kt-f5-kabisat",
+     "type": "write",
+     "title": "Tahun Kabisat",
+     "difficulty": 2,
+     "prompt": "Baca tahun. Cetak \"kabisat\" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu \"bukan\".",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Habis dibagi berarti % ... == 0.",
+      "Gabungkan dengan || dan &&.",
+      "(t % 400 == 0) || (t % 4 == 0 && t % 100 != 0)"
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val y = t[0].toInt()\n    println(if (y % 400 == 0 || (y % 4 == 0 && y % 100 != 0)) \"kabisat\" else \"bukan\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f5"
+    },
+    {
+     "id": "kt-f5-predict",
+     "type": "predict",
+     "title": "Cabang Mana yang Dipilih?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    for (x in listOf(0, 3, 8, 15)) {\n        val s = when {\n            x == 0 -> \"nol\"\n            x % 2 == 1 && x > 10 -> \"besar-ganjil\"\n            x % 2 == 1 -> \"ganjil\"\n            else -> \"genap\"\n        }\n        print(\"$s \")\n    }\n    println()\n}\n",
+     "tests": [
+      {
+       "expected": "nol ganjil genap besar-ganjil\n"
+      }
+     ],
+     "hints": [
+      "Telusuri nilai variabel baris demi baris.",
+      "Hanya satu cabang yang dijalankan per pemeriksaan.",
+      "Perhatikan kasus default/else."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f5"
+    },
+    {
+     "id": "kt-f5-parsons",
+     "type": "parsons",
+     "title": "Tanda Bilangan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak \"positif\", \"negatif\", atau \"nol\".",
+     "lang": "kotlin",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Deklarasi fungsi utama paling atas.",
+      "Baca n sebelum memeriksanya.",
+      "Kurung tutup paling akhir."
+     ],
+     "solutions": [
+      "fun main() {\n    val n = readLine()!!.trim().toInt()\n    when {\n        n > 0 -> println(\"positif\")\n        n < 0 -> println(\"negatif\")\n        else -> println(\"nol\")\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "for (i in 1..n) menelusuri 1 sampai n; 0 until n berhenti sebelum n; 10 downTo 1 mundur; step mengatur lompatan. while dan do-while juga tersedia.",
+     "code": "fun main() {\n    for (i in 1..3) print(\"$i \")\n    for (i in 10 downTo 1 step 4) print(\"$i \")\n    var n = 10\n    while (n > 1) n /= 2\n    println(\"| $n\")\n}\n"
+    },
+    {
+     "text": "\"*\".repeat(n) membuat teks berulang. Koleksi punya fungsi seperti sum(), filter { }, map { } yang sering menggantikan loop manual.",
+     "code": "fun main() {\n    println(\"*\".repeat(4))\n    println((1..10).filter { it % 2 == 0 }.sum())\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 1,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Loop i dari 1 sampai n.",
+      "Baris ke-i = \"*\" diulang i kali.",
+      "Setiap baris diakhiri newline."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    for (i in 1..n) println(\"*\".repeat(i))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f6"
+    },
+    {
+     "id": "kt-f6-prima",
+     "type": "write",
+     "title": "Uji Bilangan Prima",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≤ 10^9). Cetak \"prima\" atau \"bukan\". Cukup periksa pembagi sampai akar n.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "prima\n"
+      },
+      {
+       "input": "1",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "91",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "999999937",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "1000000000",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 bukan prima.",
+      "Loop d mulai 2 selama d * d <= n.",
+      "Pakai tipe 64-bit supaya d * d tidak overflow."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toLong()\n    var prima = n > 1\n    var d = 2L\n    while (d * d <= n) {\n        if (n % d == 0L) {\n            prima = false\n            break\n        }\n        d++\n    }\n    println(if (prima) \"prima\" else \"bukan\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f6"
+    },
+    {
+     "id": "kt-f6-predict",
+     "type": "predict",
+     "title": "Loop Berlapis",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    for (i in 0 until 5) {\n        if (i == 1) continue\n        if (i == 4) break\n        print(\"$i \")\n    }\n    var total = 0\n    for (a in 1..2) for (b in 1..3) total += a * b\n    println(\"| $total\")\n}\n",
+     "tests": [
+      {
+       "expected": "0 2 3 | 18\n"
+      }
+     ],
+     "hints": [
+      "continue melompati sisa satu putaran.",
+      "break menghentikan loop sepenuhnya.",
+      "Telusuri nilai i satu per satu."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f6"
+    },
+    {
+     "id": "kt-f6-bug",
+     "type": "bughunt",
+     "title": "Satu Tebasan Hilang",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toLong()\n    var total = 0L\n    for (i in 1 until n) total += i\n    println(total)\n}\n",
+     "bug_line": 5,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "6\n"
+      },
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apakah n sendiri ikut dijumlah?",
+      "Batas loop berhenti sebelum n.",
+      "Ganti batasnya supaya n ikut."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toLong()\n    var total = 0L\n    for (i in 1..n) total += i\n    println(total)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi ditulis fun nama(param: Tipe): TipeKembali { }. Fungsi satu ekspresi bisa disingkat: fun kuadrat(x: Int) = x * x.",
+     "code": "fun kuadrat(x: Int) = x * x\n\nfun bagi(a: Int, b: Int): Pair<Int, Int> {\n    return Pair(a / b, a % b)\n}\n\nfun main() {\n    val (h, s) = bagi(17, 5)\n    println(\"${kuadrat(9)} $h $s\")\n}\n"
+    },
+    {
+     "text": "Parameter fungsi di Kotlin selalu val (tidak bisa diubah di dalam fungsi). Untuk \"mengubah\" nilai, kembalikan nilai baru. Rekursi tetap butuh base case.",
+     "code": "fun hitungMundur(n: Int) {\n    if (n == 0) {\n        println(\"Mulai!\")\n        return\n    }\n    print(\"$n \")\n    hitungMundur(n - 1)\n}\n\nfun main() {\n    hitungMundur(3)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "fpb(a, 0) = a.",
+      "fpb(a, b) = fpb(b, a % b).",
+      "Bisa rekursif atau dengan loop."
+     ],
+     "solutions": [
+      "fun fpb(a: Long, b: Long): Long = if (b == 0L) a else fpb(b, a % b)\n\nfun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    println(fpb(t[0].toLong(), t[1].toLong()))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f7"
+    },
+    {
+     "id": "kt-f7-faktorial",
+     "type": "write",
+     "title": "Faktorial Pernapasan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "20",
+       "expected": "2432902008176640000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "0! = 1 adalah base case.",
+      "n! = n × (n-1)!.",
+      "20! melebihi 32-bit: pakai 64-bit."
+     ],
+     "solutions": [
+      "fun faktorial(n: Long): Long = if (n == 0L) 1 else n * faktorial(n - 1)\n\nfun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    println(faktorial(t[0].toLong()))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f7"
+    },
+    {
+     "id": "kt-f7-predict",
+     "type": "predict",
+     "title": "Salinan atau Asli?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun latih(x: Int): Int {\n    val y = x * 10\n    return y + 1\n}\n\nfun main() {\n    val a = 3\n    val b = latih(a)\n    println(\"$a $b\")\n    latih(b)\n    println(b)\n}\n",
+     "tests": [
+      {
+       "expected": "3 31\n31\n"
+      }
+     ],
+     "hints": [
+      "Argumen bilangan dikirim sebagai salinan.",
+      "Mengubah salinan tidak mengubah variabel pemanggil.",
+      "Nilai yang dikembalikan lain cerita."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f7"
+    },
+    {
+     "id": "kt-f7-bug",
+     "type": "bughunt",
+     "title": "Rekursi Tanpa Ujung",
+     "difficulty": 2,
+     "prompt": "pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun pangkat(a: Long, n: Long): Long {\n    if (n == -1L) return 1\n    return a * pangkat(a, n - 1)\n}\n\nfun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    println(pangkat(t[0].toLong(), t[1].toLong()))\n}\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "2 10",
+       "expected": "1024\n"
+      },
+      {
+       "input": "3 0",
+       "expected": "1\n"
+      },
+      {
+       "input": "5 3",
+       "expected": "125\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Setiap rekursi butuh base case.",
+      "Kapan rekursi harus berhenti?",
+      "Saat n == 0, kembalikan 1."
+     ],
+     "solutions": [
+      "fun pangkat(a: Long, n: Long): Long {\n    if (n == 0L) return 1\n    return a * pangkat(a, n - 1)\n}\n\nfun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    println(pangkat(t[0].toLong(), t[1].toLong()))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "listOf membuat List yang tidak bisa diubah; mutableListOf bisa ditambah (add). List adalah referensi: dua variabel bisa menunjuk list yang sama. toMutableList() membuat salinan.",
+     "code": "fun main() {\n    val a = mutableListOf(3, 1, 2)\n    val b = a\n    b.add(9)\n    val c = a.toMutableList()\n    c[0] = 100\n    println(\"$a ${c.sorted()} ${a.size}\")\n}\n"
+    },
+    {
+     "text": "mapOf / mutableMapOf memetakan kunci ke nilai; toSortedMap() mengurutkan kunci. groupingBy { it }.eachCount() langsung menghitung kemunculan setiap elemen.",
+     "code": "fun main() {\n    val hitung = listOf(\"b\", \"a\", \"b\").groupingBy { it }.eachCount().toSortedMap()\n    for ((k, v) in hitung) println(\"$k $v\")\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-m1-balik",
+     "type": "write",
+     "title": "Barisan Terbalik",
+     "difficulty": 1,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "5\n1 2 3 4 5",
+       "expected": "5 4 3 2 1\n"
+      },
+      {
+       "input": "1\n42",
+       "expected": "42\n"
+      },
+      {
+       "input": "3\n-1 0 -1",
+       "expected": "-1 0 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan semua bilangan ke array/list.",
+      "Telusuri dari indeks terakhir ke 0.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    println(t.drop(1).take(n).reversed().joinToString(\" \"))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "m1"
+    },
+    {
+     "id": "kt-m1-frekuensi",
+     "type": "write",
+     "title": "Sensus Kata",
+     "difficulty": 2,
+     "prompt": "Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, \"kata jumlah\" per baris, urut abjad.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "iblis slayer iblis bulan",
+       "expected": "bulan 1\niblis 2\nslayer 1\n"
+      },
+      {
+       "input": "a",
+       "expected": "a 1\n"
+      },
+      {
+       "input": "b a b\na c b",
+       "expected": "a 2\nb 3\nc 1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai map/dictionary: kata → jumlah.",
+      "Ambil semua kunci lalu urutkan.",
+      "Cetak \"kata jumlah\"."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    for ((k, v) in t.groupingBy { it }.eachCount().toSortedMap()) println(\"$k $v\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m1"
+    },
+    {
+     "id": "kt-m1-unik",
+     "type": "write",
+     "title": "Pasukan Tanpa Kembar",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "6\n3 1 3 2 1 3",
+       "expected": "1 2 3\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7\n"
+      },
+      {
+       "input": "4\n-2 5 -2 0",
+       "expected": "-2 0 5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Set/himpunan otomatis membuang duplikat.",
+      "Urutkan hasilnya.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    println(t.drop(1).take(n).map { it.toLong() }.toSortedSet().joinToString(\" \"))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m1"
+    },
+    {
+     "id": "kt-m1-diatas",
+     "type": "write",
+     "title": "Di Atas Rata-rata",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "5\n10 20 30 40 50",
+       "expected": "2\n"
+      },
+      {
+       "input": "3\n5 5 5",
+       "expected": "0\n"
+      },
+      {
+       "input": "4\n1 1 1 9",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung rata-rata dulu (desimal).",
+      "Lalu hitung nilai > rata-rata.",
+      "Butuh dua kali menelusuri data."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    val xs = t.drop(1).take(n).map { it.toDouble() }\n    val rata = xs.average()\n    println(xs.count { it > rata })\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m1"
+    },
+    {
+     "id": "kt-m1-predict",
+     "type": "predict",
+     "title": "Koleksi Berbagi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    val a = mutableListOf(1, 2, 3)\n    val b = a\n    b[0] = 9\n    val c = a.toMutableList()\n    c[1] = 7\n    println(\"$a $c\")\n    val m = mutableMapOf(\"x\" to 1)\n    m[\"x\"] = m.getValue(\"x\") + 4\n    println(\"${m[\"x\"]} ${m.size} ${m[\"y\"]}\")\n}\n",
+     "tests": [
+      {
+       "expected": "[9, 2, 3] [9, 7, 3]\n5 1 null\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan apakah koleksi disalin atau dibagi (referensi).",
+      "Mengubah lewat referensi terlihat dari nama lain.",
+      "Telusuri isi koleksi setelah tiap perubahan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m1"
+    },
+    {
+     "id": "kt-m1-bug",
+     "type": "bughunt",
+     "title": "Indeks Melewati Batas",
+     "difficulty": 2,
+     "prompt": "Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    val xs = t.drop(1).take(n).map { it.toLong() }\n    var total = 0L\n    for (i in 0..xs.size) total += xs[i]\n    println(total)\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "3\n1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "1\n5",
+       "expected": "5\n"
+      },
+      {
+       "input": "4\n2 2 2 2",
+       "expected": "8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Indeks terakhir = panjang - 1.",
+      "Kondisi loop memakai <=.",
+      "Gunakan < panjang."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val n = t[0].toInt()\n    val xs = t.drop(1).take(n).map { it.toLong() }\n    var total = 0L\n    for (i in 0 until xs.size) total += xs[i]\n    println(total)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "String di Kotlin immutable. Fungsi berguna: toUpperCase(), length, substring(a, b), split(\" \"), reversed(), joinToString(). Karakter diakses dengan s[i].",
+     "code": "fun main() {\n    val s = \"Kimetsu no Yaiba\"\n    println(\"${s.toUpperCase()} ${s.length} ${s.substring(0, 7)}\")\n    val kata = s.split(\" \")\n    println(\"${kata.size} ${kata.joinToString(\"-\")}\")\n}\n"
+    },
+    {
+     "text": "Char bisa dihitung: 'a' + 2 == 'c', 'z' - 'a' == 25 (Int). map pada String (s.map { }) menghasilkan List, jadi gabungkan lagi dengan joinToString(\"\").",
+     "code": "fun main() {\n    val besar = \"abc\".map { it.toUpperCase() }.joinToString(\"\")\n    println(\"$besar ${\"abc\".reversed()} ${'a' + 2} ${'z' - 'a'}\")\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "kt-m2-palindrom",
+     "type": "write",
+     "title": "Kata Cermin",
+     "difficulty": 1,
+     "prompt": "Baca satu kata. Cetak \"palindrom\" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu \"bukan\".",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "Katak",
+       "expected": "palindrom\n"
+      },
+      {
+       "input": "slayer",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "a",
+       "expected": "palindrom\n",
+       "hidden": true
+      },
+      {
+       "input": "Malam",
+       "expected": "palindrom\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah ke huruf kecil dulu.",
+      "Bandingkan dengan versi terbaliknya.",
+      "Atau bandingkan karakter i dengan n-1-i."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val s = t[0].toLowerCase()\n    println(if (s == s.reversed()) \"palindrom\" else \"bukan\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "m2"
+    },
+    {
+     "id": "kt-m2-vokal",
+     "type": "write",
+     "title": "Hitung Napas Vokal",
+     "difficulty": 1,
+     "prompt": "Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "Kimetsu no Yaiba",
+       "expected": "7\n"
+      },
+      {
+       "input": "xyz",
+       "expected": "0\n"
+      },
+      {
+       "input": "AIUEO aiueo",
+       "expected": "10\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Telusuri setiap karakter.",
+      "Ubah ke huruf kecil supaya cukup satu pengecekan.",
+      "Cek apakah karakter ada di \"aiueo\"."
+     ],
+     "solutions": [
+      "fun main() {\n    val s = System.`in`.bufferedReader().readText().toLowerCase()\n    println(s.count { it in \"aiueo\" })\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "mobile",
+     "chapter": "m2"
+    },
+    {
+     "id": "kt-m2-kapital",
+     "type": "write",
+     "title": "Nama Bergelar",
+     "difficulty": 2,
+     "prompt": "Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "kamado tanjiro",
+       "expected": "Kamado Tanjiro\n"
+      },
+      {
+       "input": "rengoku kyojuro sang hashira api",
+       "expected": "Rengoku Kyojuro Sang Hashira Api\n"
+      },
+      {
+       "input": "x",
+       "expected": "X\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pecah baris menjadi kata.",
+      "Kapitalkan karakter pertama tiap kata.",
+      "Gabungkan kembali dengan spasi."
+     ],
+     "solutions": [
+      "fun main() {\n    val kata = readLine()!!.trim().split(\" \")\n    println(kata.joinToString(\" \") { it.substring(0, 1).toUpperCase() + it.substring(1) })\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m2"
+    },
+    {
+     "id": "kt-m2-caesar",
+     "type": "write",
+     "title": "Sandi Gagak",
+     "difficulty": 2,
+     "prompt": "Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "input": "3\nslayer",
+       "expected": "vodbhu\n"
+      },
+      {
+       "input": "1\nzaz",
+       "expected": "aba\n"
+      },
+      {
+       "input": "13\nkaa kaa",
+       "expected": "xnn xnn\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf ke-i dari a = c - 'a'.",
+      "Geser: (i + k) % 26.",
+      "Spasi dicetak apa adanya."
+     ],
+     "solutions": [
+      "fun main() {\n    val k = readLine()!!.trim().toInt()\n    val pesan = readLine() ?: \"\"\n    println(pesan.map { if (it in 'a'..'z') 'a' + (it - 'a' + k) % 26 else it }.joinToString(\"\"))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m2"
+    },
+    {
+     "id": "kt-m2-predict",
+     "type": "predict",
+     "title": "Potongan Teks",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "kotlin",
+     "code": "fun main() {\n    val s = \"Hashira\"\n    println(\"${s.length} ${s.substring(0, 4)} ${s.substring(4)}\")\n    println(\"${s.indexOf('i')} ${s.count { it == 'a' }}\")\n    println(s.replaceFirst(\"a\", \"A\"))\n}\n",
+     "tests": [
+      {
+       "expected": "7 Hash ira\n4 2\nHAshira\n"
+      }
+     ],
+     "hints": [
+      "Indeks string mulai dari 0.",
+      "Potongan [a, b) mengambil a sampai b-1.",
+      "Panjang dihitung per karakter ASCII di sini."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m2"
+    },
+    {
+     "id": "kt-m2-bug",
+     "type": "bughunt",
+     "title": "Perbandingan yang Menipu",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"sama\" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu \"beda\". Tapi \"Tanjiro\" dan \"tanjiro\" dianggap beda. Temukan baris yang salah.",
+     "lang": "kotlin",
+     "starter": "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val a = t[0]\n    val b = t[1]\n    println(if (a == b) \"sama\" else \"beda\")\n}\n",
+     "bug_line": 5,
+     "tests": [
+      {
+       "input": "Tanjiro tanjiro",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Nezuko nezuko",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Giyu Sabito",
+       "expected": "beda\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf besar dan kecil adalah karakter berbeda.",
+      "Samakan dulu bentuknya sebelum dibandingkan.",
+      "Ubah keduanya ke huruf kecil."
+     ],
+     "solutions": [
+      "fun main() {\n    val t = System.`in`.bufferedReader().readText().split(Regex(\"\\\\s+\")).filter { it.isNotEmpty() }\n    val a = t[0]\n    val b = t[1]\n    println(if (a.equals(b, ignoreCase = true)) \"sama\" else \"beda\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "mobile",
+     "chapter": "m2"
+    }
+   ]
+  }
+ }
+}

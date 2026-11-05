@@ -1,0 +1,149 @@
+lesson:
+  - text: Linear search memeriksa satu per satu, O(n). Binary search hanya bekerja di data TERURUT. Lihat elemen tengah, lalu buang separuh yang tidak mungkin berisi target, sehingga butuh O(log n). Untuk 1 juta elemen cukup sekitar 20 langkah.
+    code: |
+      def cari(a, x):
+          lo, hi = 0, len(a) - 1
+          while lo <= hi:
+              mid = (lo + hi) // 2
+              if a[mid] == x:
+                  return mid
+              if a[mid] < x:
+                  lo = mid + 1
+              else:
+                  hi = mid - 1
+          return -1
+      print(cari([1, 3, 5, 7, 9, 11], 9), cari([1, 3, 5], 4))
+  - text: Binary search juga dipakai untuk mencari JAWABAN, misalnya nilai terkecil yang memenuhi syarat (lower bound). Python punya modul bisect untuk ini.
+    code: |
+      import bisect
+      a = [1, 3, 3, 3, 7]
+      print(bisect.bisect_left(a, 3), bisect.bisect_right(a, 3))
+exercises:
+  - id: dsa-f5-binary
+    type: write
+    title: Pencarian Kilat
+    difficulty: 2
+    prompt: Baris 1 berisi n dan q. Baris 2 berisi n bilangan berbeda yang terurut naik. Lalu q baris masing-masing satu bilangan x. Untuk setiap x cetak indeksnya (0-based) atau -1.
+    tests: ["6 3\n1 3 5 7 9 11\n9\n4\n1", "1 1\n5\n5"]
+    hints: |
+      lo = 0, hi = n - 1, ulangi selama lo <= hi.
+      Bandingkan a[mid] dengan x untuk membuang separuh.
+      Kembalikan -1 kalau loop selesai tanpa ketemu.
+    solution: |
+      n, q = map(int, input().split())
+      a = list(map(int, input().split()))
+      def cari(x):
+          lo, hi = 0, n - 1
+          while lo <= hi:
+              mid = (lo + hi) // 2
+              if a[mid] == x:
+                  return mid
+              if a[mid] < x:
+                  lo = mid + 1
+              else:
+                  hi = mid - 1
+          return -1
+      for _ in range(q):
+          print(cari(int(input())))
+  - id: dsa-f5-akar
+    type: write
+    title: Akar Raksasa
+    difficulty: 3
+    prompt: Baca n (0 ≤ n ≤ 10^18). Cetak bilangan bulat terbesar k dengan k*k ≤ n, memakai binary search (float math.sqrt tidak akurat untuk n sebesar ini).
+    tests: ["10", "0", "1000000000000000000", "999999999999999999"]
+    hints: |
+      Jawaban ada di antara 0 dan 10^9.
+      Cari k terbesar dengan k*k <= n.
+      Kalau mid*mid <= n, jawaban ≥ mid, jadi geser lo.
+    solution: |
+      n = int(input())
+      lo, hi = 0, 10**9
+      while lo < hi:
+          mid = (lo + hi + 1) // 2
+          if mid * mid <= n:
+              lo = mid
+          else:
+              hi = mid - 1
+      print(lo)
+  - id: dsa-f5-fill
+    type: fill
+    title: Templat Binary Search
+    difficulty: 2
+    prompt: Lengkapi binary search sehingga mencetak indeks x di array terurut, atau -1.
+    code: |
+      a = list(map(int, input().split()))
+      x = int(input())
+      lo, hi = 0, len(a) - 1
+      jawab = -1
+      while ⟦lo <= hi⟧:
+          mid = (lo + hi) // 2
+          if a[mid] == x:
+              jawab = mid
+              break
+          elif a[mid] < x:
+              lo = ⟦mid + 1⟧
+          else:
+              hi = ⟦mid - 1⟧
+      print(jawab)
+    tests: ["1 3 5 7 9\n7", "1 3 5\n4", "2\n2"]
+    hints: |
+      Loop berjalan selama rentangnya belum kosong.
+      Kalau a[mid] < x, buang mid dan semua di kirinya.
+      Kalau a[mid] > x, buang mid dan semua di kanannya.
+  - id: dsa-f5-trace-binary
+    type: trace
+    title: Jejak Binary Search
+    difficulty: 2
+    prompt: Cari 11. Isi nilai lo, hi, dan mid setiap kali baris 4 selesai dijalankan.
+    code: |
+      a = [1, 3, 5, 7, 9, 11, 13]
+      lo, hi = 0, len(a) - 1
+      while lo <= hi:
+          mid = (lo + hi) // 2
+          if a[mid] == 11:
+              break
+          if a[mid] < 11:
+              lo = mid + 1
+          else:
+              hi = mid - 1
+    line: 4
+    vars: [lo, hi, mid]
+    hints: |
+      Awalnya lo = 0, hi = 6, sehingga mid = 3.
+      a[3] = 7 < 11, jadi lo menjadi 4.
+      Hitung mid baru dari lo dan hi yang baru.
+  - id: dsa-f5-trace-lower
+    type: trace
+    title: Jejak Lower Bound
+    difficulty: 3
+    prompt: Kode mencari posisi pertama yang ≥ 6. Isi nilai mid, lo, dan hi setiap kali baris 5 selesai dijalankan.
+    code: |
+      a = [1, 3, 5, 7, 9]
+      lo, hi = 0, len(a)
+      while lo < hi:
+          mid = (lo + hi) // 2
+          lo, hi = (mid + 1, hi) if a[mid] < 6 else (lo, mid)
+    line: 5
+    vars: [mid, lo, hi]
+    hints: |
+      Awalnya lo = 0, hi = 5, sehingga mid = 2 dan a[2] = 5 < 6.
+      Jadi lo = 3, hi tetap 5.
+      Loop berhenti saat lo == hi; itulah jawabannya.
+  - id: dsa-f5-complexity
+    type: complexity
+    title: Kompleksitas Binary Search
+    difficulty: 1
+    prompt: Berapa kompleksitas waktu binary search pada array berisi n elemen?
+    code: |
+      lo, hi = 0, len(a) - 1
+      while lo <= hi:
+          mid = (lo + hi) // 2
+          if a[mid] == x: break
+          if a[mid] < x: lo = mid + 1
+          else: hi = mid - 1
+    answer: O(log n)
+    explain: Rentang pencarian menjadi separuh di setiap putaran.
+    hints: |
+      Berapa sisa elemen setelah satu putaran?
+      n, n/2, n/4, ...
+      log₂ n putaran.

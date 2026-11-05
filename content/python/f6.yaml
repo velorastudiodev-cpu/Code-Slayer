@@ -1,0 +1,134 @@
+lesson:
+  - text: for mengulang untuk setiap nilai dalam sebuah urutan. range(a, b, s) menghasilkan a, a+s, dan seterusnya, berhenti SEBELUM b. Pola paling umum adalah akumulasi, yaitu membuat variabel total di luar loop lalu menambahkannya di dalam loop.
+    code: |
+      total = 0
+      for i in range(1, 6):
+          total += i
+      print(total)
+      for i in range(10, 0, -3):
+          print(i, end=" ")
+  - text: while mengulang selama kondisinya True. Pastikan ada yang berubah di dalam loop supaya suatu saat berhenti, kalau tidak terjadi infinite loop. break keluar dari loop, continue lompat ke putaran berikutnya.
+    code: |
+      n = 3
+      while n > 0:
+          print("Tebasan", n)
+          n -= 1
+      for i in range(10):
+          if i == 2:
+              continue
+          if i == 5:
+              break
+          print(i, end=" ")
+exercises:
+  - id: py-predict-range
+    type: predict
+    title: Langkah Pernapasan Air
+    difficulty: 1
+    prompt: Tulis output persis dari kode berikut, satu nilai per baris.
+    code: |
+      for i in range(1, 10, 3):
+          print(i)
+    hints: |
+      range(start, stop, step) mulai dari start dan naik sebesar step.
+      range berhenti SEBELUM mencapai stop.
+      1, lalu 4, lalu 7. Berikutnya 10, tapi 10 tidak termasuk.
+    solution: x
+  - id: py-segitiga
+    type: write
+    title: Formasi Segitiga
+    difficulty: 2
+    story: Para kadet berbaris membentuk segitiga di Gunung Fujikasane.
+    prompt: Baca n, lalu cetak segitiga bintang n baris. Baris ke-i berisi i buah tanda *.
+    starter: |
+      n = int(input())
+    tests: ["3", "1", "5"]
+    hints: [Pakai loop dari 1 sampai n., 'String bisa dikali bilangan, "*" * 3 menghasilkan "***".', 'for i in range(1, n + 1) lalu print("*" * i)']
+    solution: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print("*" * i)
+  - id: py-f6-jumlah-genap
+    type: write
+    title: Tebasan Genap
+    difficulty: 1
+    prompt: Baca n. Cetak jumlah semua bilangan genap dari 1 sampai n.
+    tests: ["10", "1", "7", "100"]
+    hints: [Buat total = 0 sebelum loop., Tambahkan hanya bilangan yang genap., 'range(2, n + 1, 2) langsung memberi bilangan genap.']
+    solution: |
+      n = int(input())
+      print(sum(range(2, n + 1, 2)))
+  - id: py-f6-faktor
+    type: write
+    title: Pembagi Sejati
+    difficulty: 2
+    prompt: Baca n (n ≥ 1). Cetak semua pembagi n dari kecil ke besar dalam satu baris, dipisah spasi.
+    tests: ["12", "7", "1", "36"]
+    hints: [Periksa setiap i dari 1 sampai n., 'i adalah pembagi jika n % i == 0.', 'print(i, end=" ") lalu print() di akhir, atau kumpulkan di list.']
+    solution: |
+      n = int(input())
+      print(*[i for i in range(1, n + 1) if n % i == 0])
+  - id: py-f6-bug-mundur
+    type: bughunt
+    title: Hitung Mundur Kebablasan
+    difficulty: 1
+    prompt: Program menghitung mundur dari n sampai 1, lalu mencetak "Serang!". Ternyata ada angka yang ikut tercetak padahal tidak seharusnya. Temukan bug-nya.
+    starter: |
+      n = int(input())
+      while n >= 0:
+          print(n)
+          n -= 1
+      print("Serang!")
+    bug_line: 2
+    tests: ["3", "1", "5"]
+    hints: [Angka terakhir sebelum "Serang!" seharusnya 1., Kapan loop berhenti?, while n > 0]
+    solution: |
+      n = int(input())
+      while n > 0:
+          print(n)
+          n -= 1
+      print("Serang!")
+  - id: py-f6-parsons
+    type: parsons
+    title: Uji Bilangan Prima
+    difficulty: 2
+    prompt: Susun program yang mencetak "prima" jika n bilangan prima, selain itu "bukan".
+    tests: ["7", "1", "9", "2", "97"]
+    hints: [Anggap prima dulu (kecuali n ≤ 1)., Cari pembagi dari 2 sampai n - 1., Satu pembagi saja sudah cukup untuk membuatnya bukan prima.]
+    solution: |
+      n = int(input())
+      prima = n > 1
+      for i in range(2, n):
+          if n % i == 0:
+              prima = False
+      print("prima" if prima else "bukan")
+  - id: py-f6-typing
+    type: typing
+    title: Ketik Loop Berindentasi
+    difficulty: 2
+    prompt: Ketik ulang kode berikut. Indentasi pakai 4 spasi (tombol Tab = 4 spasi).
+    code: |
+      for i in range(1, 6):
+          if i % 2 == 0:
+              print(i, "genap")
+  - id: py-f6-translate
+    type: translate
+    title: Terjemahkan Jumlah Kuadrat
+    difficulty: 1
+    prompt: Tulis ulang program JavaScript ini dalam Python. Output-nya harus sama persis.
+    from_lang: javascript
+    from_code: |
+      const n = Number(readline())
+      let total = 0
+      for (let i = 1; i <= n; i++) total += i * i
+      console.log(total)
+    tests: ["3", "10", "1"]
+    hints: |
+      readline() di JS sama dengan input() di Python.
+      for (let i = 1; i <= n; i++) sama dengan for i in range(1, n + 1).
+      console.log menjadi print.
+    solution: |
+      n = int(input())
+      total = 0
+      for i in range(1, n + 1):
+          total += i * i
+      print(total)

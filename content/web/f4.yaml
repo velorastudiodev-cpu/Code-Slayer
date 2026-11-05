@@ -1,0 +1,161 @@
+lesson:
+- text: <form> mengumpulkan input. Setiap <input> sebaiknya punya <label for="id"> yang cocok dengan id input, supaya mengetuk label memfokuskan input dan screen reader tahu artinya. type="email", "password",
+    "number" memberi keyboard & validasi yang tepat.
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <form>
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" required>
+        <button type="submit">Masuk</button>
+      </form>
+    </body>
+    </html>
+- text: Data rahasia (password) dikirim dengan method="post" supaya tidak muncul di URL. required membuat browser menolak form kosong.
+exercises:
+- id: web-f4-login
+  type: write
+  title: Gerbang Login
+  difficulty: 2
+  prompt: 'Buat form login (method post) berisi: input email (id email, name email, type email, wajib), input password (id sandi, name sandi, type password, wajib), masing-masing dengan <label for> yang
+    cocok, dan tombol submit "Masuk".'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: form
+    attr: method
+    value: post
+  - sel: input#email
+    attr: type
+    value: email
+  - sel: input#sandi
+    attr: type
+    value: password
+  - sel: input
+    attr: required
+  - sel: input
+    label: true
+  - sel: button[type=submit]
+    text: Masuk
+  hints: |
+    Setiap input punya label for="id".
+    type email dan password.
+    required untuk wajib diisi.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <form method="post">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+        <label for="sandi">Kata sandi</label>
+        <input id="sandi" name="sandi" type="password" required>
+        <button type="submit">Masuk</button>
+      </form>
+    </body>
+    </html>
+- id: web-f4-select
+  type: write
+  title: Pilih Pernapasan
+  difficulty: 1
+  prompt: 'Buat <select> dengan id napas (punya label "Pernapasan") berisi tiga pilihan: Air, Petir, Api.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: select#napas > option
+    count: 3
+  - sel: select#napas
+    label: true
+  - sel: option:nth-child(2)
+    text: Petir
+  hints: |
+    select berisi beberapa option.
+    Label for harus sama dengan id select.
+    Urutan: Air, Petir, Api.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <label for="napas">Pernapasan</label>
+      <select id="napas" name="napas">
+        <option>Air</option>
+        <option>Petir</option>
+        <option>Api</option>
+      </select>
+    </body>
+    </html>
+- id: web-f4-bug
+  type: bughunt
+  title: Label Salah Alamat
+  difficulty: 2
+  prompt: Mengetuk label "Nama" tidak memfokuskan input-nya karena label menunjuk id yang salah. Temukan baris yang salah.
+  starter: |
+    <form>
+      <label for="name">Nama</label>
+      <input id="nama" name="nama">
+    </form>
+  bug_line: 2
+  checks:
+  - sel: input#nama
+    label: true
+  hints: |
+    for harus sama persis dengan id input.
+    id input-nya "nama".
+    Perbaiki atribut for.
+  solution: |
+    <form>
+      <label for="nama">Nama</label>
+      <input id="nama" name="nama">
+    </form>
+- id: web-f4-post
+  type: quiz
+  title: Rahasia di Alamat
+  difficulty: 2
+  prompt: Form login memakai method="get". Apa risikonya?
+  options:
+  - Password muncul di URL, riwayat browser, dan log server
+  - Form tidak bisa dikirim
+  - Password terenkripsi dua kali
+  - Tidak ada bedanya dengan post
+  explain: GET menaruh data form di query string URL. Gunakan POST (dan HTTPS) untuk data rahasia.
+  hints: |
+    Lihat ke mana data GET dikirim.
+    Query string ?email=...&sandi=...
+    URL tersimpan di banyak tempat.

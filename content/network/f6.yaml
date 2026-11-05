@@ -1,0 +1,98 @@
+lesson:
+- text: 'DNS menerjemahkan nama (korps.id) menjadi alamat IP. Jenis record: A (IPv4), AAAA (IPv6), CNAME (alias ke nama lain), MX (server email), TXT (teks bebas). Jawaban disimpan di cache selama TTL detik.'
+  code: |
+    dns = {"korps.id": ("A", "10.0.0.5"), "www.korps.id": ("CNAME", "korps.id")}
+    nama = "www.korps.id"
+    while dns[nama][0] == "CNAME":
+        nama = dns[nama][1]
+    print(dns[nama][1])
+exercises:
+- id: net-f6-a
+  type: quiz
+  title: Record Alamat
+  difficulty: 1
+  prompt: Jenis record DNS yang berisi alamat IPv4 sebuah nama adalah...
+  options:
+  - A
+  - AAAA
+  - MX
+  - CNAME
+  explain: A = alamat IPv4, AAAA = alamat IPv6 (empat kali lebih panjang).
+  hints: |
+    Satu huruf.
+    AAAA untuk IPv6.
+    Huruf pertama abjad.
+- id: net-f6-mx
+  type: answer
+  title: Kotak Surat Desa
+  difficulty: 1
+  prompt: Jenis record DNS yang menunjuk server penerima email suatu domain adalah...
+  accept:
+  - MX
+  explain: MX = Mail eXchanger, berisi prioritas dan nama server email.
+  hints: |
+    Mail ...
+    Dua huruf.
+    Mail eXchanger.
+- id: net-f6-resolve
+  type: write
+  title: Resolver Gagak
+  difficulty: 3
+  prompt: Baris pertama n record DNS, lalu n baris "nama TIPE nilai" (TIPE A atau CNAME). Baris berikutnya q, lalu q baris nama yang dicari. Untuk setiap pertanyaan ikuti CNAME sampai bertemu A dan cetak
+    IP-nya; kalau nama tidak ada cetak "NXDOMAIN".
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    2
+    korps.id A 10.0.0.5
+    www.korps.id CNAME korps.id
+    3
+    www.korps.id
+    korps.id
+    mail.korps.id
+  - |-
+    3
+    a.id CNAME b.id
+    b.id CNAME c.id
+    c.id A 1.2.3.4
+    2
+    a.id
+    b.id
+  - |-
+    1
+    x.id A 9.9.9.9
+    1
+    y.id
+  hints: |
+    Simpan record dalam dict nama → (tipe, nilai).
+    Selama record bertipe CNAME, pindah ke nilai tujuannya.
+    Nama yang tidak ada → NXDOMAIN.
+  solution: |
+    n = int(input())
+    rec = {}
+    for _ in range(n):
+        nama, tipe, nilai = input().split()
+        rec[nama] = (tipe, nilai)
+    for _ in range(int(input())):
+        nama = input().strip()
+        while nama in rec and rec[nama][0] == "CNAME":
+            nama = rec[nama][1]
+        print(rec[nama][1] if nama in rec else "NXDOMAIN")
+- id: net-f6-ttl
+  type: quiz
+  title: Ingatan Gagak
+  difficulty: 2
+  prompt: Sebuah record DNS punya TTL 300. Artinya...
+  options:
+  - Resolver boleh menyimpan jawabannya di cache selama 300 detik
+  - Server DNS hanya hidup 300 detik
+  - Nama domain kedaluwarsa setelah 300 hari
+  - Maksimal 300 permintaan per detik
+  explain: TTL (time to live) menentukan berapa lama jawaban boleh dipakai ulang dari cache sebelum ditanyakan lagi.
+  hints: |
+    TTL = time to live.
+    Berhubungan dengan cache.
+    Satuannya detik.

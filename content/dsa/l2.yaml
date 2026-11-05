@@ -1,0 +1,81 @@
+lesson:
+  - text: Greedy memilih yang terbaik SAAT INI di setiap langkah dan berharap hasil akhirnya optimal. Greedy cepat, tapi hanya benar kalau masalahnya punya sifat tertentu. Contoh klasiknya adalah memilih kegiatan yang selesai paling awal agar kegiatan yang tidak bertabrakan sebanyak mungkin.
+    code: |
+      kegiatan = [(1, 4), (3, 5), (0, 6), (5, 7), (8, 9)]
+      selesai, n = -1, 0
+      for a, b in sorted(kegiatan, key=lambda x: x[1]):
+          if a >= selesai:
+              n, selesai = n + 1, b
+      print(n)
+exercises:
+  - id: dsa-l2-koin
+    type: write
+    title: Kembalian Koban
+    difficulty: 1
+    prompt: Koin yang tersedia bernilai 1, 2, 5, 10, 20, 50, 100 (jumlah tak terbatas). Baca n, cetak banyaknya koin minimum untuk membayar n. Untuk sistem koin ini greedy terbukti optimal.
+    tests: ["0", "3", "289", "1000000"]
+    hints: |
+      Ambil koin terbesar yang masih muat.
+      Pakai // dan % supaya tidak perlu loop per koin.
+      Untuk setiap koin dari yang terbesar, tambah n // koin lalu n %= koin.
+    solution: |
+      n = int(input())
+      jumlah = 0
+      for k in (100, 50, 20, 10, 5, 2, 1):
+          jumlah += n // k
+          n %= k
+      print(jumlah)
+  - id: dsa-l2-kegiatan
+    type: write
+    title: Jadwal Misi Terbanyak
+    difficulty: 2
+    prompt: 'Baris 1 berisi n, lalu n baris "mulai selesai". Pilih sebanyak mungkin misi yang tidak bertabrakan (misi boleh dimulai tepat saat misi sebelumnya selesai). Cetak jumlahnya.'
+    tests: ["5\n1 4\n3 5\n0 6\n5 7\n8 9", "3\n1 2\n2 3\n3 4", "2\n1 10\n2 3"]
+    hints: |
+      Urutkan menurut waktu SELESAI.
+      Ambil misi kalau mulainya ≥ selesai misi terakhir yang diambil.
+      Hitung yang diambil.
+    solution: |
+      n = int(input())
+      misi = [tuple(map(int, input().split())) for _ in range(n)]
+      selesai, jumlah = -1, 0
+      for a, b in sorted(misi, key=lambda x: x[1]):
+          if a >= selesai:
+              jumlah += 1
+              selesai = b
+      print(jumlah)
+  - id: dsa-l2-tali
+    type: write
+    title: Menyambung Tali Pedang
+    difficulty: 3
+    prompt: Ada n tali. Menyambung dua tali berbiaya jumlah panjangnya. Sambung semua menjadi satu dengan biaya total minimum. Greedy, yaitu selalu sambung dua yang terpendek (pakai heap).
+    tests: ["4 3 2 6", "5", "1 1 1 1"]
+    hints: |
+      Masukkan semua ke min-heap.
+      Ambil dua terkecil, sambung, lalu masukkan hasilnya kembali.
+      Jumlahkan biaya setiap sambungan.
+    solution: |
+      import heapq
+      h = list(map(int, input().split()))
+      heapq.heapify(h)
+      total = 0
+      while len(h) > 1:
+          s = heapq.heappop(h) + heapq.heappop(h)
+          total += s
+          heapq.heappush(h, s)
+      print(total)
+  - id: dsa-l2-greedy-gagal
+    type: predict
+    title: Saat Greedy Gagal
+    difficulty: 3
+    prompt: Dengan koin 1, 3, dan 4, greedy (ambil koin terbesar dulu) untuk n = 6 menghasilkan berapa koin? Tulis output persis (bandingkan dengan jawaban optimal 2, yaitu 3 + 3).
+    code: |
+      n, jumlah = 6, 0
+      for k in (4, 3, 1):
+          jumlah += n // k
+          n %= k
+      print(jumlah)
+    hints: |
+      Greedy mengambil 4 dulu.
+      Sisa 2, dibayar dengan 1 + 1.
+      Totalnya lebih dari 2, jadi greedy tidak optimal di sini.

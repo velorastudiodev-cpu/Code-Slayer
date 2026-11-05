@@ -1,0 +1,86 @@
+lesson:
+- text: 'Git mencatat riwayat proyek. git init membuat repo (folder .git). Perubahan melewati tiga tempat: working tree (file yang kamu edit) → staging area (git add) → riwayat (git commit). Pisahkan "memilih
+    perubahan" dan "menyimpannya".'
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git status --short
+    git add misi.txt
+    git status --short
+    git commit -m "Misi pertama"
+    git log --format="%s"
+- text: 'Pesan commit yang baik singkat, memakai kalimat perintah, dan menjelaskan APA yang berubah: "Tambah halaman login", bukan "update" atau "fix".'
+exercises:
+- id: git-f1-pertama
+  type: write
+  title: Commit Pertama
+  difficulty: 1
+  prompt: Folder proyek sudah berisi misi.txt tapi belum menjadi repo. Buat repo, stage misi.txt, lalu commit dengan pesan "Misi pertama". (Contoh output = state target yang diperiksa.)
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek
+    echo "Kaa!" > misi.txt
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Mulai dengan git init.
+    git add memasukkan file ke staging area.
+    git commit -m "pesan"
+  solution: |
+    git init
+    git add misi.txt
+    git commit -m "Misi pertama"
+- id: git-f1-staging
+  type: quiz
+  title: Ruang Tunggu Commit
+  difficulty: 1
+  prompt: Kamu mengubah 3 file, tapi hanya ingin menyimpan perubahan di 1 file ke commit berikutnya. Fitur Git yang memungkinkan ini adalah...
+  options:
+  - Staging area (git add file itu saja)
+  - Branch baru untuk setiap file
+  - git commit -a
+  - Menghapus 2 file lainnya
+  explain: Staging area memisahkan "apa yang akan di-commit" dari "apa yang sudah berubah". git commit -a justru mengambil SEMUA file yang dilacak.
+  hints: |
+    Git punya tahap di antara edit dan commit.
+    git add memilih file.
+    commit -a mengambil semuanya.
+- id: git-f1-addall
+  type: answer
+  title: Stage Semuanya
+  difficulty: 1
+  prompt: Perintah untuk memasukkan SEMUA perubahan di folder saat ini (termasuk file baru) ke staging area adalah...
+  accept:
+  - git add .
+  - git add -A
+  - git add --all
+  explain: git add . menambahkan semua perubahan di direktori saat ini dan subdirektorinya. git add -A melakukan hal yang sama untuk seluruh repo.
+  hints: |
+    Pakai git add.
+    Titik berarti direktori saat ini.
+    git add .
+- id: git-f1-urut
+  type: parsons
+  title: Susun Ritual Commit
+  difficulty: 1
+  prompt: Susun perintah untuk membuat repo baru, membuat halo.txt, lalu meng-commit-nya dengan pesan "Halo dunia".
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Folder dibuat dan dimasuki dulu.
+    File harus ada sebelum di-add.
+    commit paling akhir.
+  solution: |
+    mkdir proyek
+    cd proyek
+    git init
+    echo "Halo" > halo.txt
+    git add halo.txt
+    git commit -m "Halo dunia"

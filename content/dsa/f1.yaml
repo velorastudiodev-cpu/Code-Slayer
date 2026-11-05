@@ -1,0 +1,95 @@
+lesson:
+  - text: Algoritma adalah langkah-langkah yang jelas untuk menyelesaikan masalah. Sebelum menulis kode, programmer biasa menulis pseudocode (langkah dalam bahasa sehari-hari) lalu MENELUSURI (trace) nilai variabel di setiap langkah. Kemampuan trace adalah inti debugging dan soal olimpiade.
+    code: |
+      # Pseudocode: total = 0; untuk i = 1..4: total += i*i
+      total = 0
+      for i in range(1, 5):
+          total += i * i
+          print(f"i={i} total={total}")
+  - text: Trace table mencatat nilai variabel setiap kali satu baris selesai dijalankan. Latih dengan tangan dulu, lalu cocokkan memakai Step Debugger (tombol 🐞) untuk melihat langkahnya satu per satu.
+    code: |
+      a, b = 48, 18
+      while b != 0:
+          a, b = b, a % b
+          print(a, b)
+exercises:
+  - id: dsa-f1-trace-kuadrat
+    type: trace
+    title: Jejak Jumlah Kuadrat
+    difficulty: 1
+    prompt: Telusuri kode berikut. Isi nilai i dan total setiap kali baris 3 selesai dijalankan.
+    code: |
+      total = 0
+      for i in range(1, 5):
+          total += i * i
+    line: 3
+    vars: [i, total]
+    hints: |
+      Putaran pertama i = 1, total = 0 + 1.
+      Setiap putaran total bertambah i * i.
+      Nilai total adalah 1, 5, 14, 30.
+  - id: dsa-f1-trace-euclid
+    type: trace
+    title: Jejak Euclid
+    difficulty: 2
+    prompt: Telusuri algoritma FPB Euclid. Isi nilai a dan b setiap kali baris 3 selesai.
+    code: |
+      a, b = 48, 18
+      while b != 0:
+          a, b = b, a % b
+    line: 3
+    vars: [a, b]
+    hints: |
+      a baru = b lama, b baru = a lama % b lama.
+      48 % 18 = 12.
+      Berhenti saat b menjadi 0; a terakhir adalah FPB.
+  - id: dsa-f1-trace-maks
+    type: trace
+    title: Jejak Pencari Terkuat
+    difficulty: 1
+    prompt: Isi nilai x dan best setiap kali baris 4 (pengecekan if) selesai dijalankan.
+    code: |
+      data = [4, 9, 2, 9, 7]
+      best = data[0]
+      for x in data:
+          if x > best:
+              best = x
+    line: 4
+    vars: [x, best]
+    hints: |
+      Baris 4 hanya memeriksa, best berubah di baris 5.
+      Saat baris 4 selesai untuk x = 9, best masih 4.
+      Perhatikan 9 kedua tidak lebih besar dari best 9.
+  - id: dsa-f1-predict-collatz
+    type: predict
+    title: Langkah Collatz
+    difficulty: 2
+    prompt: Berapa langkah sampai n menjadi 1? Tulis output persis.
+    code: |
+      n = 6
+      langkah = 0
+      while n != 1:
+          n = n // 2 if n % 2 == 0 else 3 * n + 1
+          langkah += 1
+      print(langkah)
+    hints: |
+      Genap dibagi 2, ganjil menjadi 3n + 1.
+      6 → 3 → 10 → ...
+      Hitung panah sampai tiba di 1.
+  - id: dsa-f1-collatz
+    type: write
+    title: Mesin Collatz
+    difficulty: 2
+    prompt: Baca n (1 ≤ n ≤ 10^6). Cetak banyaknya langkah sampai n menjadi 1 (genap → n/2, ganjil → 3n+1).
+    tests: ["6", "1", "27", "837799"]
+    hints: |
+      Ulangi selama n != 1.
+      Pakai // untuk pembagian bulat.
+      Hitung setiap pengulangan.
+    solution: |
+      n = int(input())
+      langkah = 0
+      while n != 1:
+          n = n // 2 if n % 2 == 0 else 3 * n + 1
+          langkah += 1
+      print(langkah)

@@ -1,0 +1,80 @@
+lesson:
+- text: 'Shinobu: "Racun yang sama bisa menyembuhkan atau membunuh." Ilmu keamanan siber hanya boleh dipakai pada sistem milikmu sendiri atau yang pemiliknya mengizinkan secara tertulis (dengan batas/scope
+    yang jelas). Di Indonesia, akses ilegal ke sistem elektronik orang lain diatur UU ITE (antara lain Pasal 30 tentang akses ilegal, Pasal 32 tentang mengubah/memindahkan data, dan sanksinya di Pasal 46
+    & 48). Semua lab di aplikasi ini adalah simulasi milik aplikasi sendiri.'
+- text: 'Responsible disclosure: bila menemukan celah di sistem nyata, laporkan ke pemiliknya (atau lewat program bug bounty resmi), beri waktu untuk memperbaiki, jangan mengambil/menyebarkan data, dan
+    jangan menguji melebihi yang perlu untuk membuktikan celah.'
+exercises:
+- id: cy-f1-izin
+  type: quiz
+  title: Izin Dulu
+  difficulty: 1
+  prompt: Kamu menemukan form login sekolah yang sepertinya rentan SQL injection. Apa yang sebaiknya kamu lakukan?
+  options:
+  - Tidak mengujinya; laporkan dugaanmu ke pengelola sistem sekolah
+  - Coba injeksi sedikit untuk memastikan
+  - Ambil satu data siswa sebagai bukti
+  - Bagikan temuannya di grup agar viral
+  explain: Menguji sistem tanpa izin tertulis termasuk akses ilegal, walau niatnya baik. Laporkan dugaan tanpa mengeksploitasi.
+  hints: |
+    Apakah kamu punya izin?
+    Niat baik tidak menghapus pelanggaran.
+    Laporkan, jangan uji.
+- id: cy-f1-uu
+  type: quiz
+  title: Payung Hukum
+  difficulty: 1
+  prompt: Undang-undang yang mengatur akses ilegal ke sistem elektronik di Indonesia adalah...
+  options:
+  - UU ITE (Informasi dan Transaksi Elektronik)
+  - UU Lalu Lintas
+  - UU Hak Cipta saja
+  - Tidak ada aturannya
+  explain: UU ITE mengatur, antara lain, akses tanpa hak ke sistem elektronik orang lain (Pasal 30) beserta sanksinya.
+  hints: |
+    Singkatannya tiga huruf.
+    Informasi dan Transaksi Elektronik.
+    UU ITE.
+- id: cy-f1-scope
+  type: quiz
+  title: Batas Wilayah
+  difficulty: 2
+  prompt: Program bug bounty sebuah toko daring hanya mengizinkan pengujian di app.toko.contoh. Kamu menemukan server lain milik mereka, db.toko.contoh. Bolehkah diuji?
+  options:
+  - Tidak, karena di luar scope yang diizinkan
+  - Boleh, karena masih milik perusahaan yang sama
+  - Boleh asal tidak merusak
+  - Boleh jika malam hari
+  explain: Izin berlaku sesuai scope tertulis. Aset di luar scope harus dilaporkan/ditanyakan dulu, bukan diuji.
+  hints: |
+    Izin punya batas.
+    Baca ketentuan program.
+    Di luar scope = tidak diizinkan.
+- id: cy-f1-disclosure
+  type: quiz
+  title: Melapor dengan Benar
+  difficulty: 2
+  prompt: Urutan responsible disclosure yang benar adalah...
+  options:
+  - Laporkan ke pemilik → beri waktu perbaikan → publikasi setelah diperbaiki/disepakati
+  - Publikasikan dulu agar pemilik cepat bergerak
+  - Jual celahnya ke pihak lain
+  - Diamkan saja
+  explain: 'Tujuannya melindungi pengguna: pemilik memperbaiki dulu sebelum detail celah dipublikasikan.'
+  hints: |
+    Siapa yang pertama harus tahu?
+    Beri kesempatan memperbaiki.
+    Publikasi belakangan.
+- id: cy-f1-white
+  type: answer
+  title: Topi Putih
+  difficulty: 1
+  prompt: Sebutan untuk peretas etis yang menguji keamanan dengan izin adalah "... hat" (isi satu kata bahasa Inggris).
+  accept:
+  - white
+  - white hat
+  explain: White hat bekerja dengan izin untuk memperbaiki keamanan; black hat menyerang tanpa izin.
+  hints: |
+    Warna.
+    Lawan dari black.
+    white

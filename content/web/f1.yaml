@@ -1,0 +1,137 @@
+lesson:
+- text: 'HTML menyusun isi halaman dengan tag berpasangan: <tag>isi</tag>. Setiap dokumen punya <!doctype html>, <html>, <head> (info halaman: judul, charset, CSS) dan <body> (yang tampil).'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <h1>Markas Korps</h1>
+      <p>Selamat datang, Slayer.</p>
+    </body>
+    </html>
+- text: 'Tag semantik menjelaskan peran isinya: <header> kepala halaman, <nav> navigasi, <main> isi utama, <footer> kaki halaman. Pembaca layar dan mesin pencari memahaminya lebih baik daripada <div> biasa.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <header><h1>Korps</h1></header>
+      <main><p>Isi utama</p></main>
+      <footer>Hak cipta Korps</footer>
+    </body>
+    </html>
+exercises:
+- id: web-f1-kerangka
+  type: write
+  title: Kerangka Markas
+  difficulty: 1
+  prompt: Buat dokumen HTML dengan judul halaman (title) "Markas Korps" dan satu <h1> bertuliskan "Selamat datang, Slayer".
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Judul</title>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: title
+    text: Markas Korps
+  - sel: h1
+    count: 1
+  - sel: h1
+    text: Selamat datang, Slayer
+  hints: |
+    <title> ada di dalam <head>.
+    <h1> ada di dalam <body>.
+    Teks harus persis sama.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Markas Korps</title>
+    </head>
+    <body>
+      <h1>Selamat datang, Slayer</h1>
+    </body>
+    </html>
+- id: web-f1-semantik
+  type: write
+  title: Tiga Bagian
+  difficulty: 1
+  prompt: Di dalam body, buat <header> berisi <h1>Korps</h1>, <main> berisi satu <p>, dan <footer> bertuliskan "Hak cipta Korps".
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <!-- header, main, footer -->
+    </body>
+    </html>
+  checks:
+  - sel: body > header > h1
+    text: Korps
+  - sel: body > main > p
+    count: ≥1
+  - sel: body > footer
+    text: Hak cipta Korps
+  hints: |
+    Tiga tag semantik: header, main, footer.
+    h1 di dalam header, p di dalam main.
+    Urutan: header, main, footer.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <header><h1>Korps</h1></header>
+      <main>
+        <p>Laporan misi hari ini.</p>
+      </main>
+      <footer>Hak cipta Korps</footer>
+    </body>
+    </html>
+- id: web-f1-semantik-q
+  type: quiz
+  title: Div atau Semantik?
+  difficulty: 1
+  prompt: Mengapa <nav> lebih baik daripada <div class="nav"> untuk menu navigasi?
+  options:
+  - Pembaca layar & mesin pencari langsung mengenali perannya
+  - nav otomatis berwarna
+  - div tidak bisa berisi link
+  - nav lebih cepat dimuat
+  explain: Tag semantik membawa makna. Teknologi bantu (screen reader) bisa melompat langsung ke navigasi, dan kode lebih mudah dibaca.
+  hints: |
+    Pikirkan pengguna tunanetra.
+    Tampilannya bisa sama persis.
+    Bedanya ada di makna, bukan gaya.
+- id: web-f1-p
+  type: answer
+  title: Tag Paragraf
+  difficulty: 1
+  prompt: Nama tag HTML untuk paragraf adalah... (tulis tanpa < >)
+  accept:
+  - p
+  - <p>
+  explain: <p> membuat paragraf; browser memberi jarak atas-bawah secara bawaan.
+  hints: |
+    Satu huruf.
+    paragraph
+    p

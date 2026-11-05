@@ -1,0 +1,125 @@
+lesson:
+  - text: if menjalankan blok kode hanya kalau kondisinya True. Blok ditandai titik dua di akhir baris dan indentasi 4 spasi. elif memeriksa kondisi berikutnya, dan else menangkap sisanya. Hanya cabang pertama yang benar yang dijalankan.
+    code: |
+      nilai = 78
+      if nilai >= 85:
+          print("A")
+      elif nilai >= 70:
+          print("B")
+      else:
+          print("C")
+  - text: Kondisi bisa digabung dengan and dan or, atau dibuat bersarang (if di dalam if). Nilai seperti 0, string kosong, dan list kosong dianggap False. Nilai lainnya dianggap True.
+    code: |
+      umur, punya_pedang = 15, True
+      if umur >= 13 and punya_pedang:
+          print("Boleh ikut Final Selection")
+      if not "":
+          print("string kosong dianggap False")
+exercises:
+  - id: py-bug-genap
+    type: bughunt
+    title: Iblis Pembalik Genap
+    difficulty: 1
+    story: Seekor iblis membalik hasil pemeriksaan genap-ganjil di markas Kisatsutai.
+    prompt: Program harus membaca bilangan bulat n lalu mencetak "genap" atau "ganjil". Temukan barisnya, lalu perbaiki.
+    starter: |
+      n = int(input())
+      if n % 2 == 1:
+          print("genap")
+      else:
+          print("ganjil")
+    bug_line: 2
+    tests: ["4", "7", "0", "-3"]
+    hints: [Coba telusuri dengan n = 4. Berapa 4 % 2?, Bilangan genap punya sisa bagi 0 terhadap 2., Ganti kondisinya menjadi n % 2 == 0.]
+    solution: |
+      n = int(input())
+      if n % 2 == 0:
+          print("genap")
+      else:
+          print("ganjil")
+  - id: py-f5-nilai
+    type: write
+    title: Rapor Kisatsutai
+    difficulty: 1
+    prompt: 'Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.'
+    tests: ["90", "85", "70", "69", "55", "10"]
+    hints: |
+      Periksa dari syarat tertinggi dulu.
+      Pakai if, elif, elif, else.
+      Cabang pertama yang benar yang dijalankan, sisanya dilewati.
+    solution: |
+      n = int(input())
+      if n >= 85:
+          print("A")
+      elif n >= 70:
+          print("B")
+      elif n >= 55:
+          print("C")
+      else:
+          print("D")
+  - id: py-f5-kabisat
+    type: write
+    title: Tahun Kabisat
+    difficulty: 2
+    prompt: Baca tahun. Cetak "kabisat" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu cetak "bukan".
+    tests: ["2024", "1900", "2000", "2023", "2100"]
+    hints: ['Habis dibagi berarti % ... == 0.', Gabungkan syarat dengan or dan and., 'tahun % 400 == 0 or (tahun % 4 == 0 and tahun % 100 != 0)']
+    solution: |
+      t = int(input())
+      if t % 400 == 0 or (t % 4 == 0 and t % 100 != 0):
+          print("kabisat")
+      else:
+          print("bukan")
+  - id: py-f5-predict
+    type: predict
+    title: Dua Gerbang
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      x = 7
+      if x > 5:
+          print("A")
+      if x > 3:
+          print("B")
+      elif x > 1:
+          print("C")
+      else:
+          print("D")
+    hints: |
+      Ada dua if terpisah, bukan satu rantai.
+      if kedua punya rantai elif/else sendiri.
+      Dalam satu rantai, hanya cabang pertama yang benar yang jalan.
+    solution: x
+  - id: py-f5-max3
+    type: write
+    title: Pedang Terpanjang
+    difficulty: 2
+    prompt: Baca tiga bilangan bulat dalam satu baris. Cetak yang terbesar TANPA memakai max().
+    tests: ["3 9 2", "5 5 1", "-1 -7 -3", "4 8 8"]
+    hints: [Anggap a yang terbesar dulu., Bandingkan dengan b dan c satu per satu., 'if b > m: m = b, dan lakukan hal yang sama untuk c']
+    solution: |
+      a, b, c = map(int, input().split())
+      m = a
+      if b > m:
+          m = b
+      if c > m:
+          m = c
+      print(m)
+  - id: py-f5-parsons
+    type: parsons
+    title: Tanda Bilangan
+    difficulty: 1
+    prompt: Susun program yang mencetak "positif", "negatif", atau "nol" sesuai bilangan input.
+    tests: ["5", "-3", "0"]
+    hints: |
+      Baca n dulu.
+      Urutannya if, elif, lalu else.
+      Setiap print berada di bawah kondisinya.
+    solution: |
+      n = int(input())
+      if n > 0:
+          print("positif")
+      elif n < 0:
+          print("negatif")
+      else:
+          print("nol")

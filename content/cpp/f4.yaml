@@ -1,0 +1,109 @@
+lesson:
+  - text: std::cin >> x membaca token berikutnya dan bernilai false saat input habis atau formatnya salah. Karena itu while (std::cin >> x) adalah cara membaca sampai EOF. Di kompetisi, baris ios::sync_with_stdio(false); cin.tie(nullptr); mempercepat input yang besar.
+    code: |
+      #include <iostream>
+      #include <sstream>
+
+      int main() {
+          std::istringstream in("3 1 4 1 5");
+          int x, total = 0;
+          while (in >> x) total += x;
+          std::cout << total << "\n";
+      }
+exercises:
+  - id: cpp-f4-jumlah
+    type: write
+    title: Menjumlah Dua Bilah
+    difficulty: 1
+    prompt: Baca dua bilangan bulat, cetak jumlahnya.
+    tests: ["3 4", "10 -2", "0 0"]
+    hints: |
+      int a, b;
+      std::cin >> a >> b;
+      std::cout << a + b << "\n";
+    solution: |
+      #include <iostream>
+
+      int main() {
+          int a, b;
+          std::cin >> a >> b;
+          std::cout << a + b << "\n";
+      }
+  - id: cpp-f4-eof
+    type: write
+    title: Sampai Gulungan Habis
+    difficulty: 2
+    prompt: Input berisi bilangan bulat yang banyaknya tidak diketahui. Cetak banyaknya, terkecil, dan terbesar, dipisah spasi.
+    tests: ["3 1 4 1 5", "7", "-2\n-9\n0"]
+    hints: |
+      while (std::cin >> x) membaca sampai habis.
+      Inisialisasi terkecil dan terbesar dari bilangan pertama.
+      std::min dan std::max.
+    solution: |
+      #include <algorithm>
+      #include <iostream>
+
+      int main() {
+          long long x, n = 0, lo = 0, hi = 0;
+          while (std::cin >> x) {
+              if (n == 0) lo = hi = x;
+              lo = std::min(lo, x);
+              hi = std::max(hi, x);
+              n++;
+          }
+          std::cout << n << " " << lo << " " << hi << "\n";
+      }
+  - id: cpp-f4-predict
+    type: predict
+    title: Token demi Token
+    difficulty: 2
+    prompt: Dengan input di bawah, tulis output persis dari program berikut.
+    code: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string a, b;
+          int n;
+          std::cin >> a >> n >> b;
+          std::cout << b << "-" << n * 2 << "-" << a << "\n";
+      }
+    tests: ["Muichiro 7 Kabut"]
+    hints: |
+      cin >> membaca dipisah spasi.
+      a mendapat token pertama, n token kedua, b token ketiga.
+      Urutan cetak berbeda dengan urutan baca.
+    solution: x
+  - id: cpp-f4-bug
+    type: bughunt
+    title: Baris yang Tertelan
+    difficulty: 3
+    prompt: 'Baris 1 berisi umur, baris 2 berisi nama lengkap (berspasi). Program harus mencetak "<nama> (<umur>)", tapi nama selalu kosong. Temukan bug-nya.'
+    starter: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          int umur;
+          std::string nama;
+          std::cin >> umur;
+          std::getline(std::cin, nama);
+          std::cout << nama << " (" << umur << ")\n";
+      }
+    bug_line: 8
+    tests: ["14\nTokito Muichiro", "27\nHimejima Gyomei"]
+    hints: |
+      Setelah cin >> umur, karakter "\n" di akhir baris pertama masih tersisa.
+      getline langsung membaca sisa baris itu, yang kosong.
+      std::getline(std::cin >> std::ws, nama);
+    solution: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          int umur;
+          std::string nama;
+          std::cin >> umur;
+          std::getline(std::cin >> std::ws, nama);
+          std::cout << nama << " (" << umur << ")\n";
+      }

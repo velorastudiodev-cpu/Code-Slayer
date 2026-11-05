@@ -1,0 +1,1303 @@
+{
+ "hash": "e851ab3a605b",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Data yang dikirim lewat jaringan dibungkus berlapis (enkapsulasi). Model TCP/IP punya 4 lapisan: Application (HTTP, DNS), Transport (TCP, UDP), Internet (IP), dan Link (Ethernet, Wi-Fi). Model OSI memecahnya lebih rinci menjadi 7 lapisan."
+    },
+    {
+     "text": "Setiap perangkat bekerja di lapisan tertentu: switch membaca alamat MAC (Data Link, lapisan 2), router membaca alamat IP (Network, lapisan 3), sedangkan browser dan server web bekerja di lapisan Application.",
+     "code": "lapisan = [\"Application\", \"Transport\", \"Internet\", \"Link\"]\ndata = \"GET /misi\"\nfor l in lapisan:\n    data = f\"[{l}]{data}\"\nprint(data)\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f1-http",
+     "type": "quiz",
+     "title": "Lapisan Surat Gagak",
+     "difficulty": 1,
+     "prompt": "HTTP, protokol yang dipakai browser untuk meminta halaman web, berada di lapisan mana pada model TCP/IP?",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Pikirkan siapa yang \"berbicara\" HTTP: aplikasinya.",
+      "TCP dan UDP ada di Transport.",
+      "Lapisan paling atas."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Application",
+      "Transport",
+      "Internet",
+      "Link"
+     ],
+     "explain": "HTTP adalah protokol aplikasi. Ia memakai TCP (Transport) di bawahnya, yang dibawa oleh IP (Internet).",
+     "track": "network",
+     "chapter": "f1"
+    },
+    {
+     "id": "net-f1-router",
+     "type": "quiz",
+     "title": "Penjaga Persimpangan",
+     "difficulty": 1,
+     "prompt": "Router menentukan ke mana paket diteruskan berdasarkan alamat IP tujuan. Router bekerja di lapisan OSI ke berapa?",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Router membaca alamat IP.",
+      "Alamat IP ada di lapisan Network.",
+      "Network = lapisan 3."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Lapisan 3 (Network)",
+      "Lapisan 2 (Data Link)",
+      "Lapisan 4 (Transport)",
+      "Lapisan 7 (Application)"
+     ],
+     "explain": "Alamat IP adalah urusan lapisan Network (3). Switch biasa bekerja di lapisan 2 dengan alamat MAC.",
+     "track": "network",
+     "chapter": "f1"
+    },
+    {
+     "id": "net-f1-osi",
+     "type": "answer",
+     "title": "Tujuh Bentuk",
+     "difficulty": 1,
+     "prompt": "Berapa jumlah lapisan pada model OSI? Jawab dengan angka.",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Lebih banyak dari TCP/IP (4).",
+      "Dari Physical sampai Application.",
+      "Jawabannya satu angka."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "7",
+      "tujuh"
+     ],
+     "explain": "OSI: Physical, Data Link, Network, Transport, Session, Presentation, Application.",
+     "track": "network",
+     "chapter": "f1"
+    },
+    {
+     "id": "net-f1-switch",
+     "type": "quiz",
+     "title": "Switch di Markas",
+     "difficulty": 2,
+     "prompt": "Di jaringan lokal markas, perangkat yang meneruskan frame ke port yang tepat berdasarkan alamat MAC adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Alamat MAC = lapisan 2.",
+      "Hub tidak \"belajar\", ia menyiarkan ke semua port.",
+      "Perangkat lapisan 2 yang pintar."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Switch",
+      "Router",
+      "Modem",
+      "Hub"
+     ],
+     "explain": "Switch mempelajari alamat MAC di setiap port, jadi frame hanya dikirim ke port tujuan. Hub mengirim ke semua port.",
+     "track": "network",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Alamat IPv4 terdiri dari 4 oktet desimal 0-255 dipisah titik, misalnya 192.168.1.10. Totalnya 32 bit. Beberapa rentang dicadangkan untuk jaringan privat: 10.0.0.0/8, 172.16.0.0/12, dan 192.168.0.0/16.",
+     "code": "ip = \"192.168.1.10\"\noktet = [int(x) for x in ip.split(\".\")]\nprint(oktet, all(0 <= x <= 255 for x in oktet))\nprint(\".\".join(f\"{x:08b}\" for x in oktet))\n"
+    },
+    {
+     "text": "127.0.0.1 (localhost) selalu menunjuk ke komputer itu sendiri. Alamat privat tidak bisa diakses langsung dari internet; router memakai NAT untuk menerjemahkannya ke alamat publik."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f2-valid",
+     "type": "write",
+     "title": "Alamat yang Sah",
+     "difficulty": 1,
+     "prompt": "Setiap baris input berisi satu teks. Cetak \"valid\" jika teks itu alamat IPv4 yang sah (4 bagian angka 0-255 dipisah titik, tanpa nol di depan kecuali \"0\"), selain itu \"tidak\".",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "192.168.1.10\n0.0.0.0\n256.1.1.1\n1.2.3\nabc.def.1.2\n01.2.3.4\n255.255.255.255",
+       "expected": "valid\nvalid\ntidak\ntidak\ntidak\ntidak\nvalid\n"
+      }
+     ],
+     "hints": [
+      "Pecah dengan split(\".\") dan pastikan ada tepat 4 bagian.",
+      "Setiap bagian harus angka (isdigit) antara 0 dan 255.",
+      "Tolak bagian yang diawali 0 tapi panjangnya lebih dari 1."
+     ],
+     "solutions": [
+      "import sys\n\nfor baris in sys.stdin.read().split():\n    bagian = baris.split(\".\")\n    ok = len(bagian) == 4 and all(b.isdigit() and 0 <= int(b) <= 255 and (b == \"0\" or not b.startswith(\"0\")) for b in bagian)\n    print(\"valid\" if ok else \"tidak\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "network",
+     "chapter": "f2"
+    },
+    {
+     "id": "net-f2-privat",
+     "type": "quiz",
+     "title": "Alamat Rumah Sendiri",
+     "difficulty": 1,
+     "prompt": "Alamat IP mana yang termasuk rentang PRIVAT (tidak bisa dirutekan langsung di internet)?",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Ingat tiga rentang: 10/8, 172.16/12, 192.168/16.",
+      "172.16/12 hanya sampai 172.31.",
+      "8.8.8.8 adalah DNS publik."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "192.168.10.5",
+      "8.8.8.8",
+      "172.32.0.1",
+      "11.0.0.1"
+     ],
+     "explain": "192.168.0.0/16 adalah rentang privat. 172.32.0.1 ada di luar 172.16.0.0/12 (yang berakhir di 172.31.255.255).",
+     "track": "network",
+     "chapter": "f2"
+    },
+    {
+     "id": "net-f2-loopback",
+     "type": "answer",
+     "title": "Rumah Sendiri",
+     "difficulty": 1,
+     "prompt": "Alamat IPv4 loopback (localhost) yang selalu menunjuk ke komputer itu sendiri adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Namanya juga localhost.",
+      "Diawali 127.",
+      "127.0.0.1"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "127.0.0.1"
+     ],
+     "explain": "Seluruh 127.0.0.0/8 adalah loopback, tapi yang dipakai umumnya 127.0.0.1.",
+     "track": "network",
+     "chapter": "f2"
+    },
+    {
+     "id": "net-f2-biner",
+     "type": "write",
+     "title": "Sandi Biner",
+     "difficulty": 2,
+     "prompt": "Baca satu alamat IPv4. Cetak representasi 32-bit-nya: 4 oktet dalam biner 8 digit dipisah titik.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "192.168.1.10",
+       "expected": "11000000.10101000.00000001.00001010\n"
+      },
+      {
+       "input": "10.0.0.1",
+       "expected": "00001010.00000000.00000000.00000001\n"
+      },
+      {
+       "input": "255.255.255.0",
+       "expected": "11111111.11111111.11111111.00000000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pecah IP menjadi 4 angka.",
+      "format(x, \"08b\") atau f\"{x:08b}\" menghasilkan 8 digit biner.",
+      "Gabungkan dengan titik."
+     ],
+     "solutions": [
+      "ip = input().strip()\nprint(\".\".join(f\"{int(x):08b}\" for x in ip.split(\".\")))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "network",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Notasi CIDR /n berarti n bit pertama adalah bagian jaringan. /24 = netmask 255.255.255.0. Sisa bit (32 - n) untuk host; jumlah host yang bisa dipakai = 2^(32-n) - 2, karena alamat jaringan dan broadcast tidak dipakai host.",
+     "code": "n = 26\nmask = (0xFFFFFFFF << (32 - n)) & 0xFFFFFFFF\nprint(\".\".join(str(mask >> s & 255) for s in (24, 16, 8, 0)))\nprint(2 ** (32 - n) - 2, \"host\")\n"
+    },
+    {
+     "text": "Alamat jaringan = IP AND netmask. Alamat broadcast = alamat jaringan dengan semua bit host bernilai 1. Dua alamat ada di subnet yang sama kalau alamat jaringannya sama."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f3-mask26",
+     "type": "answer",
+     "title": "Netmask /26",
+     "difficulty": 2,
+     "prompt": "Tulis netmask dalam notasi desimal bertitik untuk prefix /26.",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "24 bit pertama = 255.255.255.",
+      "Oktet terakhir punya 2 bit 1 di depan.",
+      "11000000 biner = 192."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "255.255.255.192"
+     ],
+     "explain": "/26 = 26 bit 1: tiga oktet penuh (24 bit) + 2 bit di oktet terakhir = 11000000 = 192.",
+     "track": "network",
+     "chapter": "f3"
+    },
+    {
+     "id": "net-f3-host27",
+     "type": "answer",
+     "title": "Kapasitas Subnet",
+     "difficulty": 2,
+     "prompt": "Berapa jumlah host yang bisa dipakai dalam subnet /27? Jawab dengan angka.",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Bit host = 32 - 27.",
+      "2 pangkat jumlah bit host.",
+      "Kurangi 2."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "30"
+     ],
+     "explain": "32 - 27 = 5 bit host → 2^5 = 32 alamat, dikurangi alamat jaringan & broadcast = 30.",
+     "track": "network",
+     "chapter": "f3"
+    },
+    {
+     "id": "net-f3-cidr",
+     "type": "write",
+     "title": "Batas Wilayah Subnet",
+     "difficulty": 2,
+     "prompt": "Baca alamat dalam format IP/prefix (misalnya 192.168.1.130/26). Cetak alamat jaringan dan alamat broadcast-nya, dipisah spasi.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "192.168.1.130/26",
+       "expected": "192.168.1.128 192.168.1.191\n"
+      },
+      {
+       "input": "10.0.0.1/8",
+       "expected": "10.0.0.0 10.255.255.255\n"
+      },
+      {
+       "input": "172.16.5.4/30",
+       "expected": "172.16.5.4 172.16.5.7\n",
+       "hidden": true
+      },
+      {
+       "input": "192.168.1.200/24",
+       "expected": "192.168.1.0 192.168.1.255\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah IP menjadi satu bilangan 32-bit.",
+      "Netmask = n bit 1 di depan: (0xFFFFFFFF << (32 - n)) & 0xFFFFFFFF.",
+      "Jaringan = ip & mask; broadcast = jaringan | (~mask & 0xFFFFFFFF)."
+     ],
+     "solutions": [
+      "teks = input().strip()\nip, n = teks.split(\"/\")\nn = int(n)\nangka = 0\nfor x in ip.split(\".\"):\n    angka = angka * 256 + int(x)\nmask = (0xFFFFFFFF << (32 - n)) & 0xFFFFFFFF\njaringan = angka & mask\nbroadcast = jaringan | (~mask & 0xFFFFFFFF)\nke_ip = lambda v: \".\".join(str(v >> s & 255) for s in (24, 16, 8, 0))\nprint(ke_ip(jaringan), ke_ip(broadcast))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "network",
+     "chapter": "f3"
+    },
+    {
+     "id": "net-f3-sama",
+     "type": "quiz",
+     "title": "Satu Desa?",
+     "difficulty": 2,
+     "prompt": "Apakah 192.168.1.70 dan 192.168.1.130 berada dalam subnet /26 yang sama?",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Ukuran blok /26 = 64 alamat.",
+      "Cari blok tempat .70 dan .130 berada.",
+      "Bandingkan alamat jaringannya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Tidak: jaringannya 192.168.1.64 dan 192.168.1.128",
+      "Ya: keduanya diawali 192.168.1",
+      "Ya: /26 mencakup 256 alamat",
+      "Tidak: alamat .130 tidak valid"
+     ],
+     "explain": "/26 membagi oktet terakhir per 64: 0-63, 64-127, 128-191, 192-255. .70 ada di blok 64, .130 di blok 128.",
+     "track": "network",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Port membedakan layanan di satu alamat IP. Port terkenal: 22 SSH, 25 SMTP, 53 DNS, 80 HTTP, 443 HTTPS, 3306 MySQL. Kombinasi IP + port (misalnya 10.0.0.5:443) disebut socket.",
+     "code": "port = {22: \"ssh\", 53: \"dns\", 80: \"http\", 443: \"https\"}\nfor p in (443, 22, 8080):\n    print(p, port.get(p, \"tidak dikenal\"))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f4-https",
+     "type": "answer",
+     "title": "Pintu Aman",
+     "difficulty": 1,
+     "prompt": "Port default untuk HTTPS adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Bukan 80.",
+      "Tiga digit.",
+      "4-4-3."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "443"
+     ],
+     "explain": "HTTP memakai port 80, HTTPS 443.",
+     "track": "network",
+     "chapter": "f4"
+    },
+    {
+     "id": "net-f4-ssh",
+     "type": "answer",
+     "title": "Pintu Admin",
+     "difficulty": 1,
+     "prompt": "Port default untuk SSH (login jarak jauh yang terenkripsi) adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Dua digit.",
+      "Sebelum Telnet (23).",
+      "2-2."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "22"
+     ],
+     "explain": "SSH memakai port 22. Telnet (tidak terenkripsi) memakai 23.",
+     "track": "network",
+     "chapter": "f4"
+    },
+    {
+     "id": "net-f4-smtp",
+     "type": "quiz",
+     "title": "Mengirim Surat",
+     "difficulty": 1,
+     "prompt": "Protokol yang dipakai untuk MENGIRIM email antar server adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Simple Mail ... Protocol.",
+      "IMAP untuk membaca.",
+      "S-M-T-P."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "SMTP",
+      "IMAP",
+      "FTP",
+      "DNS"
+     ],
+     "explain": "SMTP (port 25/587) untuk mengirim. IMAP/POP3 untuk membaca email dari kotak surat.",
+     "track": "network",
+     "chapter": "f4"
+    },
+    {
+     "id": "net-f4-lookup",
+     "type": "write",
+     "title": "Buku Port Gagak",
+     "difficulty": 1,
+     "prompt": "Setiap baris input berisi satu nomor port. Cetak nama layanannya dari tabel berikut, atau \"tidak dikenal\": 21 ftp, 22 ssh, 25 smtp, 53 dns, 80 http, 443 https, 3306 mysql.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "22\n80\n9999",
+       "expected": "ssh\nhttp\ntidak dikenal\n"
+      },
+      {
+       "input": "443\n53",
+       "expected": "https\ndns\n"
+      },
+      {
+       "input": "3306\n21\n25\n1",
+       "expected": "mysql\nftp\nsmtp\ntidak dikenal\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan tabel dalam dict.",
+      "Pakai .get(port, \"tidak dikenal\").",
+      "Ubah input menjadi int sebelum mencari."
+     ],
+     "solutions": [
+      "import sys\n\nLAYANAN = {21: \"ftp\", 22: \"ssh\", 25: \"smtp\", 53: \"dns\", 80: \"http\", 443: \"https\", 3306: \"mysql\"}\nfor baris in sys.stdin.read().split():\n    print(LAYANAN.get(int(baris), \"tidak dikenal\"))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "network",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "TCP menjamin data sampai lengkap dan berurutan: membuka koneksi dengan 3-way handshake (SYN, SYN-ACK, ACK), memberi nomor urut (sequence) pada setiap segmen, dan mengirim ulang yang hilang. UDP mengirim begitu saja: lebih cepat, tanpa jaminan."
+    },
+    {
+     "text": "Pilih TCP untuk web, email, transfer file (harus lengkap). Pilih UDP untuk video call, game online, DNS (lebih baik cepat daripada menunggu paket lama).",
+     "code": "segmen = [(3, \"dao\"), (1, \"Pedang\"), (2, \" Nichirin \")]\nprint(\"\".join(data for _, data in sorted(segmen)))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f5-udp",
+     "type": "quiz",
+     "title": "Panggilan Video Gagak",
+     "difficulty": 1,
+     "prompt": "Aplikasi video call biasanya memakai UDP. Alasan utamanya adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Pikirkan apa yang terjadi kalau satu paket hilang.",
+      "TCP akan menunggu paket itu dikirim ulang.",
+      "Kecepatan lebih penting dari kelengkapan."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Paket terlambat tidak berguna, lebih baik cepat walau ada yang hilang",
+      "UDP lebih aman karena terenkripsi",
+      "UDP menjamin semua paket sampai",
+      "TCP tidak bisa mengirim gambar"
+     ],
+     "explain": "UDP tidak menunggu pengiriman ulang. Untuk suara/video waktu nyata, frame yang terlambat sudah tidak berguna.",
+     "track": "network",
+     "chapter": "f5"
+    },
+    {
+     "id": "net-f5-handshake",
+     "type": "quiz",
+     "title": "Salam Tiga Langkah",
+     "difficulty": 1,
+     "prompt": "Urutan 3-way handshake TCP yang benar adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Dimulai dengan permintaan sinkronisasi.",
+      "Server menjawab sekaligus mengakui.",
+      "Klien mengakui jawaban server."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "SYN → SYN-ACK → ACK",
+      "ACK → SYN → FIN",
+      "SYN → ACK → SYN-ACK",
+      "HELLO → OK → DATA"
+     ],
+     "explain": "Klien mengirim SYN, server menjawab SYN-ACK, klien mengakhiri dengan ACK. Setelah itu data bisa dikirim.",
+     "track": "network",
+     "chapter": "f5"
+    },
+    {
+     "id": "net-f5-fin",
+     "type": "answer",
+     "title": "Pamit dengan Sopan",
+     "difficulty": 2,
+     "prompt": "Flag TCP yang dipakai untuk MENUTUP koneksi secara normal adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Bukan SYN.",
+      "Singkatan dari finish.",
+      "Tiga huruf."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "FIN"
+     ],
+     "explain": "FIN = finish. RST dipakai untuk memutus paksa.",
+     "track": "network",
+     "chapter": "f5"
+    },
+    {
+     "id": "net-f5-urut",
+     "type": "write",
+     "title": "Menyusun Ulang Segmen",
+     "difficulty": 2,
+     "prompt": "Baris pertama n. Lalu n baris berisi \"nomor_urut data\" (data tanpa spasi). Segmen datang acak dan bisa ada duplikat. Cetak data yang tersusun menurut nomor urut, tiap nomor sekali saja, digabung tanpa spasi.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "3\n2 Nichi\n1 Pedang\n3 rin",
+       "expected": "PedangNichirin\n"
+      },
+      {
+       "input": "4\n2 b\n2 b\n1 a\n3 c",
+       "expected": "abc\n"
+      },
+      {
+       "input": "1\n7 tunggal",
+       "expected": "tunggal\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan dalam dict nomor → data, duplikat otomatis tertimpa.",
+      "Urutkan kunci dengan sorted.",
+      "Gabungkan dengan \"\".join(...)."
+     ],
+     "solutions": [
+      "n = int(input())\nsegmen = {}\nfor _ in range(n):\n    no, data = input().split()\n    segmen[int(no)] = data\nprint(\"\".join(segmen[k] for k in sorted(segmen)))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "network",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "DNS menerjemahkan nama (korps.id) menjadi alamat IP. Jenis record: A (IPv4), AAAA (IPv6), CNAME (alias ke nama lain), MX (server email), TXT (teks bebas). Jawaban disimpan di cache selama TTL detik.",
+     "code": "dns = {\"korps.id\": (\"A\", \"10.0.0.5\"), \"www.korps.id\": (\"CNAME\", \"korps.id\")}\nnama = \"www.korps.id\"\nwhile dns[nama][0] == \"CNAME\":\n    nama = dns[nama][1]\nprint(dns[nama][1])\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f6-a",
+     "type": "quiz",
+     "title": "Record Alamat",
+     "difficulty": 1,
+     "prompt": "Jenis record DNS yang berisi alamat IPv4 sebuah nama adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Satu huruf.",
+      "AAAA untuk IPv6.",
+      "Huruf pertama abjad."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "A",
+      "AAAA",
+      "MX",
+      "CNAME"
+     ],
+     "explain": "A = alamat IPv4, AAAA = alamat IPv6 (empat kali lebih panjang).",
+     "track": "network",
+     "chapter": "f6"
+    },
+    {
+     "id": "net-f6-mx",
+     "type": "answer",
+     "title": "Kotak Surat Desa",
+     "difficulty": 1,
+     "prompt": "Jenis record DNS yang menunjuk server penerima email suatu domain adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Mail ...",
+      "Dua huruf.",
+      "Mail eXchanger."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "MX"
+     ],
+     "explain": "MX = Mail eXchanger, berisi prioritas dan nama server email.",
+     "track": "network",
+     "chapter": "f6"
+    },
+    {
+     "id": "net-f6-resolve",
+     "type": "write",
+     "title": "Resolver Gagak",
+     "difficulty": 3,
+     "prompt": "Baris pertama n record DNS, lalu n baris \"nama TIPE nilai\" (TIPE A atau CNAME). Baris berikutnya q, lalu q baris nama yang dicari. Untuk setiap pertanyaan ikuti CNAME sampai bertemu A dan cetak IP-nya; kalau nama tidak ada cetak \"NXDOMAIN\".",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "2\nkorps.id A 10.0.0.5\nwww.korps.id CNAME korps.id\n3\nwww.korps.id\nkorps.id\nmail.korps.id",
+       "expected": "10.0.0.5\n10.0.0.5\nNXDOMAIN\n"
+      },
+      {
+       "input": "3\na.id CNAME b.id\nb.id CNAME c.id\nc.id A 1.2.3.4\n2\na.id\nb.id",
+       "expected": "1.2.3.4\n1.2.3.4\n"
+      },
+      {
+       "input": "1\nx.id A 9.9.9.9\n1\ny.id",
+       "expected": "NXDOMAIN\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan record dalam dict nama → (tipe, nilai).",
+      "Selama record bertipe CNAME, pindah ke nilai tujuannya.",
+      "Nama yang tidak ada → NXDOMAIN."
+     ],
+     "solutions": [
+      "n = int(input())\nrec = {}\nfor _ in range(n):\n    nama, tipe, nilai = input().split()\n    rec[nama] = (tipe, nilai)\nfor _ in range(int(input())):\n    nama = input().strip()\n    while nama in rec and rec[nama][0] == \"CNAME\":\n        nama = rec[nama][1]\n    print(rec[nama][1] if nama in rec else \"NXDOMAIN\")\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "network",
+     "chapter": "f6"
+    },
+    {
+     "id": "net-f6-ttl",
+     "type": "quiz",
+     "title": "Ingatan Gagak",
+     "difficulty": 2,
+     "prompt": "Sebuah record DNS punya TTL 300. Artinya...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "TTL = time to live.",
+      "Berhubungan dengan cache.",
+      "Satuannya detik."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Resolver boleh menyimpan jawabannya di cache selama 300 detik",
+      "Server DNS hanya hidup 300 detik",
+      "Nama domain kedaluwarsa setelah 300 hari",
+      "Maksimal 300 permintaan per detik"
+     ],
+     "explain": "TTL (time to live) menentukan berapa lama jawaban boleh dipakai ulang dari cache sebelum ditanyakan lagi.",
+     "track": "network",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "HTTP bekerja dengan request-response. Request punya method (GET, POST, PUT, DELETE), path, header (Host, Content-Type), dan body. Response punya status code: 2xx sukses, 3xx redirect, 4xx kesalahan klien, 5xx kesalahan server.",
+     "code": "request = \"GET /misi?id=7 HTTP/1.1\\r\\nHost: korps.id\\r\\nAccept: */*\\r\\n\\r\\n\"\nbaris = request.split(\"\\r\\n\")\nmethod, path, versi = baris[0].split()\nheader = dict(b.split(\": \", 1) for b in baris[1:] if b)\nprint(method, path, header[\"Host\"])\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-f7-404",
+     "type": "answer",
+     "title": "Halaman Hilang",
+     "difficulty": 1,
+     "prompt": "Status code HTTP untuk \"halaman tidak ditemukan\" adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Kelompok 4xx.",
+      "Paling terkenal di internet.",
+      "4-0-4."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "404"
+     ],
+     "explain": "404 Not Found termasuk kelompok 4xx: kesalahan dari sisi klien (alamat yang diminta tidak ada).",
+     "track": "network",
+     "chapter": "f7"
+    },
+    {
+     "id": "net-f7-idem",
+     "type": "quiz",
+     "title": "Permintaan Berulang",
+     "difficulty": 2,
+     "prompt": "Method HTTP yang idempotent (dipanggil berkali-kali hasil akhirnya sama dengan sekali) dan dipakai untuk MENGGANTI data adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "POST setiap kali bisa membuat data baru.",
+      "Method yang \"menaruh\" data di tempatnya.",
+      "P-U-T."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "PUT",
+      "POST",
+      "PATCH",
+      "CONNECT"
+     ],
+     "explain": "PUT mengganti resource dengan data yang dikirim; mengirim PUT yang sama dua kali menghasilkan keadaan yang sama. POST biasanya membuat data baru setiap kali.",
+     "track": "network",
+     "chapter": "f7"
+    },
+    {
+     "id": "net-f7-parse",
+     "type": "write",
+     "title": "Membaca Surat HTTP",
+     "difficulty": 2,
+     "prompt": "Input berisi satu request HTTP mentah: baris request lalu header \"Nama: nilai\", diakhiri baris kosong. Cetak method, path tanpa query string, dan nilai header Host, dipisah spasi. (Nama header tidak peka huruf besar/kecil.)",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "GET /misi?id=7 HTTP/1.1\nHost: korps.id\nAccept: */*\n",
+       "expected": "GET /misi korps.id\n"
+      },
+      {
+       "input": "POST /lapor HTTP/1.1\nhost: gagak.korps.id\nContent-Type: text/plain\n",
+       "expected": "POST /lapor gagak.korps.id\n"
+      },
+      {
+       "input": "DELETE /akun/9 HTTP/1.1\nUser-Agent: slayer\nHOST: desa.id\n",
+       "expected": "DELETE /akun/9 desa.id\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baris pertama: METHOD TARGET VERSI.",
+      "Path = bagian sebelum \"?\".",
+      "Bandingkan nama header dengan .lower()."
+     ],
+     "solutions": [
+      "import sys\n\nbaris = sys.stdin.read().split(\"\\n\")\nmethod, target, _ = baris[0].split()\nhost = \"\"\nfor b in baris[1:]:\n    if \":\" in b:\n        nama, nilai = b.split(\":\", 1)\n        if nama.strip().lower() == \"host\":\n            host = nilai.strip()\nprint(method, target.split(\"?\")[0], host)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "network",
+     "chapter": "f7"
+    },
+    {
+     "id": "net-f7-kelas",
+     "type": "write",
+     "title": "Arti Status",
+     "difficulty": 1,
+     "prompt": "Setiap baris input berisi satu status code. Cetak kelasnya: 1xx \"info\", 2xx \"sukses\", 3xx \"redirect\", 4xx \"salah klien\", 5xx \"salah server\".",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "200\n404\n503",
+       "expected": "sukses\nsalah klien\nsalah server\n"
+      },
+      {
+       "input": "301\n100\n201",
+       "expected": "redirect\ninfo\nsukses\n"
+      },
+      {
+       "input": "418\n500",
+       "expected": "salah klien\nsalah server\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Digit pertama menentukan kelas.",
+      "kode // 100 memberi digit pertama.",
+      "Petakan dengan dict."
+     ],
+     "solutions": [
+      "import sys\n\nKELAS = {1: \"info\", 2: \"sukses\", 3: \"redirect\", 4: \"salah klien\", 5: \"salah server\"}\nfor b in sys.stdin.read().split():\n    print(KELAS[int(b) // 100])\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "network",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "HTTPS = HTTP di atas TLS. TLS memberi tiga jaminan: kerahasiaan (data terenkripsi), integritas (data tidak diubah di jalan), dan autentikasi (sertifikat membuktikan server itu benar-benar pemilik domain)."
+    },
+    {
+     "text": "Saat handshake TLS, server mengirim sertifikat berisi public key yang ditandatangani Certificate Authority (CA) tepercaya. Browser memeriksa tanda tangan, nama domain, dan masa berlaku sebelum melanjutkan."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-m1-tls",
+     "type": "quiz",
+     "title": "Jaminan Gembok",
+     "difficulty": 1,
+     "prompt": "Apa yang TIDAK dijamin oleh HTTPS?",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "TLS melindungi koneksi.",
+      "Penipu juga bisa membeli sertifikat untuk domainnya sendiri.",
+      "Gembok ≠ situs terpercaya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Bahwa isi situs itu jujur dan aman dari penipuan",
+      "Data tidak bisa dibaca penyadap di jaringan",
+      "Data tidak diubah di perjalanan",
+      "Server memang pemilik domain yang dikunjungi"
+     ],
+     "explain": "HTTPS mengamankan saluran, bukan niat pemilik situs. Situs phishing pun bisa punya gembok HTTPS.",
+     "track": "network",
+     "chapter": "m1"
+    },
+    {
+     "id": "net-m1-sert",
+     "type": "quiz",
+     "title": "Tanda Tangan Kepercayaan",
+     "difficulty": 2,
+     "prompt": "Browser memperingatkan \"sertifikat tidak valid\" saat membuka https://korps.id. Penyebab yang PALING mungkin adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Peringatan ini muncul SETELAH koneksi berhasil.",
+      "Apa saja yang diperiksa dari sertifikat?",
+      "Nama domain dan tanggal berlaku."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Nama di sertifikat tidak cocok dengan domain, atau sertifikatnya kedaluwarsa",
+      "Port 443 tertutup",
+      "DNS korps.id belum ada",
+      "Halaman terlalu besar"
+     ],
+     "explain": "Validasi sertifikat memeriksa tanda tangan CA, kecocokan nama domain, dan masa berlaku. Port tertutup atau DNS gagal menghasilkan error koneksi, bukan peringatan sertifikat.",
+     "track": "network",
+     "chapter": "m1"
+    },
+    {
+     "id": "net-m1-kunci",
+     "type": "answer",
+     "title": "Kunci yang Dibagikan",
+     "difficulty": 2,
+     "prompt": "Dalam kriptografi asimetris, kunci yang boleh disebarkan ke siapa saja (ada di dalam sertifikat) disebut...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Lawan dari private key.",
+      "Ada di dalam sertifikat.",
+      "public ..."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "public key",
+      "kunci publik",
+      "publik",
+      "public"
+     ],
+     "explain": "Public key boleh dibagikan; private key harus dirahasiakan oleh pemiliknya.",
+     "track": "network",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "Router memilih jalur dengan tabel routing: daftar prefix tujuan dan next hop. Kalau beberapa prefix cocok, yang dipilih adalah yang PALING SPESIFIK (prefix terpanjang). Route 0.0.0.0/0 adalah default gateway: dipakai kalau tidak ada yang lain cocok."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-m2-lpm",
+     "type": "write",
+     "title": "Jalur Terpanjang",
+     "difficulty": 3,
+     "prompt": "Baris pertama n, lalu n baris route \"prefix/len nexthop\". Baris berikutnya q, lalu q alamat IP. Untuk setiap IP cetak nexthop dari route yang cocok dengan prefix TERPANJANG, atau \"tidak ada rute\".",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "3\n0.0.0.0/0 gerbang\n10.0.0.0/8 markas\n10.1.0.0/16 desa\n3\n10.1.2.3\n10.2.0.1\n8.8.8.8",
+       "expected": "desa\nmarkas\ngerbang\n"
+      },
+      {
+       "input": "2\n192.168.1.0/24 lan\n192.168.1.128/25 lab\n2\n192.168.1.200\n192.168.2.1",
+       "expected": "lab\ntidak ada rute\n"
+      }
+     ],
+     "hints": [
+      "Ubah IP dan prefix menjadi bilangan 32-bit.",
+      "IP cocok kalau (ip & mask) == jaringan prefix.",
+      "Dari yang cocok, ambil panjang prefix terbesar."
+     ],
+     "solutions": [
+      "def angka(ip):\n    n = 0\n    for x in ip.split(\".\"):\n        n = n * 256 + int(x)\n    return n\n\nrute = []\nfor _ in range(int(input())):\n    cidr, hop = input().split()\n    p, k = cidr.split(\"/\")\n    k = int(k)\n    mask = (0xFFFFFFFF << (32 - k)) & 0xFFFFFFFF\n    rute.append((k, angka(p) & mask, mask, hop))\nfor _ in range(int(input())):\n    ip = angka(input().strip())\n    cocok = [r for r in rute if ip & r[2] == r[1]]\n    print(max(cocok)[3] if cocok else \"tidak ada rute\")\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "network",
+     "chapter": "m2"
+    },
+    {
+     "id": "net-m2-gateway",
+     "type": "quiz",
+     "title": "Gerbang Keluar Desa",
+     "difficulty": 1,
+     "prompt": "Laptop di jaringan 192.168.1.0/24 mengirim paket ke 8.8.8.8. Paket itu pertama kali dikirim ke...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Apakah 8.8.8.8 ada di 192.168.1.0/24?",
+      "Alamat di luar subnet butuh perantara.",
+      "Perantaranya adalah router."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Default gateway (router) jaringan lokal",
+      "Langsung ke 8.8.8.8 lewat switch",
+      "Server DNS lokal",
+      "Broadcast ke semua perangkat"
+     ],
+     "explain": "8.8.8.8 bukan bagian dari subnet lokal, jadi paket dikirim ke default gateway yang akan meneruskannya.",
+     "track": "network",
+     "chapter": "m2"
+    },
+    {
+     "id": "net-m2-trace",
+     "type": "answer",
+     "title": "Melacak Jejak",
+     "difficulty": 1,
+     "prompt": "Nama perintah (Linux/macOS) untuk melihat daftar router yang dilewati paket menuju sebuah tujuan adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Melacak rute.",
+      "trace...",
+      "traceroute"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "traceroute",
+      "tracert",
+      "tracepath"
+     ],
+     "explain": "traceroute (di Windows: tracert) memanfaatkan TTL yang dinaikkan satu per satu untuk memunculkan setiap hop.",
+     "track": "network",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "Firewall memeriksa paket dengan daftar aturan berurutan; aturan PERTAMA yang cocok yang dipakai (first match), dan kalau tidak ada yang cocok berlaku kebijakan default. DROP membuang diam-diam, REJECT menolak dengan memberi tahu pengirim."
+    },
+    {
+     "text": "NAT menerjemahkan alamat privat menjadi alamat publik router, sehingga banyak perangkat bisa berbagi satu IP publik. Efek sampingnya, perangkat di dalam tidak bisa dihubungi langsung dari luar tanpa port forwarding."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-m3-firewall",
+     "type": "write",
+     "title": "Gerbang Benteng",
+     "difficulty": 3,
+     "prompt": "Baris pertama n, lalu n aturan \"AKSI PROTO PORT\" (AKSI ALLOW/DROP, PROTO tcp/udp/any, PORT angka atau *). Baris berikutnya q, lalu q paket \"PROTO PORT\". Untuk setiap paket cetak aksi dari aturan pertama yang cocok, atau \"DROP\" (kebijakan default) kalau tidak ada.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "3\nALLOW tcp 22\nDROP tcp *\nALLOW udp 53\n4\ntcp 22\ntcp 80\nudp 53\nudp 123",
+       "expected": "ALLOW\nDROP\nALLOW\nDROP\n"
+      },
+      {
+       "input": "2\nALLOW any 443\nDROP udp *\n3\nudp 443\nudp 53\ntcp 8080",
+       "expected": "ALLOW\nDROP\nDROP\n"
+      }
+     ],
+     "hints": [
+      "Telusuri aturan dari atas.",
+      "Cocok kalau proto sama (atau any) dan port sama (atau *).",
+      "Berhenti di aturan pertama yang cocok."
+     ],
+     "solutions": [
+      "aturan = [input().split() for _ in range(int(input()))]\nfor _ in range(int(input())):\n    proto, port = input().split()\n    aksi = \"DROP\"\n    for a, p, pt in aturan:\n        if p in (proto, \"any\") and pt in (port, \"*\"):\n            aksi = a\n            break\n    print(aksi)\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "network",
+     "chapter": "m3"
+    },
+    {
+     "id": "net-m3-nat",
+     "type": "quiz",
+     "title": "Satu Wajah untuk Banyak Orang",
+     "difficulty": 1,
+     "prompt": "Fungsi utama NAT di router rumah adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Alamat privat tidak bisa dirutekan di internet.",
+      "Router punya satu IP publik.",
+      "Banyak perangkat, satu alamat."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Membuat banyak perangkat beralamat privat berbagi satu IP publik",
+      "Mengenkripsi semua lalu lintas",
+      "Mempercepat koneksi Wi-Fi",
+      "Memblokir semua situs berbahaya"
+     ],
+     "explain": "NAT menulis ulang alamat sumber paket keluar menjadi IP publik router, lalu mencatat pasangan port untuk menerjemahkan balasannya.",
+     "track": "network",
+     "chapter": "m3"
+    },
+    {
+     "id": "net-m3-drop",
+     "type": "quiz",
+     "title": "Diam atau Menolak",
+     "difficulty": 2,
+     "prompt": "Port scanner melaporkan port 23 sebagai \"filtered\" (tidak ada jawaban), bukan \"closed\". Aturan firewall yang paling mungkin adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Tidak ada jawaban sama sekali.",
+      "REJECT memberi tahu pengirim.",
+      "Membuang diam-diam."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "DROP",
+      "REJECT",
+      "ALLOW",
+      "NAT"
+     ],
+     "explain": "DROP membuang paket tanpa balasan sehingga scanner hanya bisa menebak (filtered). REJECT atau port tertutup mengirim balasan, sehingga terdeteksi closed.",
+     "track": "network",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "REST memodelkan data sebagai resource yang diakses dengan URL dan method HTTP: GET membaca, POST membuat, PUT/PATCH mengubah, DELETE menghapus. Data biasanya dikirim dalam format JSON.",
+     "code": "import json\n\nteks = '{\"slayer\": \"Tanjiro\", \"misi\": [{\"koban\": 50}, {\"koban\": 120}]}'\ndata = json.loads(teks)\nprint(data[\"slayer\"], sum(m[\"koban\"] for m in data[\"misi\"]))\nprint(json.dumps({\"ok\": True, \"total\": 170}))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-m4-json",
+     "type": "write",
+     "title": "Rekap dari API",
+     "difficulty": 2,
+     "prompt": "Input berisi satu dokumen JSON: daftar objek misi dengan kunci \"slayer\" (teks) dan \"koban\" (angka). Cetak setiap slayer dan total koban-nya, \"nama total\" per baris, urut nama.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "[{\"slayer\": \"Tanjiro\", \"koban\": 50}, {\"slayer\": \"Zenitsu\", \"koban\": 40}, {\"slayer\": \"Tanjiro\", \"koban\": 120}]",
+       "expected": "Tanjiro 170\nZenitsu 40\n"
+      },
+      {
+       "input": "[{\"slayer\": \"Rengoku\", \"koban\": 250}, {\"slayer\": \"Akaza\", \"koban\": 0}]",
+       "expected": "Akaza 0\nRengoku 250\n"
+      },
+      {
+       "input": "[{\"slayer\": \"Kanao\", \"koban\": 7}]",
+       "expected": "Kanao 7\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "json.loads mengubah teks JSON menjadi list/dict Python.",
+      "Jumlahkan per nama dengan dict.",
+      "Urutkan nama dengan sorted."
+     ],
+     "solutions": [
+      "import json\nimport sys\n\ntotal = {}\nfor m in json.loads(sys.stdin.read()):\n    total[m[\"slayer\"]] = total.get(m[\"slayer\"], 0) + m[\"koban\"]\nfor nama in sorted(total):\n    print(nama, total[nama])\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "network",
+     "chapter": "m4"
+    },
+    {
+     "id": "net-m4-delete",
+     "type": "quiz",
+     "title": "Menghapus Resource",
+     "difficulty": 1,
+     "prompt": "Endpoint REST yang tepat untuk menghapus misi bernomor 7 adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Method HTTP adalah kata kerjanya.",
+      "URL menunjuk resource-nya.",
+      "Method untuk menghapus."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "DELETE /misi/7",
+      "GET /hapusMisi?id=7",
+      "POST /misi/7/delete",
+      "PUT /misi/delete/7"
+     ],
+     "explain": "REST memakai method HTTP sebagai kata kerja dan URL sebagai kata benda: DELETE pada resource /misi/7.",
+     "track": "network",
+     "chapter": "m4"
+    },
+    {
+     "id": "net-m4-201",
+     "type": "answer",
+     "title": "Resource Baru",
+     "difficulty": 2,
+     "prompt": "Status code yang tepat untuk response POST yang berhasil MEMBUAT resource baru adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Kelompok 2xx.",
+      "Bukan 200.",
+      "Created."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "201",
+      "201 created"
+     ],
+     "explain": "201 Created, biasanya disertai header Location yang menunjuk resource baru. 200 OK lebih umum untuk respons sukses biasa.",
+     "track": "network",
+     "chapter": "m4"
+    }
+   ]
+  },
+  "m5": {
+   "lesson": [
+    {
+     "text": "Wireshark/tcpdump merekam paket yang lewat. Ringkasan paket biasanya berisi waktu, sumber, tujuan, protokol, dan info. Filter tampilan membantu fokus, misalnya http.request atau ip.addr == 10.0.0.5."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "net-m5-hitung",
+     "type": "write",
+     "title": "Menyaring Rekaman",
+     "difficulty": 2,
+     "prompt": "Input berisi ringkasan paket, satu per baris: \"waktu sumber tujuan PROTOKOL info...\". Cetak setiap protokol dan jumlah paketnya, urut jumlah terbanyak lalu nama protokol.",
+     "lang": "python",
+     "starter": "import sys\n\n# tulis kodemu di sini\n",
+     "tests": [
+      {
+       "input": "0.01 10.0.0.5 8.8.8.8 DNS query korps.id\n0.02 8.8.8.8 10.0.0.5 DNS response A 10.0.0.9\n0.03 10.0.0.5 10.0.0.9 TCP SYN\n0.04 10.0.0.9 10.0.0.5 TCP SYN-ACK\n0.05 10.0.0.5 10.0.0.9 HTTP GET /",
+       "expected": "DNS 2\nTCP 2\nHTTP 1\n"
+      },
+      {
+       "input": "1.0 a b ICMP echo\n1.1 b a ICMP reply\n1.2 a c UDP data",
+       "expected": "ICMP 2\nUDP 1\n"
+      }
+     ],
+     "hints": [
+      "Protokol ada di kolom ke-4 (indeks 3).",
+      "Hitung dengan dict.",
+      "Urutkan dengan key=lambda x: (-jumlah, nama)."
+     ],
+     "solutions": [
+      "import sys\n\njumlah = {}\nfor baris in sys.stdin.read().splitlines():\n    if baris.strip():\n        p = baris.split()[3]\n        jumlah[p] = jumlah.get(p, 0) + 1\nfor p, n in sorted(jumlah.items(), key=lambda x: (-x[1], x[0])):\n    print(p, n)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "network",
+     "chapter": "m5"
+    },
+    {
+     "id": "net-m5-filter",
+     "type": "quiz",
+     "title": "Filter yang Tepat",
+     "difficulty": 2,
+     "prompt": "Di Wireshark, filter tampilan untuk melihat hanya permintaan HTTP adalah...",
+     "lang": "python",
+     "tests": [],
+     "hints": [
+      "Filter tampilan memakai nama field protokol.",
+      "Formatnya protokol.field.",
+      "http.request"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "http.request",
+      "port 80 only",
+      "tcp.syn == http",
+      "show http"
+     ],
+     "explain": "http.request menampilkan paket HTTP yang merupakan request (GET, POST, dll.). Sintaks \"port 80\" adalah capture filter, bukan display filter.",
+     "track": "network",
+     "chapter": "m5"
+    }
+   ]
+  }
+ }
+}

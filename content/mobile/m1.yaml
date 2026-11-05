@@ -1,0 +1,191 @@
+lesson:
+- text: 'listOf membuat List yang tidak bisa diubah; mutableListOf bisa ditambah (add). List adalah referensi: dua variabel bisa menunjuk list yang sama. toMutableList() membuat salinan.'
+  code: |
+    fun main() {
+        val a = mutableListOf(3, 1, 2)
+        val b = a
+        b.add(9)
+        val c = a.toMutableList()
+        c[0] = 100
+        println("$a ${c.sorted()} ${a.size}")
+    }
+- text: mapOf / mutableMapOf memetakan kunci ke nilai; toSortedMap() mengurutkan kunci. groupingBy { it }.eachCount() langsung menghitung kemunculan setiap elemen.
+  code: |
+    fun main() {
+        val hitung = listOf("b", "a", "b").groupingBy { it }.eachCount().toSortedMap()
+        for ((k, v) in hitung) println("$k $v")
+    }
+exercises:
+- id: kt-m1-balik
+  type: write
+  title: Barisan Terbalik
+  difficulty: 1
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    5
+    1 2 3 4 5
+  - |-
+    1
+    42
+  - |-
+    3
+    -1 0 -1
+  hints: |
+    Simpan semua bilangan ke array/list.
+    Telusuri dari indeks terakhir ke 0.
+    Gabungkan dengan spasi.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val n = t[0].toInt()
+        println(t.drop(1).take(n).reversed().joinToString(" "))
+    }
+- id: kt-m1-frekuensi
+  type: write
+  title: Sensus Kata
+  difficulty: 2
+  prompt: Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, "kata jumlah" per baris, urut abjad.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - iblis slayer iblis bulan
+  - a
+  - |-
+    b a b
+    a c b
+  hints: |
+    Pakai map/dictionary: kata → jumlah.
+    Ambil semua kunci lalu urutkan.
+    Cetak "kata jumlah".
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        for ((k, v) in t.groupingBy { it }.eachCount().toSortedMap()) println("$k $v")
+    }
+- id: kt-m1-unik
+  type: write
+  title: Pasukan Tanpa Kembar
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    6
+    3 1 3 2 1 3
+  - |-
+    1
+    7
+  - |-
+    4
+    -2 5 -2 0
+  hints: |
+    Set/himpunan otomatis membuang duplikat.
+    Urutkan hasilnya.
+    Gabungkan dengan spasi.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val n = t[0].toInt()
+        println(t.drop(1).take(n).map { it.toLong() }.toSortedSet().joinToString(" "))
+    }
+- id: kt-m1-diatas
+  type: write
+  title: Di Atas Rata-rata
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    5
+    10 20 30 40 50
+  - |-
+    3
+    5 5 5
+  - |-
+    4
+    1 1 1 9
+  hints: |
+    Hitung rata-rata dulu (desimal).
+    Lalu hitung nilai > rata-rata.
+    Butuh dua kali menelusuri data.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val n = t[0].toInt()
+        val xs = t.drop(1).take(n).map { it.toDouble() }
+        val rata = xs.average()
+        println(xs.count { it > rata })
+    }
+- id: kt-m1-predict
+  type: predict
+  title: Koleksi Berbagi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fun main() {
+        val a = mutableListOf(1, 2, 3)
+        val b = a
+        b[0] = 9
+        val c = a.toMutableList()
+        c[1] = 7
+        println("$a $c")
+        val m = mutableMapOf("x" to 1)
+        m["x"] = m.getValue("x") + 4
+        println("${m["x"]} ${m.size} ${m["y"]}")
+    }
+  hints: |
+    Perhatikan apakah koleksi disalin atau dibagi (referensi).
+    Mengubah lewat referensi terlihat dari nama lain.
+    Telusuri isi koleksi setelah tiap perubahan.
+  solution: x
+- id: kt-m1-bug
+  type: bughunt
+  title: Indeks Melewati Batas
+  difficulty: 2
+  prompt: Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.
+  starter: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val n = t[0].toInt()
+        val xs = t.drop(1).take(n).map { it.toLong() }
+        var total = 0L
+        for (i in 0..xs.size) total += xs[i]
+        println(total)
+    }
+  bug_line: 6
+  tests:
+  - |-
+    3
+    1 2 3
+  - |-
+    1
+    5
+  - |-
+    4
+    2 2 2 2
+  hints: |
+    Indeks terakhir = panjang - 1.
+    Kondisi loop memakai <=.
+    Gunakan < panjang.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val n = t[0].toInt()
+        val xs = t.drop(1).take(n).map { it.toLong() }
+        var total = 0L
+        for (i in 0 until xs.size) total += xs[i]
+        println(total)
+    }

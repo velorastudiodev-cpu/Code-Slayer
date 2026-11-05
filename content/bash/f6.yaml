@@ -1,0 +1,85 @@
+lesson:
+- text: 'if [ kondisi ]; then ... fi. Bandingkan angka dengan -eq -lt -gt, string dengan = atau !=, file dengan -f (file ada) -d (direktori). Loop: for x in a b c; do ...; done, for i in $(seq 1 5), while
+    read baris; do ...; done.'
+  code: |
+    if [ "$n" -gt 10 ]; then echo besar; else echo kecil; fi
+    for i in $(seq 1 3); do echo "Tebasan $i"; done
+    while read baris; do echo "> $baris"; done < file
+exercises:
+- id: bash-f6-genap
+  type: write
+  title: Genap atau Ganjil
+  difficulty: 1
+  prompt: Baca bilangan n. Cetak "genap" atau "ganjil".
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    4
+  - |
+    7
+  - |
+    0
+  hints: |
+    Sisa bagi 2.
+    if [ ... -eq 0 ]
+    $(( n % 2 ))
+  solution: |
+    read n
+    if [ $(( n % 2 )) -eq 0 ]; then echo genap; else echo ganjil; fi
+- id: bash-f6-loop
+  type: write
+  title: Hitung Mundur
+  difficulty: 1
+  prompt: Baca n lalu cetak n, n-1, ..., 1, lalu "Tebas!".
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    3
+  - |
+    1
+  hints: |
+    Loop menurun.
+    for (( ...; ...; i-- )) atau seq n -1 1.
+    Akhiri dengan echo "Tebas!"
+  solution: |
+    read n
+    for (( i = n; i >= 1; i-- )); do echo $i; done
+    echo "Tebas!"
+- id: bash-f6-while
+  type: write
+  title: Nomori Baris
+  difficulty: 2
+  prompt: 'Baca input baris demi baris dan cetak setiap baris dengan nomor: "1. Tanjiro".'
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    Tanjiro
+    Zenitsu
+  - |
+    Kanao
+  hints: |
+    while read membaca baris demi baris.
+    Simpan penghitung.
+    IFS= read -r mempertahankan spasi.
+  solution: |
+    n=0
+    while IFS= read -r baris; do
+      n=$(( n + 1 ))
+      echo "$n. $baris"
+    done
+- id: bash-f6-parsons
+  type: parsons
+  title: Susun Patroli
+  difficulty: 1
+  prompt: Susun skrip yang mencetak "Pos 1" sampai "Pos 3".
+  hints: |
+    for ... do ... done
+    Isi loop di tengah.
+    done di akhir.
+  solution: |
+    for i in 1 2 3; do
+      echo "Pos $i"
+    done

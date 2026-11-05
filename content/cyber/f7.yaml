@@ -1,0 +1,99 @@
+lesson:
+- text: 'Kata sandi tidak disimpan apa adanya, melainkan sebagai hash. Hash cepat polos (MD5/SHA-256 tanpa salt) mudah di-crack dengan wordlist atau rainbow table. Gunakan salt unik per user dan algoritma
+    yang sengaja lambat: bcrypt, scrypt, atau argon2.'
+exercises:
+- id: cy-lab-cr-md5
+  type: lab
+  title: Kata Sandi Lemah
+  difficulty: 1
+  prompt: 'Lab sandbox: Temukan kata sandi asli; flag = SLAYER{katasandi}. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-md5
+  hints: |
+    Hash setiap kata di wordlist lalu bandingkan.
+    MD5 tanpa salt bisa dicari di tabel.
+    Gunakan tombol "Coba wordlist".
+- id: cy-lab-cr-sha
+  type: lab
+  title: Sidik Jari Bocor
+  difficulty: 2
+  prompt: 'Lab sandbox: Temukan PIN-nya; flag = SLAYER{pin}. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-sha
+  hints: |
+    Hanya ada 10.000 kemungkinan PIN.
+    Gunakan tombol "Coba semua PIN 0000–9999".
+    SHA-256 cepat, jadi brute force PIN instan.
+- id: cy-f7-salt
+  type: write
+  title: Garam Kata Sandi
+  difficulty: 2
+  prompt: Baca salt, kata sandi, dan hash tersimpan (masing-masing satu baris). Hash dihitung sebagai SHA-256 dari salt + kata sandi (hex). Cetak "COCOK" atau "SALAH".
+  lang: python
+  starter: |
+    import hashlib
+
+    salt = input()
+    sandi = input()
+    tersimpan = input()
+    # tulis kodemu di sini
+  tests:
+  - |
+    a9f3
+    hinokami
+    6c4bbfb7c3b5b08c4fe1d67221639afba17e4e22150ce240120fb9d6e2c18c83
+  - |
+    a9f3
+    hinokam1
+    6c4bbfb7c3b5b08c4fe1d67221639afba17e4e22150ce240120fb9d6e2c18c83
+  hints: |
+    hashlib.sha256(bytes).hexdigest()
+    Gabungkan salt + sandi lalu encode().
+    Bandingkan dengan hash tersimpan.
+  solution: |
+    import hashlib
+
+    salt = input()
+    sandi = input()
+    tersimpan = input()
+    h = hashlib.sha256((salt + sandi).encode()).hexdigest()
+    print("COCOK" if h == tersimpan else "SALAH")
+- id: cy-f7-kuat
+  type: write
+  title: Penguji Kekuatan
+  difficulty: 2
+  prompt: Baca kata sandi. Cetak "KUAT" jika panjangnya ≥ 12 DAN memuat huruf kecil, huruf besar, dan angka; selain itu "LEMAH".
+  lang: python
+  starter: |
+    sandi = input()
+    # tulis kodemu di sini
+  tests:
+  - |
+    Hinokami2026Kagura
+  - |
+    password
+  - |
+    Tanjiro123
+  - |
+    semuakecil12345
+  hints: |
+    len() untuk panjang.
+    any(c.isupper() for c in s)
+    Gabungkan semua syarat dengan and.
+  solution: |
+    sandi = input()
+    ok = len(sandi) >= 12 and any(c.islower() for c in sandi) and any(c.isupper() for c in sandi) and any(c.isdigit() for c in sandi)
+    print("KUAT" if ok else "LEMAH")
+- id: cy-f7-bcrypt
+  type: quiz
+  title: Lambat itu Bagus
+  difficulty: 2
+  prompt: Mengapa bcrypt/argon2 lebih baik daripada SHA-256 polos untuk menyimpan kata sandi?
+  options:
+  - Sengaja lambat dan memakai salt, sehingga brute force jauh lebih mahal
+  - Karena hasilnya lebih pendek
+  - Karena bisa didekripsi kembali
+  - Karena tidak butuh CPU
+  explain: Pembobol mencoba miliaran tebakan per detik pada hash cepat; algoritma lambat + salt menahan serangan itu.
+  hints: |
+    Kecepatan menguntungkan siapa?
+    Penyerang menebak berulang kali.
+    Lambat + salt.

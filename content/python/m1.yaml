@@ -1,0 +1,110 @@
+lesson:
+  - text: list adalah urutan nilai yang bisa diubah, ditulis [a, b, c]. Indeksnya dimulai dari 0, dan indeks negatif dihitung dari belakang. Method penting list adalah append, pop, sort, dan len(). Hati-hati, b = a tidak menyalin list, keduanya menunjuk list yang sama.
+    code: |
+      pasukan = ["Tanjiro", "Zenitsu"]
+      pasukan.append("Inosuke")
+      print(pasukan[0], pasukan[-1], len(pasukan))
+      salinan = pasukan.copy()
+      salinan.pop()
+      print(pasukan, salinan)
+  - text: dict memetakan kunci ke nilai, misalnya umur["Tanjiro"] berisi 15. Pakai d.get(k, default) supaya aman kalau kunci tidak ada. set menyimpan nilai unik tanpa urutan. tuple seperti list tapi tidak bisa diubah.
+    code: |
+      umur = {"Tanjiro": 15, "Rengoku": 20}
+      umur["Kanao"] = 16
+      print(umur.get("Giyu", "?"), len(umur))
+      for nama, u in umur.items():
+          print(nama, u)
+      print(sorted(set([3, 1, 3, 2, 1])))
+exercises:
+  - id: py-m1-balik
+    type: write
+    title: Barisan Terbalik
+    difficulty: 1
+    prompt: Baca deretan bilangan dalam satu baris. Cetak dalam urutan terbalik, dipisah spasi.
+    tests: ["1 2 3", "5", "9 -1 4 4"]
+    hints: |
+      Ubah input menjadi list dengan split().
+      Slicing [::-1] membalik list.
+      print(*daftar[::-1])
+    solution: |
+      a = input().split()
+      print(*a[::-1])
+  - id: py-m1-frekuensi
+    type: write
+    title: Sensus Kata
+    difficulty: 2
+    prompt: Baca satu baris kata. Untuk setiap kata unik (sesuai urutan kemunculan pertama), cetak "<kata> <jumlah>".
+    tests: ["kaa kaa gagak kaa", "a b c", "slayer slayer"]
+    hints: |
+      Pakai dict untuk menghitung.
+      dict di Python mengingat urutan kunci pertama kali dimasukkan.
+      hitung[k] = hitung.get(k, 0) + 1
+    solution: |
+      hitung = {}
+      for k in input().split():
+          hitung[k] = hitung.get(k, 0) + 1
+      for k, v in hitung.items():
+          print(k, v)
+  - id: py-m1-unik
+    type: write
+    title: Iblis Berbeda
+    difficulty: 1
+    prompt: Baca deretan bilangan. Cetak berapa banyak bilangan yang berbeda.
+    tests: ["1 2 2 3 3 3", "7 7 7", "1 2 3 4"]
+    hints: |
+      set hanya menyimpan nilai unik.
+      len() menghitung isi set.
+      print(len(set(input().split())))
+    solution: print(len(set(input().split())))
+  - id: py-m1-predict
+    type: predict
+    title: Bayangan List
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      a = [3, 1, 2]
+      b = a
+      b.append(0)
+      c = sorted(a)
+      print(a, c)
+    hints: |
+      b = a tidak membuat salinan.
+      append lewat b juga mengubah a.
+      sorted() membuat list BARU yang terurut, a tidak berubah urutannya.
+    solution: x
+  - id: py-m1-bug-get
+    type: bughunt
+    title: Catatan yang Hilang
+    difficulty: 1
+    prompt: Program mencari nilai seorang slayer. Kalau namanya tidak ada, harus mencetak -1, tapi program malah error. Temukan bug-nya.
+    starter: |
+      nilai = {"Tanjiro": 90, "Zenitsu": 75, "Inosuke": 70}
+      nama = input()
+      print(nilai[nama])
+    bug_line: 3
+    tests: ["Tanjiro", "Giyu", "Inosuke"]
+    hints: |
+      KeyError muncul kalau kunci tidak ada.
+      dict punya method yang menerima nilai default.
+      print(nilai.get(nama, -1))
+    solution: |
+      nilai = {"Tanjiro": 90, "Zenitsu": 75, "Inosuke": 70}
+      nama = input()
+      print(nilai.get(nama, -1))
+  - id: py-m1-parsons
+    type: parsons
+    title: Peringkat Kedua
+    difficulty: 2
+    prompt: Susun program yang mencetak bilangan terbesar kedua yang berbeda, atau "tidak ada" jika tidak ada.
+    tests: ["3 1 4 4 2", "5 5", "1 2"]
+    hints: |
+      Buang duplikat dulu, lalu urutkan.
+      Periksa banyaknya nilai unik sebelum mengambil indeks.
+      unik[-2] adalah terbesar kedua.
+    solution: |
+      angka = list(map(int, input().split()))
+      unik = sorted(set(angka))
+      if len(unik) < 2:
+          print("tidak ada")
+      else:
+          print(unik[-2])

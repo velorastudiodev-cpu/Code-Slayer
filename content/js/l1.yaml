@@ -1,0 +1,128 @@
+lesson:
+  - text: JavaScript menjalankan satu hal dalam satu waktu, tapi bisa menunggu tanpa memblokir program lewat event loop. Promise mewakili nilai yang akan tersedia nanti. async function selalu mengembalikan Promise, dan await menunggu Promise selesai.
+    code: |
+      const tunggu = ms => new Promise(r => setTimeout(r, ms))
+      async function misi(nama, ms) {
+        await tunggu(ms)
+        return `${nama} selesai`
+      }
+      console.log(await misi("Natagumo", 20))
+  - text: 'Urutan event loop: kode sinkron jalan dulu, lalu microtask (Promise.then), baru macrotask (setTimeout). Promise.all menjalankan beberapa Promise bersamaan dan menunggu semuanya. Error di dalam await ditangkap dengan try/catch biasa.'
+    code: |
+      console.log("1 sinkron")
+      setTimeout(() => console.log("4 timeout"), 0)
+      Promise.resolve().then(() => console.log("3 microtask"))
+      console.log("2 sinkron")
+      const hasil = await Promise.all([1, 2, 3].map(async x => x * 10))
+      console.log(hasil)
+exercises:
+  - id: js-l1-tunggu
+    type: write
+    title: Barisan Tunggu
+    difficulty: 2
+    prompt: 'Lengkapi fungsi tunggu(ms) yang mengembalikan Promise yang selesai SETELAH ms milidetik (pakai setTimeout) dengan nilai ms. Program lalu mencetak hitungan mundur dengan jeda yang dibaca dari Promise.'
+    starter: |
+      function tunggu(ms) {
+        // lengkapi
+      }
+      for (const x of [3, 2, 1]) {
+        const jeda = await tunggu(x * 5)
+        console.log(`${x} (jeda ${jeda} ms)`)
+      }
+      console.log("Serang!")
+    hints: |
+      return new Promise(resolve => ...)
+      setTimeout menerima callback dan waktu.
+      return new Promise(r => setTimeout(() => r(ms), ms))
+    solution: |
+      function tunggu(ms) {
+        return new Promise(r => setTimeout(() => r(ms), ms))
+      }
+      for (const x of [3, 2, 1]) {
+        const jeda = await tunggu(x * 5)
+        console.log(`${x} (jeda ${jeda} ms)`)
+      }
+      console.log("Serang!")
+  - id: js-l1-predict
+    type: predict
+    title: Urutan Event Loop
+    difficulty: 3
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      console.log("A")
+      setTimeout(() => console.log("B"), 0)
+      Promise.resolve().then(() => console.log("C"))
+      console.log("D")
+    hints: |
+      Kode sinkron (A, D) selalu jalan duluan.
+      Microtask (then) jalan sebelum macrotask (setTimeout).
+      Urutannya sinkron, lalu microtask, lalu timeout.
+    solution: x
+  - id: js-l1-all
+    type: write
+    title: Laporan Serentak
+    difficulty: 2
+    prompt: 'Setiap baris input berisi "nama ms". Fungsi lapor(nama, ms) sudah tersedia dan mengembalikan Promise berisi teks laporan. Jalankan semua lapor secara BERSAMAAN dengan Promise.all, lalu cetak hasilnya sesuai urutan input, diikuti "total <n> laporan".'
+    starter: |
+      const tunggu = ms => new Promise(r => setTimeout(r, ms))
+      async function lapor(nama, ms) {
+        await tunggu(ms)
+        return `${nama} melapor`
+      }
+      // baca input & jalankan semuanya bersamaan
+    tests: ["Tanjiro 30\nZenitsu 5\nInosuke 15", "Kanao 1"]
+    hints: |
+      Kumpulkan semua baris dulu.
+      Promise.all mempertahankan urutan hasil sesuai urutan input.
+      const hasil = await Promise.all(data.map(([n, ms]) => lapor(n, Number(ms))))
+    solution: |
+      const tunggu = ms => new Promise(r => setTimeout(r, ms))
+      async function lapor(nama, ms) {
+        await tunggu(ms)
+        return `${nama} melapor`
+      }
+      const data = []
+      let b
+      while ((b = readline()) !== null) data.push(b.split(" "))
+      const hasil = await Promise.all(data.map(([n, ms]) => lapor(n, Number(ms))))
+      hasil.forEach(h => console.log(h))
+      console.log(`total ${hasil.length} laporan`)
+  - id: js-l1-bug-await
+    type: bughunt
+    title: Janji yang Tidak Ditunggu
+    difficulty: 2
+    prompt: Program harus mencetak dua kali lipat input ditambah 1, tapi malah mencetak "[object Promise]1". Temukan bug-nya.
+    starter: |
+      async function ganda(x) { return x * 2 }
+      const hasil = ganda(Number(readline()))
+      console.log(hasil + 1)
+    bug_line: 2
+    tests: ["5", "0", "-4"]
+    hints: |
+      async function selalu mengembalikan Promise.
+      Isi Promise harus ditunggu dulu.
+      const hasil = await ganda(...)
+    solution: |
+      async function ganda(x) { return x * 2 }
+      const hasil = await ganda(Number(readline()))
+      console.log(hasil + 1)
+  - id: js-l1-parsons
+    type: parsons
+    title: Misi yang Bisa Gagal
+    difficulty: 2
+    prompt: 'Susun program yang memanggil misi(n). misi menolak (reject) jika n < 0. Cetak hasilnya, atau "gagal: <pesan>".'
+    tests: ["5", "-1"]
+    hints: |
+      Definisi async function di atas.
+      try membungkus await.
+      catch menerima error yang dilempar.
+    solution: |
+      async function misi(n) {
+        if (n < 0) throw new Error("jarak negatif")
+        return `tempuh ${n} km`
+      }
+      try {
+        console.log(await misi(Number(readline())))
+      } catch (e) {
+        console.log(`gagal: ${e.message}`)
+      }

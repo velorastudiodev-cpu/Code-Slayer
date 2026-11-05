@@ -1,0 +1,178 @@
+lesson:
+- text: if / else if / else memakai kurung di sekitar kondisi. Kurung kurawal boleh dihilangkan untuk satu pernyataan, tapi lebih aman selalu ditulis.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            int nilai = 78;
+            if (nilai >= 85) Console.WriteLine("A");
+            else if (nilai >= 70) Console.WriteLine("B");
+            else Console.WriteLine("C");
+        }
+    }
+- text: switch mencocokkan satu nilai dengan banyak case. Di C#, setiap case harus diakhiri break (atau return); tidak boleh "jatuh" ke case berikutnya kecuali case-nya kosong.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            string napas = "suara";
+            switch (napas)
+            {
+                case "air":
+                case "bunga":
+                    Console.WriteLine("lembut");
+                    break;
+                case "suara":
+                    Console.WriteLine("meledak");
+                    break;
+                default:
+                    Console.WriteLine("?");
+                    break;
+            }
+        }
+    }
+exercises:
+- id: cs-f5-nilai
+  type: write
+  title: Rapor Kisatsutai
+  difficulty: 1
+  prompt: Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '90'
+  - '85'
+  - '70'
+  - '69'
+  - '55'
+  - '10'
+  hints: |
+    Periksa dari syarat tertinggi.
+    Rantai if / else if / else.
+    Cetak satu huruf saja.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            if (n >= 85) Console.WriteLine("A");
+            else if (n >= 70) Console.WriteLine("B");
+            else if (n >= 55) Console.WriteLine("C");
+            else Console.WriteLine("D");
+        }
+    }
+- id: cs-f5-kabisat
+  type: write
+  title: Tahun Kabisat
+  difficulty: 2
+  prompt: Baca tahun. Cetak "kabisat" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu "bukan".
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '2024'
+  - '1900'
+  - '2000'
+  - '2023'
+  hints: |
+    Habis dibagi berarti % ... == 0.
+    Gabungkan dengan || dan &&.
+    (t % 400 == 0) || (t % 4 == 0 && t % 100 != 0)
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int y = int.Parse(t[0]);
+            Console.WriteLine(y % 400 == 0 || (y % 4 == 0 && y % 100 != 0) ? "kabisat" : "bukan");
+        }
+    }
+- id: cs-f5-predict
+  type: predict
+  title: Cabang Mana yang Dipilih?
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            foreach (int x in new[] { 0, 3, 8, 15 })
+            {
+                switch (x % 4)
+                {
+                    case 0:
+                        Console.Write(x == 0 ? "nol " : "kelipatan4 ");
+                        break;
+                    case 1:
+                    case 3:
+                        Console.Write("ganjil ");
+                        break;
+                    default:
+                        Console.Write("dua ");
+                        break;
+                }
+            }
+            Console.WriteLine();
+        }
+    }
+  hints: |
+    Telusuri nilai variabel baris demi baris.
+    Hanya satu cabang yang dijalankan per pemeriksaan.
+    Perhatikan kasus default/else.
+  solution: x
+- id: cs-f5-parsons
+  type: parsons
+  title: Tanda Bilangan
+  difficulty: 1
+  prompt: Susun program yang mencetak "positif", "negatif", atau "nol".
+  tests:
+  - '5'
+  - '-3'
+  - '0'
+  hints: |
+    Deklarasi fungsi utama paling atas.
+    Baca n sebelum memeriksanya.
+    Kurung tutup paling akhir.
+  solution: |
+    using System;
+    class Program
+    {
+        static void Main()
+        {
+            int n = int.Parse(Console.ReadLine());
+            if (n > 0) Console.WriteLine("positif");
+            else if (n < 0) Console.WriteLine("negatif");
+            else Console.WriteLine("nol");
+        }
+    }

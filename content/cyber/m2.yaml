@@ -1,0 +1,71 @@
+lesson:
+- text: 'Cross-site scripting (XSS): input user dirender sebagai HTML/JS di halaman orang lain. Reflected (dari URL/form), stored (tersimpan di database), DOM-based (skrip halaman memasang input lewat innerHTML).
+    Perbaikan: escape output sesuai konteks, pakai textContent, sanitizer untuk HTML, dan Content-Security-Policy.'
+  code: |
+    el.textContent = input        // aman: tampil sebagai teks
+    el.innerHTML = input          // RENTAN
+exercises:
+- id: cy-lab-xss-cari
+  type: lab
+  title: Pantulan Kata Kunci
+  difficulty: 1
+  prompt: 'Lab sandbox: Jalankan alert() di halaman korban. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: xss-cari
+  hints: |
+    Input masuk langsung ke HTML.
+    Tag script ikut dirender.
+    <script>alert(1)</script>
+- id: cy-lab-xss-bukutamu
+  type: lab
+  title: Filter Bocor
+  difficulty: 2
+  prompt: 'Lab sandbox: Jalankan alert() di buku tamu. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: xss-bukutamu
+  hints: |
+    Filter hanya menghapus kemunculan pertama.
+    Apa jadinya jika penghapusan justru membentuk tag baru?
+    <scr<script>ipt>alert(1)</script>
+- id: cy-lab-xss-dom
+  type: lab
+  title: Bayangan di Fragmen
+  difficulty: 3
+  prompt: 'Lab sandbox: Jalankan alert() lewat nama. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: xss-dom
+  hints: |
+    innerHTML tidak mengeksekusi <script>.
+    Atribut seperti onerror atau onload dijalankan browser.
+    <img src=x onerror=alert(1)>
+- id: cy-m2-patch
+  type: write
+  title: 'Patch: Escape HTML'
+  difficulty: 2
+  prompt: Patch the Bug. Fungsi tampilkan memasukkan komentar mentah ke HTML. Perbaiki dengan meng-escape & < > " ' menjadi &amp; &lt; &gt; &quot; &#39;.
+  lang: javascript
+  starter: |
+    function tampilkan(komentar) {
+      return "<li>" + komentar + "</li>"
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") console.log(tampilkan(baris))
+  tests:
+  - |
+    Halo semua
+  - |
+    <script>alert(1)</script>
+  - |
+    <img src=x onerror="alert('x')"> & teman
+  hints: |
+    & harus di-escape PERTAMA.
+    Lima karakter berbahaya.
+    replace dengan /g.
+  solution: |
+    function escapeHtml(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;")
+    }
+    function tampilkan(komentar) {
+      return "<li>" + escapeHtml(komentar) + "</li>"
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") console.log(tampilkan(baris))

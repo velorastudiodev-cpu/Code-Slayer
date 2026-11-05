@@ -1,0 +1,121 @@
+lesson:
+- text: |-
+    Konflik terjadi kalau dua branch mengubah baris yang sama. Git menandai bagian itu:
+    <<<<<<< HEAD (versimu), ======= (pemisah), >>>>>>> nama-branch (versi yang di-merge). Edit file sampai sesuai yang diinginkan, hapus penandanya, lalu git add dan git commit.
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "napas: air" > jurus.txt
+    git add jurus.txt
+    git commit -q -m awal
+    git switch -q -c petir
+    echo "napas: petir" > jurus.txt
+    git commit -q -am "Ganti ke petir"
+    git switch -q main
+    echo "napas: api" > jurus.txt
+    git commit -q -am "Ganti ke api"
+    git merge petir
+    cat jurus.txt
+    git status --short
+- text: Kalau ingin membatalkan merge yang berkonflik dan kembali ke keadaan sebelum merge, gunakan git merge --abort.
+exercises:
+- id: git-f6-selesai
+  type: write
+  title: Damai di Jurus
+  difficulty: 2
+  prompt: 'Merge petir ke main berkonflik di jurus.txt. Selesaikan: isi jurus.txt menjadi tepat "napas: api dan petir", tandai selesai, lalu commit dengan pesan "Gabungkan petir".'
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "napas: air" > jurus.txt
+    git add jurus.txt
+    git commit -q -m awal
+    git switch -q -c petir
+    echo "napas: petir" > jurus.txt
+    git commit -q -am "Ganti ke petir"
+    git switch -q main
+    echo "napas: api" > jurus.txt
+    git commit -q -am "Ganti ke api"
+    git merge petir
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Tulis ulang isi file tanpa penanda konflik.
+    git add menandai konflik selesai.
+    Akhiri dengan git commit.
+  solution: |
+    echo "napas: api dan petir" > jurus.txt
+    git add jurus.txt
+    git commit -m "Gabungkan petir"
+- id: git-f6-penanda
+  type: predict
+  title: Membaca Penanda
+  difficulty: 2
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    cat jurus.txt
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "napas: air" > jurus.txt
+    git add jurus.txt
+    git commit -q -m awal
+    git switch -q -c petir
+    echo "napas: petir" > jurus.txt
+    git commit -q -am "Ganti ke petir"
+    git switch -q main
+    echo "napas: api" > jurus.txt
+    git commit -q -am "Ganti ke api"
+    git merge petir
+  hints: |
+    Bagian atas (HEAD) = versi branch aktif (main).
+    Bagian bawah = versi branch petir.
+    Ada tiga baris penanda.
+  solution: x
+- id: git-f6-arti
+  type: quiz
+  title: Antara Dua Garis
+  difficulty: 1
+  prompt: Di dalam penanda konflik, teks di antara <<<<<<< HEAD dan ======= adalah...
+  options:
+  - Versi dari branch yang sedang aktif
+  - Versi dari branch yang di-merge
+  - Versi leluhur bersama
+  - Pesan error Git
+  explain: Bagian atas = HEAD (branch aktif), bagian bawah sampai >>>>>>> = branch yang sedang digabungkan.
+  hints: |
+    HEAD = di mana kamu berada.
+    Bagian bawah diberi label nama branch lain.
+    Atas = versimu.
+- id: git-f6-abort
+  type: write
+  title: Mundur Teratur
+  difficulty: 1
+  prompt: Merge petir berkonflik dan kamu belum siap menyelesaikannya. Batalkan merge-nya sehingga main kembali bersih.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "napas: air" > jurus.txt
+    git add jurus.txt
+    git commit -q -m awal
+    git switch -q -c petir
+    echo "napas: petir" > jurus.txt
+    git commit -q -am "Ganti ke petir"
+    git switch -q main
+    echo "napas: api" > jurus.txt
+    git commit -q -am "Ganti ke api"
+    git merge petir
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Ada opsi untuk membatalkan merge.
+    Opsinya diberikan ke git merge.
+    git merge --abort
+  solution: |
+    git merge --abort

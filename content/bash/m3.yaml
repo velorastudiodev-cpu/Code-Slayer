@@ -1,0 +1,73 @@
+lesson:
+- text: 'Skrip menerima argumen: $1 $2 ... $# (jumlah), "$@" (semua). Baris pertama #!/bin/bash (shebang). Selalu validasi argumen dan keluar dengan exit 1 bila salah.'
+  code: |
+    #!/bin/bash
+    if [ $# -lt 1 ]; then
+      echo "Pakai: $0 nama" >&2
+      exit 1
+    fi
+    echo "Halo, $1"
+exercises:
+- id: bash-m3-args
+  type: write
+  title: Jumlah Argumen
+  difficulty: 2
+  prompt: 'Tulis fungsi info yang mencetak "Jumlah: N" lalu setiap argumen di baris sendiri. Panggil: info Tanjiro "Kamado Nezuko" Zenitsu'
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    $# = jumlah argumen.
+    "$@" mempertahankan argumen berspasi.
+    for a in "$@"
+  solution: |
+    info() {
+      echo "Jumlah: $#"
+      for a in "$@"; do echo "$a"; done
+    }
+    info Tanjiro "Kamado Nezuko" Zenitsu
+- id: bash-m3-getopts
+  type: write
+  title: Bendera Perintah
+  difficulty: 3
+  prompt: Buat fungsi napas dengan opsi -n NAMA dan -k (keras). Cetak "Napas NAMA" dan tambah "!!!" bila -k. Panggil napas -n Air -k lalu napas -n Petir.
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    getopts "n:k" — n butuh nilai.
+    OPTARG berisi nilai opsi.
+    local OPTIND agar fungsi bisa dipanggil ulang.
+  solution: |
+    napas() {
+      local OPTIND nama="" keras=""
+      while getopts "n:k" o; do
+        case $o in
+          n) nama=$OPTARG ;;
+          k) keras="!!!" ;;
+        esac
+      done
+      echo "Napas $nama$keras"
+    }
+    napas -n Air -k
+    napas -n Petir
+- id: bash-m3-kutip
+  type: bughunt
+  title: Nama Berspasi
+  difficulty: 2
+  prompt: Fungsi harus mencetak setiap argumen di barisnya sendiri. Panggilan dengan "Kamado Tanjiro" malah terpecah.
+  starter: |
+    cetak() {
+      for a in $@; do echo "$a"; done
+    }
+    cetak "Kamado Tanjiro" Nezuko
+  bug_line: 2
+  tests:
+  - ''
+  hints: |
+    $@ tanpa kutip dipecah lagi oleh spasi.
+    Kutip ganda mempertahankan argumen.
+    for a in "$@"
+  solution: |
+    cetak() {
+      for a in "$@"; do echo "$a"; done
+    }
+    cetak "Kamado Tanjiro" Nezuko

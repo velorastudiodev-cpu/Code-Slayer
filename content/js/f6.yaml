@@ -1,0 +1,150 @@
+lesson:
+  - text: 'for (let i = 0; i < n; i++) adalah loop klasik dengan tiga bagian: inisialisasi, kondisi, dan langkah. for...of mengulang setiap nilai array atau string. Pola akumulasi tetap sama, yaitu buat total di luar loop lalu tambah di dalamnya.'
+    code: |
+      let total = 0
+      for (let i = 1; i <= 5; i++) total += i
+      console.log(total)
+      for (const huruf of "Kaa") console.log(huruf)
+  - text: while mengulang selama kondisinya true. Pastikan ada yang berubah supaya loop berhenti. break keluar dari loop, continue lompat ke putaran berikutnya.
+    code: |
+      let n = 3
+      while (n > 0) {
+        console.log("Tebasan", n)
+        n--
+      }
+      for (let i = 0; i < 10; i++) {
+        if (i === 2) continue
+        if (i === 5) break
+        console.log(i)
+      }
+exercises:
+  - id: js-deret
+    type: write
+    title: Seribu Tebasan
+    difficulty: 1
+    story: Latihan Urokodaki dimulai dengan 1, lalu 2, lalu 3 tebasan, sampai n.
+    prompt: Baca n dengan readline(), lalu cetak total 1 + 2 + ... + n.
+    starter: |
+      const n = Number(readline())
+    tests: ["3", "10", "1", "1000"]
+    hints: |
+      Siapkan variabel total = 0, lalu tambahkan i di setiap putaran loop.
+      for (let i = 1; i <= n; i++) ...
+      Setelah loop selesai, console.log(total).
+    solution: |
+      const n = Number(readline())
+      let total = 0
+      for (let i = 1; i <= n; i++) total += i
+      console.log(total)
+  - id: js-parsons-fizz
+    type: parsons
+    title: Susun Jurus Fizz
+    difficulty: 2
+    prompt: Susun program yang membaca n, lalu untuk i = 1 sampai n mencetak "Fizz" jika i habis dibagi 3, selain itu mencetak i.
+    tests: ["4", "6"]
+    hints: |
+      n harus dibaca sebelum loop.
+      if dan else berada di dalam kurung kurawal for.
+      Kurung kurawal penutup berada paling akhir.
+    solution: |
+      const n = Number(readline())
+      for (let i = 1; i <= n; i++) {
+        if (i % 3 === 0) console.log("Fizz")
+        else console.log(i)
+      }
+  - id: js-f6-segitiga
+    type: write
+    title: Formasi Segitiga
+    difficulty: 2
+    prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+    tests: ["3", "1", "5"]
+    hints: |
+      Loop dari 1 sampai n.
+      "*".repeat(i) mengulang string.
+      console.log("*".repeat(i))
+    solution: |
+      const n = Number(readline())
+      for (let i = 1; i <= n; i++) console.log("*".repeat(i))
+  - id: js-f6-faktor
+    type: write
+    title: Pembagi Sejati
+    difficulty: 2
+    prompt: Baca n (n ≥ 1). Cetak semua pembaginya dari kecil ke besar dalam satu baris, dipisah spasi.
+    tests: ["12", "7", "1", "36"]
+    hints: |
+      Periksa setiap i dari 1 sampai n.
+      Kumpulkan pembagi di array.
+      console.log(pembagi.join(" "))
+    solution: |
+      const n = Number(readline())
+      const pembagi = []
+      for (let i = 1; i <= n; i++) if (n % i === 0) pembagi.push(i)
+      console.log(pembagi.join(" "))
+  - id: js-f6-predict
+    type: predict
+    title: Loop Berlapis
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      for (let i = 1; i <= 3; i++) {
+        let baris = ""
+        for (let j = 1; j <= i; j++) baris += j
+        console.log(baris)
+      }
+    hints: |
+      Loop dalam berjalan i kali untuk setiap i.
+      baris adalah string, jadi angka digabung.
+      Baris ke-3 berisi 1, 2, 3 yang ditempel.
+    solution: x
+  - id: js-f6-bug-mundur
+    type: bughunt
+    title: Hitung Mundur Kebablasan
+    difficulty: 1
+    prompt: Hitung mundur dari n sampai 1 lalu "Serang!", tapi angka 0 ikut tercetak. Temukan bug-nya.
+    starter: |
+      let n = Number(readline())
+      while (n >= 0) {
+        console.log(n)
+        n--
+      }
+      console.log("Serang!")
+    bug_line: 2
+    tests: ["3", "1"]
+    hints: |
+      Angka terakhir seharusnya 1.
+      Kondisi loop membiarkan n = 0 lewat.
+      while (n > 0)
+    solution: |
+      let n = Number(readline())
+      while (n > 0) {
+        console.log(n)
+        n--
+      }
+      console.log("Serang!")
+  - id: js-f6-typing
+    type: typing
+    title: Ketik Loop Kilat
+    difficulty: 1
+    prompt: Ketik ulang kode berikut. Indentasi 2 spasi.
+    code: |
+      for (let i = 0; i < 3; i++) {
+        console.log("tebasan", i)
+      }
+  - id: js-f6-translate
+    type: translate
+    title: Terjemahkan Segitiga
+    difficulty: 2
+    prompt: Tulis ulang program Python ini dalam JavaScript.
+    from_lang: python
+    from_code: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print("*" * i)
+    tests: ["3", "1", "5"]
+    hints: |
+      range(1, n + 1) menjadi for (let i = 1; i <= n; i++).
+      "*" * i di JS adalah "*".repeat(i).
+      console.log setiap baris.
+    solution: |
+      const n = Number(readline())
+      for (let i = 1; i <= n; i++) console.log("*".repeat(i))

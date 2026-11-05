@@ -1,0 +1,116 @@
+lesson:
+  - text: Alat kerja programmer JS antara lain npm atau pnpm (paket dan script di package.json), bundler seperti Vite, linter (ESLint atau oxlint), formatter (Prettier), dan test runner (Vitest). Script di package.json dijalankan dengan npm run nama.
+    code: |
+      const pkg = { scripts: { dev: "vite", build: "tsc -b && vite build", test: "vitest run" } }
+      for (const [nama, cmd] of Object.entries(pkg.scripts)) console.log(`npm run ${nama} -> ${cmd}`)
+  - text: Program CLI membaca argumen command line (process.argv di Node). Dengan flag seperti --nama Tanjiro --verbose, program bisa diatur tanpa mengubah kode. Banyak alat juga membaca konfigurasi dari file JSON lalu menggabungkannya dengan nilai default.
+    code: |
+      const argv = ["--nama", "Tanjiro", "--verbose"]
+      const opsi = {}
+      for (let i = 0; i < argv.length; i++) {
+        const k = argv[i].slice(2)
+        opsi[k] = argv[i + 1]?.startsWith("--") || argv[i + 1] === undefined ? true : argv[++i]
+      }
+      console.log(opsi)
+exercises:
+  - id: js-p1-argv
+    type: write
+    title: Perintah Markas
+    difficulty: 2
+    prompt: 'Input berisi argumen CLI dalam satu baris. Parse flag --nama <teks>, --umur <angka> (default 0), dan --verbose (tanpa nilai). Cetak "<nama> <umur>", lalu "verbose aktif" jika ada flag --verbose.'
+    tests: ["--nama Tanjiro --umur 15 --verbose", "--nama Giyu", "--verbose --umur 20 --nama Rengoku"]
+    hints: |
+      Ulangi token. Kalau token berikutnya tidak diawali "--", itu nilainya.
+      Simpan ke object opsi.
+      Number(opsi.umur ?? 0)
+    solution: |
+      const t = readline().split(" ")
+      const opsi = {}
+      for (let i = 0; i < t.length; i++) {
+        const k = t[i].slice(2)
+        if (t[i + 1] !== undefined && !t[i + 1].startsWith("--")) opsi[k] = t[++i]
+        else opsi[k] = true
+      }
+      console.log(opsi.nama, Number(opsi.umur ?? 0))
+      if (opsi.verbose) console.log("verbose aktif")
+  - id: js-p1-config
+    type: write
+    title: Menggabung Konfigurasi
+    difficulty: 2
+    prompt: 'Baris 1 berisi JSON konfigurasi default, baris 2 berisi JSON konfigurasi user. Gabungkan secara mendalam satu tingkat: properti objek di level kedua digabung, bukan ditimpa. Cetak hasilnya dengan JSON.stringify.'
+    tests:
+      - |-
+        {"tema":"malam","editor":{"font":15,"tab":2},"suara":true}
+        {"editor":{"font":18},"suara":false}
+      - |-
+        {"a":1}
+        {}
+    hints: |
+      Spread { ...a, ...b } menimpa objek bersarang secara utuh.
+      Untuk kunci yang nilainya objek di kedua sisi, gabungkan lagi dengan spread.
+      Object.entries(user) lalu periksa typeof === "object".
+    solution: |
+      const def = JSON.parse(readline()), user = JSON.parse(readline())
+      const hasil = { ...def }
+      for (const [k, v] of Object.entries(user)) {
+        hasil[k] = typeof v === "object" && v && typeof def[k] === "object" ? { ...def[k], ...v } : v
+      }
+      console.log(JSON.stringify(hasil))
+  - id: js-p1-lint
+    type: write
+    title: Linter Mini
+    difficulty: 3
+    prompt: 'Input berupa kode JS beberapa baris. Laporkan masalah per baris dengan format "<no baris>: <aturan>". Aturan "no-var" berlaku jika ada kata var diikuti spasi, dan "eqeqeq" jika ada == atau != yang bukan === atau !==. Jika bersih, cetak "bersih".'
+    tests: ["var a = 1\nif (a == 1) console.log(a)\nconst b = a === 1", "const x = 1"]
+    hints: |
+      Regex \bvar\s untuk var.
+      Regex (^|[^=!])[=!]=(?!=) untuk == atau != tunggal.
+      Ulangi baris dengan nomor mulai 1.
+    solution: |
+      const masalah = []
+      let baris, no = 0
+      while ((baris = readline()) !== null) {
+        no++
+        if (/\bvar\s/.test(baris)) masalah.push(`${no}: no-var`)
+        if (/(^|[^=!])[=!]=(?!=)/.test(baris)) masalah.push(`${no}: eqeqeq`)
+      }
+      console.log(masalah.length ? masalah.join("\n") : "bersih")
+  - id: js-p1-predict
+    type: predict
+    title: Rentang Versi npm
+    difficulty: 2
+    prompt: 'Di package.json, ^1.2.3 artinya boleh 1.x.x yang ≥ 1.2.3, dan ~1.2.3 artinya boleh 1.2.x yang ≥ 1.2.3. Tulis output persis dari kode berikut.'
+    code: |
+      const cocok = (range, v) => {
+        const [jenis, ...r] = [range[0], ...range.slice(1).split(".").map(Number)]
+        const x = v.split(".").map(Number)
+        const gte = x[0] > r[0] || (x[0] === r[0] && (x[1] > r[1] || (x[1] === r[1] && x[2] >= r[2])))
+        return gte && x[0] === r[0] && (jenis === "^" || x[1] === r[1])
+      }
+      console.log(cocok("^1.2.3", "1.9.0"), cocok("~1.2.3", "1.3.0"), cocok("^1.2.3", "2.0.0"))
+    hints: |
+      ^ mengizinkan minor dan patch naik.
+      ~ hanya mengizinkan patch naik.
+      Major yang berbeda tidak pernah cocok.
+    solution: x
+  - id: js-p1-bug-script
+    type: bughunt
+    title: Script yang Salah Panggil
+    difficulty: 1
+    prompt: 'Program membaca nama script, lalu mencetak perintah dari package.json, atau "script <nama> tidak ada". Untuk script yang tidak ada, keluarnya malah "undefined". Temukan bug-nya.'
+    starter: |
+      const pkg = { scripts: { dev: "vite", test: "vitest run" } }
+      const nama = readline()
+      const cmd = pkg.scripts.nama
+      console.log(cmd ?? `script ${nama} tidak ada`)
+    bug_line: 3
+    tests: ["dev", "lint", "test"]
+    hints: |
+      .nama mencari properti yang benar-benar bernama "nama".
+      Untuk kunci dari variabel, pakai kurung siku.
+      pkg.scripts[nama]
+    solution: |
+      const pkg = { scripts: { dev: "vite", test: "vitest run" } }
+      const nama = readline()
+      const cmd = pkg.scripts[nama]
+      console.log(cmd ?? `script ${nama} tidak ada`)

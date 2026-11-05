@@ -1,0 +1,97 @@
+lesson:
+- text: Remote adalah salinan repo di tempat lain (misalnya GitHub). git remote add origin <url> mendaftarkannya, git push mengirim commit, git pull mengambil commit baru lalu menggabungkannya, git clone
+    menyalin repo lengkap.
+  code: |
+    git init -q --bare pusat.git
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    git remote add origin ../pusat.git
+    git push -u origin main
+    git remote -v
+- text: Di terminal simulasi, "server" adalah repo bare di folder lain (git init --bare). Di dunia nyata alamatnya URL seperti https://github.com/korps/proyek.git, tapi perintahnya sama.
+exercises:
+- id: git-f7-push
+  type: write
+  title: Kirim ke Markas
+  difficulty: 2
+  prompt: Repo bare ../pusat.git sudah ada. Daftarkan sebagai remote bernama origin, lalu push branch main ke sana (dengan upstream).
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    git init -q --bare pusat.git
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+  quiet: true
+  after: |
+    cd ../pusat.git
+    echo "pusat: $(git log --format=%s main | tr '\n' '<')"
+  hints: |
+    Daftarkan remote dulu.
+    git remote add origin <alamat>
+    git push -u origin main
+  solution: |
+    git remote add origin ../pusat.git
+    git push -u origin main
+- id: git-f7-clone
+  type: write
+  title: Salinan Regu Lain
+  difficulty: 2
+  prompt: Repo pusat.git sudah berisi "Misi pertama". Dari folder induk (cd ..), clone menjadi folder salinan, tambahkan file laporan.txt berisi "aman" dengan commit "Laporan", lalu push ke origin main.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    git init -q --bare pusat.git
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    git remote add origin ../pusat.git
+    git push -q -u origin main
+  quiet: true
+  after: |
+    cd ../pusat.git
+    echo "pusat: $(git log --format=%s main | tr '\n' '<')"
+  hints: |
+    git clone alamat nama-folder
+    Masuk ke folder hasil clone.
+    Commit lalu git push origin main.
+  solution: |
+    cd ..
+    git clone pusat.git salinan
+    cd salinan
+    echo "aman" > laporan.txt
+    git add laporan.txt
+    git commit -m "Laporan"
+    git push origin main
+- id: git-f7-pull
+  type: quiz
+  title: Mengambil Kabar
+  difficulty: 1
+  prompt: git pull pada dasarnya adalah gabungan dua perintah. Yang mana?
+  options:
+  - git fetch lalu git merge
+  - git clone lalu git push
+  - git add lalu git commit
+  - git fetch lalu git push
+  explain: git pull = git fetch (ambil commit dari remote) + git merge (gabungkan ke branch aktif).
+  hints: |
+    Ambil dulu, lalu gabungkan.
+    fetch tidak mengubah branch-mu.
+    fetch + merge.
+- id: git-f7-remote
+  type: answer
+  title: Daftar Markas
+  difficulty: 1
+  prompt: Perintah untuk melihat daftar remote beserta alamatnya adalah...
+  accept:
+  - git remote -v
+  - git remote --verbose
+  explain: git remote -v menampilkan nama dan URL fetch/push setiap remote.
+  hints: |
+    git remote ...
+    Opsi verbose.
+    git remote -v

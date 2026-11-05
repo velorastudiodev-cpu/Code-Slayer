@@ -1,0 +1,67 @@
+lesson:
+- text: 'Operator aritmetika: + - * / %. Untuk int, / adalah pembagian bulat dan % sisa bagi. Operator gabungan seperti += dan ++ (sebagai pernyataan, bukan ekspresi) juga ada.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tt := 3725\n\tfmt.Println(t/3600, t%3600/60, t%60)\n\tn := 5\n\tn += 3\n\tn++\n\tfmt.Println(n)\n}\n"
+- text: 'Perbandingan menghasilkan bool: == != < <= > >=. Logika: && (dan), || (atau), ! (bukan). Go tidak mengubah angka menjadi bool otomatis, jadi if x { } hanya boleh untuk bool.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tumur := 16\n\tpunyaPedang := true\n\tfmt.Println(umur >= 15 && punyaPedang)\n\tfmt.Println(umur < 13 || !punyaPedang)\n}\n"
+exercises:
+- id: go-f3-detik
+  type: write
+  title: Jam Pertarungan
+  difficulty: 2
+  prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - '3725'
+  - '59'
+  - '86399'
+  - '0'
+  hints: |
+    1 jam = 3600 detik, 1 menit = 60 detik.
+    Jam = t / 3600, menit = (t % 3600) / 60.
+    Detik = t % 60.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar t int\n\tfmt.Scan(&t)\n\tfmt.Printf(\"%d:%d:%d\\n\", t/3600, t%3600/60, t%60)\n}\n"
+- id: go-f3-suhu
+  type: write
+  title: Suhu Napas Api
+  difficulty: 1
+  prompt: Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - '100'
+  - '0'
+  - '-40'
+  - '37'
+  hints: |
+    Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.
+    Contoh: 37 menjadi 98.6.
+    Format 1 angka di belakang koma.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar c float64\n\tfmt.Scan(&c)\n\tfmt.Printf(\"%.1f\\n\", c*9/5+32)\n}\n"
+- id: go-f3-predict
+  type: predict
+  title: Urutan Operasi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(2 + 3*4, (2+3)*4)\n\tfmt.Println(20 - 6 / 2 % 2)\n\tfmt.Println(7 > 3 && 2 > 5 || true)\n}\n"
+  hints: |
+    * / % dikerjakan sebelum + -.
+    Operator dengan derajat sama dikerjakan dari kiri.
+    Kurung mengubah urutan.
+  solution: x
+- id: go-f3-bug
+  type: bughunt
+  title: Gerbang yang Salah Jaga
+  difficulty: 1
+  prompt: Program harus mencetak "masuk" hanya jika 1 ≤ n ≤ 10, selain itu "tolak". Tapi semua angka masuk. Temukan baris yang salah.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tif n >= 1 || n <= 10 {\n\t\tfmt.Println(\"masuk\")\n\t} else {\n\t\tfmt.Println(\"tolak\")\n\t}\n}\n"
+  bug_line: 8
+  tests:
+  - '5'
+  - '1'
+  - '10'
+  - '0'
+  - '11'
+  hints: |
+    Coba n = 11: apakah kedua syarat harus benar?
+    || (atau) cukup salah satu benar.
+    Gunakan && (dan).
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tif n >= 1 && n <= 10 {\n\t\tfmt.Println(\"masuk\")\n\t} else {\n\t\tfmt.Println(\"tolak\")\n\t}\n}\n"

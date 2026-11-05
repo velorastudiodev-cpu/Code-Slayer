@@ -1,0 +1,52 @@
+lesson:
+- text: '.gitignore berisi pola file yang tidak perlu dilacak: hasil build, log, dependensi, rahasia. Satu pola per baris: *.log, build/ (folder), dan !penting.log untuk pengecualian. File yang SUDAH dilacak
+    tetap dilacak walau ditambahkan ke .gitignore.'
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    printf "*.log\nbuild/\n" > .gitignore
+    echo x > app.log
+    mkdir build && echo y > build/out
+    echo k > kode.py
+    git status --short
+exercises:
+- id: git-m5-ignore
+  type: write
+  title: Abaikan Sampah
+  difficulty: 2
+  prompt: Buat .gitignore yang mengabaikan semua file .log dan folder build/, lalu commit .gitignore dan kode.py saja dengan pesan "Awal proyek" (pakai git add .).
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo x > app.log
+    mkdir build && echo y > build/out
+    echo k > kode.py
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+    git ls-files
+  hints: |
+    Satu pola per baris.
+    *.log untuk semua file log, build/ untuk folder.
+    Setelah itu git add . tidak akan mengambil file yang diabaikan.
+  solution: |
+    printf "*.log\nbuild/\n" > .gitignore
+    git add .
+    git commit -m "Awal proyek"
+- id: git-m5-sudah
+  type: quiz
+  title: Terlambat Diabaikan
+  difficulty: 2
+  prompt: kunci.env sudah ter-commit, lalu kamu menambahkan kunci.env ke .gitignore. Apa yang terjadi?
+  options:
+  - Git tetap melacaknya; hapus dari index dengan git rm --cached kunci.env
+  - Git otomatis menghapusnya dari riwayat
+  - File langsung terhapus dari disk
+  - Commit lama ikut berubah
+  explain: .gitignore hanya berlaku untuk file yang belum dilacak. Rahasia yang sudah ter-commit tetap ada di riwayat, jadi ganti juga rahasianya.
+  hints: |
+    .gitignore tidak berlaku surut.
+    File yang sudah dilacak tetap dilacak.
+    git rm --cached berhenti melacak tanpa menghapus file.

@@ -1,0 +1,764 @@
+{
+ "hash": "b28f6fef5ddd",
+ "projects": [
+  {
+   "id": "brankas",
+   "title": "Brankas Desa Penempa",
+   "track": "rust",
+   "lang": "rust",
+   "requires": "f7",
+   "emoji": "🔐",
+   "story": "Haganezuka menyimpan kata sandi bengkel di kertas tempel. Buat password manager baris perintah yang aman dari salah ketik. (Untuk latihan; jangan dipakai menyimpan sandi sungguhan.)",
+   "starter": "use std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    for baris in input.lines() {\n        // tulis kodemu di sini\n    }\n}\n",
+   "stages": [
+    {
+     "title": "Simpan & ambil",
+     "prompt": "\"simpan <situs> <sandi>\" menyimpan (menimpa kalau sudah ada); \"ambil <situs>\" mencetak sandinya atau \"tidak ada\".",
+     "hints": [
+      "BTreeMap<String, String> sebagai brankas.",
+      "match b.as_slice() dengan pola [\"simpan\", situs, sandi].",
+      "get mengembalikan Option."
+     ],
+     "solution": "use std::collections::BTreeMap;\nuse std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut brankas: BTreeMap<String, String> = BTreeMap::new();\n    for baris in input.lines() {\n        let b: Vec<&str> = baris.split_whitespace().collect();\n        match b.as_slice() {\n            [\"simpan\", situs, sandi] => {\n                brankas.insert(situs.to_string(), sandi.to_string());\n            }\n            [\"ambil\", situs] => match brankas.get(*situs) {\n                Some(s) => println!(\"{}\", s),\n                None => println!(\"tidak ada\"),\n            },\n            _ => {}\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "simpan korps.id kaa123\nambil korps.id\nambil iblis.id\nsimpan korps.id baru\nambil korps.id",
+       "expected": "kaa123\ntidak ada\nbaru\n"
+      },
+      {
+       "input": "ambil x",
+       "expected": "tidak ada\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Daftar & hapus",
+     "prompt": "\"daftar\" mencetak semua situs urut abjad (satu per baris); \"hapus <situs>\" menghapusnya.",
+     "hints": [
+      "BTreeMap sudah terurut menurut kunci.",
+      "keys() untuk menelusuri situs.",
+      "remove untuk menghapus."
+     ],
+     "solution": "use std::collections::BTreeMap;\nuse std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut brankas: BTreeMap<String, String> = BTreeMap::new();\n    for baris in input.lines() {\n        let b: Vec<&str> = baris.split_whitespace().collect();\n        match b.as_slice() {\n            [\"simpan\", situs, sandi] => {\n                brankas.insert(situs.to_string(), sandi.to_string());\n            }\n            [\"ambil\", situs] => match brankas.get(*situs) {\n                Some(s) => println!(\"{}\", s),\n                None => println!(\"tidak ada\"),\n            },\n            [\"daftar\"] => {\n                for k in brankas.keys() {\n                    println!(\"{}\", k);\n                }\n            }\n            [\"hapus\", situs] => {\n                brankas.remove(*situs);\n            }\n            _ => {}\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "simpan zeta.id a\nsimpan alfa.id b\nsimpan mid.id c\nhapus mid.id\ndaftar",
+       "expected": "alfa.id\nzeta.id\n"
+      },
+      {
+       "input": "daftar\nsimpan a b\ndaftar",
+       "expected": "a\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Kunci master",
+     "prompt": "\"master <kata>\" memasang kata kunci dan MENGUNCI brankas. Selama terkunci, \"ambil\" mencetak \"terkunci\". \"buka <kata>\" mencetak \"terbuka\" kalau benar (lalu ambil boleh) atau \"salah\". Tanpa master, brankas selalu terbuka.",
+     "hints": [
+      "Simpan master dalam Option<String>.",
+      "Variabel bool terbuka.",
+      "Cabang ambil yang terkunci diletakkan sebelum cabang ambil biasa."
+     ],
+     "solution": "use std::collections::BTreeMap;\nuse std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut brankas: BTreeMap<String, String> = BTreeMap::new();\n    let mut kunci_master: Option<String> = None;\n    let mut terbuka = true;\n    for baris in input.lines() {\n        let b: Vec<&str> = baris.split_whitespace().collect();\n        match b.as_slice() {\n            [\"simpan\", situs, sandi] => {\n                brankas.insert(situs.to_string(), sandi.to_string());\n            }\n            [\"ambil\", situs] if !terbuka => {\n                let _ = situs;\n                println!(\"terkunci\");\n            }\n            [\"ambil\", situs] => match brankas.get(*situs) {\n                Some(s) => println!(\"{}\", s),\n                None => println!(\"tidak ada\"),\n            },\n            [\"daftar\"] => {\n                for k in brankas.keys() {\n                    println!(\"{}\", k);\n                }\n            }\n            [\"hapus\", situs] => {\n                brankas.remove(*situs);\n            }\n            [\"master\", kata] => {\n                kunci_master = Some(kata.to_string());\n                terbuka = false;\n            }\n            [\"buka\", kata] => {\n                terbuka = kunci_master.as_deref() == Some(*kata);\n                println!(\"{}\", if terbuka { \"terbuka\" } else { \"salah\" });\n            }\n            _ => {}\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "simpan korps.id kaa\nmaster nichirin\nambil korps.id\nbuka salah\nambil korps.id\nbuka nichirin\nambil korps.id",
+       "expected": "terkunci\nsalah\nterkunci\nterbuka\nkaa\n"
+      },
+      {
+       "input": "simpan a 1\nambil a",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Ekspor terenkripsi",
+     "prompt": "\"ekspor\" mencetak setiap entri \"situs:hex\" urut abjad, dengan hex = setiap byte sandi di-XOR byte kunci master yang diulang (kunci \"slayer\" kalau belum ada master), ditulis 2 digit hex huruf kecil.",
+     "hints": [
+      "bytes().zip(kunci.bytes().cycle()).",
+      "a ^ k untuk XOR.",
+      "format!(\"{:02x}\", ...)."
+     ],
+     "solution": "use std::collections::BTreeMap;\nuse std::io::{self, Read};\n\nfn main() {\n    let mut input = String::new();\n    io::stdin().read_to_string(&mut input).unwrap();\n    let mut brankas: BTreeMap<String, String> = BTreeMap::new();\n    let mut kunci_master: Option<String> = None;\n    let mut terbuka = true;\n    for baris in input.lines() {\n        let b: Vec<&str> = baris.split_whitespace().collect();\n        match b.as_slice() {\n            [\"simpan\", situs, sandi] => {\n                brankas.insert(situs.to_string(), sandi.to_string());\n            }\n            [\"ambil\", situs] if !terbuka => {\n                let _ = situs;\n                println!(\"terkunci\");\n            }\n            [\"ambil\", situs] => match brankas.get(*situs) {\n                Some(s) => println!(\"{}\", s),\n                None => println!(\"tidak ada\"),\n            },\n            [\"daftar\"] => {\n                for k in brankas.keys() {\n                    println!(\"{}\", k);\n                }\n            }\n            [\"hapus\", situs] => {\n                brankas.remove(*situs);\n            }\n            [\"master\", kata] => {\n                kunci_master = Some(kata.to_string());\n                terbuka = false;\n            }\n            [\"buka\", kata] => {\n                terbuka = kunci_master.as_deref() == Some(*kata);\n                println!(\"{}\", if terbuka { \"terbuka\" } else { \"salah\" });\n            }\n            [\"ekspor\"] => {\n                let kunci = kunci_master.clone().unwrap_or_else(|| \"slayer\".to_string());\n                for (situs, sandi) in &brankas {\n                    let hex: String = sandi.bytes().zip(kunci.bytes().cycle()).map(|(a, k)| format!(\"{:02x}\", a ^ k)).collect();\n                    println!(\"{}:{}\", situs, hex);\n                }\n            }\n            _ => {}\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "simpan korps.id kaa\nsimpan a.id zz\nekspor",
+       "expected": "a.id:0916\nkorps.id:180d00\n"
+      },
+      {
+       "input": "master kunci\nsimpan x.id rahasia\nekspor",
+       "expected": "x.id:191406021a0214\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "kalkulator",
+   "title": "Sempoa Desa Penempa",
+   "track": "c",
+   "lang": "c",
+   "requires": "f7",
+   "emoji": "🧮",
+   "story": "Para penempa pedang menghitung bahan setiap hari. Buat kalkulator baris perintah: setiap baris input berisi satu operasi \"a op b\".",
+   "starter": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n\nint main(void) {\n    char a[32], b[32];\n    char op;\n    while (scanf(\"%31s %c %31s\", a, &op, b) == 3) {\n        // tulis kodemu di sini\n    }\n    return 0;\n}\n",
+   "stages": [
+    {
+     "title": "Empat operasi",
+     "prompt": "Untuk setiap baris \"a op b\" dengan op salah satu + - * / (bilangan bulat, pembagian dibulatkan ke nol), cetak hasilnya. Angka bisa sangat besar (pakai long long).",
+     "hints": [
+      "Baca a dan b sebagai teks dulu, lalu atoll.",
+      "Pilih operasi dengan if/else if.",
+      "Cetak dengan %lld."
+     ],
+     "solution": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n\nlong long nilai(const char *s, long long ans) { (void)ans; return atoll(s); }\n\nint main(void) {\n    char a[32], b[32];\n    char op;\n    long long ans = 0;\n    while (scanf(\"%31s %c %31s\", a, &op, b) == 3) {\n        long long x = nilai(a, ans), y = nilai(b, ans), r;\n        if (op == '+') r = x + y;\n        else if (op == '-') r = x - y;\n        else if (op == '*') r = x * y;\n        else if (op == '/') r = x / y;\n        else continue;\n        printf(\"%lld\\n\", r);\n        ans = r;\n    }\n    return 0;\n}\n",
+     "tests": [
+      {
+       "input": "3 + 4\n10 - 25\n6 * 7\n20 / 3",
+       "expected": "7\n-15\n42\n6\n"
+      },
+      {
+       "input": "-7 / 2\n3000000000 * 3",
+       "expected": "-3\n9000000000\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Penjaga kesalahan",
+     "prompt": "Pembagian dengan nol mencetak \"error: bagi nol\"; operator lain yang tidak dikenal mencetak \"error: operator\". Program tetap lanjut ke baris berikutnya.",
+     "hints": [
+      "Periksa pembagi sebelum membagi.",
+      "Cabang else untuk operator tak dikenal.",
+      "continue melompat ke baris berikutnya."
+     ],
+     "solution": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n\nlong long nilai(const char *s, long long ans) { (void)ans; return atoll(s); }\n\nint main(void) {\n    char a[32], b[32];\n    char op;\n    long long ans = 0;\n    while (scanf(\"%31s %c %31s\", a, &op, b) == 3) {\n        long long x = nilai(a, ans), y = nilai(b, ans), r;\n        if ((op == '/' || op == '%') && y == 0) { printf(\"error: bagi nol\\n\"); continue; }\n        if (op == '+') r = x + y;\n        else if (op == '-') r = x - y;\n        else if (op == '*') r = x * y;\n        else if (op == '/') r = x / y;\n        else { printf(\"error: operator\\n\"); continue; }\n        printf(\"%lld\\n\", r);\n        ans = r;\n    }\n    return 0;\n}\n",
+     "tests": [
+      {
+       "input": "8 / 0\n5 + 5\n2 x 3",
+       "expected": "error: bagi nol\n10\nerror: operator\n"
+      },
+      {
+       "input": "1 / 1\n9 / 0",
+       "expected": "1\nerror: bagi nol\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Sisa & pangkat",
+     "prompt": "Tambahkan operator % (sisa bagi, juga error bila pembagi nol) dan ^ (pangkat bilangan bulat, b ≥ 0).",
+     "hints": [
+      "% sama dengan sisa bagi di C.",
+      "Pangkat: kalikan berulang.",
+      "x^0 = 1."
+     ],
+     "solution": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n\nlong long nilai(const char *s, long long ans) { (void)ans; return atoll(s); }\n\nint main(void) {\n    char a[32], b[32];\n    char op;\n    long long ans = 0;\n    while (scanf(\"%31s %c %31s\", a, &op, b) == 3) {\n        long long x = nilai(a, ans), y = nilai(b, ans), r;\n        if ((op == '/' || op == '%') && y == 0) { printf(\"error: bagi nol\\n\"); continue; }\n        if (op == '+') r = x + y;\n        else if (op == '-') r = x - y;\n        else if (op == '*') r = x * y;\n        else if (op == '/') r = x / y;\n        else if (op == '%') r = x % y;\n        else if (op == '^') { r = 1; for (long long i = 0; i < y; i++) r *= x; }\n        else { printf(\"error: operator\\n\"); continue; }\n        printf(\"%lld\\n\", r);\n        ans = r;\n    }\n    return 0;\n}\n",
+     "tests": [
+      {
+       "input": "17 % 5\n2 ^ 10\n7 ^ 0\n5 % 0",
+       "expected": "2\n1024\n1\nerror: bagi nol\n"
+      },
+      {
+       "input": "3 ^ 3\n10 % 3",
+       "expected": "27\n1\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Kata ans",
+     "prompt": "Kata \"ans\" boleh menggantikan angka mana pun dan bernilai hasil sukses terakhir (awalnya 0). Hasil error tidak mengubah ans.",
+     "hints": [
+      "Simpan hasil terakhir di variabel ans.",
+      "strcmp(s, \"ans\") == 0.",
+      "Jangan ubah ans saat error."
+     ],
+     "solution": "#include <stdio.h>\n#include <string.h>\n#include <stdlib.h>\n\nlong long nilai(const char *s, long long ans) { return strcmp(s, \"ans\") == 0 ? ans : atoll(s); }\n\nint main(void) {\n    char a[32], b[32];\n    char op;\n    long long ans = 0;\n    while (scanf(\"%31s %c %31s\", a, &op, b) == 3) {\n        long long x = nilai(a, ans), y = nilai(b, ans), r;\n        if ((op == '/' || op == '%') && y == 0) { printf(\"error: bagi nol\\n\"); continue; }\n        if (op == '+') r = x + y;\n        else if (op == '-') r = x - y;\n        else if (op == '*') r = x * y;\n        else if (op == '/') r = x / y;\n        else if (op == '%') r = x % y;\n        else if (op == '^') { r = 1; for (long long i = 0; i < y; i++) r *= x; }\n        else { printf(\"error: operator\\n\"); continue; }\n        printf(\"%lld\\n\", r);\n        ans = r;\n    }\n    return 0;\n}\n",
+     "tests": [
+      {
+       "input": "5 * 4\nans + 1\nans / 0\nans - ans",
+       "expected": "20\n21\nerror: bagi nol\n0\n"
+      },
+      {
+       "input": "ans + 7\nans ^ 2",
+       "expected": "7\n49\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "kasir",
+   "title": "Kas Korps Pemburu",
+   "track": "java",
+   "lang": "java",
+   "requires": "f7",
+   "emoji": "💰",
+   "story": "Bendahara korps mencatat Koban setiap anggota. Buat sistem kas baris perintah; setiap baris input satu perintah.",
+   "starter": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        while (in.hasNextLine()) {\n            String[] b = in.nextLine().trim().split(\" \");\n            // tulis kodemu di sini\n        }\n    }\n}\n",
+   "stages": [
+    {
+     "title": "Buka & saldo",
+     "prompt": "\"buka <nama> <saldo>\" membuat akun; \"saldo <nama>\" mencetak saldonya atau \"akun tidak ada\".",
+     "hints": [
+      "Map<String, Long> untuk akun.",
+      "Long.parseLong untuk angka.",
+      "containsKey sebelum get."
+     ],
+     "solution": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        Map<String, Long> akun = new HashMap<>();\n        while (in.hasNextLine()) {\n            String[] b = in.nextLine().trim().split(\" \");\n            switch (b[0]) {\n                case \"buka\" -> akun.put(b[1], Long.parseLong(b[2]));\n                case \"saldo\" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : \"akun tidak ada\");\n                default -> { }\n            }\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "buka tanjiro 300\nbuka zenitsu 50\nsaldo tanjiro\nsaldo inosuke",
+       "expected": "300\nakun tidak ada\n"
+      },
+      {
+       "input": "buka a 0\nsaldo a",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Setor & tarik",
+     "prompt": "\"setor <nama> <x>\" menambah; \"tarik <nama> <x>\" mengurangi, atau mencetak \"saldo kurang\" kalau tidak cukup. Akun tak dikenal → \"akun tidak ada\".",
+     "hints": [
+      "Periksa akun dulu, lalu saldo.",
+      "Ubah nilai dengan put.",
+      "Saldo tidak boleh negatif."
+     ],
+     "solution": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        Map<String, Long> akun = new HashMap<>();\n        while (in.hasNextLine()) {\n            String[] b = in.nextLine().trim().split(\" \");\n            switch (b[0]) {\n                case \"buka\" -> akun.put(b[1], Long.parseLong(b[2]));\n                case \"saldo\" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : \"akun tidak ada\");\n                case \"setor\" -> {\n                    if (!akun.containsKey(b[1])) System.out.println(\"akun tidak ada\");\n                    else akun.put(b[1], akun.get(b[1]) + Long.parseLong(b[2]));\n                }\n                case \"tarik\" -> {\n                    long x = Long.parseLong(b[2]);\n                    if (!akun.containsKey(b[1])) System.out.println(\"akun tidak ada\");\n                    else if (akun.get(b[1]) < x) System.out.println(\"saldo kurang\");\n                    else akun.put(b[1], akun.get(b[1]) - x);\n                }\n                default -> { }\n            }\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "buka tanjiro 100\nsetor tanjiro 50\ntarik tanjiro 500\ntarik tanjiro 30\nsaldo tanjiro\nsetor nezuko 5",
+       "expected": "saldo kurang\n120\nakun tidak ada\n"
+      },
+      {
+       "input": "buka a 10\ntarik a 10\nsaldo a",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Transfer",
+     "prompt": "\"transfer <a> <b> <x>\" memindahkan x dari a ke b secara utuh: kalau salah satu akun tidak ada atau saldo a kurang, tidak ada yang berubah.",
+     "hints": [
+      "Periksa SEMUA syarat sebelum mengubah apa pun.",
+      "Kurangi a, tambah b.",
+      "Pesan error sama seperti tarik."
+     ],
+     "solution": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        Map<String, Long> akun = new HashMap<>();\n        while (in.hasNextLine()) {\n            String[] b = in.nextLine().trim().split(\" \");\n            switch (b[0]) {\n                case \"buka\" -> akun.put(b[1], Long.parseLong(b[2]));\n                case \"saldo\" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : \"akun tidak ada\");\n                case \"setor\" -> {\n                    if (!akun.containsKey(b[1])) System.out.println(\"akun tidak ada\");\n                    else akun.put(b[1], akun.get(b[1]) + Long.parseLong(b[2]));\n                }\n                case \"tarik\" -> {\n                    long x = Long.parseLong(b[2]);\n                    if (!akun.containsKey(b[1])) System.out.println(\"akun tidak ada\");\n                    else if (akun.get(b[1]) < x) System.out.println(\"saldo kurang\");\n                    else akun.put(b[1], akun.get(b[1]) - x);\n                }\n                case \"transfer\" -> {\n                    long x = Long.parseLong(b[3]);\n                    if (!akun.containsKey(b[1]) || !akun.containsKey(b[2])) System.out.println(\"akun tidak ada\");\n                    else if (akun.get(b[1]) < x) System.out.println(\"saldo kurang\");\n                    else {\n                        akun.put(b[1], akun.get(b[1]) - x);\n                        akun.put(b[2], akun.get(b[2]) + x);\n                    }\n                }\n                default -> { }\n            }\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "buka tanjiro 100\nbuka zenitsu 20\ntransfer tanjiro zenitsu 70\ntransfer zenitsu tanjiro 500\ntransfer tanjiro nezuko 1\nsaldo tanjiro\nsaldo zenitsu",
+       "expected": "saldo kurang\nakun tidak ada\n30\n90\n"
+      },
+      {
+       "input": "buka a 5\nbuka b 5\ntransfer a b 5\nsaldo b",
+       "expected": "10\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Laporan",
+     "prompt": "\"laporan\" mencetak \"nama saldo\" semua akun, urut saldo terbesar; kalau sama, urut nama.",
+     "hints": [
+      "Ambil entrySet lalu urutkan.",
+      "Bandingkan saldo menurun, lalu nama menaik.",
+      "Cetak dengan forEach."
+     ],
+     "solution": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        Map<String, Long> akun = new HashMap<>();\n        while (in.hasNextLine()) {\n            String[] b = in.nextLine().trim().split(\" \");\n            switch (b[0]) {\n                case \"buka\" -> akun.put(b[1], Long.parseLong(b[2]));\n                case \"saldo\" -> System.out.println(akun.containsKey(b[1]) ? String.valueOf(akun.get(b[1])) : \"akun tidak ada\");\n                case \"setor\" -> {\n                    if (!akun.containsKey(b[1])) System.out.println(\"akun tidak ada\");\n                    else akun.put(b[1], akun.get(b[1]) + Long.parseLong(b[2]));\n                }\n                case \"tarik\" -> {\n                    long x = Long.parseLong(b[2]);\n                    if (!akun.containsKey(b[1])) System.out.println(\"akun tidak ada\");\n                    else if (akun.get(b[1]) < x) System.out.println(\"saldo kurang\");\n                    else akun.put(b[1], akun.get(b[1]) - x);\n                }\n                case \"transfer\" -> {\n                    long x = Long.parseLong(b[3]);\n                    if (!akun.containsKey(b[1]) || !akun.containsKey(b[2])) System.out.println(\"akun tidak ada\");\n                    else if (akun.get(b[1]) < x) System.out.println(\"saldo kurang\");\n                    else {\n                        akun.put(b[1], akun.get(b[1]) - x);\n                        akun.put(b[2], akun.get(b[2]) + x);\n                    }\n                }\n                case \"laporan\" -> akun.entrySet().stream()\n                    .sorted((p, q) -> !p.getValue().equals(q.getValue()) ? Long.compare(q.getValue(), p.getValue()) : p.getKey().compareTo(q.getKey()))\n                    .forEach(e -> System.out.println(e.getKey() + \" \" + e.getValue()));\n                default -> { }\n            }\n        }\n    }\n}\n",
+     "tests": [
+      {
+       "input": "buka tanjiro 100\nbuka zenitsu 300\nbuka inosuke 100\nlaporan",
+       "expected": "zenitsu 300\ninosuke 100\ntanjiro 100\n"
+      },
+      {
+       "input": "buka a 1\nsetor a 1\nlaporan",
+       "expected": "a 2\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pemindai",
+   "title": "Mata Gagak (Port Scanner Etis)",
+   "track": "python",
+   "lang": "python",
+   "requires": "m1",
+   "emoji": "🛰️",
+   "story": "Shinobu ingin memeriksa jaringan markas SENDIRI. Pemindai ini bekerja pada peta jaringan simulasi dari input: baris 1 \"izin <jaringan/prefix>\", lalu baris \"ip port,port\" (port terbuka), lalu perintah. Tidak ada koneksi jaringan sungguhan, dan alat ini menolak target di luar izin.",
+   "starter": "import sys\n\nbaris = sys.stdin.read().splitlines()\n# tulis kodemu di sini\n",
+   "stages": [
+    {
+     "title": "Pindai satu host",
+     "prompt": "Perintah \"scan <ip>\" mencetak \"<ip>: port/layanan ...\" (port urut menaik; layanan: 21 ftp, 22 ssh, 25 smtp, 53 dns, 80 http, 443 https, 3306 mysql, lainnya ?) atau \"<ip>: tidak ada port terbuka\". Abaikan baris izin dulu.",
+     "hints": [
+      "Simpan peta ip → daftar port, dan tabel layanan dalam dict.",
+      "Urutkan port sebagai angka.",
+      "Format f\"{p}/{LAYANAN.get(p, '?')}\"."
+     ],
+     "solution": "import sys\n\nbaris = sys.stdin.read().splitlines()\nLAYANAN = {21: \"ftp\", 22: \"ssh\", 25: \"smtp\", 53: \"dns\", 80: \"http\", 443: \"https\", 3306: \"mysql\"}\nhost = {}\nperintah = []\nfor b in baris[1:]:\n    kata = b.split()\n    if kata[0] in (\"scan\", \"laporan\"):\n        perintah.append(kata)\n    else:\n        host[kata[0]] = sorted(int(p) for p in kata[1].split(\",\"))\nfor kata in perintah:\n    ip = kata[1]\n    terbuka = host.get(ip, [])\n    if not terbuka:\n        print(f\"{ip}: tidak ada port terbuka\")\n    else:\n        print(f\"{ip}: \" + \" \".join(f\"{p}/{LAYANAN.get(p, '?')}\" for p in terbuka))\n",
+     "tests": [
+      {
+       "input": "izin 192.168.10.0/24\n192.168.10.5 80,22,443\n192.168.10.9 3306\n10.0.0.1 22\nscan 192.168.10.5\nscan 192.168.10.7",
+       "expected": "192.168.10.5: 22/ssh 80/http 443/https\n192.168.10.7: tidak ada port terbuka\n"
+      },
+      {
+       "input": "izin 192.168.10.0/24\n192.168.10.5 80,22,443\n192.168.10.9 3306\n10.0.0.1 22\nscan 192.168.10.9\n10.9.9.9 8080",
+       "expected": "192.168.10.9: 3306/mysql\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Hanya dengan izin",
+     "prompt": "Target di luar jaringan izin dicetak \"DITOLAK <ip>: di luar izin\" dan tidak dipindai. Memindai jaringan orang lain tanpa izin melanggar hukum (UU ITE).",
+     "hints": [
+      "Ubah IP jadi bilangan 32-bit.",
+      "Bandingkan ip & mask dengan jaringan & mask.",
+      "Periksa sebelum mencari di peta."
+     ],
+     "solution": "import sys\n\nbaris = sys.stdin.read().splitlines()\n\n\ndef angka(ip):\n    n = 0\n    for x in ip.split(\".\"):\n        n = n * 256 + int(x)\n    return n\n\n\njaringan, prefix = baris[0].split()[1].split(\"/\")\nmask = (0xFFFFFFFF << (32 - int(prefix))) & 0xFFFFFFFF\nLAYANAN = {21: \"ftp\", 22: \"ssh\", 25: \"smtp\", 53: \"dns\", 80: \"http\", 443: \"https\", 3306: \"mysql\"}\nhost = {}\nperintah = []\nfor b in baris[1:]:\n    kata = b.split()\n    if kata[0] in (\"scan\", \"laporan\"):\n        perintah.append(kata)\n    else:\n        host[kata[0]] = sorted(int(p) for p in kata[1].split(\",\"))\nfor kata in perintah:\n    ip = kata[1]\n    if angka(ip) & mask != angka(jaringan) & mask:\n        print(f\"DITOLAK {ip}: di luar izin\")\n        continue\n    terbuka = host.get(ip, [])\n    if not terbuka:\n        print(f\"{ip}: tidak ada port terbuka\")\n    else:\n        print(f\"{ip}: \" + \" \".join(f\"{p}/{LAYANAN.get(p, '?')}\" for p in terbuka))\n",
+     "tests": [
+      {
+       "input": "izin 192.168.10.0/24\n192.168.10.5 80,22,443\n192.168.10.9 3306\n10.0.0.1 22\nscan 10.0.0.1\nscan 192.168.10.5",
+       "expected": "DITOLAK 10.0.0.1: di luar izin\n192.168.10.5: 22/ssh 80/http 443/https\n"
+      },
+      {
+       "input": "izin 10.0.0.0/8\n10.1.2.3 22\nscan 10.1.2.3\nscan 11.0.0.1",
+       "expected": "10.1.2.3: 22/ssh\nDITOLAK 11.0.0.1: di luar izin\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Rentang port",
+     "prompt": "\"scan <ip> <awal>-<akhir>\" hanya melaporkan port terbuka di rentang itu (termasuk kedua ujung). Tanpa rentang, perilakunya tetap seperti sebelumnya.",
+     "hints": [
+      "Kata ketiga (kalau ada) berisi \"a-b\".",
+      "map(int, ...split(\"-\")).",
+      "Saring dengan a <= p <= b."
+     ],
+     "solution": "import sys\n\nbaris = sys.stdin.read().splitlines()\n\n\ndef angka(ip):\n    n = 0\n    for x in ip.split(\".\"):\n        n = n * 256 + int(x)\n    return n\n\n\njaringan, prefix = baris[0].split()[1].split(\"/\")\nmask = (0xFFFFFFFF << (32 - int(prefix))) & 0xFFFFFFFF\nLAYANAN = {21: \"ftp\", 22: \"ssh\", 25: \"smtp\", 53: \"dns\", 80: \"http\", 443: \"https\", 3306: \"mysql\"}\nhost = {}\nperintah = []\nfor b in baris[1:]:\n    kata = b.split()\n    if kata[0] in (\"scan\", \"laporan\"):\n        perintah.append(kata)\n    else:\n        host[kata[0]] = sorted(int(p) for p in kata[1].split(\",\"))\nfor kata in perintah:\n    ip = kata[1]\n    if angka(ip) & mask != angka(jaringan) & mask:\n        print(f\"DITOLAK {ip}: di luar izin\")\n        continue\n    terbuka = host.get(ip, [])\n    if len(kata) > 2:\n        a, b = map(int, kata[2].split(\"-\"))\n        terbuka = [p for p in terbuka if a <= p <= b]\n    if not terbuka:\n        print(f\"{ip}: tidak ada port terbuka\")\n    else:\n        print(f\"{ip}: \" + \" \".join(f\"{p}/{LAYANAN.get(p, '?')}\" for p in terbuka))\n",
+     "tests": [
+      {
+       "input": "izin 192.168.10.0/24\n192.168.10.5 80,22,443\n192.168.10.9 3306\n10.0.0.1 22\nscan 192.168.10.5 1-100\nscan 192.168.10.5 400-500\nscan 192.168.10.9 1-1000",
+       "expected": "192.168.10.5: 22/ssh 80/http\n192.168.10.5: 443/https\n192.168.10.9: tidak ada port terbuka\n"
+      },
+      {
+       "input": "izin 10.0.0.0/8\n10.0.0.7 8080,53\nscan 10.0.0.7 53-53",
+       "expected": "10.0.0.7: 53/dns\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Laporan",
+     "prompt": "\"laporan\" mencetak \"N host dipindai, M port terbuka, terbanyak <ip> (k)\" untuk host yang SUDAH dipindai (hasil scan terakhir per host; host ditolak tidak dihitung; seri → ip terkecil secara teks). Kalau belum ada: \"0 host dipindai\".",
+     "hints": [
+      "Catat hasil setiap scan yang diizinkan.",
+      "Pakai dict ip → port.",
+      "max(sorted(...), key=...) memilih yang terbanyak, seri → urutan teks."
+     ],
+     "solution": "import sys\n\nbaris = sys.stdin.read().splitlines()\n\n\ndef angka(ip):\n    n = 0\n    for x in ip.split(\".\"):\n        n = n * 256 + int(x)\n    return n\n\n\njaringan, prefix = baris[0].split()[1].split(\"/\")\nmask = (0xFFFFFFFF << (32 - int(prefix))) & 0xFFFFFFFF\nLAYANAN = {21: \"ftp\", 22: \"ssh\", 25: \"smtp\", 53: \"dns\", 80: \"http\", 443: \"https\", 3306: \"mysql\"}\nhost = {}\nperintah = []\nfor b in baris[1:]:\n    kata = b.split()\n    if kata[0] in (\"scan\", \"laporan\"):\n        perintah.append(kata)\n    else:\n        host[kata[0]] = sorted(int(p) for p in kata[1].split(\",\"))\ndipindai = {}\nfor kata in perintah:\n    if kata[0] == \"laporan\":\n        total = sum(len(v) for v in dipindai.values())\n        if dipindai:\n            ip_top = max(sorted(dipindai), key=lambda i: len(dipindai[i]))\n            print(f\"{len(dipindai)} host dipindai, {total} port terbuka, terbanyak {ip_top} ({len(dipindai[ip_top])})\")\n        else:\n            print(\"0 host dipindai\")\n        continue\n    ip = kata[1]\n    if angka(ip) & mask != angka(jaringan) & mask:\n        print(f\"DITOLAK {ip}: di luar izin\")\n        continue\n    terbuka = host.get(ip, [])\n    if len(kata) > 2:\n        a, b = map(int, kata[2].split(\"-\"))\n        terbuka = [p for p in terbuka if a <= p <= b]\n    dipindai[ip] = terbuka\n    if not terbuka:\n        print(f\"{ip}: tidak ada port terbuka\")\n    else:\n        print(f\"{ip}: \" + \" \".join(f\"{p}/{LAYANAN.get(p, '?')}\" for p in terbuka))\n",
+     "tests": [
+      {
+       "input": "izin 192.168.10.0/24\n192.168.10.5 80,22,443\n192.168.10.9 3306\n10.0.0.1 22\nlaporan\nscan 192.168.10.5\nscan 192.168.10.9\nscan 10.0.0.1\nlaporan",
+       "expected": "0 host dipindai\n192.168.10.5: 22/ssh 80/http 443/https\n192.168.10.9: 3306/mysql\nDITOLAK 10.0.0.1: di luar izin\n2 host dipindai, 4 port terbuka, terbanyak 192.168.10.5 (3)\n"
+      },
+      {
+       "input": "izin 10.0.0.0/8\n10.0.0.2 22\n10.0.0.1 80\nscan 10.0.0.2\nscan 10.0.0.1\nlaporan",
+       "expected": "10.0.0.2: 22/ssh\n10.0.0.1: 80/http\n2 host dipindai, 2 port terbuka, terbanyak 10.0.0.1 (1)\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rest-router",
+   "title": "Pos Gagak (REST API)",
+   "track": "go",
+   "lang": "go",
+   "requires": "f7",
+   "emoji": "📮",
+   "story": "Markas butuh layanan pencatat misi. Setiap baris input adalah satu request \"METHOD PATH [body]\"; cetak status code dan isi response.",
+   "starter": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tfmt.Println(bagian)\n\t}\n}\n",
+   "stages": [
+    {
+     "title": "GET & POST /misi",
+     "prompt": "\"POST /misi <judul>\" menyimpan misi dan mencetak \"201 <id>\" (id mulai 1). \"GET /misi\" mencetak \"200 judul1,judul2,...\" atau \"200 (kosong)\".",
+     "hints": [
+      "Pecah baris dengan strings.SplitN(..., \" \", 3).",
+      "Simpan judul di slice.",
+      "id = urutan tambah."
+     ],
+     "solution": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar judul []string\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && path == \"/misi\":\n\t\t\tif len(judul) == 0 {\n\t\t\t\tfmt.Println(\"200 (kosong)\")\n\t\t\t} else {\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(judul, \",\"))\n\t\t\t}\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tjudul = append(judul, bagian[2])\n\t\t\tfmt.Printf(\"201 %d\\n\", len(judul))\n\t\t}\n\t}\n}\n",
+     "tests": [
+      {
+       "input": "GET /misi\nPOST /misi Natagumo\nPOST /misi Kereta Mugen\nGET /misi",
+       "expected": "200 (kosong)\n201 1\n201 2\n200 Natagumo,Kereta Mugen\n"
+      },
+      {
+       "input": "POST /misi Desa Penempa\nGET /misi",
+       "expected": "201 1\n200 Desa Penempa\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "GET /misi/{id}",
+     "prompt": "\"GET /misi/<id>\" mencetak \"200 <judul>\", \"404 tidak ditemukan\" kalau id tidak ada, atau \"400 id tidak valid\" kalau id bukan angka.",
+     "hints": [
+      "Simpan id bersama judul (struct).",
+      "strconv.Atoi untuk id.",
+      "Cari id di slice."
+     ],
+     "solution": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype misi struct {\n\tid    int\n\tjudul string\n}\n\nfunc main() {\n\tvar data []misi\n\tnext := 1\n\tcari := func(id int) int {\n\t\tfor i, m := range data {\n\t\t\tif m.id == id {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn -1\n\t}\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && path == \"/misi\":\n\t\t\tif len(data) == 0 {\n\t\t\t\tfmt.Println(\"200 (kosong)\")\n\t\t\t} else {\n\t\t\t\tvar j []string\n\t\t\t\tfor _, m := range data {\n\t\t\t\t\tj = append(j, m.judul)\n\t\t\t\t}\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(j, \",\"))\n\t\t\t}\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tdata = append(data, misi{next, bagian[2]})\n\t\t\tfmt.Printf(\"201 %d\\n\", next)\n\t\t\tnext++\n\t\tcase method == \"GET\" && strings.HasPrefix(path, \"/misi/\"):\n\t\t\tid, err := strconv.Atoi(strings.TrimPrefix(path, \"/misi/\"))\n\t\t\tif err != nil {\n\t\t\t\tfmt.Println(\"400 id tidak valid\")\n\t\t\t} else if i := cari(id); i < 0 {\n\t\t\t\tfmt.Println(\"404 tidak ditemukan\")\n\t\t\t} else {\n\t\t\t\tfmt.Println(\"200 \" + data[i].judul)\n\t\t\t}\n\t\t}\n\t}\n}\n",
+     "tests": [
+      {
+       "input": "POST /misi A\nPOST /misi B\nGET /misi/2\nGET /misi/9\nGET /misi/abc",
+       "expected": "201 1\n201 2\n200 B\n404 tidak ditemukan\n400 id tidak valid\n"
+      },
+      {
+       "input": "GET /misi/1",
+       "expected": "404 tidak ditemukan\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "DELETE & error rute",
+     "prompt": "\"DELETE /misi/<id>\" menghapus dan mencetak \"204\" (404/400 seperti GET). Method lain pada /misi atau /misi/<id> → \"405 method tidak diizinkan\"; path lain → \"404 rute tidak ada\". id TIDAK dipakai ulang.",
+     "hints": [
+      "Gabungkan GET & DELETE untuk /misi/<id>.",
+      "Hapus elemen slice: append(s[:i], s[i+1:]...).",
+      "Urutan case penting: rute spesifik dulu."
+     ],
+     "solution": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype misi struct {\n\tid    int\n\tjudul string\n}\n\nfunc main() {\n\tvar data []misi\n\tnext := 1\n\tcari := func(id int) int {\n\t\tfor i, m := range data {\n\t\t\tif m.id == id {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn -1\n\t}\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && path == \"/misi\":\n\t\t\tif len(data) == 0 {\n\t\t\t\tfmt.Println(\"200 (kosong)\")\n\t\t\t} else {\n\t\t\t\tvar j []string\n\t\t\t\tfor _, m := range data {\n\t\t\t\t\tj = append(j, m.judul)\n\t\t\t\t}\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(j, \",\"))\n\t\t\t}\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tdata = append(data, misi{next, bagian[2]})\n\t\t\tfmt.Printf(\"201 %d\\n\", next)\n\t\t\tnext++\n\t\tcase strings.HasPrefix(path, \"/misi/\") && (method == \"GET\" || method == \"DELETE\"):\n\t\t\tid, err := strconv.Atoi(strings.TrimPrefix(path, \"/misi/\"))\n\t\t\tif err != nil {\n\t\t\t\tfmt.Println(\"400 id tidak valid\")\n\t\t\t} else if i := cari(id); i < 0 {\n\t\t\t\tfmt.Println(\"404 tidak ditemukan\")\n\t\t\t} else if method == \"GET\" {\n\t\t\t\tfmt.Println(\"200 \" + data[i].judul)\n\t\t\t} else {\n\t\t\t\tdata = append(data[:i], data[i+1:]...)\n\t\t\t\tfmt.Println(\"204\")\n\t\t\t}\n\t\tcase path == \"/misi\" || strings.HasPrefix(path, \"/misi/\"):\n\t\t\tfmt.Println(\"405 method tidak diizinkan\")\n\t\tdefault:\n\t\t\tfmt.Println(\"404 rute tidak ada\")\n\t\t}\n\t}\n}\n",
+     "tests": [
+      {
+       "input": "POST /misi A\nPOST /misi B\nDELETE /misi/1\nGET /misi\nDELETE /misi/1\nPUT /misi/2\nGET /iblis\nPOST /misi C\nGET /misi/3",
+       "expected": "201 1\n201 2\n204\n200 B\n404 tidak ditemukan\n405 method tidak diizinkan\n404 rute tidak ada\n201 3\n200 C\n"
+      },
+      {
+       "input": "PATCH /misi\nDELETE /misi/x",
+       "expected": "405 method tidak diizinkan\n400 id tidak valid\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Pencarian",
+     "prompt": "\"GET /misi?cari=<kata>\" mencetak judul yang memuat kata itu (tidak peka huruf besar/kecil), dengan format sama seperti GET /misi.",
+     "hints": [
+      "Pisahkan path dan query ?cari=.",
+      "strings.ToLower di kedua sisi.",
+      "Tanpa hasil → \"200 (kosong)\"."
+     ],
+     "solution": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype misi struct {\n\tid    int\n\tjudul string\n}\n\nfunc main() {\n\tvar data []misi\n\tnext := 1\n\tcari := func(id int) int {\n\t\tfor i, m := range data {\n\t\t\tif m.id == id {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn -1\n\t}\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && (path == \"/misi\" || strings.HasPrefix(path, \"/misi?cari=\")):\n\t\t\tkata := strings.ToLower(strings.TrimPrefix(path, \"/misi?cari=\"))\n\t\t\tif path == \"/misi\" {\n\t\t\t\tkata = \"\"\n\t\t\t}\n\t\t\tvar j []string\n\t\t\tfor _, m := range data {\n\t\t\t\tif strings.Contains(strings.ToLower(m.judul), kata) {\n\t\t\t\t\tj = append(j, m.judul)\n\t\t\t\t}\n\t\t\t}\n\t\t\tif len(j) == 0 {\n\t\t\t\tfmt.Println(\"200 (kosong)\")\n\t\t\t} else {\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(j, \",\"))\n\t\t\t}\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tdata = append(data, misi{next, bagian[2]})\n\t\t\tfmt.Printf(\"201 %d\\n\", next)\n\t\t\tnext++\n\t\tcase strings.HasPrefix(path, \"/misi/\") && (method == \"GET\" || method == \"DELETE\"):\n\t\t\tid, err := strconv.Atoi(strings.TrimPrefix(path, \"/misi/\"))\n\t\t\tif err != nil {\n\t\t\t\tfmt.Println(\"400 id tidak valid\")\n\t\t\t} else if i := cari(id); i < 0 {\n\t\t\t\tfmt.Println(\"404 tidak ditemukan\")\n\t\t\t} else if method == \"GET\" {\n\t\t\t\tfmt.Println(\"200 \" + data[i].judul)\n\t\t\t} else {\n\t\t\t\tdata = append(data[:i], data[i+1:]...)\n\t\t\t\tfmt.Println(\"204\")\n\t\t\t}\n\t\tcase path == \"/misi\" || strings.HasPrefix(path, \"/misi/\"):\n\t\t\tfmt.Println(\"405 method tidak diizinkan\")\n\t\tdefault:\n\t\t\tfmt.Println(\"404 rute tidak ada\")\n\t\t}\n\t}\n}\n",
+     "tests": [
+      {
+       "input": "POST /misi Gunung Natagumo\nPOST /misi Kereta Mugen\nPOST /misi Gunung Fuji\nGET /misi?cari=gunung\nGET /misi?cari=iblis",
+       "expected": "201 1\n201 2\n201 3\n200 Gunung Natagumo,Gunung Fuji\n200 (kosong)\n"
+      },
+      {
+       "input": "GET /misi?cari=x",
+       "expected": "200 (kosong)\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "snake",
+   "title": "Ular Gunung Natagumo",
+   "track": "js",
+   "lang": "javascript",
+   "requires": "f7",
+   "emoji": "🐍",
+   "story": "Mesin permainan ular untuk melatih refleks. Input: baris 1 \"W H\" (ukuran papan), baris 2 posisi makanan \"x,y x,y\" atau \"-\", baris 3 langkah (huruf R L U D). Ular mulai di (0,0) dengan panjang 1. Cetak \"x y panjang\" posisi kepala akhir.",
+   "starter": "const baris = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")\nconst [W, H] = baris[0].trim().split(\" \")\nconst langkah = (baris[2] ?? \"\").trim()\n// tulis kodemu di sini\n",
+   "stages": [
+    {
+     "title": "Bergerak",
+     "prompt": "Gerakkan kepala sesuai langkah (R kanan, L kiri, U atas, D bawah; y bertambah ke bawah). Abaikan makanan dulu; panjang tetap 1. Cetak \"x y 1\".",
+     "hints": [
+      "Simpan arah dalam objek: R → [1, 0].",
+      "Tambah dx, dy ke posisi kepala.",
+      "Cetak `${x} ${y} ${panjang}`."
+     ],
+     "solution": "const baris = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")\nconst [W, H, mode] = baris[0].trim().split(\" \")\nconst makanan = (baris[1] ?? \"\").trim() === \"-\" ? [] : (baris[1] ?? \"\").trim().split(\" \").map(p => p.split(\",\").map(Number))\nconst langkah = (baris[2] ?? \"\").trim()\nconst arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }\nlet ular = [[0, 0]]\nlet mati = 0\nfor (let i = 0; i < langkah.length; i++) {\n  const [dx, dy] = arah[langkah[i]]\n  let x = ular[0][0] + dx, y = ular[0][1] + dy\n  ular.unshift([x, y])\n  ular.pop()\n}\nconsole.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)\n",
+     "tests": [
+      {
+       "input": "5 5\n-\nRRDDR",
+       "expected": "3 2 1\n"
+      },
+      {
+       "input": "3 3\n-\nRDLDR",
+       "expected": "1 2 1\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Makan & tumbuh",
+     "prompt": "Kalau kepala tiba di posisi makanan, makanan habis dan ular bertambah panjang 1 (ekor tidak dipotong pada langkah itu).",
+     "hints": [
+      "Ular = daftar posisi, kepala di indeks 0.",
+      "Tiap langkah: tambah kepala baru, buang ekor.",
+      "Kalau makan, jangan buang ekor."
+     ],
+     "solution": "const baris = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")\nconst [W, H, mode] = baris[0].trim().split(\" \")\nconst makanan = (baris[1] ?? \"\").trim() === \"-\" ? [] : (baris[1] ?? \"\").trim().split(\" \").map(p => p.split(\",\").map(Number))\nconst langkah = (baris[2] ?? \"\").trim()\nconst arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }\nlet ular = [[0, 0]]\nlet mati = 0\nfor (let i = 0; i < langkah.length; i++) {\n  const [dx, dy] = arah[langkah[i]]\n  let x = ular[0][0] + dx, y = ular[0][1] + dy\n  ular.unshift([x, y])\n  const k = makanan.findIndex(([a, b]) => a === x && b === y)\n  if (k >= 0) makanan.splice(k, 1)\n  else ular.pop()\n}\nconsole.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)\n",
+     "tests": [
+      {
+       "input": "6 6\n1,0 2,0 2,2\nRRDD",
+       "expected": "2 2 4\n"
+      },
+      {
+       "input": "5 5\n3,3\nRRDD",
+       "expected": "2 2 1\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Dinding & tabrakan",
+     "prompt": "Keluar papan atau menabrak badan sendiri = mati. Cetak \"game over <n>\" dengan n nomor langkah (mulai 1) saat mati, dan berhenti.",
+     "hints": [
+      "Periksa posisi kepala baru sebelum bergerak.",
+      "Ekor yang akan dipotong tidak dihitung sebagai badan.",
+      "break setelah mati."
+     ],
+     "solution": "const baris = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")\nconst [W, H, mode] = baris[0].trim().split(\" \")\nconst makanan = (baris[1] ?? \"\").trim() === \"-\" ? [] : (baris[1] ?? \"\").trim().split(\" \").map(p => p.split(\",\").map(Number))\nconst langkah = (baris[2] ?? \"\").trim()\nconst arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }\nlet ular = [[0, 0]]\nlet mati = 0\nfor (let i = 0; i < langkah.length; i++) {\n  const [dx, dy] = arah[langkah[i]]\n  let x = ular[0][0] + dx, y = ular[0][1] + dy\n  const kena = x < 0 || y < 0 || x >= +W || y >= +H || ular.slice(0, -1).some(([a, b]) => a === x && b === y)\n  if (kena) { mati = i + 1; break }\n  ular.unshift([x, y])\n  const k = makanan.findIndex(([a, b]) => a === x && b === y)\n  if (k >= 0) makanan.splice(k, 1)\n  else ular.pop()\n}\nconsole.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)\n",
+     "tests": [
+      {
+       "input": "4 4\n-\nRRRR",
+       "expected": "game over 4\n"
+      },
+      {
+       "input": "6 6\n1,0 2,0 2,1 1,1\nRRDLU",
+       "expected": "game over 5\n",
+       "hidden": true
+      },
+      {
+       "input": "5 5\n-\nDDRR",
+       "expected": "2 2 1\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Mode tembus",
+     "prompt": "Kalau baris 1 berisi kata ketiga \"tembus\", ular yang keluar papan muncul di sisi seberang (tidak mati). Tabrakan badan tetap mati.",
+     "hints": [
+      "Baca kata ketiga di baris pertama.",
+      "Gunakan modulo: (x + W) % W.",
+      "Lakukan sebelum pemeriksaan tabrakan."
+     ],
+     "solution": "const baris = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")\nconst [W, H, mode] = baris[0].trim().split(\" \")\nconst makanan = (baris[1] ?? \"\").trim() === \"-\" ? [] : (baris[1] ?? \"\").trim().split(\" \").map(p => p.split(\",\").map(Number))\nconst langkah = (baris[2] ?? \"\").trim()\nconst arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }\nlet ular = [[0, 0]]\nlet mati = 0\nfor (let i = 0; i < langkah.length; i++) {\n  const [dx, dy] = arah[langkah[i]]\n  let x = ular[0][0] + dx, y = ular[0][1] + dy\n  if (mode === \"tembus\") { x = (x + +W) % +W; y = (y + +H) % +H }\n  const kena = x < 0 || y < 0 || x >= +W || y >= +H || ular.slice(0, -1).some(([a, b]) => a === x && b === y)\n  if (kena) { mati = i + 1; break }\n  ular.unshift([x, y])\n  const k = makanan.findIndex(([a, b]) => a === x && b === y)\n  if (k >= 0) makanan.splice(k, 1)\n  else ular.pop()\n}\nconsole.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)\n",
+     "tests": [
+      {
+       "input": "3 3 tembus\n-\nLLUU",
+       "expected": "1 1 1\n"
+      },
+      {
+       "input": "4 4 tembus\n1,0 2,0 3,0\nRRRRR",
+       "expected": "1 0 4\n",
+       "hidden": true
+      },
+      {
+       "input": "4 4\n-\nL",
+       "expected": "game over 1\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "todo-cli",
+   "title": "Gulungan Tugas Korps",
+   "track": "python",
+   "lang": "python",
+   "requires": "f7",
+   "emoji": "📜",
+   "story": "Gagak Kasugai kewalahan mengingat semua misi. Tempa aplikasi to-do baris perintah yang menerima perintah lewat input, satu per baris.",
+   "starter": "import sys\n\nfor baris in sys.stdin.read().splitlines():\n    perintah, _, sisa = baris.partition(\" \")\n    # tulis kodemu di sini\n",
+   "stages": [
+    {
+     "title": "Tambah & lihat",
+     "prompt": "Perintah \"tambah <teks>\" menambah tugas, \"lihat\" mencetak semua tugas dengan format \"1. [ ] teks\". Kalau belum ada tugas, \"lihat\" mencetak \"(kosong)\".",
+     "hints": [
+      "Simpan tugas di list.",
+      "enumerate(tugas, 1) memberi nomor mulai 1.",
+      "Format: f\"{i}. [ ] {t}\""
+     ],
+     "solution": "import sys\n\ntugas = []\n\n\ndef lihat():\n    if not tugas:\n        print(\"(kosong)\")\n    for i, t in enumerate(tugas, 1):\n        print(f\"{i}. [ ] {t}\")\n\n\nfor baris in sys.stdin.read().splitlines():\n    perintah, _, sisa = baris.partition(\" \")\n    if perintah == \"tambah\":\n        tugas.append(sisa)\n    elif perintah == \"lihat\":\n        lihat()\n",
+     "tests": [
+      {
+       "input": "tambah Latihan pernapasan\ntambah Asah pedang\nlihat",
+       "expected": "1. [ ] Latihan pernapasan\n2. [ ] Asah pedang\n"
+      },
+      {
+       "input": "lihat\ntambah Makan onigiri\nlihat",
+       "expected": "(kosong)\n1. [ ] Makan onigiri\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Selesai & hapus",
+     "prompt": "Tambahkan \"selesai <n>\" (tandai [x]) dan \"hapus <n>\". Nomor yang bukan angka atau di luar daftar mencetak \"nomor tidak valid\".",
+     "hints": [
+      "Simpan status selesai bersama teksnya.",
+      "Nomor tampilan mulai 1, indeks list mulai 0.",
+      "Periksa isdigit() dan rentangnya."
+     ],
+     "solution": "import sys\n\ntugas = []  # setiap tugas: [teks, selesai]\n\n\ndef lihat():\n    if not tugas:\n        print(\"(kosong)\")\n    for i, (t, ok) in enumerate(tugas, 1):\n        print(f\"{i}. [{'x' if ok else ' '}] {t}\")\n\n\ndef nomor(sisa):\n    if sisa.isdigit() and 1 <= int(sisa) <= len(tugas):\n        return int(sisa) - 1\n    print(\"nomor tidak valid\")\n    return None\n\n\nfor baris in sys.stdin.read().splitlines():\n    perintah, _, sisa = baris.partition(\" \")\n    if perintah == \"tambah\":\n        tugas.append([sisa, False])\n    elif perintah == \"lihat\":\n        lihat()\n    elif perintah == \"selesai\":\n        i = nomor(sisa)\n        if i is not None:\n            tugas[i][1] = True\n    elif perintah == \"hapus\":\n        i = nomor(sisa)\n        if i is not None:\n            tugas.pop(i)\n",
+     "tests": [
+      {
+       "input": "tambah A\ntambah B\ntambah C\nselesai 2\nhapus 1\nlihat",
+       "expected": "1. [x] B\n2. [ ] C\n"
+      },
+      {
+       "input": "tambah A\nselesai 3\nhapus x\nselesai 1\nlihat",
+       "expected": "nomor tidak valid\nnomor tidak valid\n1. [x] A\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Cari",
+     "prompt": "Tambahkan \"cari <kata>\": cetak tugas yang memuat kata itu (tidak peka huruf besar/kecil) lengkap dengan nomor aslinya, atau \"tidak ditemukan\".",
+     "hints": [
+      "Bandingkan dengan .lower().",
+      "Simpan nomor asli saat menyaring.",
+      "Kalau kosong cetak \"tidak ditemukan\"."
+     ],
+     "solution": "import sys\n\ntugas = []  # setiap tugas: [teks, selesai]\n\n\ndef lihat():\n    if not tugas:\n        print(\"(kosong)\")\n    for i, (t, ok) in enumerate(tugas, 1):\n        print(f\"{i}. [{'x' if ok else ' '}] {t}\")\n\n\ndef nomor(sisa):\n    if sisa.isdigit() and 1 <= int(sisa) <= len(tugas):\n        return int(sisa) - 1\n    print(\"nomor tidak valid\")\n    return None\n\n\nfor baris in sys.stdin.read().splitlines():\n    perintah, _, sisa = baris.partition(\" \")\n    if perintah == \"tambah\":\n        tugas.append([sisa, False])\n    elif perintah == \"lihat\":\n        lihat()\n    elif perintah == \"selesai\":\n        i = nomor(sisa)\n        if i is not None:\n            tugas[i][1] = True\n    elif perintah == \"cari\":\n        hasil = [(i, t, ok) for i, (t, ok) in enumerate(tugas, 1) if sisa.lower() in t.lower()]\n        if not hasil:\n            print(\"tidak ditemukan\")\n        for i, t, ok in hasil:\n            print(f\"{i}. [{'x' if ok else ' '}] {t}\")\n    elif perintah == \"hapus\":\n        i = nomor(sisa)\n        if i is not None:\n            tugas.pop(i)\n",
+     "tests": [
+      {
+       "input": "tambah Latihan pedang\ntambah Makan\ntambah Asah PEDANG\nselesai 3\ncari pedang",
+       "expected": "1. [ ] Latihan pedang\n3. [x] Asah PEDANG\n"
+      },
+      {
+       "input": "tambah A\ncari zzz",
+       "expected": "tidak ditemukan\n",
+       "hidden": true
+      }
+     ]
+    },
+    {
+     "title": "Statistik",
+     "prompt": "Tambahkan \"statistik\": cetak \"total X, selesai Y, sisa Z\".",
+     "hints": [
+      "Hitung tugas yang selesai.",
+      "sisa = total - selesai.",
+      "Formatnya harus persis."
+     ],
+     "solution": "import sys\n\ntugas = []  # setiap tugas: [teks, selesai]\n\n\ndef lihat():\n    if not tugas:\n        print(\"(kosong)\")\n    for i, (t, ok) in enumerate(tugas, 1):\n        print(f\"{i}. [{'x' if ok else ' '}] {t}\")\n\n\ndef nomor(sisa):\n    if sisa.isdigit() and 1 <= int(sisa) <= len(tugas):\n        return int(sisa) - 1\n    print(\"nomor tidak valid\")\n    return None\n\n\nfor baris in sys.stdin.read().splitlines():\n    perintah, _, sisa = baris.partition(\" \")\n    if perintah == \"tambah\":\n        tugas.append([sisa, False])\n    elif perintah == \"lihat\":\n        lihat()\n    elif perintah == \"selesai\":\n        i = nomor(sisa)\n        if i is not None:\n            tugas[i][1] = True\n    elif perintah == \"cari\":\n        hasil = [(i, t, ok) for i, (t, ok) in enumerate(tugas, 1) if sisa.lower() in t.lower()]\n        if not hasil:\n            print(\"tidak ditemukan\")\n        for i, t, ok in hasil:\n            print(f\"{i}. [{'x' if ok else ' '}] {t}\")\n    elif perintah == \"statistik\":\n        selesai = sum(1 for _, ok in tugas if ok)\n        print(f\"total {len(tugas)}, selesai {selesai}, sisa {len(tugas) - selesai}\")\n    elif perintah == \"hapus\":\n        i = nomor(sisa)\n        if i is not None:\n            tugas.pop(i)\n",
+     "tests": [
+      {
+       "input": "tambah A\ntambah B\ntambah C\nselesai 1\nstatistik",
+       "expected": "total 3, selesai 1, sisa 2\n"
+      },
+      {
+       "input": "statistik\ntambah A\nselesai 1\nhapus 1\nstatistik",
+       "expected": "total 0, selesai 0, sisa 0\ntotal 0, selesai 0, sisa 0\n",
+       "hidden": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "toko",
+   "title": "Toko Perlengkapan Korps",
+   "track": "sql",
+   "lang": "sql",
+   "requires": "f7",
+   "emoji": "🏪",
+   "story": "Toko perlengkapan korps butuh database. Kodemu adalah satu skrip SQL yang tumbuh setiap tahap; pemeriksa menjalankan query setelah skripmu.",
+   "starter": "-- tulis skrip SQL-mu di sini\n",
+   "regression": false,
+   "stages": [
+    {
+     "title": "Tabel produk",
+     "prompt": "Buat tabel produk: id (INTEGER PRIMARY KEY), nama (TEXT, wajib, unik), harga (INTEGER, wajib, > 0), stok (INTEGER, wajib, bawaan 0). Pemeriksa mencoba data valid dan tidak valid.",
+     "hints": [
+      "NOT NULL UNIQUE untuk nama.",
+      "CHECK (harga > 0).",
+      "DEFAULT 0 untuk stok."
+     ],
+     "solution": "CREATE TABLE produk (\n  id INTEGER PRIMARY KEY,\n  nama TEXT NOT NULL UNIQUE,\n  harga INTEGER NOT NULL CHECK (harga > 0),\n  stok INTEGER NOT NULL DEFAULT 0\n);\n",
+     "after": "INSERT OR IGNORE INTO produk (nama, harga) VALUES ('Tes', 10), ('Tes', 20), ('Gratis', 0), (NULL, 5);\nSELECT nama, harga, stok FROM produk;\n",
+     "tests": [
+      {
+       "expected": "Tes|10|0\n"
+      }
+     ]
+    },
+    {
+     "title": "Isi rak",
+     "prompt": "Tambahkan 5 produk: Pedang Nichirin (500, stok 3), Haori (120, 10), Onigiri (5, 50), Topeng Rubah (40, 7), Racun Wisteria (80, 0), dengan urutan itu.",
+     "hints": [
+      "Satu INSERT dengan beberapa baris VALUES.",
+      "Teks diapit kutip tunggal.",
+      "Urutan kolom: nama, harga, stok."
+     ],
+     "solution": "CREATE TABLE produk (\n  id INTEGER PRIMARY KEY,\n  nama TEXT NOT NULL UNIQUE,\n  harga INTEGER NOT NULL CHECK (harga > 0),\n  stok INTEGER NOT NULL DEFAULT 0\n);\nINSERT INTO produk (nama, harga, stok) VALUES\n  ('Pedang Nichirin', 500, 3),\n  ('Haori', 120, 10),\n  ('Onigiri', 5, 50),\n  ('Topeng Rubah', 40, 7),\n  ('Racun Wisteria', 80, 0);\n",
+     "after": "SELECT COUNT(*), SUM(stok), MAX(harga) FROM produk;\nSELECT nama FROM produk WHERE stok = 0;\n",
+     "tests": [
+      {
+       "expected": "Racun Wisteria\n"
+      }
+     ]
+    },
+    {
+     "title": "Catat penjualan",
+     "prompt": "Buat tabel penjualan: id, produk_id (wajib, merujuk produk), jumlah (wajib, > 0), lalu catat penjualan: produk 1 ×1, produk 3 ×12, produk 2 ×2, produk 3 ×8, produk 4 ×1.",
+     "hints": [
+      "REFERENCES produk(id) untuk relasi.",
+      "CHECK (jumlah > 0).",
+      "Lima baris penjualan."
+     ],
+     "solution": "CREATE TABLE produk (\n  id INTEGER PRIMARY KEY,\n  nama TEXT NOT NULL UNIQUE,\n  harga INTEGER NOT NULL CHECK (harga > 0),\n  stok INTEGER NOT NULL DEFAULT 0\n);\nINSERT INTO produk (nama, harga, stok) VALUES\n  ('Pedang Nichirin', 500, 3),\n  ('Haori', 120, 10),\n  ('Onigiri', 5, 50),\n  ('Topeng Rubah', 40, 7),\n  ('Racun Wisteria', 80, 0);\nCREATE TABLE penjualan (\n  id INTEGER PRIMARY KEY,\n  produk_id INTEGER NOT NULL REFERENCES produk(id),\n  jumlah INTEGER NOT NULL CHECK (jumlah > 0)\n);\nINSERT INTO penjualan (produk_id, jumlah) VALUES (1, 1), (3, 12), (2, 2), (3, 8), (4, 1);\n",
+     "after": "SELECT p.nama, SUM(j.jumlah) FROM penjualan j JOIN produk p ON p.id = j.produk_id GROUP BY p.id ORDER BY p.id;\n",
+     "tests": [
+      {
+       "expected": "Pedang Nichirin|1\nHaori|2\nOnigiri|20\nTopeng Rubah|1\n"
+      }
+     ]
+    },
+    {
+     "title": "Laporan",
+     "prompt": "Buat VIEW laporan berisi nama produk, total terjual (terjual), dan pendapatan (jumlah × harga) per produk yang pernah terjual.",
+     "hints": [
+      "CREATE VIEW laporan AS SELECT ...",
+      "JOIN penjualan dengan produk.",
+      "GROUP BY produk."
+     ],
+     "solution": "CREATE TABLE produk (\n  id INTEGER PRIMARY KEY,\n  nama TEXT NOT NULL UNIQUE,\n  harga INTEGER NOT NULL CHECK (harga > 0),\n  stok INTEGER NOT NULL DEFAULT 0\n);\nINSERT INTO produk (nama, harga, stok) VALUES\n  ('Pedang Nichirin', 500, 3),\n  ('Haori', 120, 10),\n  ('Onigiri', 5, 50),\n  ('Topeng Rubah', 40, 7),\n  ('Racun Wisteria', 80, 0);\nCREATE TABLE penjualan (\n  id INTEGER PRIMARY KEY,\n  produk_id INTEGER NOT NULL REFERENCES produk(id),\n  jumlah INTEGER NOT NULL CHECK (jumlah > 0)\n);\nINSERT INTO penjualan (produk_id, jumlah) VALUES (1, 1), (3, 12), (2, 2), (3, 8), (4, 1);\nCREATE VIEW laporan AS\nSELECT p.nama, SUM(j.jumlah) AS terjual, SUM(j.jumlah * p.harga) AS pendapatan\nFROM penjualan j JOIN produk p ON p.id = j.produk_id\nGROUP BY p.id;\n",
+     "after": "SELECT nama, terjual, pendapatan FROM laporan ORDER BY pendapatan DESC;\n",
+     "tests": [
+      {
+       "expected": "Pedang Nichirin|1|500\nHaori|2|240\nOnigiri|20|100\nTopeng Rubah|1|40\n"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

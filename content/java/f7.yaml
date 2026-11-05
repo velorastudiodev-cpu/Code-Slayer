@@ -1,0 +1,159 @@
+lesson:
+  - text: Method di Java ditulis di dalam class. Method yang dipanggil dari main (yang static) juga harus static, misalnya static int kuadrat(int x). Parameter primitif dikirim sebagai salinan. Objek dikirim sebagai salinan referensinya, sehingga isinya bisa diubah.
+    code: |
+      public class Main {
+          static int kuadrat(int x) { return x * x; }
+          static void naik(int x) { x++; }
+          static void naikArray(int[] a) { a[0]++; }
+
+          public static void main(String[] args) {
+              int n = 1;
+              int[] arr = {1};
+              naik(n);
+              naikArray(arr);
+              System.out.println(kuadrat(7) + " " + n + " " + arr[0]);
+          }
+      }
+  - text: Method boleh di-overload (nama sama, parameter berbeda) dan boleh rekursif. Semua jalur method non-void wajib berakhir dengan return, dan compiler Java akan menolak kalau ada jalur yang lupa.
+    code: |
+      public class Main {
+          static long faktorial(int n) { return n <= 1 ? 1 : n * faktorial(n - 1); }
+          static int luas(int s) { return s * s; }
+          static int luas(int p, int l) { return p * l; }
+
+          public static void main(String[] args) {
+              System.out.println(faktorial(10) + " " + luas(3) + " " + luas(2, 5));
+          }
+      }
+exercises:
+  - id: java-f7-fpb
+    type: write
+    title: FPB Dua Klan
+    difficulty: 2
+    prompt: Tulis method static int fpb(int a, int b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.
+    tests: ["12 18", "7 13", "100 75", "0 5"]
+    hints: |
+      fpb(a, b) = fpb(b, a % b), dan berhenti saat b == 0.
+      Method harus static supaya bisa dipanggil dari main.
+      static int fpb(int a, int b) { return b == 0 ? a : fpb(b, a % b); }
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          static int fpb(int a, int b) { return b == 0 ? a : fpb(b, a % b); }
+
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              System.out.println(fpb(in.nextInt(), in.nextInt()));
+          }
+      }
+  - id: java-f7-palindrom
+    type: write
+    title: Kata Cermin
+    difficulty: 1
+    prompt: Tulis method static boolean palindrom(String s). Baca satu kata (huruf kecil), cetak "ya" atau "tidak".
+    tests: ["katak", "slayer", "a", "ab"]
+    hints: |
+      new StringBuilder(s).reverse().toString() membalik string.
+      Bandingkan isinya dengan equals.
+      return s.equals(new StringBuilder(s).reverse().toString());
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          static boolean palindrom(String s) { return s.equals(new StringBuilder(s).reverse().toString()); }
+
+          public static void main(String[] args) {
+              System.out.println(palindrom(new Scanner(System.in).next()) ? "ya" : "tidak");
+          }
+      }
+  - id: java-f7-predict
+    type: predict
+    title: Salinan atau Referensi
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      public class Main {
+          static void ubah(int x, int[] a, String s) {
+              x = 99;
+              a[0] = 99;
+              s = "baru";
+          }
+
+          public static void main(String[] args) {
+              int x = 1;
+              int[] a = {1};
+              String s = "lama";
+              ubah(x, a, s);
+              System.out.println(x + " " + a[0] + " " + s);
+          }
+      }
+    hints: |
+      int dikirim sebagai salinan.
+      Array dikirim sebagai salinan referensi, jadi isinya bisa diubah.
+      s = "baru" hanya mengganti referensi lokal, bukan String milik pemanggil.
+    solution: x
+  - id: java-f7-bug
+    type: bughunt
+    title: Method yang Lupa Kembali
+    difficulty: 2
+    prompt: Program gagal dikompilasi dengan "missing return statement". Temukan baris yang salah.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          static String tanda(int n) {
+              if (n > 0) return "positif";
+              else if (n < 0) return "negatif";
+              else if (n == 0) System.out.println("nol");
+          }
+
+          public static void main(String[] args) {
+              System.out.println(tanda(new Scanner(System.in).nextInt()));
+          }
+      }
+    bug_line: 7
+    tests: ["5", "-3", "0"]
+    hints: |
+      Cabang terakhir mencetak, tapi tidak mengembalikan apa-apa.
+      Method String harus mengembalikan nilai di semua jalur.
+      else return "nol";
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          static String tanda(int n) {
+              if (n > 0) return "positif";
+              else if (n < 0) return "negatif";
+              else return "nol";
+          }
+
+          public static void main(String[] args) {
+              System.out.println(tanda(new Scanner(System.in).nextInt()));
+          }
+      }
+  - id: java-f7-translate
+    type: translate
+    title: Terjemahkan Faktorial
+    difficulty: 2
+    prompt: Tulis ulang program Python ini dalam Java (n ≤ 20).
+    from_lang: python
+    from_code: |
+      def faktorial(n):
+          return 1 if n <= 1 else n * faktorial(n - 1)
+      print(faktorial(int(input())))
+    tests: ["5", "0", "20"]
+    hints: |
+      Pakai long karena 20! melebihi int.
+      Method static long faktorial(int n).
+      Ternary n <= 1 ? 1 : n * faktorial(n - 1)
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          static long faktorial(int n) { return n <= 1 ? 1 : n * faktorial(n - 1); }
+
+          public static void main(String[] args) {
+              System.out.println(faktorial(new Scanner(System.in).nextInt()));
+          }
+      }

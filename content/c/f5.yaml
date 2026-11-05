@@ -1,0 +1,112 @@
+lesson:
+  - text: if (kondisi) { ... } else if (...) { ... } else { ... } memilih cabang yang dijalankan. Kurung kurawal boleh dihilangkan kalau isinya hanya satu pernyataan, tapi lebih aman selalu ditulis. Operator ternary kondisi ? a - b memilih nilai.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int nilai = 78;
+          if (nilai >= 85) printf("A\n");
+          else if (nilai >= 70) printf("B\n");
+          else printf("C\n");
+          printf("%s\n", nilai >= 75 ? "lulus" : "ulang");
+          return 0;
+      }
+  - text: switch cocok untuk mencocokkan satu nilai bulat atau karakter dengan banyak kasus. Setiap case biasanya diakhiri break. Tanpa break, eksekusi akan "jatuh" ke case berikutnya.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          char napas = 'A';
+          switch (napas) {
+              case 'A': printf("Air\n"); break;
+              case 'P': printf("Petir\n"); break;
+              default: printf("?\n");
+          }
+          return 0;
+      }
+exercises:
+  - id: c-f5-nilai
+    type: write
+    title: Rapor Kisatsutai
+    difficulty: 1
+    prompt: Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.
+    tests: ["90", "85", "70", "69", "55", "10"]
+    hints: |
+      Periksa dari syarat tertinggi.
+      Rantai if / else if / else.
+      Setiap printf diakhiri \n.
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n;
+          scanf("%d", &n);
+          if (n >= 85) printf("A\n");
+          else if (n >= 70) printf("B\n");
+          else if (n >= 55) printf("C\n");
+          else printf("D\n");
+          return 0;
+      }
+  - id: c-f5-kabisat
+    type: write
+    title: Tahun Kabisat
+    difficulty: 2
+    prompt: Baca tahun. Cetak "kabisat" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu "bukan".
+    tests: ["2024", "1900", "2000", "2023"]
+    hints: |
+      Habis dibagi berarti % ... == 0.
+      Gabungkan dengan || dan &&.
+      (t % 400 == 0 || (t % 4 == 0 && t % 100 != 0))
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int t;
+          scanf("%d", &t);
+          printf("%s\n", (t % 400 == 0 || (t % 4 == 0 && t % 100 != 0)) ? "kabisat" : "bukan");
+          return 0;
+      }
+  - id: c-f5-predict
+    type: predict
+    title: Jatuh Tanpa Break
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int x = 2;
+          switch (x) {
+              case 1: printf("satu\n");
+              case 2: printf("dua\n");
+              case 3: printf("tiga\n"); break;
+              case 4: printf("empat\n");
+          }
+          if (x - 2) printf("A\n"); else printf("B\n");
+          return 0;
+      }
+    hints: |
+      Tanpa break, eksekusi berlanjut ke case berikutnya.
+      break di case 3 menghentikannya.
+      x - 2 bernilai 0, yang berarti salah.
+    solution: x
+  - id: c-f5-parsons
+    type: parsons
+    title: Tanda Bilangan
+    difficulty: 1
+    prompt: Susun program yang mencetak "positif", "negatif", atau "nol".
+    tests: ["5", "-3", "0"]
+    hints: |
+      #include dan main paling atas.
+      Baca n sebelum memeriksanya.
+      return 0 dan } paling akhir.
+    solution: |
+      #include <stdio.h>
+      int main(void) {
+          int n;
+          scanf("%d", &n);
+          if (n > 0) printf("positif\n");
+          else if (n < 0) printf("negatif\n");
+          else printf("nol\n");
+          return 0;
+      }

@@ -1,0 +1,81 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: 'Transaksi mengelompokkan beberapa perubahan menjadi satu: BEGIN, lalu perubahan, lalu COMMIT untuk menyimpan semuanya atau ROLLBACK untuk membatalkan semuanya. Cocok untuk transfer saldo: tidak
+    boleh setengah jadi.'
+  code: |
+    BEGIN;
+    UPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Tanjiro';
+    UPDATE dompet SET saldo = saldo + 50 WHERE nama = 'Zenitsu';
+    COMMIT;
+    SELECT * FROM dompet;
+exercises:
+- id: sql-m6-transfer
+  type: write
+  title: Transfer Koban
+  difficulty: 2
+  prompt: Dalam satu transaksi, pindahkan 100 koban dari 'Kas Korps' ke 'Tanjiro'. (Saldo semua dompet diperiksa setelah kodemu.)
+  after: |
+    SELECT nama, saldo FROM dompet ORDER BY nama;
+  hints: |
+    Mulai dengan BEGIN, akhiri dengan COMMIT.
+    Dua UPDATE: kurangi pengirim, tambah penerima.
+    Periksa WHERE nama di setiap UPDATE.
+  solution: |
+    BEGIN;
+    UPDATE dompet SET saldo = saldo - 100 WHERE nama = 'Kas Korps';
+    UPDATE dompet SET saldo = saldo + 100 WHERE nama = 'Tanjiro';
+    COMMIT;
+- id: sql-m6-rollback
+  type: predict
+  title: Transaksi Dibatalkan
+  difficulty: 2
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    BEGIN;
+    UPDATE dompet SET saldo = 0 WHERE nama = 'Zenitsu';
+    ROLLBACK;
+    SELECT saldo FROM dompet WHERE nama = 'Zenitsu';
+  hints: |
+    ROLLBACK membatalkan semua perubahan sejak BEGIN.
+    Saldo kembali seperti sebelum BEGIN.
+    Lihat data awal tabel dompet.
+  solution: x
+- id: sql-m6-bug
+  type: bughunt
+  title: Koban yang Menguap
+  difficulty: 2
+  prompt: Transfer 50 koban dari Zenitsu ke Tanjiro, tapi total koban di semua dompet berkurang 50. Temukan baris yang salah.
+  starter: |
+    BEGIN;
+    UPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Zenitsu';
+    UPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Tanjiro';
+    COMMIT;
+  bug_line: 3
+  after: |
+    SELECT nama, saldo FROM dompet ORDER BY nama;
+  hints: |
+    Total semua saldo harus tetap sama setelah transfer.
+    Penerima seharusnya bertambah, bukan berkurang.
+    saldo = saldo + 50 untuk Tanjiro.
+  solution: |
+    BEGIN;
+    UPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Zenitsu';
+    UPDATE dompet SET saldo = saldo + 50 WHERE nama = 'Tanjiro';
+    COMMIT;

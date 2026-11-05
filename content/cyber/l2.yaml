@@ -1,0 +1,39 @@
+lesson:
+- text: 'OSINT (Open Source Intelligence): mengumpulkan informasi dari sumber terbuka (situs, media sosial, WHOIS, metadata). Selalu etis & legal: lab ini memakai data fiktif. Jangan melakukan doxing atau
+    mengumpulkan data pribadi orang sungguhan tanpa dasar yang sah.'
+exercises:
+- id: cy-lab-os-gagak
+  type: lab
+  title: Gagak Tersesat
+  difficulty: 1
+  prompt: 'Lab sandbox: Dari berkas kasus, tentukan nama desa tempat foto terakhir diambil. Flag = SLAYER{nama_desa} (huruf kecil). Temukan flag SLAYER{...} lalu serahkan.'
+  lab: os-gagak
+  hints: |
+    Baca semua postingan.
+    Foto terakhir punya metadata.
+    Koordinat di EXIF cocok dengan salah satu desa di peta.
+- id: cy-lab-os-domain
+  type: lab
+  title: Jejak Pendaftar
+  difficulty: 2
+  prompt: 'Lab sandbox: Gunakan berkas WHOIS & arsip fiktif. Flag = SLAYER{nama_organisasi} (huruf kecil, spasi jadi _). Temukan flag SLAYER{...} lalu serahkan.'
+  lab: os-domain
+  hints: |
+    Baca WHOIS domain penipu.
+    Email pendaftar dipakai juga di domain lain.
+    Organisasi tercantum di WHOIS domain kedua.
+- id: cy-l2-etika
+  type: quiz
+  title: Batas OSINT
+  difficulty: 1
+  prompt: Mana yang termasuk penggunaan OSINT yang TIDAK etis?
+  options:
+  - Mengumpulkan alamat rumah & keluarga seseorang lalu menyebarkannya (doxing)
+  - Memeriksa WHOIS domain phishing untuk dilaporkan
+  - Mengecek metadata foto milik sendiri sebelum diunggah
+  - Mempelajari teknik OSINT dengan data fiktif
+  explain: Doxing melanggar privasi dan bisa melanggar hukum, walaupun datanya "terbuka".
+  hints: |
+    Terbuka ≠ boleh disebar.
+    Privasi orang.
+    Doxing.

@@ -1,0 +1,46 @@
+lesson:
+- text: 'Project: alat backup kecil. Kumpulkan file sesuai pola, salin ke folder backup bertanggal, lalu tampilkan ringkasan. Di dunia nyata ditambah kompresi (tar -czf) dan rotasi backup lama.'
+  code: |
+    tujuan="backup/$(date +%F)"
+    mkdir -p "$tujuan"
+    cp -r dokumen "$tujuan"/
+exercises:
+- id: bash-p3-backup
+  type: write
+  title: Backup Tahap 1
+  difficulty: 2
+  prompt: Salin semua file .txt dari dok/ ke cadangan/ (buat foldernya), lalu cetak isi cadangan/ terurut dan baris "N file dicadangkan".
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p dok
+    echo a > dok/misi.txt
+    echo b > dok/regu.txt
+    echo c > dok/foto.png
+    echo d > dok/catatan.txt
+  hints: |
+    mkdir -p cadangan
+    cp dok/*.txt cadangan/
+    Hitung dengan ls | wc -l.
+  solution: |
+    mkdir -p cadangan
+    cp dok/*.txt cadangan/
+    ls cadangan | sort
+    echo "$(ls cadangan | wc -l | tr -d " ") file dicadangkan"
+- id: bash-p3-rotasi
+  type: write
+  title: 'Backup Tahap 2: Rotasi'
+  difficulty: 3
+  prompt: Folder arsip/ berisi backup-1 sampai backup-5. Hapus semua kecuali 3 backup bernomor terbesar, lalu tampilkan sisa isinya terurut.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p arsip/backup-1 arsip/backup-2 arsip/backup-3 arsip/backup-4 arsip/backup-5
+  hints: |
+    Urutkan nomor dengan sort -t- -k2 -n.
+    head -n -3 = semua kecuali 3 terakhir.
+    xargs rm -r menghapus daftar itu.
+  solution: |
+    cd arsip
+    ls | sort -t- -k2 -n | head -n -3 | xargs rm -r
+    ls | sort

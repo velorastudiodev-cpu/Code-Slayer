@@ -1,0 +1,90 @@
+lesson:
+- text: 'Encoding (base64, hex) hanya mengubah bentuk dan bisa dibalik siapa saja. Enkripsi memakai kunci: simetris (AES, kunci sama) atau asimetris (RSA, kunci publik/privat). Hashing satu arah (SHA-256)
+    untuk integritas & kata sandi. Cipher klasik seperti Caesar mudah dipecah.'
+exercises:
+- id: cy-lab-cr-caesar
+  type: lab
+  title: Surat Kaisar
+  difficulty: 1
+  prompt: 'Lab sandbox: Pecahkan sandinya dengan Cipher Playground. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-caesar
+  hints: |
+    Caesar menggeser setiap huruf sejauh k.
+    Ada 25 kemungkinan saja.
+    Coba k = 3.
+- id: cy-lab-cr-base64
+  type: lab
+  title: Berlapis-lapis
+  difficulty: 1
+  prompt: 'Lab sandbox: Kupas lapisannya satu per satu. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-base64
+  hints: |
+    Huruf, angka, + / dan = di akhir: tanda base64.
+    Hasil decode pertama masih terlihat seperti base64?
+    Decode base64 dua kali lalu ROT13.
+- id: cy-f6-caesar
+  type: write
+  title: Mesin Caesar
+  difficulty: 2
+  prompt: Baca k lalu satu baris teks. Cetak teks yang huruf-hurufnya digeser maju k (A-Z dan a-z berputar), karakter lain tetap.
+  lang: python
+  starter: |
+    k = int(input())
+    teks = input()
+    # tulis kodemu di sini
+  tests:
+  - |
+    3
+    SLAYER{abc}
+  - |
+    13
+    Hello, World!
+  - |
+    25
+    zZ
+  hints: |
+    ord dan chr mengubah huruf ↔ angka.
+    Modulo 26 untuk berputar.
+    Bedakan huruf besar & kecil.
+  solution: |
+    k = int(input())
+    teks = input()
+    hasil = ""
+    for c in teks:
+        if c.isupper():
+            hasil += chr((ord(c) - 65 + k) % 26 + 65)
+        elif c.islower():
+            hasil += chr((ord(c) - 97 + k) % 26 + 97)
+        else:
+            hasil += c
+    print(hasil)
+- id: cy-f6-enc
+  type: quiz
+  title: Encoding atau Enkripsi?
+  difficulty: 1
+  prompt: Pernyataan yang BENAR tentang base64 adalah...
+  options:
+  - Base64 adalah encoding; siapa pun bisa men-decode tanpa kunci
+  - Base64 adalah enkripsi yang aman
+  - Base64 adalah hash satu arah
+  - Base64 butuh kunci publik
+  explain: Jangan pernah "mengamankan" rahasia dengan base64.
+  hints: |
+    Ada kunci?
+    Bisa dibalik siapa saja.
+    Encoding.
+- id: cy-f6-asym
+  type: quiz
+  title: Dua Kunci
+  difficulty: 2
+  prompt: Pada enkripsi asimetris (mis. RSA), untuk mengirim pesan rahasia ke Shinobu kamu mengenkripsi dengan...
+  options:
+  - Kunci publik Shinobu
+  - Kunci privat Shinobu
+  - Kunci privatmu
+  - Kata sandi Shinobu
+  explain: Siapa pun boleh memakai kunci publik untuk mengenkripsi; hanya pemilik kunci privat yang bisa membuka.
+  hints: |
+    Kunci yang boleh dibagikan.
+    Hanya Shinobu yang bisa membuka.
+    Publik penerima.

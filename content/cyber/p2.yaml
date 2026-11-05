@@ -1,0 +1,34 @@
+lesson:
+- text: 'Kategori crypto & forensik di CTF sering menggabungkan beberapa lapisan: encoding berlapis, cipher klasik dengan kunci tersembunyi di soal, dan artefak di berkas/proses. Kenali bentuk data: base64
+    (=), hex (0-9a-f), dan pola flag.'
+exercises:
+- id: cy-lab-cr-vigenere
+  type: lab
+  title: Kunci Pernapasan
+  difficulty: 3
+  prompt: 'Lab sandbox: Dekripsi dengan Vigenère. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-vigenere
+  hints: |
+    Tanjiro memakai Napas Air (dan Hinokami Kagura).
+    Kunci dalam bahasa Indonesia.
+    kunci = air
+- id: cy-lab-cr-hex-rev
+  type: lab
+  title: Cermin Heksa
+  difficulty: 2
+  prompt: 'Lab sandbox: Decode lalu balik. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-hex-rev
+  hints: |
+    Hex decode dulu.
+    Hasilnya terbaca terbalik.
+    Gunakan alat "Balik string".
+- id: cy-lab-for-proses
+  type: lab
+  title: Proses Penyusup
+  difficulty: 2
+  prompt: 'Lab sandbox: Temukan token di daftar proses. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-proses
+  hints: |
+    ps aux menampilkan semua proses lengkap dengan argumen.
+    Cari yang tidak biasa.
+    ps aux | grep -i token

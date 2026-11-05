@@ -1,0 +1,113 @@
+lesson:
+  - text: Di C, setiap variabel harus dideklarasikan dengan tipenya sebelum dipakai. Tipe dasarnya adalah int (bilangan bulat), double (desimal), char (satu karakter), dan long long (bulat besar). Ukuran tipe menentukan rentang nilai yang bisa disimpan, dan sizeof memberi ukurannya dalam byte.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int umur = 15;
+          double tinggi = 165.5;
+          char inisial = 'T';
+          long long besar = 9000000000LL;
+          printf("%d %.1f %c %lld\n", umur, tinggi, inisial, besar);
+          printf("int: %zu byte, double: %zu byte\n", sizeof(int), sizeof(double));
+          return 0;
+      }
+  - text: Hati-hati dengan pembagian. Kalau kedua operand int, hasilnya int (desimal dibuang). Ubah salah satunya ke double dengan casting, (double)a / b. int juga bisa meluap (overflow) kalau melebihi sekitar 2,1 miliar, jadi pakai long long untuk angka besar.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int a = 7, b = 2;
+          printf("%d %.1f\n", a / b, (double)a / b);
+          return 0;
+      }
+exercises:
+  - id: c-f2-baca
+    type: write
+    title: Kartu Identitas
+    difficulty: 1
+    prompt: 'Input berisi nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".'
+    tests: ["Tanjiro 15", "Kanao 16", "Gyomei 27"]
+    hints: |
+      Baca dengan scanf("%s %d", nama, &umur), dan nama berupa array char.
+      Variabel int butuh & di scanf, array char tidak.
+      printf("%s akan berumur %d tahun\n", nama, umur + 1);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          char nama[64];
+          int umur;
+          scanf("%63s %d", nama, &umur);
+          printf("%s akan berumur %d tahun\n", nama, umur + 1);
+          return 0;
+      }
+  - id: c-f2-besar
+    type: write
+    title: Jarak Antar Bintang
+    difficulty: 2
+    prompt: Baca dua bilangan a dan b (masing-masing sampai 2 miliar). Cetak a * b. Hasilnya bisa melebihi batas int.
+    tests: ["3 4", "2000000000 2000000000", "-5 100000"]
+    hints: |
+      int maksimal sekitar 2,1 miliar.
+      Pakai long long dengan format %lld.
+      long long a, b; scanf("%lld %lld", &a, &b);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          long long a, b;
+          scanf("%lld %lld", &a, &b);
+          printf("%lld\n", a * b);
+          return 0;
+      }
+  - id: c-f2-predict
+    type: predict
+    title: Pembagian Bulat
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int a = 7, b = 2;
+          double c = a / b;
+          printf("%d %.1f %.1f\n", a / b, c, (double)a / b);
+          return 0;
+      }
+    hints: |
+      a / b dengan dua int menghasilkan int.
+      c diisi hasil a / b, jadi desimalnya sudah hilang sebelum disimpan.
+      Casting ke double sebelum membagi mempertahankan desimal.
+    solution: x
+  - id: c-f2-bug
+    type: bughunt
+    title: Rata-rata Terpotong
+    difficulty: 2
+    prompt: Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan bug-nya.
+    starter: |
+      #include <stdio.h>
+
+      int main(void) {
+          int a, b, c;
+          scanf("%d %d %d", &a, &b, &c);
+          double rata = (a + b + c) / 3;
+          printf("%.2f\n", rata);
+          return 0;
+      }
+    bug_line: 6
+    tests: ["1 2 4", "5 5 6", "3 3 3"]
+    hints: |
+      (a + b + c) / 3 adalah pembagian int.
+      Desimal dibuang SEBELUM disimpan ke double.
+      (a + b + c) / 3.0
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int a, b, c;
+          scanf("%d %d %d", &a, &b, &c);
+          double rata = (a + b + c) / 3.0;
+          printf("%.2f\n", rata);
+          return 0;
+      }

@@ -1,0 +1,168 @@
+lesson:
+- text: for x in a..b menelusuri a sampai b-1, a..=b sampai b. while untuk kondisi, loop untuk perulangan tanpa akhir yang dihentikan break (break bahkan bisa membawa nilai).
+  code: |
+    fn main() {
+        for i in 1..=3 {
+            print!("{} ", i);
+        }
+        let mut n = 10;
+        while n > 1 {
+            n /= 2;
+        }
+        println!("| {}", n);
+    }
+- text: 'Iterator membuat loop ringkas: (1..=n).sum(), .map(), .filter(), .count(). "*".repeat(i) membuat teks berulang.'
+  code: |
+    fn main() {
+        let jumlah: i32 = (1..=10).filter(|x| x % 2 == 0).sum();
+        println!("{}", jumlah);
+        println!("{}", "*".repeat(4));
+    }
+exercises:
+- id: rs-f6-segitiga
+  type: write
+  title: Formasi Segitiga
+  difficulty: 1
+  prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '3'
+  - '1'
+  - '5'
+  hints: |
+    Loop i dari 1 sampai n.
+    Baris ke-i = "*" diulang i kali.
+    Setiap baris diakhiri newline.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: usize = it.next().unwrap().parse().unwrap();
+        for i in 1..=n {
+            println!("{}", "*".repeat(i));
+        }
+    }
+- id: rs-f6-prima
+  type: write
+  title: Uji Bilangan Prima
+  difficulty: 2
+  prompt: Baca n (n ≤ 10^9). Cetak "prima" atau "bukan". Cukup periksa pembagi sampai akar n.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '7'
+  - '1'
+  - '91'
+  - '2'
+  - '999999937'
+  - '1000000000'
+  hints: |
+    1 bukan prima.
+    Loop d mulai 2 selama d * d <= n.
+    Pakai tipe 64-bit supaya d * d tidak overflow.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: i64 = it.next().unwrap().parse().unwrap();
+        let mut prima = n > 1;
+        let mut d = 2;
+        while d * d <= n {
+            if n % d == 0 {
+                prima = false;
+                break;
+            }
+            d += 1;
+        }
+        println!("{}", if prima { "prima" } else { "bukan" });
+    }
+- id: rs-f6-predict
+  type: predict
+  title: Loop Berlapis
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn main() {
+        for i in 0..5 {
+            if i == 1 {
+                continue;
+            }
+            if i == 4 {
+                break;
+            }
+            print!("{} ", i);
+        }
+        let mut total = 0;
+        for a in 1..=2 {
+            for b in 1..=3 {
+                total += a * b;
+            }
+        }
+        println!("| {}", total);
+    }
+  hints: |
+    continue melompati sisa satu putaran.
+    break menghentikan loop sepenuhnya.
+    Telusuri nilai i satu per satu.
+  solution: x
+- id: rs-f6-bug
+  type: bughunt
+  title: Satu Tebasan Hilang
+  difficulty: 1
+  prompt: Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: i64 = it.next().unwrap().parse().unwrap();
+        let mut total = 0;
+        for i in 1..n {
+            total += i;
+        }
+        println!("{}", total);
+    }
+  bug_line: 9
+  tests:
+  - '3'
+  - '10'
+  - '1'
+  hints: |
+    Apakah n sendiri ikut dijumlah?
+    Batas loop berhenti sebelum n.
+    Ganti batasnya supaya n ikut.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: i64 = it.next().unwrap().parse().unwrap();
+        let mut total = 0;
+        for i in 1..=n {
+            total += i;
+        }
+        println!("{}", total);
+    }

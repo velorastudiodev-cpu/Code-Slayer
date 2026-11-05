@@ -1,0 +1,1208 @@
+{
+ "hash": "55260d181582",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Setiap program Java berada di dalam class. Di aplikasi ini, nama class-nya harus Main. Eksekusi dimulai dari method public static void main(String[] args). System.out.println mencetak lalu pindah baris, sedangkan System.out.print tidak pindah baris.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Halo, Slayer!\");\n        System.out.print(\"Napas Ular, \");\n        System.out.println(\"bentuk \" + 1);\n    }\n}\n"
+    },
+    {
+     "text": "System.out.printf memformat output seperti di C, misalnya %d, %.2f, dan %s, dengan %n untuk baris baru. String.format menghasilkan string dengan aturan yang sama. Java ketat terhadap tipe, dan setiap pernyataan diakhiri titik koma.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.printf(\"%s berumur %d, kekuatan %.2f%n\", \"Obanai\", 21, 9.5);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-halo",
+     "type": "write",
+     "title": "Salam Napas Ular",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "java",
+     "starter": "public class Main {\n    public static void main(String[] args) {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "System.out.println mencetak satu baris.",
+      "Teks diapit kutip ganda, dan pernyataan diakhiri ;.",
+      "System.out.println(\"Halo, Slayer!\");"
+     ],
+     "solutions": [
+      "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Halo, Slayer!\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f1"
+    },
+    {
+     "id": "java-f1-printf",
+     "type": "write",
+     "title": "Laporan Berformat",
+     "difficulty": 1,
+     "prompt": "Dengan printf, cetak \"Obanai berumur 21 tahun, kekuatan 9.50\" memakai %s, %d, dan %.2f.",
+     "lang": "java",
+     "tests": [
+      {
+       "expected": "Obanai berumur 21 tahun, kekuatan 9.50\n"
+      }
+     ],
+     "hints": [
+      "System.out.printf(format, nilai...)",
+      "%n untuk baris baru.",
+      "System.out.printf(\"%s berumur %d tahun, kekuatan %.2f%n\", \"Obanai\", 21, 9.5);"
+     ],
+     "solutions": [
+      "public class Main {\n    public static void main(String[] args) {\n        System.out.printf(\"%s berumur %d tahun, kekuatan %.2f%n\", \"Obanai\", 21, 9.5);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f1"
+    },
+    {
+     "id": "java-f1-predict",
+     "type": "predict",
+     "title": "Print atau Println",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "java",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.print(\"A\");\n        System.out.println(\"B\" + 1 + 2);\n        System.out.println(1 + 2 + \"C\");\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "AB12\n3C\n"
+      }
+     ],
+     "hints": [
+      "print tidak pindah baris.",
+      "Begitu ada String, + menjadi penggabungan dari kiri ke kanan.",
+      "1 + 2 dihitung dulu karena keduanya angka."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f1"
+    },
+    {
+     "id": "java-f1-bug",
+     "type": "bughunt",
+     "title": "Kurung yang Tertukar",
+     "difficulty": 1,
+     "prompt": "Program gagal dikompilasi. Temukan baris yang salah.",
+     "lang": "java",
+     "starter": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Kaa!\";\n    }\n}\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "expected": "Kaa!\n"
+      }
+     ],
+     "hints": [
+      "Hitung pasangan kurung buka dan tutup.",
+      "println( dibuka tapi tidak ditutup sebelum ;.",
+      "System.out.println(\"Kaa!\");"
+     ],
+     "solutions": [
+      "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Kaa!\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f1"
+    },
+    {
+     "id": "java-f1-typing",
+     "type": "typing",
+     "title": "Ketik Program Java Pertama",
+     "difficulty": 1,
+     "prompt": "Ketik ulang program Java berikut. Akurasi minimal 95%.",
+     "lang": "java",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Halo!\");\n    }\n}\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Java bertipe statis, jadi setiap variabel punya tipe yang tetap. Tipe primitifnya antara lain int, long, double, boolean, dan char. String adalah objek untuk teks. var (Java 10+) membiarkan compiler menyimpulkan tipenya. Konstanta ditandai final.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int umur = 21;\n        double tinggi = 162.5;\n        boolean hashira = true;\n        char inisial = 'O';\n        var nama = \"Obanai\";\n        final long besar = 9_000_000_000L;\n        System.out.println(nama + \" \" + umur + \" \" + tinggi + \" \" + hashira + \" \" + inisial + \" \" + besar);\n    }\n}\n"
+    },
+    {
+     "text": "Konversi dari String ke angka memakai Integer.parseInt atau Double.parseDouble, dan sebaliknya String.valueOf. Casting (int) 3.9 membuang desimal. Pembagian dua int menghasilkan int, dan int (maksimal sekitar 2,1 miliar) bisa meluap, jadi pakai long untuk angka besar.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int a = Integer.parseInt(\"7\");\n        System.out.println(a / 2 + \" \" + a / 2.0 + \" \" + (int) 3.9 + \" \" + Integer.MAX_VALUE);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Baca nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "Obanai 21",
+       "expected": "Obanai akan berumur 22 tahun\n"
+      },
+      {
+       "input": "Kanao 16",
+       "expected": "Kanao akan berumur 17 tahun\n"
+      }
+     ],
+     "hints": [
+      "Scanner in = new Scanner(System.in);",
+      "in.next() untuk kata, in.nextInt() untuk int.",
+      "Jangan lupa import java.util.Scanner;"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        String nama = in.next();\n        int umur = in.nextInt();\n        System.out.println(nama + \" akan berumur \" + (umur + 1) + \" tahun\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f2"
+    },
+    {
+     "id": "java-f2-long",
+     "type": "write",
+     "title": "Jarak Antar Bintang",
+     "difficulty": 2,
+     "prompt": "Baca dua bilangan a dan b (masing-masing sampai 2 miliar). Cetak a * b. Hasilnya bisa melebihi batas int.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "2000000000 2000000000",
+       "expected": "4000000000000000000\n"
+      },
+      {
+       "input": "-5 100000",
+       "expected": "-500000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "int maksimal sekitar 2,1 miliar.",
+      "Pakai long dan in.nextLong().",
+      "System.out.println(a * b);"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        long a = in.nextLong(), b = in.nextLong();\n        System.out.println(a * b);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f2"
+    },
+    {
+     "id": "java-f2-predict",
+     "type": "predict",
+     "title": "Casting dan Pembagian",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "java",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int a = 7, b = 2;\n        double c = a / b;\n        System.out.println(a / b + \" \" + c + \" \" + (double) a / b + \" \" + (int) 9.99);\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "3 3.0 3.5 9\n"
+      }
+     ],
+     "hints": [
+      "a / b dengan dua int menghasilkan int.",
+      "c menyimpan 3 sebagai double, sehingga tercetak 3.0.",
+      "(int) membuang desimal, bukan membulatkan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f2"
+    },
+    {
+     "id": "java-f2-bug",
+     "type": "bughunt",
+     "title": "Teks yang Dijumlah",
+     "difficulty": 1,
+     "prompt": "Program membaca dua angka (sebagai teks) dan harus mencetak jumlahnya, tapi hasilnya angka yang menempel. Temukan bug-nya.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        String a = in.next(), b = in.next();\n        System.out.println(a + b);\n    }\n}\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      }
+     ],
+     "hints": [
+      "+ pada String berarti digabung.",
+      "Ubah teks ke int dulu.",
+      "System.out.println(Integer.parseInt(a) + Integer.parseInt(b));"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        String a = in.next(), b = in.next();\n        System.out.println(Integer.parseInt(a) + Integer.parseInt(b));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f2"
+    },
+    {
+     "id": "java-f2-typing",
+     "type": "typing",
+     "title": "Ketik Deklarasi Java",
+     "difficulty": 1,
+     "prompt": "Ketik ulang potongan kode berikut. Akurasi minimal 95%.",
+     "lang": "java",
+     "code": "int umur = 21;\nString nama = \"Obanai\";\nSystem.out.println(nama + \" \" + umur);\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator Java adalah + - * / % ++ -- dan operator gabungan seperti +=. Perbandingan menghasilkan boolean (true/false), bukan 0 atau 1. Operator logika && dan || bersifat short-circuit, jadi sisi kanan tidak dievaluasi kalau hasilnya sudah pasti.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 15;\n        System.out.println((x > 10) + \" \" + (x % 2 == 0) + \" \" + (x > 10 && x < 20));\n        System.out.println(Math.max(3, 9) + \" \" + Math.abs(-7) + \" \" + Math.pow(2, 10));\n    }\n}\n"
+    },
+    {
+     "text": "Untuk String, == membandingkan apakah dua objek SAMA (referensi), bukan isinya. Untuk membandingkan isi teks, selalu pakai .equals(). Ini salah satu bug Java paling klasik.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        String a = \"ular\";\n        String b = new String(\"ular\");\n        System.out.println((a == b) + \" \" + a.equals(b));\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Jam adalah t / 3600, menit adalah t % 3600 / 60, detik adalah t % 60.",
+      "Gabungkan dengan \":\".",
+      "System.out.println(t / 3600 + \":\" + t % 3600 / 60 + \":\" + t % 60);"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int t = new Scanner(System.in).nextInt();\n        System.out.println(t / 3600 + \":\" + t % 3600 / 60 + \":\" + t % 60);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f3"
+    },
+    {
+     "id": "java-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "c * 9 / 5 dengan int membuang desimal.",
+      "Pakai 9.0.",
+      "System.out.printf(\"%.1f%n\", c * 9.0 / 5 + 32);"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int c = new Scanner(System.in).nextInt();\n        System.out.printf(\"%.1f%n\", c * 9.0 / 5 + 32);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f3"
+    },
+    {
+     "id": "java-f3-predict",
+     "type": "predict",
+     "title": "Short-circuit",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "java",
+     "code": "public class Main {\n    static int hitung = 0;\n    static boolean cek(boolean v) { hitung++; return v; }\n    public static void main(String[] args) {\n        boolean a = cek(false) && cek(true);\n        boolean b = cek(true) || cek(false);\n        System.out.println(a + \" \" + b + \" \" + hitung + \" \" + (-7 % 3));\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "false true 2 -1\n"
+      }
+     ],
+     "hints": [
+      "false && ... tidak mengevaluasi sisi kanan.",
+      "true || ... juga tidak mengevaluasi sisi kanan.",
+      "Tanda hasil % mengikuti pembilang."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f3"
+    },
+    {
+     "id": "java-f3-bug",
+     "type": "bughunt",
+     "title": "Sandi yang Selalu Salah",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"masuk\" jika sandi sama dengan \"ular\", tapi selalu \"ditolak\". Temukan bug-nya.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        String sandi = new Scanner(System.in).next();\n        if (sandi == \"ular\") System.out.println(\"masuk\");\n        else System.out.println(\"ditolak\");\n    }\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "ular",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "kabut",
+       "expected": "ditolak\n"
+      }
+     ],
+     "hints": [
+      "== pada String membandingkan objeknya, bukan isinya.",
+      "Teks dari Scanner adalah objek baru.",
+      "if (sandi.equals(\"ular\"))"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        String sandi = new Scanner(System.in).next();\n        if (sandi.equals(\"ular\")) System.out.println(\"masuk\");\n        else System.out.println(\"ditolak\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f3"
+    },
+    {
+     "id": "java-f3-review",
+     "type": "review",
+     "title": "Review Pemeriksa Sandi",
+     "difficulty": 2,
+     "prompt": "Tandai baris yang bermasalah.",
+     "lang": "java",
+     "code": "String sandi = in.next();\nif (sandi == \"ular\") {\n    System.out.println(\"masuk\");\n}\ndouble rata = (a + b) / 2;\n",
+     "tests": [],
+     "hints": [
+      "Bagaimana cara benar membandingkan String di Java?",
+      "Apa tipe hasil int / int?",
+      "Ada dua baris."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "issues": [
+      {
+       "line": 2,
+       "text": "== membandingkan referensi String, bukan isinya. Pakai sandi.equals(\"ular\")."
+      },
+      {
+       "line": 5,
+       "text": "Kalau a dan b int, (a + b) / 2 adalah pembagian int sehingga desimalnya hilang. Pakai 2.0."
+      }
+     ],
+     "track": "java",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Scanner membaca input per token, misalnya next() untuk kata, nextInt() dan nextLong() untuk bilangan, dan nextLine() untuk satu baris penuh. hasNextInt() memeriksa apakah masih ada bilangan, sehingga cocok untuk membaca sampai input habis.",
+     "code": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(\"3 1 4 1 5\");\n        int total = 0;\n        while (in.hasNextInt()) total += in.nextInt();\n        System.out.println(total);\n    }\n}\n"
+    },
+    {
+     "text": "Untuk input besar (di soal kompetisi), Scanner terlalu lambat. Gunakan BufferedReader dengan readLine() lalu pecah barisnya dengan split(\" \"). Output banyak sebaiknya dikumpulkan di StringBuilder lalu dicetak sekali.",
+     "code": "import java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new StringReader(\"10 20 30\"));\n        int s = 0;\n        for (String t : br.readLine().split(\" \")) s += Integer.parseInt(t);\n        System.out.println(s);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat, cetak jumlahnya.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Scanner in = new Scanner(System.in);",
+      "in.nextInt() dua kali.",
+      "System.out.println(a + b);"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int a = in.nextInt(), b = in.nextInt();\n        System.out.println(a + b);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f4"
+    },
+    {
+     "id": "java-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi bilangan bulat yang banyaknya tidak diketahui. Cetak banyaknya dan rata-ratanya (2 desimal).",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "4 2.50\n"
+      },
+      {
+       "input": "10",
+       "expected": "1 10.00\n"
+      },
+      {
+       "input": "5\n6\n7",
+       "expected": "3 6.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "while (in.hasNextInt())",
+      "Simpan total di long.",
+      "System.out.printf(\"%d %.2f%n\", n, (double) total / n);"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        long total = 0;\n        int n = 0;\n        while (in.hasNextInt()) { total += in.nextInt(); n++; }\n        System.out.printf(\"%d %.2f%n\", n, (double) total / n);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f4"
+    },
+    {
+     "id": "java-f4-baris",
+     "type": "write",
+     "title": "Baris Berspasi",
+     "difficulty": 2,
+     "prompt": "Baris 1 berisi umur, baris 2 berisi nama lengkap (berspasi). Cetak \"<nama> (<umur>)\".",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "21\nIguro Obanai",
+       "expected": "Iguro Obanai (21)\n"
+      },
+      {
+       "input": "16\nTsuyuri Kanao",
+       "expected": "Tsuyuri Kanao (16)\n"
+      }
+     ],
+     "hints": [
+      "Setelah nextInt(), sisa baris pertama (\"\\n\") belum terbaca.",
+      "Panggil nextLine() sekali untuk membuangnya.",
+      "Baru panggil nextLine() lagi untuk nama."
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int umur = in.nextInt();\n        in.nextLine();\n        String nama = in.nextLine();\n        System.out.println(nama + \" (\" + umur + \")\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f4"
+    },
+    {
+     "id": "java-f4-bug",
+     "type": "bughunt",
+     "title": "Satu Bilangan Terlewat",
+     "difficulty": 2,
+     "prompt": "Baris 1 berisi n, baris 2 berisi n bilangan. Program harus mencetak jumlahnya, tapi bilangan pertama selalu hilang. Temukan bug-nya.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int n = in.nextInt(), total = 0;\n        for (int i = 1; i < n; i++) total += in.nextInt();\n        System.out.println(total);\n    }\n}\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "input": "3\n1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "1\n5",
+       "expected": "5\n"
+      },
+      {
+       "input": "4\n10 20 30 40",
+       "expected": "100\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Berapa kali loop berjalan untuk n = 3?",
+      "Dimulai dari 1 dengan syarat < n berarti hanya n - 1 kali.",
+      "for (int i = 0; i < n; i++)"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int n = in.nextInt(), total = 0;\n        for (int i = 0; i < n; i++) total += in.nextInt();\n        System.out.println(total);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if, else if, dan else bekerja seperti di C, tapi kondisinya harus bertipe boolean (if (x) dengan int tidak diizinkan). Ternary kondisi ? a - b memilih nilai. Java 14+ punya switch expression dengan panah -> yang tidak butuh break.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int nilai = 78;\n        String grade = nilai >= 85 ? \"A\" : nilai >= 70 ? \"B\" : \"C\";\n        String napas = \"ular\";\n        String mentor = switch (napas) {\n            case \"air\" -> \"Giyu\";\n            case \"ular\" -> \"Obanai\";\n            default -> \"?\";\n        };\n        System.out.println(grade + \" \" + mentor);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "System.out.println(\"A\");"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        if (n >= 85) System.out.println(\"A\");\n        else if (n >= 70) System.out.println(\"B\");\n        else if (n >= 55) System.out.println(\"C\");\n        else System.out.println(\"D\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f5"
+    },
+    {
+     "id": "java-f5-switch",
+     "type": "write",
+     "title": "Mentor Pernapasan",
+     "difficulty": 1,
+     "prompt": "Baca nama pernapasan (air, api, petir, ular, atau lainnya). Cetak nama mentornya, yaitu Giyu, Rengoku, Zenitsu, Obanai, atau \"tidak dikenal\". Gunakan switch expression.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "air",
+       "expected": "Giyu\n"
+      },
+      {
+       "input": "ular",
+       "expected": "Obanai\n"
+      },
+      {
+       "input": "petir",
+       "expected": "Zenitsu\n",
+       "hidden": true
+      },
+      {
+       "input": "batu",
+       "expected": "tidak dikenal\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "String mentor = switch (napas) { case \"air\" -> \"Giyu\"; ... };",
+      "default -> \"tidak dikenal\";",
+      "Jangan lupa ; setelah kurung kurawal penutup switch."
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        String napas = new Scanner(System.in).next();\n        String mentor = switch (napas) {\n            case \"air\" -> \"Giyu\";\n            case \"api\" -> \"Rengoku\";\n            case \"petir\" -> \"Zenitsu\";\n            case \"ular\" -> \"Obanai\";\n            default -> \"tidak dikenal\";\n        };\n        System.out.println(mentor);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f5"
+    },
+    {
+     "id": "java-f5-predict",
+     "type": "predict",
+     "title": "Switch Lama Tanpa Break",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "java",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int x = 2;\n        switch (x) {\n            case 1: System.out.print(\"satu \");\n            case 2: System.out.print(\"dua \");\n            case 3: System.out.print(\"tiga \"); break;\n            default: System.out.print(\"lain \");\n        }\n        System.out.println(x > 1 ? \"besar\" : \"kecil\");\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "dua tiga besar\n"
+      }
+     ],
+     "hints": [
+      "switch gaya lama (dengan :) jatuh ke case berikutnya tanpa break.",
+      "break di case 3 menghentikannya.",
+      "Lalu ternary dicetak di baris yang sama."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f5"
+    },
+    {
+     "id": "java-f5-bug",
+     "type": "bughunt",
+     "title": "Kabisat yang Keliru",
+     "difficulty": 2,
+     "prompt": "Program menentukan tahun kabisat, tapi 1900 dianggap kabisat. Temukan bug-nya.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int t = new Scanner(System.in).nextInt();\n        boolean kabisat = t % 4 == 0 || t % 100 != 0 && t % 400 == 0;\n        System.out.println(kabisat ? \"kabisat\" : \"bukan\");\n    }\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "&& dikerjakan sebelum ||.",
+      "Syaratnya adalah (habis 4 DAN tidak habis 100) ATAU habis 400.",
+      "t % 400 == 0 || (t % 4 == 0 && t % 100 != 0)"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int t = new Scanner(System.in).nextInt();\n        boolean kabisat = t % 400 == 0 || (t % 4 == 0 && t % 100 != 0);\n        System.out.println(kabisat ? \"kabisat\" : \"bukan\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "Java punya for klasik, while, do-while, dan enhanced for (for (int x - arr)) untuk mengulang setiap elemen. break dan continue bekerja seperti biasa. Label (luar:) memungkinkan break keluar dari loop bersarang sekaligus.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int[] angka = {3, 1, 4};\n        int total = 0;\n        for (int x : angka) total += x;\n        System.out.println(total);\n        luar:\n        for (int i = 0; i < 3; i++)\n            for (int j = 0; j < 3; j++) {\n                if (i * j == 2) break luar;\n                System.out.print(i + \"\" + j + \" \");\n            }\n        System.out.println();\n    }\n}\n"
+    },
+    {
+     "text": "Menggabung string di dalam loop dengan + itu lambat, karena setiap + membuat String baru. Gunakan StringBuilder dengan append, lalu toString() di akhir.",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        StringBuilder sb = new StringBuilder();\n        for (int i = 1; i <= 5; i++) sb.append(i).append(i < 5 ? \",\" : \"\");\n        System.out.println(sb);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 2,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "\"*\".repeat(i) mengulang string (Java 11+).",
+      "Atau pakai loop bersarang.",
+      "System.out.println(\"*\".repeat(i));"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        for (int i = 1; i <= n; i++) System.out.println(\"*\".repeat(i));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f6"
+    },
+    {
+     "id": "java-f6-faktor",
+     "type": "write",
+     "title": "Pembagi Sejati",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≥ 1). Cetak semua pembagi n dari kecil ke besar dalam satu baris, dipisah spasi.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "12",
+       "expected": "1 2 3 4 6 12\n"
+      },
+      {
+       "input": "7",
+       "expected": "1 7\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      },
+      {
+       "input": "36",
+       "expected": "1 2 3 4 6 9 12 18 36\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa setiap i dari 1 sampai n.",
+      "Kumpulkan di StringBuilder.",
+      "Pangkas spasi berlebih di akhir dengan trim()."
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        StringBuilder sb = new StringBuilder();\n        for (int i = 1; i <= n; i++) if (n % i == 0) sb.append(i).append(' ');\n        System.out.println(sb.toString().trim());\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f6"
+    },
+    {
+     "id": "java-f6-predict",
+     "type": "predict",
+     "title": "Keluar dari Dua Loop",
+     "difficulty": 3,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "java",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        luar:\n        for (int i = 1; i <= 3; i++) {\n            for (int j = 1; j <= 3; j++) {\n                if (j == 2) continue luar;\n                if (i == 3) break luar;\n                System.out.print(i * 10 + j + \" \");\n            }\n        }\n        System.out.println(\"selesai\");\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "11 21 selesai\n"
+      }
+     ],
+     "hints": [
+      "continue luar lanjut ke i berikutnya.",
+      "Untuk setiap i, hanya j = 1 yang dicetak sebelum j == 2.",
+      "Saat i == 3, break luar langsung keluar."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "java",
+     "chapter": "f6"
+    },
+    {
+     "id": "java-f6-bug",
+     "type": "bughunt",
+     "title": "Indeks Kebablasan",
+     "difficulty": 1,
+     "prompt": "Program menjumlah elemen array, tapi crash dengan ArrayIndexOutOfBoundsException. Temukan bug-nya.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int[] a = new int[in.nextInt()];\n        for (int i = 0; i < a.length; i++) a[i] = in.nextInt();\n        int total = 0;\n        for (int i = 0; i <= a.length; i++) total += a[i];\n        System.out.println(total);\n    }\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "3\n1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "1\n5",
+       "expected": "5\n"
+      }
+     ],
+     "hints": [
+      "Indeks array valid dari 0 sampai length - 1.",
+      "i <= a.length menyentuh indeks length.",
+      "i < a.length"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int[] a = new int[in.nextInt()];\n        for (int i = 0; i < a.length; i++) a[i] = in.nextInt();\n        int total = 0;\n        for (int i = 0; i < a.length; i++) total += a[i];\n        System.out.println(total);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f6"
+    },
+    {
+     "id": "java-f6-readerror",
+     "type": "readerror",
+     "title": "Indeks Kebablasan",
+     "difficulty": 1,
+     "prompt": "Baca pesan exception-nya lalu tentukan perbaikannya.",
+     "lang": "java",
+     "code": "public class Main {\n    public static void main(String[] args) {\n        int[] skor = {90, 75, 80};\n        for (int i = 0; i <= skor.length; i++) System.out.println(skor[i]);\n    }\n}\n",
+     "tests": [],
+     "hints": [
+      "Berapa panjang skor?",
+      "Indeks terakhir yang valid adalah length - 1.",
+      "Periksa kondisi loop."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "error": "Exception in thread \"main\" java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 3\n\tat Main.main(Main.java:4)\n(exit code 1)",
+     "options": [
+      "i <= skor.length membaca indeks 3 yang tidak ada. Pakai i < skor.length.",
+      "Array Java harus dibuat dengan new ArrayList.",
+      "println tidak bisa mencetak isi array.",
+      "skor harus dideklarasikan static."
+     ],
+     "explain": "ArrayIndexOutOfBoundsException, karena indeks valid hanya 0 sampai length - 1.",
+     "track": "java",
+     "chapter": "f6"
+    },
+    {
+     "id": "java-f6-refactor",
+     "type": "refactor",
+     "title": "Refactor ke StringBuilder",
+     "difficulty": 2,
+     "prompt": "Menggabung String dengan += di dalam loop membuat banyak objek baru. Refactor memakai StringBuilder dengan output tetap sama.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        String s = \"\";\n        for (int i = 1; i <= n; i++) s += i + (i < n ? \",\" : \"\");\n        System.out.println(s);\n    }\n}\n",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "1,2,3,4,5\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n"
+      },
+      {
+       "input": "12",
+       "expected": "1,2,3,4,5,6,7,8,9,10,11,12\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "StringBuilder sb = new StringBuilder();",
+      "sb.append(...) bisa dirantai.",
+      "Cetak sb atau sb.toString()."
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        int n = new Scanner(System.in).nextInt();\n        StringBuilder sb = new StringBuilder();\n        for (int i = 1; i <= n; i++) sb.append(i).append(i < n ? \",\" : \"\");\n        System.out.println(sb);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "rules": [
+      {
+       "text": "Memakai StringBuilder",
+       "require": "StringBuilder"
+      },
+      {
+       "text": "Tanpa s += di dalam loop",
+       "forbid": "s\\s*\\+="
+      }
+     ],
+     "track": "java",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Method di Java ditulis di dalam class. Method yang dipanggil dari main (yang static) juga harus static, misalnya static int kuadrat(int x). Parameter primitif dikirim sebagai salinan. Objek dikirim sebagai salinan referensinya, sehingga isinya bisa diubah.",
+     "code": "public class Main {\n    static int kuadrat(int x) { return x * x; }\n    static void naik(int x) { x++; }\n    static void naikArray(int[] a) { a[0]++; }\n\n    public static void main(String[] args) {\n        int n = 1;\n        int[] arr = {1};\n        naik(n);\n        naikArray(arr);\n        System.out.println(kuadrat(7) + \" \" + n + \" \" + arr[0]);\n    }\n}\n"
+    },
+    {
+     "text": "Method boleh di-overload (nama sama, parameter berbeda) dan boleh rekursif. Semua jalur method non-void wajib berakhir dengan return, dan compiler Java akan menolak kalau ada jalur yang lupa.",
+     "code": "public class Main {\n    static long faktorial(int n) { return n <= 1 ? 1 : n * faktorial(n - 1); }\n    static int luas(int s) { return s * s; }\n    static int luas(int p, int l) { return p * l; }\n\n    public static void main(String[] args) {\n        System.out.println(faktorial(10) + \" \" + luas(3) + \" \" + luas(2, 5));\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "java-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis method static int fpb(int a, int b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "fpb(a, b) = fpb(b, a % b), dan berhenti saat b == 0.",
+      "Method harus static supaya bisa dipanggil dari main.",
+      "static int fpb(int a, int b) { return b == 0 ? a : fpb(b, a % b); }"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    static int fpb(int a, int b) { return b == 0 ? a : fpb(b, a % b); }\n\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        System.out.println(fpb(in.nextInt(), in.nextInt()));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f7"
+    },
+    {
+     "id": "java-f7-palindrom",
+     "type": "write",
+     "title": "Kata Cermin",
+     "difficulty": 1,
+     "prompt": "Tulis method static boolean palindrom(String s). Baca satu kata (huruf kecil), cetak \"ya\" atau \"tidak\".",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "katak",
+       "expected": "ya\n"
+      },
+      {
+       "input": "slayer",
+       "expected": "tidak\n"
+      },
+      {
+       "input": "a",
+       "expected": "ya\n",
+       "hidden": true
+      },
+      {
+       "input": "ab",
+       "expected": "tidak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "new StringBuilder(s).reverse().toString() membalik string.",
+      "Bandingkan isinya dengan equals.",
+      "return s.equals(new StringBuilder(s).reverse().toString());"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    static boolean palindrom(String s) { return s.equals(new StringBuilder(s).reverse().toString()); }\n\n    public static void main(String[] args) {\n        System.out.println(palindrom(new Scanner(System.in).next()) ? \"ya\" : \"tidak\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "java",
+     "chapter": "f7"
+    },
+    {
+     "id": "java-f7-predict",
+     "type": "predict",
+     "title": "Salinan atau Referensi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "java",
+     "code": "public class Main {\n    static void ubah(int x, int[] a, String s) {\n        x = 99;\n        a[0] = 99;\n        s = \"baru\";\n    }\n\n    public static void main(String[] args) {\n        int x = 1;\n        int[] a = {1};\n        String s = \"lama\";\n        ubah(x, a, s);\n        System.out.println(x + \" \" + a[0] + \" \" + s);\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "1 99 lama\n"
+      }
+     ],
+     "hints": [
+      "int dikirim sebagai salinan.",
+      "Array dikirim sebagai salinan referensi, jadi isinya bisa diubah.",
+      "s = \"baru\" hanya mengganti referensi lokal, bukan String milik pemanggil."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f7"
+    },
+    {
+     "id": "java-f7-bug",
+     "type": "bughunt",
+     "title": "Method yang Lupa Kembali",
+     "difficulty": 2,
+     "prompt": "Program gagal dikompilasi dengan \"missing return statement\". Temukan baris yang salah.",
+     "lang": "java",
+     "starter": "import java.util.Scanner;\n\npublic class Main {\n    static String tanda(int n) {\n        if (n > 0) return \"positif\";\n        else if (n < 0) return \"negatif\";\n        else if (n == 0) System.out.println(\"nol\");\n    }\n\n    public static void main(String[] args) {\n        System.out.println(tanda(new Scanner(System.in).nextInt()));\n    }\n}\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Cabang terakhir mencetak, tapi tidak mengembalikan apa-apa.",
+      "Method String harus mengembalikan nilai di semua jalur.",
+      "else return \"nol\";"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    static String tanda(int n) {\n        if (n > 0) return \"positif\";\n        else if (n < 0) return \"negatif\";\n        else return \"nol\";\n    }\n\n    public static void main(String[] args) {\n        System.out.println(tanda(new Scanner(System.in).nextInt()));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "java",
+     "chapter": "f7"
+    },
+    {
+     "id": "java-f7-translate",
+     "type": "translate",
+     "title": "Terjemahkan Faktorial",
+     "difficulty": 2,
+     "prompt": "Tulis ulang program Python ini dalam Java (n ≤ 20).",
+     "lang": "java",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "20",
+       "expected": "2432902008176640000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai long karena 20! melebihi int.",
+      "Method static long faktorial(int n).",
+      "Ternary n <= 1 ? 1 : n * faktorial(n - 1)"
+     ],
+     "solutions": [
+      "import java.util.Scanner;\n\npublic class Main {\n    static long faktorial(int n) { return n <= 1 ? 1 : n * faktorial(n - 1); }\n\n    public static void main(String[] args) {\n        System.out.println(faktorial(new Scanner(System.in).nextInt()));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "from_lang": "python",
+     "from_code": "def faktorial(n):\n    return 1 if n <= 1 else n * faktorial(n - 1)\nprint(faktorial(int(input())))\n",
+     "track": "java",
+     "chapter": "f7"
+    }
+   ]
+  }
+ }
+}

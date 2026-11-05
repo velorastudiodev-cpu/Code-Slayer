@@ -1,0 +1,42 @@
+lesson:
+- text: 'Praktik terbaik skrip: set -euo pipefail, kutip semua variabel, pakai $(...) bukan backtick, nama variabel jelas, fungsi kecil, mktemp untuk file sementara, trap untuk bersih-bersih, dan cek dengan
+    shellcheck.'
+  code: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+    tmp=$(mktemp)
+    trap 'rm -f "$tmp"' EXIT
+exercises:
+- id: bash-p2-kutip
+  type: quiz
+  title: Kutip Semua
+  difficulty: 1
+  prompt: rm $file berbahaya jika file berisi "laporan lama.txt" karena...
+  options:
+  - 'Tanpa kutip, nama dipecah menjadi dua argumen: laporan dan lama.txt'
+  - rm tidak bisa menghapus file .txt
+  - Spasi dilarang di Linux
+  - rm akan meminta konfirmasi
+  explain: Word splitting memecah variabel tanpa kutip. Selalu tulis rm -- "$file".
+  hints: |
+    Spasi memecah kata.
+    Bisa menghapus file yang salah.
+    Kutip ganda.
+- id: bash-p2-trap
+  type: write
+  title: Bersih-bersih Otomatis
+  difficulty: 3
+  prompt: Di dalam subshell, buat file sementara sem.txt, pasang trap yang menghapusnya saat EXIT, tulis "data" ke dalamnya. Setelah subshell selesai, cetak "ada" jika sem.txt masih ada atau "bersih" bila
+    sudah terhapus.
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    trap perintah EXIT
+    Subshell ( ... ) punya EXIT sendiri.
+    Cek dengan [ -f sem.txt ].
+  solution: |
+    (
+      echo data > sem.txt
+      trap 'rm -f sem.txt' EXIT
+    )
+    if [ -f sem.txt ]; then echo ada; else echo bersih; fi

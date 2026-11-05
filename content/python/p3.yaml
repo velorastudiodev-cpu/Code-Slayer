@@ -1,0 +1,127 @@
+lesson:
+  - text: Design pattern adalah solusi umum untuk masalah desain yang berulang. Di Python, banyak pattern jadi sangat sederhana karena fungsi adalah nilai. Strategy cukup berupa dict yang memetakan nama ke fungsi, dan Factory cukup berupa dict yang memetakan nama ke class.
+    code: |
+      import operator
+      OPS = {"+": operator.add, "-": operator.sub, "*": operator.mul}
+      print(OPS["*"](6, 7))
+  - text: Observer membuat banyak pihak bisa "berlangganan" sebuah kejadian. Saat kejadian terjadi, semua pelanggan diberi tahu. Pola ini dipakai di UI, notifikasi, dan sistem event.
+    code: |
+      pelanggan = []
+      def langganan(f):
+          pelanggan.append(f)
+      def kabarkan(pesan):
+          for f in pelanggan:
+              f(pesan)
+      langganan(lambda p: print("Tanjiro dengar:", p))
+      langganan(lambda p: print("Zenitsu dengar:", p))
+      kabarkan("iblis di utara!")
+exercises:
+  - id: py-p3-strategy
+    type: write
+    title: Kalkulator Strategi
+    difficulty: 2
+    prompt: 'Setiap baris input berisi "a op b". Hitung dengan dict strategi untuk op di antara +, -, *, //. Jika op tidak dikenal, cetak "operator tidak dikenal".'
+    tests: ["3 + 4\n10 // 3\n2 ^ 5", "6 * 7"]
+    hints: |
+      Buat dict yang memetakan simbol ke fungsi (lambda atau modul operator).
+      Baca semua baris dengan sys.stdin.
+      Periksa op in OPS sebelum memanggil.
+    solution: |
+      import sys, operator
+      OPS = {"+": operator.add, "-": operator.sub, "*": operator.mul, "//": operator.floordiv}
+      for baris in sys.stdin.read().splitlines():
+          a, op, b = baris.split()
+          print(OPS[op](int(a), int(b)) if op in OPS else "operator tidak dikenal")
+  - id: py-p3-observer
+    type: write
+    title: Jaringan Gagak
+    difficulty: 3
+    prompt: 'Perintah per baris berupa "sub <nama>" (berlangganan) atau "pub <pesan...>" (umumkan). Untuk setiap pub, setiap pelanggan (sesuai urutan berlangganan) mencetak "<nama> menerima: <pesan>". Jika belum ada pelanggan, cetak "tidak ada yang mendengar".'
+    tests: ["pub halo\nsub Tanjiro\nsub Zenitsu\npub iblis di utara", "sub A\npub x\npub y"]
+    hints: |
+      Simpan pelanggan di list.
+      split(" ", 1) memisahkan perintah dari sisa teks.
+      Untuk pub, loop semua pelanggan.
+    solution: |
+      import sys
+      pelanggan = []
+      for baris in sys.stdin.read().splitlines():
+          cmd, arg = baris.split(" ", 1)
+          if cmd == "sub":
+              pelanggan.append(arg)
+          elif not pelanggan:
+              print("tidak ada yang mendengar")
+          else:
+              for p in pelanggan:
+                  print(f"{p} menerima: {arg}")
+  - id: py-p3-factory
+    type: write
+    title: Pabrik Bentuk
+    difficulty: 2
+    prompt: 'Setiap baris berisi bentuk dan ukurannya, yaitu "persegi s", "lingkaran r", atau "segitiga a t". Buat class untuk tiap bentuk dengan method luas(), pilih class lewat dict (factory), lalu cetak luasnya dengan 2 desimal.'
+    tests: ["persegi 3\nlingkaran 1\nsegitiga 3 4", "lingkaran 2.5"]
+    hints: |
+      Setiap class menerima angka di __init__.
+      BENTUK = {"persegi": Persegi, ...}
+      BENTUK[nama](*map(float, angka)).luas()
+    solution: |
+      import math, sys
+      class Persegi:
+          def __init__(self, s): self.s = s
+          def luas(self): return self.s ** 2
+      class Lingkaran:
+          def __init__(self, r): self.r = r
+          def luas(self): return math.pi * self.r ** 2
+      class Segitiga:
+          def __init__(self, a, t): self.a, self.t = a, t
+          def luas(self): return self.a * self.t / 2
+      BENTUK = {"persegi": Persegi, "lingkaran": Lingkaran, "segitiga": Segitiga}
+      for baris in sys.stdin.read().splitlines():
+          nama, *angka = baris.split()
+          print(f"{BENTUK[nama](*map(float, angka)).luas():.2f}")
+  - id: py-p3-predict
+    type: predict
+    title: Penghitung Tertutup
+    difficulty: 3
+    prompt: Closure menyimpan state, dan inilah dasar banyak pattern. Tulis output persis dari kode berikut.
+    code: |
+      def pembuat():
+          hitung = 0
+          def tambah():
+              nonlocal hitung
+              hitung += 1
+              return hitung
+          return tambah
+      a = pembuat()
+      b = pembuat()
+      a()
+      a()
+      print(a(), b())
+    hints: |
+      Setiap pemanggilan pembuat() punya hitung sendiri.
+      a dipanggil tiga kali.
+      b baru dipanggil sekali.
+    solution: x
+  - id: py-p3-bug-strategy
+    type: bughunt
+    title: Strategi yang Langsung Dijalankan
+    difficulty: 2
+    prompt: Kalkulator strategi ini error bahkan sebelum membaca input. Temukan bug-nya.
+    starter: |
+      def tambah(a, b): return a + b
+      def kurang(a, b): return a - b
+      OPS = {"+": tambah(), "-": kurang}
+      a, op, b = input().split()
+      print(OPS[op](int(a), int(b)))
+    bug_line: 3
+    tests: ["3 + 4", "10 - 15"]
+    hints: |
+      Apa beda tambah dan tambah()?
+      Dict harus menyimpan fungsinya, bukan hasil memanggilnya.
+      {"+": tambah, "-": kurang}
+    solution: |
+      def tambah(a, b): return a + b
+      def kurang(a, b): return a - b
+      OPS = {"+": tambah, "-": kurang}
+      a, op, b = input().split()
+      print(OPS[op](int(a), int(b)))

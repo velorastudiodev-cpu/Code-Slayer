@@ -1,0 +1,98 @@
+lesson:
+  - text: Operator aritmetikanya adalah + - * / % dan **. / selalu menghasilkan pembagian desimal. Pakai Math.floor(a / b) untuk pembagian bulat. % memberi sisa bagi. Hati-hati, + dengan string berarti penggabungan.
+    code: |
+      console.log(7 / 2, Math.floor(7 / 2), 7 % 2, 2 ** 10)
+      console.log("1" + 2 + 3, 1 + 2 + "3")
+  - text: === membandingkan nilai DAN tipe, sedangkan == mengonversi tipe dulu sehingga hasilnya bisa mengejutkan. Biasakan selalu memakai === dan !==. Operator logika adalah && (dan), || (atau), dan ! (tidak).
+    code: |
+      console.log(0 == "0", 0 === "0", null == undefined)
+      const x = 15
+      console.log(x > 10 && x < 20, x < 0 || x > 100, !(x > 10))
+exercises:
+  - id: js-predict-plus
+    type: predict
+    title: Iblis Penggabung Tipe
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      console.log("1" + 2 + 3)
+      console.log(1 + 2 + "3")
+    hints: |
+      + dievaluasi dari kiri ke kanan.
+      Begitu salah satu operand string, + menjadi penggabungan teks.
+      Baris kedua menghitung 1 + 2 dulu (angka), baru digabung dengan "3".
+    solution: x
+  - id: js-f3-detik
+    type: write
+    title: Jam Pertarungan
+    difficulty: 2
+    prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+    tests: ["3725", "59", "86399", "0"]
+    hints: |
+      1 jam = 3600 detik.
+      Pakai Math.floor untuk pembagian bulat dan % untuk sisa.
+      `${Math.floor(t / 3600)}:${Math.floor(t % 3600 / 60)}:${t % 60}`
+    solution: |
+      const t = Number(readline())
+      console.log(`${Math.floor(t / 3600)}:${Math.floor(t % 3600 / 60)}:${t % 60}`)
+  - id: js-f3-rentang
+    type: write
+    title: Penjaga Gerbang
+    difficulty: 1
+    prompt: Baca n. Cetak true jika n di antara 10 dan 20 (inklusif) dan genap, selain itu false.
+    tests: ["12", "13", "22", "10", "8"]
+    hints: |
+      Ada tiga syarat yang digabung dengan &&.
+      Genap berarti n % 2 === 0.
+      console.log(n >= 10 && n <= 20 && n % 2 === 0)
+    solution: |
+      const n = Number(readline())
+      console.log(n >= 10 && n <= 20 && n % 2 === 0)
+  - id: js-f3-bug-rata
+    type: bughunt
+    title: Rata-rata Kebesaran
+    difficulty: 1
+    prompt: Rata-rata tiga bilangan selalu terlalu besar. Temukan bug-nya.
+    starter: |
+      const [a, b, c] = readline().split(" ").map(Number)
+      const rata = a + b + c / 3
+      console.log(rata)
+    bug_line: 2
+    tests: ["3 6 9", "1 2 3", "4 4 4"]
+    hints: |
+      / dikerjakan sebelum +.
+      Hanya c yang dibagi 3.
+      (a + b + c) / 3
+    solution: |
+      const [a, b, c] = readline().split(" ").map(Number)
+      const rata = (a + b + c) / 3
+      console.log(rata)
+  - id: js-f3-suhu
+    type: write
+    title: Suhu Napas Api
+    difficulty: 1
+    prompt: Baca suhu Celsius. Cetak Fahrenheit-nya dengan 1 desimal (F = C * 9 / 5 + 32).
+    tests: ["100", "0", "-40", "37"]
+    hints: |
+      Ubah input dengan Number().
+      .toFixed(1) membulatkan ke 1 desimal (hasilnya string).
+      console.log((c * 9 / 5 + 32).toFixed(1))
+    solution: |
+      const c = Number(readline())
+      console.log((c * 9 / 5 + 32).toFixed(1))
+  - id: js-f3-parsons
+    type: parsons
+    title: Lapangan Latihan
+    difficulty: 1
+    prompt: Susun program yang membaca panjang dan lebar lalu mencetak luas kemudian keliling.
+    tests: ["3 4", "10 2"]
+    hints: |
+      Baca dulu sebelum menghitung.
+      Hitung sebelum mencetak.
+      Luas dicetak lebih dulu.
+    solution: |
+      const [p, l] = readline().split(" ").map(Number)
+      const luas = p * l
+      const keliling = 2 * (p + l)
+      console.log(luas)
+      console.log(keliling)

@@ -1,0 +1,127 @@
+lesson:
+  - text: Modul memisahkan kode ke beberapa file. ES Modules memakai export dan import, misalnya import { tambah } from "./mat.js". Node.js lama memakai require dan module.exports. Ekosistem package diatur npm, dengan dependensi yang dicatat di package.json.
+    code: |
+      const paket = JSON.parse('{"name":"code-slayer","version":"1.2.0","dependencies":{"dexie":"^4.0.0"}}')
+      console.log(`${paket.name}@${paket.version}`, Object.keys(paket.dependencies))
+  - text: Inti modul adalah menyembunyikan detail dan hanya mengekspos API publik. Sebelum ada ES Modules, hal ini dilakukan dengan module pattern, yaitu fungsi yang langsung dipanggil (IIFE) dan mengembalikan objek berisi fungsi publik. Variabel di dalamnya tetap privat lewat closure.
+    code: |
+      const Gagak = (() => {
+        let terkirim = 0
+        return { kirim: pesan => `Kaa! ${pesan} (#${++terkirim})` }
+      })()
+      console.log(Gagak.kirim("misi"), Gagak.kirim("pulang"))
+      console.log(Gagak.terkirim)
+exercises:
+  - id: js-m5-modul-mat
+    type: write
+    title: Modul Matematika
+    difficulty: 1
+    prompt: 'Buat objek modul Mat berisi fungsi jumlah(arr) dan rata(arr), dengan rata memakai jumlah. Baca deretan bilangan, lalu cetak "jumlah <J>, rata <R>" dengan R berisi 1 desimal.'
+    tests: ["1 2 3 4", "10", "5 6"]
+    hints: |
+      const Mat = { jumlah(a) { ... }, rata(a) { ... } }
+      Di dalam rata, panggil Mat.jumlah(a).
+      toFixed(1) untuk 1 desimal.
+    solution: |
+      const Mat = {
+        jumlah: a => a.reduce((s, x) => s + x, 0),
+        rata: a => Mat.jumlah(a) / a.length,
+      }
+      const a = readline().split(" ").map(Number)
+      console.log(`jumlah ${Mat.jumlah(a)}, rata ${Mat.rata(a).toFixed(1)}`)
+  - id: js-m5-package
+    type: write
+    title: Membaca package.json
+    difficulty: 2
+    prompt: 'Input berisi satu baris JSON package.json. Cetak "<name>@<version>", lalu setiap dependency (gabungan dependencies dan devDependencies) dalam format "<nama> <versi>" urut menurut nama. Jika tidak ada, cetak "(tanpa dependency)".'
+    tests: ['{"name":"slayer","version":"1.0.0","dependencies":{"react":"^19","dexie":"^4"},"devDependencies":{"vite":"^8"}}', '{"name":"kosong","version":"0.0.1"}']
+    hints: |
+      Gabungkan dengan spread, yaitu { ...p.dependencies, ...p.devDependencies }.
+      Spread pada undefined aman di object literal.
+      Object.entries(...).sort()
+    solution: |
+      const p = JSON.parse(readline())
+      console.log(`${p.name}@${p.version}`)
+      const dep = Object.entries({ ...p.dependencies, ...p.devDependencies }).sort()
+      if (!dep.length) console.log("(tanpa dependency)")
+      for (const [n, v] of dep) console.log(n, v)
+  - id: js-m5-predict
+    type: predict
+    title: Rahasia Modul
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const Kas = (() => {
+        let saldo = 0
+        const log = []
+        return {
+          setor(x) { saldo += x; log.push(x); return this },
+          get saldo() { return saldo },
+          riwayat: () => log.length,
+        }
+      })()
+      Kas.setor(5).setor(10)
+      Kas.saldo = 999
+      console.log(Kas.saldo, Kas.riwayat(), typeof Kas.log)
+    hints: |
+      saldo dan log privat di dalam closure.
+      Getter tanpa setter membuat assignment diabaikan, tanpa error di mode non-strict.
+      log tidak diekspos sebagai properti.
+    solution: x
+  - id: js-m5-bug-iife
+    type: bughunt
+    title: Modul yang Lupa Dipanggil
+    difficulty: 2
+    prompt: Modul Gagak seharusnya menghitung pesan yang dikirim, tapi program error. Temukan bug-nya.
+    starter: |
+      const Gagak = (function () {
+        let pesan = 0
+        return { kirim() { pesan++; return pesan } }
+      })
+      console.log(Gagak.kirim(), Gagak.kirim())
+    bug_line: 4
+    hints: |
+      Gagak saat ini berisi fungsi, bukan objek hasilnya.
+      IIFE artinya fungsi langsung dipanggil.
+      })()
+    solution: |
+      const Gagak = (function () {
+        let pesan = 0
+        return { kirim() { pesan++; return pesan } }
+      })()
+      console.log(Gagak.kirim(), Gagak.kirim())
+  - id: js-m5-semver
+    type: write
+    title: Membandingkan Versi
+    difficulty: 3
+    prompt: 'Setiap baris berisi dua versi semver "a.b.c x.y.z". Cetak -1 jika versi pertama lebih lama, 1 jika lebih baru, dan 0 jika sama. Bandingkan per bagian sebagai angka, bukan teks.'
+    tests: ["1.2.10 1.10.0\n2.0.0 1.99.99\n3.1.4 3.1.4", "0.0.1 0.0.2"]
+    hints: |
+      Pecah dengan split(".").map(Number).
+      Bandingkan major, lalu minor, lalu patch.
+      Math.sign(a[i] - b[i]) pada bagian pertama yang berbeda.
+    solution: |
+      let baris
+      while ((baris = readline()) !== null) {
+        const [a, b] = baris.split(" ").map(v => v.split(".").map(Number))
+        const i = [0, 1, 2].find(i => a[i] !== b[i])
+        console.log(i === undefined ? 0 : Math.sign(a[i] - b[i]))
+      }
+  - id: js-m5-parsons
+    type: parsons
+    title: Modul Penghitung
+    difficulty: 2
+    prompt: Susun module pattern Penghitung dengan method tambah() dan nilai(). Panggil tambah sebanyak n kali dari input, lalu cetak nilainya.
+    tests: ["3", "0"]
+    hints: |
+      IIFE dibuka dengan (() => { dan ditutup dengan })().
+      Variabel privat dibuat sebelum return.
+      Loop dan console.log berada setelah modul dibuat.
+    solution: |
+      const Penghitung = (() => {
+        let n = 0
+        return { tambah: () => n++, nilai: () => n }
+      })()
+      const k = Number(readline())
+      for (let i = 0; i < k; i++) Penghitung.tambah()
+      console.log(Penghitung.nilai())

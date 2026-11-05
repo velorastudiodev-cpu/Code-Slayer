@@ -1,0 +1,148 @@
+lesson:
+- text: if di Rust tidak memakai kurung di sekitar kondisi, dan kondisinya WAJIB bool (angka tidak otomatis jadi bool). Rantai else if bekerja seperti biasa.
+  code: |
+    fn main() {
+        let nilai = 78;
+        if nilai >= 85 {
+            println!("A");
+        } else if nilai >= 70 {
+            println!("B");
+        } else {
+            println!("C");
+        }
+    }
+- text: 'match mencocokkan nilai dengan pola: nilai tunggal, beberapa nilai (a | b), rentang (1..=9), atau penjaga (x if x > 10). Semua kemungkinan harus tertangani, biasanya dengan _ di akhir.'
+  code: |
+    fn main() {
+        for x in [0, 7, 42] {
+            let s = match x {
+                0 => "nol",
+                1..=9 => "satu digit",
+                n if n % 2 == 0 => "genap besar",
+                _ => "lainnya",
+            };
+            println!("{} {}", x, s);
+        }
+    }
+exercises:
+- id: rs-f5-nilai
+  type: write
+  title: Rapor Kisatsutai
+  difficulty: 1
+  prompt: Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '90'
+  - '85'
+  - '70'
+  - '69'
+  - '55'
+  - '10'
+  hints: |
+    Periksa dari syarat tertinggi.
+    Rantai if / else if / else.
+    Cetak satu huruf saja.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: i32 = it.next().unwrap().parse().unwrap();
+        let h = if n >= 85 { "A" } else if n >= 70 { "B" } else if n >= 55 { "C" } else { "D" };
+        println!("{}", h);
+    }
+- id: rs-f5-kabisat
+  type: write
+  title: Tahun Kabisat
+  difficulty: 2
+  prompt: Baca tahun. Cetak "kabisat" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu "bukan".
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '2024'
+  - '1900'
+  - '2000'
+  - '2023'
+  hints: |
+    Habis dibagi berarti % ... == 0.
+    Gabungkan dengan || dan &&.
+    (t % 400 == 0) || (t % 4 == 0 && t % 100 != 0)
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let t: i32 = it.next().unwrap().parse().unwrap();
+        if t % 400 == 0 || (t % 4 == 0 && t % 100 != 0) {
+            println!("kabisat");
+        } else {
+            println!("bukan");
+        }
+    }
+- id: rs-f5-predict
+  type: predict
+  title: Cabang Mana yang Dipilih?
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn main() {
+        for x in [0, 3, 8, 15] {
+            let s = match x {
+                0 => "nol",
+                n if n % 2 == 1 && n > 10 => "besar-ganjil",
+                n if n % 2 == 1 => "ganjil",
+                _ => "genap",
+            };
+            print!("{} ", s);
+        }
+        println!();
+    }
+  hints: |
+    Telusuri nilai variabel baris demi baris.
+    Hanya satu cabang yang dijalankan per pemeriksaan.
+    Perhatikan kasus default/else.
+  solution: x
+- id: rs-f5-parsons
+  type: parsons
+  title: Tanda Bilangan
+  difficulty: 1
+  prompt: Susun program yang mencetak "positif", "negatif", atau "nol".
+  tests:
+  - '5'
+  - '-3'
+  - '0'
+  hints: |
+    Deklarasi fungsi utama paling atas.
+    Baca n sebelum memeriksanya.
+    Kurung tutup paling akhir.
+  solution: |
+    use std::io;
+    fn main() {
+        let mut s = String::new();
+        io::stdin().read_line(&mut s).unwrap();
+        let n: i32 = s.trim().parse().unwrap();
+        if n > 0 {
+            println!("positif");
+        } else if n < 0 {
+            println!("negatif");
+        } else {
+            println!("nol");
+        }
+    }

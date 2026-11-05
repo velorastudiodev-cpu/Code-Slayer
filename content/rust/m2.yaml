@@ -1,0 +1,221 @@
+lesson:
+- text: 'Rust punya dua tipe teks: String (dimiliki, bisa tumbuh) dan &str (pinjaman). Teks UTF-8, jadi tidak bisa diindeks s[0]; pakai .chars() untuk menelusuri karakter, atau .as_bytes() untuk ASCII.'
+  code: |
+    fn main() {
+        let s = String::from("Kimetsu no Yaiba");
+        println!("{} {}", s.to_uppercase(), s.len());
+        let kata: Vec<&str> = s.split_whitespace().collect();
+        println!("{} {}", kata.len(), kata.join("-"));
+    }
+- text: char bisa diubah ke angka dengan as u8 dan kembali dengan as char. Iterator .rev() membalik urutan, .collect::<String>() menyusun kembali menjadi String.
+  code: |
+    fn main() {
+        let s = "abc";
+        let besar: String = s.chars().map(|c| ((c as u8) - b'a' + b'A') as char).collect();
+        let balik: String = s.chars().rev().collect();
+        println!("{} {} {}", besar, balik, b'z' - b'a');
+    }
+exercises:
+- id: rs-m2-palindrom
+  type: write
+  title: Kata Cermin
+  difficulty: 1
+  prompt: Baca satu kata. Cetak "palindrom" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu "bukan".
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - Katak
+  - slayer
+  - a
+  - Malam
+  hints: |
+    Ubah ke huruf kecil dulu.
+    Bandingkan dengan versi terbaliknya.
+    Atau bandingkan karakter i dengan n-1-i.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let s = it.next().unwrap().to_lowercase();
+        let balik: String = s.chars().rev().collect();
+        println!("{}", if s == balik { "palindrom" } else { "bukan" });
+    }
+- id: rs-m2-vokal
+  type: write
+  title: Hitung Napas Vokal
+  difficulty: 1
+  prompt: Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - Kimetsu no Yaiba
+  - xyz
+  - AIUEO aiueo
+  hints: |
+    Telusuri setiap karakter.
+    Ubah ke huruf kecil supaya cukup satu pengecekan.
+    Cek apakah karakter ada di "aiueo".
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let c = input.to_lowercase().chars().filter(|ch| "aiueo".contains(*ch)).count();
+        println!("{}", c);
+    }
+- id: rs-m2-kapital
+  type: write
+  title: Nama Bergelar
+  difficulty: 2
+  prompt: Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - kamado tanjiro
+  - rengoku kyojuro sang hashira api
+  - x
+  hints: |
+    Pecah baris menjadi kata.
+    Kapitalkan karakter pertama tiap kata.
+    Gabungkan kembali dengan spasi.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let kata: Vec<String> = it
+            .map(|k| {
+                let mut cs = k.chars();
+                let a = cs.next().unwrap().to_uppercase().collect::<String>();
+                a + cs.as_str()
+            })
+            .collect();
+        println!("{}", kata.join(" "));
+    }
+- id: rs-m2-caesar
+  type: write
+  title: Sandi Gagak
+  difficulty: 2
+  prompt: Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    3
+    slayer
+  - |-
+    1
+    zaz
+  - |-
+    13
+    kaa kaa
+  hints: |
+    Huruf ke-i dari a = c - 'a'.
+    Geser: (i + k) % 26.
+    Spasi dicetak apa adanya.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut baris = input.lines();
+        let k: u8 = baris.next().unwrap().trim().parse().unwrap();
+        let pesan = baris.next().unwrap_or("");
+        let hasil: String = pesan
+            .chars()
+            .map(|c| if c.is_ascii_lowercase() { (b'a' + (c as u8 - b'a' + k) % 26) as char } else { c })
+            .collect();
+        println!("{}", hasil);
+    }
+- id: rs-m2-predict
+  type: predict
+  title: Potongan Teks
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn main() {
+        let s = "Hashira";
+        println!("{} {} {}", s.len(), &s[0..4], &s[4..]);
+        println!("{:?} {}", s.find('i'), s.matches('a').count());
+        println!("{}", s.replacen("a", "A", 1));
+    }
+  hints: |
+    Indeks string mulai dari 0.
+    Potongan [a, b) mengambil a sampai b-1.
+    Panjang dihitung per karakter ASCII di sini.
+  solution: x
+- id: rs-m2-bug
+  type: bughunt
+  title: Perbandingan yang Menipu
+  difficulty: 2
+  prompt: Program harus mencetak "sama" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu "beda". Tapi "Tanjiro" dan "tanjiro" dianggap beda. Temukan baris yang salah.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a = it.next().unwrap();
+        let b = it.next().unwrap();
+        if a == b {
+            println!("sama");
+        } else {
+            println!("beda");
+        }
+    }
+  bug_line: 9
+  tests:
+  - Tanjiro tanjiro
+  - Nezuko nezuko
+  - Giyu Sabito
+  hints: |
+    Huruf besar dan kecil adalah karakter berbeda.
+    Samakan dulu bentuknya sebelum dibandingkan.
+    Ubah keduanya ke huruf kecil.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a = it.next().unwrap();
+        let b = it.next().unwrap();
+        if a.to_lowercase() == b.to_lowercase() {
+            println!("sama");
+        } else {
+            println!("beda");
+        }
+    }

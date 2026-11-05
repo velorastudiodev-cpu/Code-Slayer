@@ -1,0 +1,38 @@
+lesson:
+- text: 'SSH (Secure Shell) membuka shell di server lain secara terenkripsi: ssh user@host. Lebih aman memakai kunci (ssh-keygen, lalu salin kunci publik ke ~/.ssh/authorized_keys) daripada kata sandi.
+    Kunci privat jangan pernah dibagikan.'
+  code: |
+    ssh-keygen -t ed25519
+    ssh-copy-id slayer@markas.contoh
+    ssh slayer@markas.contoh
+exercises:
+- id: bash-m6-key
+  type: quiz
+  title: Kunci Siapa?
+  difficulty: 1
+  prompt: Berkas mana yang boleh disalin ke server agar kamu bisa login dengan kunci?
+  options:
+  - id_ed25519.pub (kunci publik)
+  - id_ed25519 (kunci privat)
+  - known_hosts
+  - /etc/passwd
+  explain: Kunci publik boleh dibagikan; kunci privat harus tetap di perangkatmu.
+  hints: |
+    Satu boleh dibagikan, satu tidak.
+    Akhiran .pub
+    Kunci publik.
+- id: bash-m6-perm
+  type: quiz
+  title: Izin Kunci Privat
+  difficulty: 2
+  prompt: SSH menolak memakai kunci privat dengan izin 644. Izin yang benar adalah...
+  options:
+  - '600'
+  - '644'
+  - '777'
+  - '755'
+  explain: Kunci privat hanya boleh dibaca pemiliknya (600); SSH menolak kunci yang bisa dibaca orang lain.
+  hints: |
+    Hanya pemilik.
+    rw untuk user saja.
+    600

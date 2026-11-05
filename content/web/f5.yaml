@@ -1,0 +1,173 @@
+lesson:
+- text: 'CSS memilih elemen dengan selector: tag (p), class (.nama), id (#nama), keturunan (nav a), anak langsung (ul > li). Satu class boleh dipakai banyak elemen; id harus unik.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    p { color: #555; }
+    .hashira { color: crimson; font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <p class="hashira">Rengoku</p>
+      <p>Tanjiro</p>
+    </body>
+    </html>
+- text: 'Kalau beberapa aturan bertabrakan, yang menang adalah yang paling spesifik: id > class > tag. Kalau sama spesifiknya, yang ditulis paling akhir menang.'
+exercises:
+- id: web-f5-class
+  type: write
+  title: Tanda Hashira
+  difficulty: 1
+  prompt: Buat semua elemen ber-class hashira berwarna crimson dan tebal (bold). Elemen lain tidak berubah.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <p class="hashira">Rengoku</p>
+      <p>Tanjiro</p>
+      <p class="hashira">Giyu</p>
+    </body>
+    </html>
+  checks:
+  - sel: .hashira
+    css: color
+    value: crimson
+  - sel: .hashira
+    css: font-weight
+    value: bold
+  - sel: p:not(.hashira)
+    css: color
+    value: black
+  hints: |
+    Selector class diawali titik.
+    color dan font-weight.
+    .hashira { ... }
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .hashira { color: crimson; font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <p class="hashira">Rengoku</p>
+      <p>Tanjiro</p>
+      <p class="hashira">Giyu</p>
+    </body>
+    </html>
+- id: web-f5-nav
+  type: write
+  title: Link di Navigasi
+  difficulty: 2
+  prompt: 'Buat link di dalam nav berwarna white dengan latar (background-color) #222, TANPA mengubah link di luar nav.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+      <p><a href="#">Link biasa</a></p>
+    </body>
+    </html>
+  checks:
+  - sel: nav a
+    css: color
+    value: white
+  - sel: nav a
+    css: background-color
+    value: '#222'
+  - sel: p a
+    css: color
+    value: black
+  hints: |
+    Selector keturunan: nav a.
+    Link lain jangan ikut berubah.
+    nav a { color: white; background-color: #222; }
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    nav a { color: white; background-color: #222; }
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+      <p><a href="#">Link biasa</a></p>
+    </body>
+    </html>
+- id: web-f5-menang
+  type: quiz
+  title: Siapa yang Menang?
+  difficulty: 2
+  prompt: 'Elemen <p id="x" class="y">. Aturan: p { color: red } .y { color: green } #x { color: blue }. Warnanya?'
+  options:
+  - blue
+  - green
+  - red
+  - hitam (bawaan)
+  explain: 'Specificity: id (#x) > class (.y) > tag (p). Urutan penulisan hanya penentu kalau specificity sama.'
+  hints: |
+    Bandingkan kekuatan selector.
+    id paling kuat di antara ketiganya.
+    #x menang.
+- id: web-f5-bug
+  type: bughunt
+  title: Class yang Tidak Dikenali
+  difficulty: 1
+  prompt: Paragraf ber-class hashira seharusnya merah, tapi tetap hitam. Temukan baris yang salah.
+  starter: |
+    <!doctype html>
+    <style>
+      .Hashira { color: red; }
+    </style>
+    <p class="hashira">Rengoku</p>
+  bug_line: 3
+  checks:
+  - sel: .hashira
+    css: color
+    value: red
+  hints: |
+    Nama class peka huruf besar/kecil.
+    Bandingkan selector dengan atribut class.
+    .hashira, bukan .Hashira.
+  solution: |
+    <!doctype html>
+    <style>
+      .hashira { color: red; }
+    </style>
+    <p class="hashira">Rengoku</p>

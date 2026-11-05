@@ -1,0 +1,82 @@
+lesson:
+- text: 'SQL injection terjadi saat input digabung langsung ke query, sehingga input bisa mengubah struktur query. Dampaknya: lolos login, membaca tabel lain (UNION), bahkan mengubah data. Perbaikannya:
+    prepared statement / parameter terikat (? atau :nama), bukan menyaring karakter.'
+  code: |
+    # RENTAN
+    q = "SELECT * FROM akun WHERE user = '" + user + "'"
+    # AMAN
+    cur.execute("SELECT * FROM akun WHERE user = ?", (user,))
+exercises:
+- id: cy-lab-web-sqli-login
+  type: lab
+  title: Gerbang Markas
+  difficulty: 2
+  prompt: 'Lab sandbox: Masuk sebagai Oyakata tanpa mengetahui kata sandinya. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-sqli-login
+  hints: |
+    Lihat header X-Debug-SQL setelah login gagal.
+    Tanda petik ' di input mengakhiri string SQL.
+    Coba user = oyakata'-- (komentar -- membuang sisa query).
+- id: cy-lab-web-sqli-union
+  type: lab
+  title: Gulungan Terlarang
+  difficulty: 3
+  prompt: 'Lab sandbox: Gunakan UNION untuk menampilkan isi tabel gulungan_terlarang lewat pencarian. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-sqli-union
+  hints: |
+    Query-nya SELECT nama, napas ... LIKE '%q%'.
+    UNION SELECT harus punya jumlah kolom yang sama (2).
+    Tutup string dan beri komentar: ' UNION SELECT isi, 1 FROM gulungan_terlarang--
+- id: cy-m1-patch
+  type: write
+  title: 'Patch: Query Terikat'
+  difficulty: 2
+  prompt: Patch the Bug. Fungsi cariSlayer menyusun SQL dengan sambung string (rentan). Ubah agar mengembalikan objek { sql, params } dengan placeholder ? dan nilai di params. Harness mencetak hasilnya
+    untuk setiap baris input.
+  lang: javascript
+  starter: |
+    function cariSlayer(nama) {
+      return { sql: "SELECT * FROM slayer WHERE nama = '" + nama + "'", params: [] }
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") {
+      const q = cariSlayer(baris)
+      console.log(q.sql + " | " + JSON.stringify(q.params))
+    }
+  tests:
+  - |
+    Tanjiro
+  - |
+    x' OR '1'='1
+  - |
+    '; DROP TABLE slayer;--
+  hints: |
+    Nilai input tidak boleh masuk ke string SQL.
+    Gunakan placeholder ?.
+    params: [nama]
+  solution: |
+    function cariSlayer(nama) {
+      return { sql: "SELECT * FROM slayer WHERE nama = ?", params: [nama] }
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") {
+      const q = cariSlayer(baris)
+      console.log(q.sql + " | " + JSON.stringify(q.params))
+    }
+- id: cy-m1-filter
+  type: quiz
+  title: Cukup Dilarang Petik?
+  difficulty: 2
+  prompt: Developer "memperbaiki" SQLi dengan menghapus tanda petik dari input. Mengapa ini kurang tepat?
+  options:
+  - Konteks lain (angka, ORDER BY, encoding) tetap bisa disusupi; perbaikan yang benar adalah prepared statement
+  - Karena tanda petik dibutuhkan untuk nama
+  - Karena SQL tidak memakai tanda petik
+  - Sudah tepat, tidak ada masalah
+  explain: Menyaring karakter adalah tambalan rapuh. Parameter terikat memisahkan kode dan data secara tuntas.
+  hints: |
+    Apakah semua query memakai petik?
+    Contoh: WHERE id = 1 OR 1=1
+    Prepared statement.

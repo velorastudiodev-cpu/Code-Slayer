@@ -1,0 +1,141 @@
+lesson:
+- text: 'Secure coding: validasi input dengan allowlist, gunakan API yang aman (prepared statement, subprocess tanpa shell, path yang dinormalisasi), batasi field yang bisa diubah user, dan jangan pernah
+    percaya data dari klien.'
+exercises:
+- id: cy-lab-web-path
+  type: lab
+  title: Jalan Mundur
+  difficulty: 2
+  prompt: 'Lab sandbox: Ambil kunci.txt dari /srv/rahasia/. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-path
+  hints: |
+    .. berarti naik satu direktori.
+    Dari /srv/dokumen/ naik ke /srv/.
+    file=../rahasia/kunci.txt
+- id: cy-lab-web-mass
+  type: lab
+  title: Pendaftar Kilat
+  difficulty: 2
+  prompt: 'Lab sandbox: Daftarkan akun yang langsung berperan hashira. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-mass
+  hints: |
+    Lihat field apa saja yang ada di respons pendaftaran.
+    Kamu bisa mengirim field tambahan.
+    Body: {"user":"a","pass":"b","peran":"hashira"}
+- id: cy-lab-web-cmd
+  type: lab
+  title: Ping Terkutuk
+  difficulty: 3
+  prompt: 'Lab sandbox: Baca flag.txt lewat parameter host. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-cmd
+  hints: |
+    Shell menjalankan beberapa perintah yang dipisah titik koma (;).
+    Tambahkan perintah kedua setelah alamat.
+    host=8.8.8.8;cat flag.txt (encode ; dan spasi menjadi %3B dan %20 bila perlu)
+- id: cy-m5-path
+  type: write
+  title: 'Patch: Jalur Aman'
+  difficulty: 2
+  prompt: 'Patch the Bug. Fungsi unduh menggabungkan nama file ke /srv/dokumen/. Perbaiki: normalisasi path (os.path.normpath) dan tolak dengan mencetak "DITOLAK" jika hasilnya keluar dari /srv/dokumen/.
+    Jika aman, cetak path lengkapnya.'
+  lang: python
+  starter: |
+    import os, sys
+
+    BASE = "/srv/dokumen"
+
+    def unduh(nama):
+        return os.path.join(BASE, nama)
+
+    for nama in sys.stdin.read().split():
+        print(unduh(nama))
+  tests:
+  - |
+    laporan.txt
+    ../rahasia/kunci.txt
+  - |
+    arsip/2024.txt
+    ../../etc/passwd
+    /etc/shadow
+  hints: |
+    normpath menyelesaikan .. dan .
+    Cek awalan BASE + "/".
+    Path absolut juga harus ditolak (os.path.join mengabaikan BASE!).
+  solution: |
+    import os, sys
+
+    BASE = "/srv/dokumen"
+
+    def unduh(nama):
+        p = os.path.normpath(os.path.join(BASE, nama))
+        if not p.startswith(BASE + "/"):
+            return "DITOLAK"
+        return p
+
+    for nama in sys.stdin.read().split():
+        print(unduh(nama))
+- id: cy-m5-args
+  type: write
+  title: 'Patch: Tanpa Shell'
+  difficulty: 3
+  prompt: 'Patch the Bug. perintah_ping menyusun string perintah shell dari input (rawan command injection). Perbaiki: validasi host (hanya huruf, angka, titik, dan minus) dan kembalikan LIST argumen ["ping",
+    "-c", "1", host]; bila tidak valid cetak "DITOLAK".'
+  lang: python
+  starter: |
+    import sys
+
+    def perintah_ping(host):
+        return "ping -c 1 " + host
+
+    for host in sys.stdin.read().split():
+        print(perintah_ping(host))
+  tests:
+  - |
+    8.8.8.8
+    markas.contoh
+  - |
+    8.8.8.8;cat
+    $(whoami)
+  hints: |
+    Allowlist karakter dengan regex.
+    re.fullmatch
+    List argumen tidak lewat shell.
+  solution: |
+    import re, sys
+
+    def perintah_ping(host):
+        if not re.fullmatch(r"[A-Za-z0-9.-]+", host):
+            return "DITOLAK"
+        return ["ping", "-c", "1", host]
+
+    for host in sys.stdin.read().split():
+        print(perintah_ping(host))
+- id: cy-m5-allow
+  type: write
+  title: 'Patch: Allowlist Field'
+  difficulty: 2
+  prompt: Patch the Bug. daftar menyalin semua field JSON ke akun (mass assignment). Perbaiki agar hanya user dan pass yang diambil, dan peran selalu "kakushi".
+  lang: javascript
+  starter: |
+    function daftar(body) {
+      return { peran: "kakushi", ...body }
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") console.log(JSON.stringify(daftar(JSON.parse(baris))))
+  tests:
+  - |
+    {"user":"murata","pass":"x"}
+  - |
+    {"user":"a","pass":"b","peran":"hashira","admin":true}
+  hints: |
+    Jangan spread seluruh body.
+    Ambil field yang diizinkan saja.
+    peran ditentukan server.
+  solution: |
+    function daftar(body) {
+      return { peran: "kakushi", user: body.user, pass: body.pass }
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") console.log(JSON.stringify(daftar(JSON.parse(baris))))

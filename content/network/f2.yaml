@@ -1,0 +1,85 @@
+lesson:
+- text: 'Alamat IPv4 terdiri dari 4 oktet desimal 0-255 dipisah titik, misalnya 192.168.1.10. Totalnya 32 bit. Beberapa rentang dicadangkan untuk jaringan privat: 10.0.0.0/8, 172.16.0.0/12, dan 192.168.0.0/16.'
+  code: |
+    ip = "192.168.1.10"
+    oktet = [int(x) for x in ip.split(".")]
+    print(oktet, all(0 <= x <= 255 for x in oktet))
+    print(".".join(f"{x:08b}" for x in oktet))
+- text: 127.0.0.1 (localhost) selalu menunjuk ke komputer itu sendiri. Alamat privat tidak bisa diakses langsung dari internet; router memakai NAT untuk menerjemahkannya ke alamat publik.
+exercises:
+- id: net-f2-valid
+  type: write
+  title: Alamat yang Sah
+  difficulty: 1
+  prompt: Setiap baris input berisi satu teks. Cetak "valid" jika teks itu alamat IPv4 yang sah (4 bagian angka 0-255 dipisah titik, tanpa nol di depan kecuali "0"), selain itu "tidak".
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    192.168.1.10
+    0.0.0.0
+    256.1.1.1
+    1.2.3
+    abc.def.1.2
+    01.2.3.4
+    255.255.255.255
+  hints: |
+    Pecah dengan split(".") dan pastikan ada tepat 4 bagian.
+    Setiap bagian harus angka (isdigit) antara 0 dan 255.
+    Tolak bagian yang diawali 0 tapi panjangnya lebih dari 1.
+  solution: |
+    import sys
+
+    for baris in sys.stdin.read().split():
+        bagian = baris.split(".")
+        ok = len(bagian) == 4 and all(b.isdigit() and 0 <= int(b) <= 255 and (b == "0" or not b.startswith("0")) for b in bagian)
+        print("valid" if ok else "tidak")
+- id: net-f2-privat
+  type: quiz
+  title: Alamat Rumah Sendiri
+  difficulty: 1
+  prompt: Alamat IP mana yang termasuk rentang PRIVAT (tidak bisa dirutekan langsung di internet)?
+  options:
+  - 192.168.10.5
+  - 8.8.8.8
+  - 172.32.0.1
+  - 11.0.0.1
+  explain: 192.168.0.0/16 adalah rentang privat. 172.32.0.1 ada di luar 172.16.0.0/12 (yang berakhir di 172.31.255.255).
+  hints: |
+    Ingat tiga rentang: 10/8, 172.16/12, 192.168/16.
+    172.16/12 hanya sampai 172.31.
+    8.8.8.8 adalah DNS publik.
+- id: net-f2-loopback
+  type: answer
+  title: Rumah Sendiri
+  difficulty: 1
+  prompt: Alamat IPv4 loopback (localhost) yang selalu menunjuk ke komputer itu sendiri adalah...
+  accept:
+  - 127.0.0.1
+  explain: Seluruh 127.0.0.0/8 adalah loopback, tapi yang dipakai umumnya 127.0.0.1.
+  hints: |
+    Namanya juga localhost.
+    Diawali 127.
+    127.0.0.1
+- id: net-f2-biner
+  type: write
+  title: Sandi Biner
+  difficulty: 2
+  prompt: 'Baca satu alamat IPv4. Cetak representasi 32-bit-nya: 4 oktet dalam biner 8 digit dipisah titik.'
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - 192.168.1.10
+  - 10.0.0.1
+  - 255.255.255.0
+  hints: |
+    Pecah IP menjadi 4 angka.
+    format(x, "08b") atau f"{x:08b}" menghasilkan 8 digit biner.
+    Gabungkan dengan titik.
+  solution: |
+    ip = input().strip()
+    print(".".join(f"{int(x):08b}" for x in ip.split(".")))

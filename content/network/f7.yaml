@@ -1,0 +1,107 @@
+lesson:
+- text: 'HTTP bekerja dengan request-response. Request punya method (GET, POST, PUT, DELETE), path, header (Host, Content-Type), dan body. Response punya status code: 2xx sukses, 3xx redirect, 4xx kesalahan
+    klien, 5xx kesalahan server.'
+  code: |
+    request = "GET /misi?id=7 HTTP/1.1\r\nHost: korps.id\r\nAccept: */*\r\n\r\n"
+    baris = request.split("\r\n")
+    method, path, versi = baris[0].split()
+    header = dict(b.split(": ", 1) for b in baris[1:] if b)
+    print(method, path, header["Host"])
+exercises:
+- id: net-f7-404
+  type: answer
+  title: Halaman Hilang
+  difficulty: 1
+  prompt: Status code HTTP untuk "halaman tidak ditemukan" adalah...
+  accept:
+  - '404'
+  explain: '404 Not Found termasuk kelompok 4xx: kesalahan dari sisi klien (alamat yang diminta tidak ada).'
+  hints: |
+    Kelompok 4xx.
+    Paling terkenal di internet.
+    4-0-4.
+- id: net-f7-idem
+  type: quiz
+  title: Permintaan Berulang
+  difficulty: 2
+  prompt: Method HTTP yang idempotent (dipanggil berkali-kali hasil akhirnya sama dengan sekali) dan dipakai untuk MENGGANTI data adalah...
+  options:
+  - PUT
+  - POST
+  - PATCH
+  - CONNECT
+  explain: PUT mengganti resource dengan data yang dikirim; mengirim PUT yang sama dua kali menghasilkan keadaan yang sama. POST biasanya membuat data baru setiap kali.
+  hints: |
+    POST setiap kali bisa membuat data baru.
+    Method yang "menaruh" data di tempatnya.
+    P-U-T.
+- id: net-f7-parse
+  type: write
+  title: Membaca Surat HTTP
+  difficulty: 2
+  prompt: 'Input berisi satu request HTTP mentah: baris request lalu header "Nama: nilai", diakhiri baris kosong. Cetak method, path tanpa query string, dan nilai header Host, dipisah spasi. (Nama header
+    tidak peka huruf besar/kecil.)'
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |
+    GET /misi?id=7 HTTP/1.1
+    Host: korps.id
+    Accept: */*
+  - |
+    POST /lapor HTTP/1.1
+    host: gagak.korps.id
+    Content-Type: text/plain
+  - |
+    DELETE /akun/9 HTTP/1.1
+    User-Agent: slayer
+    HOST: desa.id
+  hints: |
+    Baris pertama: METHOD TARGET VERSI.
+    Path = bagian sebelum "?".
+    Bandingkan nama header dengan .lower().
+  solution: |
+    import sys
+
+    baris = sys.stdin.read().split("\n")
+    method, target, _ = baris[0].split()
+    host = ""
+    for b in baris[1:]:
+        if ":" in b:
+            nama, nilai = b.split(":", 1)
+            if nama.strip().lower() == "host":
+                host = nilai.strip()
+    print(method, target.split("?")[0], host)
+- id: net-f7-kelas
+  type: write
+  title: Arti Status
+  difficulty: 1
+  prompt: 'Setiap baris input berisi satu status code. Cetak kelasnya: 1xx "info", 2xx "sukses", 3xx "redirect", 4xx "salah klien", 5xx "salah server".'
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    200
+    404
+    503
+  - |-
+    301
+    100
+    201
+  - |-
+    418
+    500
+  hints: |
+    Digit pertama menentukan kelas.
+    kode // 100 memberi digit pertama.
+    Petakan dengan dict.
+  solution: |
+    import sys
+
+    KELAS = {1: "info", 2: "sukses", 3: "redirect", 4: "salah klien", 5: "salah server"}
+    for b in sys.stdin.read().split():
+        print(KELAS[int(b) // 100])

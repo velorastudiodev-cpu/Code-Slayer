@@ -1,0 +1,109 @@
+lesson:
+- text: string di Go tidak bisa diubah (immutable) dan diindeks per byte. Paket strings menyediakan ToLower, ToUpper, Split, Fields, Join, Contains, dan Builder untuk menyusun teks secara efisien.
+  code: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\ts := \"Kimetsu no Yaiba\"\n\tfmt.Println(strings.ToUpper(s), len(s))\n\tkata := strings.Fields(s)\n\tfmt.Println(len(kata),\
+    \ strings.Join(kata, \"-\"))\n}\n"
+- text: 'Untuk mengolah per karakter, ubah ke []byte (teks ASCII) atau []rune (Unicode). s[i] menghasilkan byte; byte bisa dihitung seperti angka: b - ''a''.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tb := []byte(\"abc\")\n\tfor i := range b {\n\t\tb[i] = b[i] - 'a' + 'A'\n\t}\n\tfmt.Println(string(b), \"z\"[0]-'a')\n}\n"
+exercises:
+- id: go-m2-palindrom
+  type: write
+  title: Kata Cermin
+  difficulty: 1
+  prompt: Baca satu kata. Cetak "palindrom" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu "bukan".
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - Katak
+  - slayer
+  - a
+  - Malam
+  hints: |
+    Ubah ke huruf kecil dulu.
+    Bandingkan dengan versi terbaliknya.
+    Atau bandingkan karakter i dengan n-1-i.
+  solution: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar s string\n\tfmt.Scan(&s)\n\ts = strings.ToLower(s)\n\tok := true\n\tfor i := 0; i < len(s)/2; i++ {\n\t\tif s[i]\
+    \ != s[len(s)-1-i] {\n\t\t\tok = false\n\t\t}\n\t}\n\tif ok {\n\t\tfmt.Println(\"palindrom\")\n\t} else {\n\t\tfmt.Println(\"bukan\")\n\t}\n}\n"
+- id: go-m2-vokal
+  type: write
+  title: Hitung Napas Vokal
+  difficulty: 1
+  prompt: Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - Kimetsu no Yaiba
+  - xyz
+  - AIUEO aiueo
+  hints: |
+    Telusuri setiap karakter.
+    Ubah ke huruf kecil supaya cukup satu pengecekan.
+    Cek apakah karakter ada di "aiueo".
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\ts, _ := r.ReadString('\\n')\n\tc := 0\n\tfor _, ch := range\
+    \ strings.ToLower(s) {\n\t\tif strings.ContainsRune(\"aiueo\", ch) {\n\t\t\tc++\n\t\t}\n\t}\n\tfmt.Println(c)\n}\n"
+- id: go-m2-kapital
+  type: write
+  title: Nama Bergelar
+  difficulty: 2
+  prompt: Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - kamado tanjiro
+  - rengoku kyojuro sang hashira api
+  - x
+  hints: |
+    Pecah baris menjadi kata.
+    Kapitalkan karakter pertama tiap kata.
+    Gabungkan kembali dengan spasi.
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\ts, _ := r.ReadString('\\n')\n\tkata := strings.Fields(s)\n\
+    \tfor i, k := range kata {\n\t\tkata[i] = strings.ToUpper(k[:1]) + k[1:]\n\t}\n\tfmt.Println(strings.Join(kata, \" \"))\n}\n"
+- id: go-m2-caesar
+  type: write
+  title: Sandi Gagak
+  difficulty: 2
+  prompt: Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - |-
+    3
+    slayer
+  - |-
+    1
+    zaz
+  - |-
+    13
+    kaa kaa
+  hints: |
+    Huruf ke-i dari a = c - 'a'.
+    Geser: (i + k) % 26.
+    Spasi dicetak apa adanya.
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\ta, _ := r.ReadString('\\n')\n\tk, _ := strconv.Atoi(strings.TrimSpace(a))\n\
+    \tpesan, _ := r.ReadString('\\n')\n\tpesan = strings.TrimRight(pesan, \"\\n\")\n\tb := []byte(pesan)\n\tfor i, c := range b {\n\t\tif c >= 'a' && c <= 'z' {\n\t\t\tb[i] = 'a' + (c-'a'+byte(k))%26\n\t\
+    \t}\n\t}\n\tfmt.Println(string(b))\n}\n"
+- id: go-m2-predict
+  type: predict
+  title: Potongan Teks
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\ts := \"Hashira\"\n\tfmt.Println(len(s), s[0:4], s[4:])\n\tfmt.Println(strings.Index(s, \"i\"), strings.Count(s, \"a\"))\n\
+    \tfmt.Println(strings.Replace(s, \"a\", \"A\", 1))\n}\n"
+  hints: |
+    Indeks string mulai dari 0.
+    Potongan [a, b) mengambil a sampai b-1.
+    Panjang dihitung per karakter ASCII di sini.
+  solution: x
+- id: go-m2-bug
+  type: bughunt
+  title: Perbandingan yang Menipu
+  difficulty: 2
+  prompt: Program harus mencetak "sama" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu "beda". Tapi "Tanjiro" dan "tanjiro" dianggap beda. Temukan baris yang salah.
+  starter: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar a, b string\n\tfmt.Scan(&a, &b)\n\tif a == b {\n\t\tfmt.Println(\"sama\")\n\t} else {\n\t\tfmt.Println(\"beda\"\
+    )\n\t}\n\t_ = strings.EqualFold\n}\n"
+  bug_line: 11
+  tests:
+  - Tanjiro tanjiro
+  - Nezuko nezuko
+  - Giyu Sabito
+  hints: |
+    Huruf besar dan kecil adalah karakter berbeda.
+    Samakan dulu bentuknya sebelum dibandingkan.
+    Ubah keduanya ke huruf kecil.
+  solution: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar a, b string\n\tfmt.Scan(&a, &b)\n\tif strings.EqualFold(a, b) {\n\t\tfmt.Println(\"sama\")\n\t} else {\n\t\tfmt.Println(\"\
+    beda\")\n\t}\n\t_ = strings.EqualFold\n}\n"

@@ -1,0 +1,89 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: 'Fungsi agregat merangkum banyak baris menjadi satu nilai: COUNT, SUM, AVG, MIN, MAX. COUNT(*) menghitung baris; COUNT(kolom) hanya menghitung yang tidak NULL.'
+  code: |
+    SELECT COUNT(*), COUNT(peringkat), MIN(nama) FROM iblis;
+- text: ROUND(x, n) membulatkan ke n desimal, berguna untuk AVG yang hasilnya pecahan.
+  code: |
+    SELECT ROUND(AVG(umur), 2), SUM(umur) FROM slayer;
+exercises:
+- id: sql-predict-count
+  type: predict
+  title: Menghitung Kadet Muda
+  difficulty: 1
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    SELECT COUNT(*) FROM slayer WHERE umur < 18;
+  hints: |
+    COUNT(*) menghitung banyak baris yang lolos WHERE.
+    Periksa umur tiap slayer satu per satu.
+    18 tidak memenuhi umur < 18.
+  solution: x
+- id: sql-f4-koban
+  type: write
+  title: Total Upah Korps
+  difficulty: 1
+  prompt: Tampilkan total koban dari misi yang berhasil (berhasil = 1).
+  tests:
+  - ''
+  - INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);
+  samples: 1
+  hints: |
+    Saring dulu misi yang berhasil.
+    SUM menjumlah satu kolom.
+    SELECT SUM(koban) FROM misi WHERE ...
+  solution: |
+    SELECT SUM(koban) FROM misi WHERE berhasil = 1;
+- id: sql-f4-rata
+  type: write
+  title: Rata-rata Umur
+  difficulty: 1
+  prompt: Tampilkan rata-rata umur slayer, dibulatkan 1 desimal.
+  tests:
+  - ''
+  - INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);
+  samples: 1
+  hints: |
+    AVG menghitung rata-rata.
+    ROUND(nilai, 1) membulatkan.
+    Bungkus AVG di dalam ROUND.
+  solution: |
+    SELECT ROUND(AVG(umur), 1) FROM slayer;
+- id: sql-f4-bug
+  type: bughunt
+  title: Iblis yang Tak Terhitung
+  difficulty: 2
+  prompt: Query harus menghitung SEMUA iblis, tapi hasilnya kurang. Temukan baris yang salah.
+  starter: |
+    SELECT
+      COUNT(peringkat) AS jumlah
+    FROM iblis;
+  bug_line: 2
+  tests:
+  - ''
+  - INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL);
+  hints: |
+    Ada iblis yang peringkatnya NULL.
+    COUNT(kolom) melewati nilai NULL.
+    Gunakan COUNT(*).
+  solution: |
+    SELECT
+      COUNT(*) AS jumlah
+    FROM iblis;

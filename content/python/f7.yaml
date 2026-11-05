@@ -1,0 +1,139 @@
+lesson:
+  - text: Fungsi dibuat dengan def, punya parameter, dan mengembalikan nilai lewat return. Fungsi membuat kode bisa dipakai ulang dan mudah diuji. Variabel yang dibuat di dalam fungsi hanya hidup di dalam fungsi itu.
+    code: |
+      def luas_persegi(sisi):
+          return sisi * sisi
+      print(luas_persegi(3), luas_persegi(5))
+  - text: Parameter bisa punya nilai default, dan argumen bisa diberikan dengan nama. Fungsi juga boleh memanggil dirinya sendiri (rekursi), asalkan ada kondisi berhenti (base case).
+    code: |
+      def sapa(nama, salam="Halo"):
+          return f"{salam}, {nama}!"
+      print(sapa("Tanjiro"), sapa(salam="Kaa", nama="Gagak"))
+      def faktorial(n):
+          return 1 if n <= 1 else n * faktorial(n - 1)
+      print(faktorial(5))
+exercises:
+  - id: py-parsons-faktorial
+    type: parsons
+    title: Susun Jurus Faktorial
+    difficulty: 2
+    story: Gulungan jurus faktorial robek dan barisnya tercecer.
+    prompt: Susun baris-baris berikut menjadi program yang membaca n lalu mencetak n! (faktorial).
+    tests: ["5", "0", "10"]
+    hints: [Fungsi harus didefinisikan (def) sebelum dipanggil., Variabel hasil harus diberi nilai awal sebelum loop., 'return berada setelah loop, sejajar dengan for.']
+    solution: |
+      def faktorial(n):
+          hasil = 1
+          for i in range(2, n + 1):
+              hasil *= i
+          return hasil
+      n = int(input())
+      print(faktorial(n))
+  - id: py-f7-fpb
+    type: write
+    title: FPB Dua Klan
+    difficulty: 2
+    prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid, lalu baca dua bilangan dan cetak FPB-nya.
+    tests: ["12 18", "7 13", "100 75", "0 5"]
+    hints: |
+      Euclid: fpb(a, b) = fpb(b, a % b).
+      Berhenti saat b == 0; jawabannya a.
+      while b: a, b = b, a % b
+    solution: |
+      def fpb(a, b):
+          while b:
+              a, b = b, a % b
+          return a
+      a, b = map(int, input().split())
+      print(fpb(a, b))
+  - id: py-f7-predict
+    type: predict
+    title: Argumen Bernama
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      def f(x, y=10):
+          return x + y
+      print(f(1), f(1, 2), f(y=5, x=3))
+    hints: |
+      Kalau y tidak diisi, nilainya 10.
+      f(1, 2) mengisi y dengan 2.
+      Argumen bernama boleh ditulis dalam urutan apa pun.
+    solution: x
+  - id: py-f7-bug-return
+    type: bughunt
+    title: Kembali Terlalu Cepat
+    difficulty: 2
+    prompt: Fungsi jumlah() seharusnya menjumlahkan semua angka, tapi hasilnya hanya angka pertama. Temukan bug-nya.
+    starter: |
+      def jumlah(daftar):
+          total = 0
+          for x in daftar:
+              total += x
+              return total
+      angka = list(map(int, input().split()))
+      print(jumlah(angka))
+    bug_line: 5
+    tests: ["1 2 3", "5", "10 20"]
+    hints: [Kapan return dijalankan?, return di dalam loop langsung menghentikan fungsi., Geser return supaya sejajar dengan for.]
+    solution: |
+      def jumlah(daftar):
+          total = 0
+          for x in daftar:
+              total += x
+          return total
+      angka = list(map(int, input().split()))
+      print(jumlah(angka))
+  - id: py-f7-palindrom
+    type: write
+    title: Kata Cermin
+    difficulty: 1
+    prompt: Tulis fungsi palindrom(s) yang mengembalikan True jika s sama dibaca dari depan dan belakang. Baca satu kata (huruf kecil), cetak "ya" atau "tidak".
+    tests: ["katak", "slayer", "a", "kodok", "ab"]
+    hints: ['s[::-1] membalik string.', Bandingkan s dengan kebalikannya., 'return s == s[::-1]']
+    solution: |
+      def palindrom(s):
+          return s == s[::-1]
+      print("ya" if palindrom(input()) else "tidak")
+  - id: py-f7-fibonacci
+    type: write
+    title: Spiral Fibonacci
+    difficulty: 2
+    prompt: 'Tulis fungsi fib(n) dengan fib(0) = 0, fib(1) = 1, fib(n) = fib(n-1) + fib(n-2). Baca n (0 ≤ n ≤ 30), cetak fib(n).'
+    tests: ["0", "1", "10", "20", "30"]
+    hints: |
+      Base case: n = 0 dan n = 1.
+      Rekursi untuk n = 30 lambat; coba pakai loop.
+      a, b = 0, 1 lalu ulangi n kali: a, b = b, a + b
+    solution: |
+      def fib(n):
+          a, b = 0, 1
+          for _ in range(n):
+              a, b = b, a + b
+          return a
+      print(fib(int(input())))
+  - id: py-f7-translate
+    type: translate
+    title: Terjemahkan Fibonacci
+    difficulty: 2
+    prompt: Tulis ulang fungsi JavaScript ini dalam Python.
+    from_lang: javascript
+    from_code: |
+      function fib(n) {
+        let [a, b] = [0, 1]
+        for (let i = 0; i < n; i++) [a, b] = [b, a + b]
+        return a
+      }
+      console.log(fib(Number(readline())))
+    tests: ["10", "0", "30"]
+    hints: |
+      function menjadi def.
+      Destructuring [a, b] = [b, a + b] menjadi a, b = b, a + b.
+      Kurung kurawal diganti indentasi.
+    solution: |
+      def fib(n):
+          a, b = 0, 1
+          for _ in range(n):
+              a, b = b, a + b
+          return a
+      print(fib(int(input())))

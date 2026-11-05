@@ -1,0 +1,220 @@
+id: todo-cli
+title: Gulungan Tugas Korps
+track: python
+lang: python
+requires: f7
+emoji: 📜
+story: Gagak Kasugai kewalahan mengingat semua misi. Tempa aplikasi to-do baris perintah yang menerima perintah lewat input, satu per baris.
+starter: |
+  import sys
+
+  for baris in sys.stdin.read().splitlines():
+      perintah, _, sisa = baris.partition(" ")
+      # tulis kodemu di sini
+stages:
+- title: Tambah & lihat
+  prompt: Perintah "tambah <teks>" menambah tugas, "lihat" mencetak semua tugas dengan format "1. [ ] teks". Kalau belum ada tugas, "lihat" mencetak "(kosong)".
+  tests:
+  - |-
+    tambah Latihan pernapasan
+    tambah Asah pedang
+    lihat
+  - |-
+    lihat
+    tambah Makan onigiri
+    lihat
+  hints: |
+    Simpan tugas di list.
+    enumerate(tugas, 1) memberi nomor mulai 1.
+    Format: f"{i}. [ ] {t}"
+  solution: |
+    import sys
+
+    tugas = []
+
+
+    def lihat():
+        if not tugas:
+            print("(kosong)")
+        for i, t in enumerate(tugas, 1):
+            print(f"{i}. [ ] {t}")
+
+
+    for baris in sys.stdin.read().splitlines():
+        perintah, _, sisa = baris.partition(" ")
+        if perintah == "tambah":
+            tugas.append(sisa)
+        elif perintah == "lihat":
+            lihat()
+- title: Selesai & hapus
+  prompt: Tambahkan "selesai <n>" (tandai [x]) dan "hapus <n>". Nomor yang bukan angka atau di luar daftar mencetak "nomor tidak valid".
+  tests:
+  - |-
+    tambah A
+    tambah B
+    tambah C
+    selesai 2
+    hapus 1
+    lihat
+  - |-
+    tambah A
+    selesai 3
+    hapus x
+    selesai 1
+    lihat
+  hints: |
+    Simpan status selesai bersama teksnya.
+    Nomor tampilan mulai 1, indeks list mulai 0.
+    Periksa isdigit() dan rentangnya.
+  solution: |
+    import sys
+
+    tugas = []  # setiap tugas: [teks, selesai]
+
+
+    def lihat():
+        if not tugas:
+            print("(kosong)")
+        for i, (t, ok) in enumerate(tugas, 1):
+            print(f"{i}. [{'x' if ok else ' '}] {t}")
+
+
+    def nomor(sisa):
+        if sisa.isdigit() and 1 <= int(sisa) <= len(tugas):
+            return int(sisa) - 1
+        print("nomor tidak valid")
+        return None
+
+
+    for baris in sys.stdin.read().splitlines():
+        perintah, _, sisa = baris.partition(" ")
+        if perintah == "tambah":
+            tugas.append([sisa, False])
+        elif perintah == "lihat":
+            lihat()
+        elif perintah == "selesai":
+            i = nomor(sisa)
+            if i is not None:
+                tugas[i][1] = True
+        elif perintah == "hapus":
+            i = nomor(sisa)
+            if i is not None:
+                tugas.pop(i)
+- title: Cari
+  prompt: 'Tambahkan "cari <kata>": cetak tugas yang memuat kata itu (tidak peka huruf besar/kecil) lengkap dengan nomor aslinya, atau "tidak ditemukan".'
+  tests:
+  - |-
+    tambah Latihan pedang
+    tambah Makan
+    tambah Asah PEDANG
+    selesai 3
+    cari pedang
+  - |-
+    tambah A
+    cari zzz
+  hints: |
+    Bandingkan dengan .lower().
+    Simpan nomor asli saat menyaring.
+    Kalau kosong cetak "tidak ditemukan".
+  solution: |
+    import sys
+
+    tugas = []  # setiap tugas: [teks, selesai]
+
+
+    def lihat():
+        if not tugas:
+            print("(kosong)")
+        for i, (t, ok) in enumerate(tugas, 1):
+            print(f"{i}. [{'x' if ok else ' '}] {t}")
+
+
+    def nomor(sisa):
+        if sisa.isdigit() and 1 <= int(sisa) <= len(tugas):
+            return int(sisa) - 1
+        print("nomor tidak valid")
+        return None
+
+
+    for baris in sys.stdin.read().splitlines():
+        perintah, _, sisa = baris.partition(" ")
+        if perintah == "tambah":
+            tugas.append([sisa, False])
+        elif perintah == "lihat":
+            lihat()
+        elif perintah == "selesai":
+            i = nomor(sisa)
+            if i is not None:
+                tugas[i][1] = True
+        elif perintah == "cari":
+            hasil = [(i, t, ok) for i, (t, ok) in enumerate(tugas, 1) if sisa.lower() in t.lower()]
+            if not hasil:
+                print("tidak ditemukan")
+            for i, t, ok in hasil:
+                print(f"{i}. [{'x' if ok else ' '}] {t}")
+        elif perintah == "hapus":
+            i = nomor(sisa)
+            if i is not None:
+                tugas.pop(i)
+- title: Statistik
+  prompt: 'Tambahkan "statistik": cetak "total X, selesai Y, sisa Z".'
+  tests:
+  - |-
+    tambah A
+    tambah B
+    tambah C
+    selesai 1
+    statistik
+  - |-
+    statistik
+    tambah A
+    selesai 1
+    hapus 1
+    statistik
+  hints: |
+    Hitung tugas yang selesai.
+    sisa = total - selesai.
+    Formatnya harus persis.
+  solution: |
+    import sys
+
+    tugas = []  # setiap tugas: [teks, selesai]
+
+
+    def lihat():
+        if not tugas:
+            print("(kosong)")
+        for i, (t, ok) in enumerate(tugas, 1):
+            print(f"{i}. [{'x' if ok else ' '}] {t}")
+
+
+    def nomor(sisa):
+        if sisa.isdigit() and 1 <= int(sisa) <= len(tugas):
+            return int(sisa) - 1
+        print("nomor tidak valid")
+        return None
+
+
+    for baris in sys.stdin.read().splitlines():
+        perintah, _, sisa = baris.partition(" ")
+        if perintah == "tambah":
+            tugas.append([sisa, False])
+        elif perintah == "lihat":
+            lihat()
+        elif perintah == "selesai":
+            i = nomor(sisa)
+            if i is not None:
+                tugas[i][1] = True
+        elif perintah == "cari":
+            hasil = [(i, t, ok) for i, (t, ok) in enumerate(tugas, 1) if sisa.lower() in t.lower()]
+            if not hasil:
+                print("tidak ditemukan")
+            for i, t, ok in hasil:
+                print(f"{i}. [{'x' if ok else ' '}] {t}")
+        elif perintah == "statistik":
+            selesai = sum(1 for _, ok in tugas if ok)
+            print(f"total {len(tugas)}, selesai {selesai}, sisa {len(tugas) - selesai}")
+        elif perintah == "hapus":
+            i = nomor(sisa)
+            if i is not None:
+                tugas.pop(i)

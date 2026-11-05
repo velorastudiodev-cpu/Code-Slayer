@@ -1,0 +1,77 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: WITH (Common Table Expression) memberi nama pada subquery supaya query panjang lebih mudah dibaca. CTE bisa dipakai beberapa kali dalam query utama.
+  code: |
+    WITH upah AS (SELECT slayer_id, SUM(koban) AS total FROM misi GROUP BY slayer_id)
+    SELECT s.nama, u.total FROM upah u JOIN slayer s ON s.id = u.slayer_id ORDER BY u.total DESC;
+- text: 'WITH RECURSIVE membuat CTE yang merujuk dirinya sendiri: bagian awal (anchor) UNION ALL bagian rekursif, sampai tidak ada baris baru. Cocok untuk deret dan hierarki (guru-murid).'
+  code: |
+    WITH RECURSIVE n(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM n WHERE x < 5)
+    SELECT group_concat(x) FROM n;
+exercises:
+- id: sql-l2-cte
+  type: write
+  title: Aliran Paling Berharga
+  difficulty: 3
+  prompt: Dengan CTE, hitung total koban misi berhasil per pernapasan, lalu tampilkan pernapasan dan total untuk total di atas 200, urut total terbesar.
+  tests:
+  - ''
+  - INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);
+  samples: 1
+  hints: |
+    WITH nama AS (SELECT ...) lalu SELECT dari nama itu.
+    Di dalam CTE: JOIN misi-slayer, GROUP BY pernapasan.
+    Saring total > 200 di query utama.
+  solution: |
+    WITH per_aliran AS (SELECT s.pernapasan, SUM(m.koban) AS total FROM misi m JOIN slayer s ON s.id = m.slayer_id WHERE m.berhasil = 1 GROUP BY s.pernapasan)
+    SELECT pernapasan, total FROM per_aliran WHERE total > 200 ORDER BY total DESC;
+- id: sql-l2-deret
+  type: predict
+  title: Deret Pangkat Dua
+  difficulty: 2
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    WITH RECURSIVE p(n) AS (SELECT 1 UNION ALL SELECT n * 2 FROM p WHERE n < 100)
+    SELECT group_concat(n, ' ') FROM p;
+  hints: |
+    Mulai dari 1.
+    Setiap langkah dikali 2 selama n < 100.
+    64 < 100 masih lanjut ke 128, lalu berhenti.
+  solution: x
+- id: sql-l2-murid
+  type: write
+  title: Silsilah Urokodaki
+  difficulty: 3
+  prompt: Dengan WITH RECURSIVE, tampilkan semua murid (langsung maupun tidak langsung) dari 'Urokodaki' di tabel guru, urut nama.
+  tests:
+  - ''
+  - INSERT INTO guru VALUES ('Genya', 'Murata');
+  samples: 1
+  hints: |
+    Anchor: murid langsung Urokodaki.
+    Bagian rekursif: siapa yang gurunya ada di hasil sebelumnya.
+    JOIN guru g ON g.guru = m.nama
+  solution: |
+    WITH RECURSIVE murid(nama) AS (
+      SELECT murid FROM guru WHERE guru = 'Urokodaki'
+      UNION ALL
+      SELECT g.murid FROM guru g JOIN murid m ON g.guru = m.nama
+    )
+    SELECT nama FROM murid ORDER BY nama;

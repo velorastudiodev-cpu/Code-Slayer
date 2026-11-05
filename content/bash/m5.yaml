@@ -1,0 +1,38 @@
+lesson:
+- text: 'Paket dipasang dengan manajer paket (apt di Debian/Ubuntu): apt update, apt install nama, apt remove nama. Service dikelola systemd: systemctl status/start/stop/enable nama.'
+  code: |
+    sudo apt update
+    sudo apt install htop
+    systemctl status ssh
+    sudo systemctl enable --now nginx
+exercises:
+- id: bash-m5-apt
+  type: quiz
+  title: Memasang Alat
+  difficulty: 1
+  prompt: Urutan yang benar untuk memasang paket htop di Ubuntu adalah...
+  options:
+  - sudo apt update lalu sudo apt install htop
+  - apt get htop
+  - install htop --force
+  - sudo systemctl install htop
+  explain: apt update menyegarkan daftar paket, apt install memasang.
+  hints: |
+    Perbarui daftar paket dulu.
+    Butuh hak root.
+    apt update, apt install
+- id: bash-m5-enable
+  type: quiz
+  title: Hidup Setelah Reboot
+  difficulty: 2
+  prompt: Agar service nginx otomatis berjalan setiap boot, gunakan...
+  options:
+  - systemctl enable nginx
+  - systemctl start nginx
+  - service nginx restart
+  - nginx --boot
+  explain: start hanya menyalakan sekarang; enable mendaftarkannya untuk boot.
+  hints: |
+    start ≠ enable.
+    Yang tetap setelah reboot.
+    enable

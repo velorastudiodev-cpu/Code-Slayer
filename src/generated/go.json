@@ -1,0 +1,1533 @@
+{
+ "hash": "0c8a2c80d315",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Program Go selalu dimulai dari package main dan fungsi main. fmt.Println mencetak argumennya dipisah spasi lalu newline; fmt.Print tanpa newline.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Pernapasan Angin,\", \"Bentuk Pertama\")\n\tfmt.Print(\"tanpa \")\n\tfmt.Print(\"newline\\n\")\n}\n"
+    },
+    {
+     "text": "fmt.Printf mencetak dengan format: %s teks, %d bilangan bulat, %.2f desimal 2 angka, %v nilai apa pun. Printf tidak menambah newline, jadi tulis \\n sendiri.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnama := \"Sanemi\"\n\tluka := 7\n\tfmt.Printf(\"%s punya %d luka, rata-rata %.1f per misi\\n\", nama, luka, float64(luka)/2)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f1-halo",
+     "type": "write",
+     "title": "Salam Pertama",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "Gunakan fungsi cetak baris bawaan bahasa ini.",
+      "Teks harus persis sama, termasuk koma dan tanda seru.",
+      "Satu baris saja, diakhiri newline."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Halo, Slayer!\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f1"
+    },
+    {
+     "id": "go-f1-format",
+     "type": "write",
+     "title": "Laporan Berformat",
+     "difficulty": 1,
+     "prompt": "Dengan string berformat, cetak \"Rengoku berumur 20 tahun, kekuatan 9.50\" dari variabel nama = \"Rengoku\", umur = 20, dan kekuatan = 9.5.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "expected": "Rengoku berumur 20 tahun, kekuatan 9.50\n"
+      }
+     ],
+     "hints": [
+      "Simpan ketiga nilai dalam variabel dulu.",
+      "Pakai format/interpolasi string, bukan menyambung manual.",
+      "Kekuatan dicetak dengan tepat 2 angka di belakang koma."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnama := \"Rengoku\"\n\tumur := 20\n\tkekuatan := 9.5\n\tfmt.Printf(\"%s berumur %d tahun, kekuatan %.2f\\n\", nama, umur, kekuatan)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f1"
+    },
+    {
+     "id": "go-f1-predict",
+     "type": "predict",
+     "title": "Baris yang Tidak Berganti",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Print(\"Kaa\")\n\tfmt.Print(\"!\", \"!\")\n\tfmt.Println()\n\tfmt.Println(\"misi\", 3, \"selesai\")\n\tfmt.Printf(\"%d+%d=%d\\n\", 2, 3, 2+3)\n}\n",
+     "tests": [
+      {
+       "expected": "Kaa!!\nmisi 3 selesai\n2+3=5\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan perintah cetak mana yang menambah newline.",
+      "Perintah tanpa newline menyambung ke baris yang sama.",
+      "Hitung spasinya dengan teliti."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f1"
+    },
+    {
+     "id": "go-f1-bug",
+     "type": "bughunt",
+     "title": "Iblis Pemakan Tanda Kutip",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"Kaa!\" lalu \"Misi!\", tapi gagal dikompilasi. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Kaa!\")\n\tfmt.Println(\"Misi!)\n}\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "expected": "Kaa!\nMisi!\n"
+      }
+     ],
+     "hints": [
+      "Baca pesan error compiler: ia menunjuk nomor baris.",
+      "Setiap string harus dibuka DAN ditutup dengan tanda kutip.",
+      "Tambahkan tanda kutip penutup yang hilang."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Kaa!\")\n\tfmt.Println(\"Misi!\")\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Variabel dibuat dengan var nama tipe atau singkatan := yang menebak tipe. Go bertipe statis: int, int64, float64, string, bool. Variabel yang tidak dipakai = error kompilasi.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar umur int = 15\n\tnama := \"Tanjiro\"\n\ttinggi := 165.5\n\taktif := true\n\tfmt.Println(nama, umur, tinggi, aktif)\n}\n"
+    },
+    {
+     "text": "Konversi tipe harus eksplisit: float64(x), int(y). Pembagian dua int menghasilkan int (desimal dibuang). int di Go 64-bit di mesin modern, tapi pakai int64 kalau ingin pasti.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ta, b := 7, 2\n\tfmt.Println(a/b, a%b)\n\tfmt.Println(float64(a) / float64(b))\n\tvar besar int64 = 3000000000\n\tfmt.Println(besar * 2)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Input berisi nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "Tanjiro 15",
+       "expected": "Tanjiro akan berumur 16 tahun\n"
+      },
+      {
+       "input": "Kanao 16",
+       "expected": "Kanao akan berumur 17 tahun\n"
+      },
+      {
+       "input": "Gyomei 27",
+       "expected": "Gyomei akan berumur 28 tahun\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua nilai: teks lalu bilangan bulat.",
+      "Ubah umur menjadi angka sebelum ditambah 1.",
+      "Contoh: \"Tanjiro akan berumur 16 tahun\"."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar nama string\n\tvar umur int\n\tfmt.Scan(&nama, &umur)\n\tfmt.Printf(\"%s akan berumur %d tahun\\n\", nama, umur+1)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f2"
+    },
+    {
+     "id": "go-f2-besar",
+     "type": "write",
+     "title": "Jarak Antar Bintang",
+     "difficulty": 2,
+     "prompt": "Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "2000000000 2000000000",
+       "expected": "4000000000000000000\n"
+      },
+      {
+       "input": "-5 100000",
+       "expected": "-500000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "2 miliar × 2 miliar = 4 × 10^18.",
+      "Batas int 32-bit sekitar 2,1 miliar.",
+      "Pakai tipe bilangan bulat 64-bit."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b int64\n\tfmt.Scan(&a, &b)\n\tfmt.Println(a * b)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f2"
+    },
+    {
+     "id": "go-f2-predict",
+     "type": "predict",
+     "title": "Pembagian Bulat",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(17 / 5, 17 % 5)\n\tfmt.Println(17.0 / 5)\n\tx := 9\n\ty := x / 2 * 2\n\tfmt.Println(y, x-y)\n}\n",
+     "tests": [
+      {
+       "expected": "3 2\n3.4\n8 1\n"
+      }
+     ],
+     "hints": [
+      "Pembagian dua bilangan bulat membuang bagian desimal.",
+      "Sisa bagi memakai operator %.",
+      "Kalau salah satu operand desimal, hasilnya desimal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f2"
+    },
+    {
+     "id": "go-f2-bug",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 2,
+     "prompt": "Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b, c int\n\tfmt.Scan(&a, &b, &c)\n\trata := float64((a + b + c) / 3)\n\tfmt.Printf(\"%.2f\\n\", rata)\n}\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "input": "1 2 4",
+       "expected": "2.33\n"
+      },
+      {
+       "input": "5 5 6",
+       "expected": "5.33\n"
+      },
+      {
+       "input": "3 3 3",
+       "expected": "3.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.",
+      "Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.",
+      "Ubah jumlahnya ke tipe desimal dulu, baru dibagi."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b, c int\n\tfmt.Scan(&a, &b, &c)\n\trata := float64(a+b+c) / 3\n\tfmt.Printf(\"%.2f\\n\", rata)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator aritmetika: + - * / %. Untuk int, / adalah pembagian bulat dan % sisa bagi. Operator gabungan seperti += dan ++ (sebagai pernyataan, bukan ekspresi) juga ada.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tt := 3725\n\tfmt.Println(t/3600, t%3600/60, t%60)\n\tn := 5\n\tn += 3\n\tn++\n\tfmt.Println(n)\n}\n"
+    },
+    {
+     "text": "Perbandingan menghasilkan bool: == != < <= > >=. Logika: && (dan), || (atau), ! (bukan). Go tidak mengubah angka menjadi bool otomatis, jadi if x { } hanya boleh untuk bool.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tumur := 16\n\tpunyaPedang := true\n\tfmt.Println(umur >= 15 && punyaPedang)\n\tfmt.Println(umur < 13 || !punyaPedang)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 jam = 3600 detik, 1 menit = 60 detik.",
+      "Jam = t / 3600, menit = (t % 3600) / 60.",
+      "Detik = t % 60."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar t int\n\tfmt.Scan(&t)\n\tfmt.Printf(\"%d:%d:%d\\n\", t/3600, t%3600/60, t%60)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f3"
+    },
+    {
+     "id": "go-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.",
+      "Contoh: 37 menjadi 98.6.",
+      "Format 1 angka di belakang koma."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar c float64\n\tfmt.Scan(&c)\n\tfmt.Printf(\"%.1f\\n\", c*9/5+32)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f3"
+    },
+    {
+     "id": "go-f3-predict",
+     "type": "predict",
+     "title": "Urutan Operasi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(2 + 3*4, (2+3)*4)\n\tfmt.Println(20 - 6 / 2 % 2)\n\tfmt.Println(7 > 3 && 2 > 5 || true)\n}\n",
+     "tests": [
+      {
+       "expected": "14 20\n19\ntrue\n"
+      }
+     ],
+     "hints": [
+      "* / % dikerjakan sebelum + -.",
+      "Operator dengan derajat sama dikerjakan dari kiri.",
+      "Kurung mengubah urutan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f3"
+    },
+    {
+     "id": "go-f3-bug",
+     "type": "bughunt",
+     "title": "Gerbang yang Salah Jaga",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"masuk\" hanya jika 1 ≤ n ≤ 10, selain itu \"tolak\". Tapi semua angka masuk. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tif n >= 1 || n <= 10 {\n\t\tfmt.Println(\"masuk\")\n\t} else {\n\t\tfmt.Println(\"tolak\")\n\t}\n}\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "1",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "10",
+       "expected": "masuk\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "tolak\n",
+       "hidden": true
+      },
+      {
+       "input": "11",
+       "expected": "tolak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Coba n = 11: apakah kedua syarat harus benar?",
+      "|| (atau) cukup salah satu benar.",
+      "Gunakan && (dan)."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tif n >= 1 && n <= 10 {\n\t\tfmt.Println(\"masuk\")\n\t} else {\n\t\tfmt.Println(\"tolak\")\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "fmt.Scan membaca nilai dipisah spasi atau baris baru ke dalam variabel (pakai &). Ia mengembalikan banyak nilai yang berhasil dibaca dan error, berguna untuk membaca sampai input habis.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b int\n\tfmt.Scan(&a, &b)\n\tfmt.Println(\"jumlah:\", a+b)\n}\n"
+    },
+    {
+     "text": "Untuk membaca per baris, pakai bufio.Reader atau bufio.Scanner. Baris yang dibaca ReadString masih membawa \\n, jadi bersihkan dengan strings.TrimSpace sebelum diubah dengan strconv.Atoi.",
+     "code": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\tbaris, _ := r.ReadString('\\n')\n\tfmt.Printf(\"[%s]\\n\", strings.TrimSpace(baris))\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat (dalam satu baris), cetak jumlahnya.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua bilangan dari input.",
+      "Ubah teks menjadi angka.",
+      "Cetak a + b."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b int\n\tfmt.Scan(&a, &b)\n\tfmt.Println(a + b)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f4"
+    },
+    {
+     "id": "go-f4-n",
+     "type": "write",
+     "title": "Laporan Berjumlah n",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "3\n1 9 2",
+       "expected": "12 9\n"
+      },
+      {
+       "input": "1\n-5",
+       "expected": "-5 -5\n"
+      },
+      {
+       "input": "5\n-1 -2 -3 -4 -5",
+       "expected": "-15 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Nilai terbesar awal = bilangan pertama, bukan 0.",
+      "Ingat bilangan bisa negatif semua.",
+      "Cetak \"<jumlah> <maks>\"."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\ttotal, maks := 0, 0\n\tfor i := 0; i < n; i++ {\n\t\tvar x int\n\t\tfmt.Scan(&x)\n\t\ttotal += x\n\t\tif i == 0 || x > maks {\n\t\t\tmaks = x\n\t\t}\n\t}\n\tfmt.Println(total, maks)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f4"
+    },
+    {
+     "id": "go-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi sejumlah bilangan bulat dipisah spasi atau baris baru (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal), dipisah spasi.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "4 2.50\n"
+      },
+      {
+       "input": "10",
+       "expected": "1 10.00\n"
+      },
+      {
+       "input": "5\n6\n7",
+       "expected": "3 6.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca seluruh input lalu pecah berdasarkan spasi/baris.",
+      "Hitung banyak dan jumlahnya.",
+      "Rata-rata = jumlah / banyak, dalam desimal."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tn, total := 0, 0\n\tfor {\n\t\tvar x int\n\t\tif _, err := fmt.Scan(&x); err != nil {\n\t\t\tbreak\n\t\t}\n\t\tn++\n\t\ttotal += x\n\t}\n\tfmt.Printf(\"%d %.2f\\n\", n, float64(total)/float64(n))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f4"
+    },
+    {
+     "id": "go-f4-bug",
+     "type": "bughunt",
+     "title": "Spasi yang Menyusup",
+     "difficulty": 2,
+     "prompt": "Program membaca satu baris berisi angka lalu mencetak angka itu dikali 2, tapi gagal karena baris input masih membawa karakter newline. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\tbaris, _ := r.ReadString('\\n')\n\tn, err := strconv.Atoi(baris)\n\tif err != nil {\n\t\tfmt.Println(\"gagal:\", err)\n\t\tos.Exit(1)\n\t}\n\t_ = strings.TrimSpace\n\tfmt.Println(n * 2)\n}\n",
+     "bug_line": 14,
+     "tests": [
+      {
+       "input": "21\n",
+       "expected": "42\n"
+      },
+      {
+       "input": "0\n",
+       "expected": "0\n"
+      },
+      {
+       "input": "-7\n",
+       "expected": "-14\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baris yang dibaca masih berisi \"\\n\" di ujungnya.",
+      "Teks \"21\\n\" tidak bisa diubah langsung menjadi angka.",
+      "Buang spasi/newline di ujung sebelum mengubah ke angka."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\tbaris, _ := r.ReadString('\\n')\n\tn, err := strconv.Atoi(strings.TrimSpace(baris))\n\tif err != nil {\n\t\tfmt.Println(\"gagal:\", err)\n\t\tos.Exit(1)\n\t}\n\t_ = strings.TrimSpace\n\tfmt.Println(n * 2)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if di Go tidak memakai kurung di sekitar kondisi, tapi kurung kurawal wajib. if boleh punya pernyataan pendek sebelum kondisi: if x := f(); x > 0 { ... }.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnilai := 78\n\tif nilai >= 85 {\n\t\tfmt.Println(\"A\")\n\t} else if nilai >= 70 {\n\t\tfmt.Println(\"B\")\n\t} else {\n\t\tfmt.Println(\"C\")\n\t}\n}\n"
+    },
+    {
+     "text": "switch di Go otomatis berhenti di case yang cocok (tidak perlu break). Satu case boleh berisi beberapa nilai, dan switch tanpa ekspresi berfungsi seperti rantai if.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnapas := \"petir\"\n\tswitch napas {\n\tcase \"air\", \"bunga\":\n\t\tfmt.Println(\"lembut\")\n\tcase \"petir\":\n\t\tfmt.Println(\"cepat\")\n\tdefault:\n\t\tfmt.Println(\"?\")\n\t}\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "Cetak satu huruf saja."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tif n >= 85 {\n\t\tfmt.Println(\"A\")\n\t} else if n >= 70 {\n\t\tfmt.Println(\"B\")\n\t} else if n >= 55 {\n\t\tfmt.Println(\"C\")\n\t} else {\n\t\tfmt.Println(\"D\")\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f5"
+    },
+    {
+     "id": "go-f5-kabisat",
+     "type": "write",
+     "title": "Tahun Kabisat",
+     "difficulty": 2,
+     "prompt": "Baca tahun. Cetak \"kabisat\" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu \"bukan\".",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Habis dibagi berarti % ... == 0.",
+      "Gabungkan dengan || dan &&.",
+      "(t % 400 == 0) || (t % 4 == 0 && t % 100 != 0)"
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar t int\n\tfmt.Scan(&t)\n\tif t%400 == 0 || (t%4 == 0 && t%100 != 0) {\n\t\tfmt.Println(\"kabisat\")\n\t} else {\n\t\tfmt.Println(\"bukan\")\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f5"
+    },
+    {
+     "id": "go-f5-predict",
+     "type": "predict",
+     "title": "Cabang Mana yang Dipilih?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfor _, x := range []int{0, 3, 8, 15} {\n\t\tswitch {\n\t\tcase x == 0:\n\t\t\tfmt.Print(\"nol \")\n\t\tcase x%2 == 1 && x > 10:\n\t\t\tfmt.Print(\"besar-ganjil \")\n\t\tcase x%2 == 1:\n\t\t\tfmt.Print(\"ganjil \")\n\t\tdefault:\n\t\t\tfmt.Print(\"genap \")\n\t\t}\n\t}\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "expected": "nol ganjil genap besar-ganjil\n"
+      }
+     ],
+     "hints": [
+      "Telusuri nilai variabel baris demi baris.",
+      "Hanya satu cabang yang dijalankan per pemeriksaan.",
+      "Perhatikan kasus default/else."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f5"
+    },
+    {
+     "id": "go-f5-parsons",
+     "type": "parsons",
+     "title": "Tanda Bilangan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak \"positif\", \"negatif\", atau \"nol\".",
+     "lang": "go",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Deklarasi fungsi utama paling atas.",
+      "Baca n sebelum memeriksanya.",
+      "Kurung tutup paling akhir."
+     ],
+     "solutions": [
+      "package main\nimport \"fmt\"\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tif n > 0 {\n\t\tfmt.Println(\"positif\")\n\t} else if n < 0 {\n\t\tfmt.Println(\"negatif\")\n\t} else {\n\t\tfmt.Println(\"nol\")\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "Go hanya punya satu kata kunci loop: for. Bentuk klasik for i := 0; i < n; i++, bentuk \"while\" for kondisi { }, dan loop tanpa akhir for { } yang dihentikan dengan break.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfor i := 1; i <= 3; i++ {\n\t\tfmt.Print(i, \" \")\n\t}\n\tn := 10\n\tfor n > 1 {\n\t\tn /= 2\n\t}\n\tfmt.Println(\"|\", n)\n}\n"
+    },
+    {
+     "text": "for range menelusuri slice, string, atau map: indeks dan nilainya. strings.Repeat membuat teks berulang, praktis untuk pola.",
+     "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tfor i, nama := range []string{\"Giyu\", \"Sanemi\"} {\n\t\tfmt.Println(i, nama)\n\t}\n\tfmt.Println(strings.Repeat(\"*\", 4))\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 1,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Loop i dari 1 sampai n.",
+      "Baris ke-i = \"*\" diulang i kali.",
+      "Setiap baris diakhiri newline."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tfor i := 1; i <= n; i++ {\n\t\tfmt.Println(strings.Repeat(\"*\", i))\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f6"
+    },
+    {
+     "id": "go-f6-prima",
+     "type": "write",
+     "title": "Uji Bilangan Prima",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≤ 10^9). Cetak \"prima\" atau \"bukan\". Cukup periksa pembagi sampai akar n.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "prima\n"
+      },
+      {
+       "input": "1",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "91",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "999999937",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "1000000000",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 bukan prima.",
+      "Loop d mulai 2 selama d * d <= n.",
+      "Pakai tipe 64-bit supaya d * d tidak overflow."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int64\n\tfmt.Scan(&n)\n\tprima := n > 1\n\tfor d := int64(2); d*d <= n; d++ {\n\t\tif n%d == 0 {\n\t\t\tprima = false\n\t\t\tbreak\n\t\t}\n\t}\n\tif prima {\n\t\tfmt.Println(\"prima\")\n\t} else {\n\t\tfmt.Println(\"bukan\")\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f6"
+    },
+    {
+     "id": "go-f6-predict",
+     "type": "predict",
+     "title": "Loop Berlapis",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfor i := 0; i < 5; i++ {\n\t\tif i == 1 {\n\t\t\tcontinue\n\t\t}\n\t\tif i == 4 {\n\t\t\tbreak\n\t\t}\n\t\tfmt.Print(i, \" \")\n\t}\n\ttotal := 0\n\tfor a := 1; a <= 2; a++ {\n\t\tfor b := 1; b <= 3; b++ {\n\t\t\ttotal += a * b\n\t\t}\n\t}\n\tfmt.Println(\"|\", total)\n}\n",
+     "tests": [
+      {
+       "expected": "0 2 3 | 18\n"
+      }
+     ],
+     "hints": [
+      "continue melompati sisa satu putaran.",
+      "break menghentikan loop sepenuhnya.",
+      "Telusuri nilai i satu per satu."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f6"
+    },
+    {
+     "id": "go-f6-bug",
+     "type": "bughunt",
+     "title": "Satu Tebasan Hilang",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\ttotal := 0\n\tfor i := 1; i < n; i++ {\n\t\ttotal += i\n\t}\n\tfmt.Println(total)\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "6\n"
+      },
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apakah n sendiri ikut dijumlah?",
+      "Batas loop berhenti sebelum n.",
+      "Ganti batasnya supaya n ikut."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\ttotal := 0\n\tfor i := 1; i <= n; i++ {\n\t\ttotal += i\n\t}\n\tfmt.Println(total)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi ditulis func nama(param tipe) tipeKembali { }. Go bisa mengembalikan beberapa nilai sekaligus, pola yang dipakai untuk mengembalikan hasil + error.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc bagi(a, b int) (int, int) {\n\treturn a / b, a % b\n}\n\nfunc main() {\n\th, s := bagi(17, 5)\n\tfmt.Println(h, s)\n}\n"
+    },
+    {
+     "text": "Argumen dikirim sebagai salinan (pass by value). Untuk mengubah variabel pemanggil, kirim pointer (*int) dan alamatnya (&x). Fungsi juga boleh rekursif.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc gandakan(p *int) {\n\t*p *= 2\n}\n\nfunc main() {\n\tx := 21\n\tgandakan(&x)\n\tfmt.Println(x)\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "fpb(a, 0) = a.",
+      "fpb(a, b) = fpb(b, a % b).",
+      "Bisa rekursif atau dengan loop."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc fpb(a, b int) int {\n\tif b == 0 {\n\t\treturn a\n\t}\n\treturn fpb(b, a%b)\n}\n\nfunc main() {\n\tvar a, b int\n\tfmt.Scan(&a, &b)\n\tfmt.Println(fpb(a, b))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f7"
+    },
+    {
+     "id": "go-f7-faktorial",
+     "type": "write",
+     "title": "Faktorial Pernapasan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "20",
+       "expected": "2432902008176640000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "0! = 1 adalah base case.",
+      "n! = n × (n-1)!.",
+      "20! melebihi 32-bit: pakai 64-bit."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc faktorial(n int64) int64 {\n\tif n == 0 {\n\t\treturn 1\n\t}\n\treturn n * faktorial(n-1)\n}\n\nfunc main() {\n\tvar n int64\n\tfmt.Scan(&n)\n\tfmt.Println(faktorial(n))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f7"
+    },
+    {
+     "id": "go-f7-predict",
+     "type": "predict",
+     "title": "Salinan atau Asli?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc latih(x int) int {\n\tx = x * 10\n\treturn x + 1\n}\n\nfunc main() {\n\ta := 3\n\tb := latih(a)\n\tfmt.Println(a, b)\n\tlatih(b)\n\tfmt.Println(b)\n}\n",
+     "tests": [
+      {
+       "expected": "3 31\n31\n"
+      }
+     ],
+     "hints": [
+      "Argumen bilangan dikirim sebagai salinan.",
+      "Mengubah salinan tidak mengubah variabel pemanggil.",
+      "Nilai yang dikembalikan lain cerita."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f7"
+    },
+    {
+     "id": "go-f7-bug",
+     "type": "bughunt",
+     "title": "Rekursi Tanpa Ujung",
+     "difficulty": 2,
+     "prompt": "pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc pangkat(a, n int) int {\n\tif n == -1 {\n\t\treturn 1\n\t}\n\treturn a * pangkat(a, n-1)\n}\n\nfunc main() {\n\tvar a, n int\n\tfmt.Scan(&a, &n)\n\tfmt.Println(pangkat(a, n))\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "2 10",
+       "expected": "1024\n"
+      },
+      {
+       "input": "3 0",
+       "expected": "1\n"
+      },
+      {
+       "input": "5 3",
+       "expected": "125\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Setiap rekursi butuh base case.",
+      "Kapan rekursi harus berhenti?",
+      "Saat n == 0, kembalikan 1."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc pangkat(a, n int) int {\n\tif n == 0 {\n\t\treturn 1\n\t}\n\treturn a * pangkat(a, n-1)\n}\n\nfunc main() {\n\tvar a, n int\n\tfmt.Scan(&a, &n)\n\tfmt.Println(pangkat(a, n))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "Slice adalah daftar yang bisa bertambah: make([]int, 0) lalu append. len(s) memberi panjangnya. Slice berbagi array di belakangnya, jadi potongan s[a:b] masih menunjuk data yang sama.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ts := []int{3, 1, 2}\n\ts = append(s, 9)\n\tpotong := s[1:3]\n\tpotong[0] = 100\n\tfmt.Println(s, len(s), potong)\n}\n"
+    },
+    {
+     "text": "map memetakan kunci ke nilai: m := map[string]int{}. Nilai kunci yang belum ada adalah nilai nol (0), jadi m[k]++ langsung bisa dipakai untuk menghitung. Urutan map acak, maka urutkan kuncinya dengan sort.",
+     "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n)\n\nfunc main() {\n\tm := map[string]int{}\n\tfor _, k := range []string{\"b\", \"a\", \"b\"} {\n\t\tm[k]++\n\t}\n\tkunci := make([]string, 0, len(m))\n\tfor k := range m {\n\t\tkunci = append(kunci, k)\n\t}\n\tsort.Strings(kunci)\n\tfmt.Println(kunci, m[\"b\"])\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-m1-balik",
+     "type": "write",
+     "title": "Barisan Terbalik",
+     "difficulty": 1,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "5\n1 2 3 4 5",
+       "expected": "5 4 3 2 1\n"
+      },
+      {
+       "input": "1\n42",
+       "expected": "42\n"
+      },
+      {
+       "input": "3\n-1 0 -1",
+       "expected": "-1 0 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan semua bilangan ke array/list.",
+      "Telusuri dari indeks terakhir ke 0.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]string, n)\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t}\n\tout := make([]string, 0, n)\n\tfor i := n - 1; i >= 0; i-- {\n\t\tout = append(out, xs[i])\n\t}\n\tfmt.Println(strings.Join(out, \" \"))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "m1"
+    },
+    {
+     "id": "go-m1-frekuensi",
+     "type": "write",
+     "title": "Sensus Kata",
+     "difficulty": 2,
+     "prompt": "Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, \"kata jumlah\" per baris, urut abjad.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "iblis slayer iblis bulan",
+       "expected": "bulan 1\niblis 2\nslayer 1\n"
+      },
+      {
+       "input": "a",
+       "expected": "a 1\n"
+      },
+      {
+       "input": "b a b\na c b",
+       "expected": "a 2\nb 3\nc 1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai map/dictionary: kata → jumlah.",
+      "Ambil semua kunci lalu urutkan.",
+      "Cetak \"kata jumlah\"."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n)\n\nfunc main() {\n\tjumlah := map[string]int{}\n\tfor {\n\t\tvar k string\n\t\tif _, err := fmt.Scan(&k); err != nil {\n\t\t\tbreak\n\t\t}\n\t\tjumlah[k]++\n\t}\n\tkata := make([]string, 0, len(jumlah))\n\tfor k := range jumlah {\n\t\tkata = append(kata, k)\n\t}\n\tsort.Strings(kata)\n\tfor _, k := range kata {\n\t\tfmt.Println(k, jumlah[k])\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m1"
+    },
+    {
+     "id": "go-m1-unik",
+     "type": "write",
+     "title": "Pasukan Tanpa Kembar",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "6\n3 1 3 2 1 3",
+       "expected": "1 2 3\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7\n"
+      },
+      {
+       "input": "4\n-2 5 -2 0",
+       "expected": "-2 0 5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Set/himpunan otomatis membuang duplikat.",
+      "Urutkan hasilnya.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n\t\"strconv\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tada := map[int]bool{}\n\txs := []int{}\n\tfor i := 0; i < n; i++ {\n\t\tvar x int\n\t\tfmt.Scan(&x)\n\t\tif !ada[x] {\n\t\t\tada[x] = true\n\t\t\txs = append(xs, x)\n\t\t}\n\t}\n\tsort.Ints(xs)\n\tout := make([]string, len(xs))\n\tfor i, x := range xs {\n\t\tout[i] = strconv.Itoa(x)\n\t}\n\tfmt.Println(strings.Join(out, \" \"))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m1"
+    },
+    {
+     "id": "go-m1-diatas",
+     "type": "write",
+     "title": "Di Atas Rata-rata",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "5\n10 20 30 40 50",
+       "expected": "2\n"
+      },
+      {
+       "input": "3\n5 5 5",
+       "expected": "0\n"
+      },
+      {
+       "input": "4\n1 1 1 9",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung rata-rata dulu (desimal).",
+      "Lalu hitung nilai > rata-rata.",
+      "Butuh dua kali menelusuri data."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]float64, n)\n\ttotal := 0.0\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t\ttotal += xs[i]\n\t}\n\trata := total / float64(n)\n\tc := 0\n\tfor _, x := range xs {\n\t\tif x > rata {\n\t\t\tc++\n\t\t}\n\t}\n\tfmt.Println(c)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m1"
+    },
+    {
+     "id": "go-m1-predict",
+     "type": "predict",
+     "title": "Koleksi Berbagi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ta := []int{1, 2, 3}\n\tb := a\n\tb[0] = 9\n\tc := make([]int, len(a))\n\tcopy(c, a)\n\tc[1] = 7\n\tfmt.Println(a, b, c)\n\tm := map[string]int{\"x\": 1}\n\tn := m\n\tn[\"x\"] = 5\n\tfmt.Println(m[\"x\"], len(m), m[\"y\"])\n}\n",
+     "tests": [
+      {
+       "expected": "[9 2 3] [9 2 3] [9 7 3]\n5 1 0\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan apakah koleksi disalin atau dibagi (referensi).",
+      "Mengubah lewat referensi terlihat dari nama lain.",
+      "Telusuri isi koleksi setelah tiap perubahan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m1"
+    },
+    {
+     "id": "go-m1-bug",
+     "type": "bughunt",
+     "title": "Indeks Melewati Batas",
+     "difficulty": 2,
+     "prompt": "Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]int, n)\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t}\n\ttotal := 0\n\tfor i := 0; i <= len(xs); i++ {\n\t\ttotal += xs[i]\n\t}\n\tfmt.Println(total)\n}\n",
+     "bug_line": 13,
+     "tests": [
+      {
+       "input": "3\n1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "1\n5",
+       "expected": "5\n"
+      },
+      {
+       "input": "4\n2 2 2 2",
+       "expected": "8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Indeks terakhir = panjang - 1.",
+      "Kondisi loop memakai <=.",
+      "Gunakan < panjang."
+     ],
+     "solutions": [
+      "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]int, n)\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t}\n\ttotal := 0\n\tfor i := 0; i < len(xs); i++ {\n\t\ttotal += xs[i]\n\t}\n\tfmt.Println(total)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "string di Go tidak bisa diubah (immutable) dan diindeks per byte. Paket strings menyediakan ToLower, ToUpper, Split, Fields, Join, Contains, dan Builder untuk menyusun teks secara efisien.",
+     "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\ts := \"Kimetsu no Yaiba\"\n\tfmt.Println(strings.ToUpper(s), len(s))\n\tkata := strings.Fields(s)\n\tfmt.Println(len(kata), strings.Join(kata, \"-\"))\n}\n"
+    },
+    {
+     "text": "Untuk mengolah per karakter, ubah ke []byte (teks ASCII) atau []rune (Unicode). s[i] menghasilkan byte; byte bisa dihitung seperti angka: b - 'a'.",
+     "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tb := []byte(\"abc\")\n\tfor i := range b {\n\t\tb[i] = b[i] - 'a' + 'A'\n\t}\n\tfmt.Println(string(b), \"z\"[0]-'a')\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "go-m2-palindrom",
+     "type": "write",
+     "title": "Kata Cermin",
+     "difficulty": 1,
+     "prompt": "Baca satu kata. Cetak \"palindrom\" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu \"bukan\".",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "Katak",
+       "expected": "palindrom\n"
+      },
+      {
+       "input": "slayer",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "a",
+       "expected": "palindrom\n",
+       "hidden": true
+      },
+      {
+       "input": "Malam",
+       "expected": "palindrom\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah ke huruf kecil dulu.",
+      "Bandingkan dengan versi terbaliknya.",
+      "Atau bandingkan karakter i dengan n-1-i."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar s string\n\tfmt.Scan(&s)\n\ts = strings.ToLower(s)\n\tok := true\n\tfor i := 0; i < len(s)/2; i++ {\n\t\tif s[i] != s[len(s)-1-i] {\n\t\t\tok = false\n\t\t}\n\t}\n\tif ok {\n\t\tfmt.Println(\"palindrom\")\n\t} else {\n\t\tfmt.Println(\"bukan\")\n\t}\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "m2"
+    },
+    {
+     "id": "go-m2-vokal",
+     "type": "write",
+     "title": "Hitung Napas Vokal",
+     "difficulty": 1,
+     "prompt": "Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "Kimetsu no Yaiba",
+       "expected": "7\n"
+      },
+      {
+       "input": "xyz",
+       "expected": "0\n"
+      },
+      {
+       "input": "AIUEO aiueo",
+       "expected": "10\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Telusuri setiap karakter.",
+      "Ubah ke huruf kecil supaya cukup satu pengecekan.",
+      "Cek apakah karakter ada di \"aiueo\"."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\ts, _ := r.ReadString('\\n')\n\tc := 0\n\tfor _, ch := range strings.ToLower(s) {\n\t\tif strings.ContainsRune(\"aiueo\", ch) {\n\t\t\tc++\n\t\t}\n\t}\n\tfmt.Println(c)\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "go",
+     "chapter": "m2"
+    },
+    {
+     "id": "go-m2-kapital",
+     "type": "write",
+     "title": "Nama Bergelar",
+     "difficulty": 2,
+     "prompt": "Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "kamado tanjiro",
+       "expected": "Kamado Tanjiro\n"
+      },
+      {
+       "input": "rengoku kyojuro sang hashira api",
+       "expected": "Rengoku Kyojuro Sang Hashira Api\n"
+      },
+      {
+       "input": "x",
+       "expected": "X\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pecah baris menjadi kata.",
+      "Kapitalkan karakter pertama tiap kata.",
+      "Gabungkan kembali dengan spasi."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\ts, _ := r.ReadString('\\n')\n\tkata := strings.Fields(s)\n\tfor i, k := range kata {\n\t\tkata[i] = strings.ToUpper(k[:1]) + k[1:]\n\t}\n\tfmt.Println(strings.Join(kata, \" \"))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m2"
+    },
+    {
+     "id": "go-m2-caesar",
+     "type": "write",
+     "title": "Sandi Gagak",
+     "difficulty": 2,
+     "prompt": "Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.",
+     "lang": "go",
+     "starter": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n",
+     "tests": [
+      {
+       "input": "3\nslayer",
+       "expected": "vodbhu\n"
+      },
+      {
+       "input": "1\nzaz",
+       "expected": "aba\n"
+      },
+      {
+       "input": "13\nkaa kaa",
+       "expected": "xnn xnn\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf ke-i dari a = c - 'a'.",
+      "Geser: (i + k) % 26.",
+      "Spasi dicetak apa adanya."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\nfunc main() {\n\tr := bufio.NewReader(os.Stdin)\n\ta, _ := r.ReadString('\\n')\n\tk, _ := strconv.Atoi(strings.TrimSpace(a))\n\tpesan, _ := r.ReadString('\\n')\n\tpesan = strings.TrimRight(pesan, \"\\n\")\n\tb := []byte(pesan)\n\tfor i, c := range b {\n\t\tif c >= 'a' && c <= 'z' {\n\t\t\tb[i] = 'a' + (c-'a'+byte(k))%26\n\t\t}\n\t}\n\tfmt.Println(string(b))\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m2"
+    },
+    {
+     "id": "go-m2-predict",
+     "type": "predict",
+     "title": "Potongan Teks",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "go",
+     "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\ts := \"Hashira\"\n\tfmt.Println(len(s), s[0:4], s[4:])\n\tfmt.Println(strings.Index(s, \"i\"), strings.Count(s, \"a\"))\n\tfmt.Println(strings.Replace(s, \"a\", \"A\", 1))\n}\n",
+     "tests": [
+      {
+       "expected": "7 Hash ira\n4 2\nHAshira\n"
+      }
+     ],
+     "hints": [
+      "Indeks string mulai dari 0.",
+      "Potongan [a, b) mengambil a sampai b-1.",
+      "Panjang dihitung per karakter ASCII di sini."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m2"
+    },
+    {
+     "id": "go-m2-bug",
+     "type": "bughunt",
+     "title": "Perbandingan yang Menipu",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"sama\" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu \"beda\". Tapi \"Tanjiro\" dan \"tanjiro\" dianggap beda. Temukan baris yang salah.",
+     "lang": "go",
+     "starter": "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar a, b string\n\tfmt.Scan(&a, &b)\n\tif a == b {\n\t\tfmt.Println(\"sama\")\n\t} else {\n\t\tfmt.Println(\"beda\")\n\t}\n\t_ = strings.EqualFold\n}\n",
+     "bug_line": 11,
+     "tests": [
+      {
+       "input": "Tanjiro tanjiro",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Nezuko nezuko",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Giyu Sabito",
+       "expected": "beda\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf besar dan kecil adalah karakter berbeda.",
+      "Samakan dulu bentuknya sebelum dibandingkan.",
+      "Ubah keduanya ke huruf kecil."
+     ],
+     "solutions": [
+      "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar a, b string\n\tfmt.Scan(&a, &b)\n\tif strings.EqualFold(a, b) {\n\t\tfmt.Println(\"sama\")\n\t} else {\n\t\tfmt.Println(\"beda\")\n\t}\n\t_ = strings.EqualFold\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "go",
+     "chapter": "m2"
+    }
+   ]
+  }
+ }
+}

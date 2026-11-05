@@ -1,0 +1,37 @@
+lesson:
+- text: 'Debugging skrip: set -x mencetak setiap perintah sebelum dijalankan, set -e berhenti saat ada error, set -u error untuk variabel tak terdefinisi, set -o pipefail membuat pipa gagal jika salah satu
+    bagian gagal. Biasakan set -euo pipefail di awal skrip.'
+  code: |
+    set -euo pipefail
+    set -x
+    echo "$nama"   # error: nama belum didefinisikan
+exercises:
+- id: bash-l2-e
+  type: quiz
+  title: Berhenti Saat Gagal
+  difficulty: 2
+  prompt: Apa efek set -e?
+  options:
+  - Skrip berhenti begitu ada perintah yang gagal (status bukan 0)
+  - Mencetak setiap perintah
+  - Mengabaikan semua error
+  - Mengaktifkan mode ekspor variabel
+  explain: Tanpa set -e, skrip terus berjalan walau perintah sebelumnya gagal, yang bisa berbahaya (misalnya cd gagal lalu rm -rf jalan di folder yang salah).
+  hints: |
+    e untuk error/exit.
+    Status bukan 0 = gagal.
+    Berhenti.
+- id: bash-l2-u
+  type: write
+  title: Variabel Hantu
+  difficulty: 2
+  prompt: 'Jalankan set -u lalu echo "$hantu" di dalam subshell ( ... ) dan cetak "status: N" dengan status keluar subshell itu.'
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    set -u membuat variabel tak terdefinisi menjadi error.
+    Bungkus dalam ( ) agar skrip utama tidak berhenti.
+    $? berisi status perintah terakhir.
+  solution: |
+    ( set -u; echo "$hantu" ) 2>/dev/null
+    echo "status: $?"

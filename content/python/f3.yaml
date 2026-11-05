@@ -1,0 +1,85 @@
+lesson:
+  - text: Operator aritmetika Python adalah + - * / // % dan **. Operator / selalu menghasilkan float, // membagi lalu membulatkan ke bawah, % memberi sisa bagi, dan ** adalah pangkat. Urutan pengerjaannya sama seperti matematika, dan kurung didahulukan.
+    code: |
+      print(7 / 2, 7 // 2, 7 % 2, 2 ** 10)
+      print(2 + 3 * 4, (2 + 3) * 4)
+  - text: Operator perbandingan (== != < > <= >=) menghasilkan True atau False. Hasilnya bisa digabung dengan and, or, dan not. Python juga mendukung perbandingan berantai seperti 10 <= x <= 20.
+    code: |
+      x = 15
+      print(x > 10, x == 15, x != 15)
+      print(10 <= x <= 20, x % 2 == 0 or x > 100, not x > 10)
+exercises:
+  - id: py-f3-detik
+    type: write
+    title: Jam Pertarungan
+    difficulty: 2
+    prompt: 'Input berupa total detik. Cetak dalam format J:M:D (jam:menit:detik), tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+    tests: ["3725", "59", "86399", "0", "7200"]
+    hints: [1 jam = 3600 detik dan 1 menit = 60 detik., 'Pakai // untuk jam, lalu % untuk sisanya.', 'j = t // 3600; m = t % 3600 // 60; d = t % 60']
+    solution: |
+      t = int(input())
+      print(f"{t // 3600}:{t % 3600 // 60}:{t % 60}")
+  - id: py-f3-rentang
+    type: write
+    title: Penjaga Gerbang
+    difficulty: 1
+    prompt: Baca bilangan bulat n. Cetak True jika n berada di antara 10 dan 20 (inklusif) DAN genap. Selain itu cetak False.
+    tests: ["12", "13", "22", "10", "20", "8"]
+    hints: [Ada dua syarat yang harus benar sekaligus., 'Genap berarti n % 2 == 0.', print(10 <= n <= 20 and n % 2 == 0)]
+    solution: |
+      n = int(input())
+      print(10 <= n <= 20 and n % 2 == 0)
+  - id: py-f3-predict
+    type: predict
+    title: Empat Jurus Pembagian
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: print(7 / 2, 7 // 2, -7 // 2, 7 % 3)
+    hints: |
+      / selalu menghasilkan float.
+      // membulatkan ke BAWAH, termasuk untuk bilangan negatif.
+      7 % 3 adalah sisa dari 7 dibagi 3.
+    solution: x
+  - id: py-f3-bug-rata
+    type: bughunt
+    title: Rata-rata yang Kebesaran
+    difficulty: 1
+    prompt: Program membaca tiga bilangan lalu mencetak rata-ratanya. Hasilnya selalu terlalu besar. Temukan bug-nya.
+    starter: |
+      a, b, c = map(int, input().split())
+      rata = a + b + c / 3
+      print(rata)
+    bug_line: 2
+    tests: ["3 6 9", "1 2 3", "10 10 10"]
+    hints: |
+      Ingat urutan operasi: mana yang dikerjakan duluan, + atau /?
+      Saat ini hanya c yang dibagi 3.
+      Beri kurung: (a + b + c) / 3
+    solution: |
+      a, b, c = map(int, input().split())
+      rata = (a + b + c) / 3
+      print(rata)
+  - id: py-f3-suhu
+    type: write
+    title: Suhu Napas Api
+    difficulty: 1
+    prompt: Input suhu dalam Celsius (bilangan bulat). Cetak suhu dalam Fahrenheit dengan 1 angka desimal. Rumus F = C * 9 / 5 + 32.
+    tests: ["100", "0", "-40", "37"]
+    hints: [Ubah input ke int atau float., Hitung pakai rumus yang diberikan., 'print(f"{f:.1f}") mencetak 1 desimal.']
+    solution: |
+      c = int(input())
+      f = c * 9 / 5 + 32
+      print(f"{f:.1f}")
+  - id: py-f3-parsons
+    type: parsons
+    title: Lapangan Latihan
+    difficulty: 1
+    prompt: Susun program yang membaca panjang dan lebar sebuah lapangan, lalu mencetak luas lalu kelilingnya.
+    tests: ["3 4", "10 2", "1 1"]
+    hints: [Baca input sebelum menghitung., Luas harus dihitung sebelum dicetak., Luas dicetak lebih dulu daripada keliling.]
+    solution: |
+      p, l = map(int, input().split())
+      luas = p * l
+      keliling = 2 * (p + l)
+      print(luas)
+      print(keliling)

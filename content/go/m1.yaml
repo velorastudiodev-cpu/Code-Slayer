@@ -1,0 +1,130 @@
+lesson:
+- text: 'Slice adalah daftar yang bisa bertambah: make([]int, 0) lalu append. len(s) memberi panjangnya. Slice berbagi array di belakangnya, jadi potongan s[a:b] masih menunjuk data yang sama.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ts := []int{3, 1, 2}\n\ts = append(s, 9)\n\tpotong := s[1:3]\n\tpotong[0] = 100\n\tfmt.Println(s, len(s), potong)\n}\n"
+- text: 'map memetakan kunci ke nilai: m := map[string]int{}. Nilai kunci yang belum ada adalah nilai nol (0), jadi m[k]++ langsung bisa dipakai untuk menghitung. Urutan map acak, maka urutkan kuncinya
+    dengan sort.'
+  code: "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n)\n\nfunc main() {\n\tm := map[string]int{}\n\tfor _, k := range []string{\"b\", \"a\", \"b\"} {\n\t\tm[k]++\n\t}\n\tkunci := make([]string, 0,\
+    \ len(m))\n\tfor k := range m {\n\t\tkunci = append(kunci, k)\n\t}\n\tsort.Strings(kunci)\n\tfmt.Println(kunci, m[\"b\"])\n}\n"
+exercises:
+- id: go-m1-balik
+  type: write
+  title: Barisan Terbalik
+  difficulty: 1
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - |-
+    5
+    1 2 3 4 5
+  - |-
+    1
+    42
+  - |-
+    3
+    -1 0 -1
+  hints: |
+    Simpan semua bilangan ke array/list.
+    Telusuri dari indeks terakhir ke 0.
+    Gabungkan dengan spasi.
+  solution: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]string, n)\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t}\n\tout := make([]string,\
+    \ 0, n)\n\tfor i := n - 1; i >= 0; i-- {\n\t\tout = append(out, xs[i])\n\t}\n\tfmt.Println(strings.Join(out, \" \"))\n}\n"
+- id: go-m1-frekuensi
+  type: write
+  title: Sensus Kata
+  difficulty: 2
+  prompt: Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, "kata jumlah" per baris, urut abjad.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - iblis slayer iblis bulan
+  - a
+  - |-
+    b a b
+    a c b
+  hints: |
+    Pakai map/dictionary: kata → jumlah.
+    Ambil semua kunci lalu urutkan.
+    Cetak "kata jumlah".
+  solution: "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n)\n\nfunc main() {\n\tjumlah := map[string]int{}\n\tfor {\n\t\tvar k string\n\t\tif _, err := fmt.Scan(&k); err != nil {\n\t\t\tbreak\n\t\t\
+    }\n\t\tjumlah[k]++\n\t}\n\tkata := make([]string, 0, len(jumlah))\n\tfor k := range jumlah {\n\t\tkata = append(kata, k)\n\t}\n\tsort.Strings(kata)\n\tfor _, k := range kata {\n\t\tfmt.Println(k, jumlah[k])\n\
+    \t}\n}\n"
+- id: go-m1-unik
+  type: write
+  title: Pasukan Tanpa Kembar
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - |-
+    6
+    3 1 3 2 1 3
+  - |-
+    1
+    7
+  - |-
+    4
+    -2 5 -2 0
+  hints: |
+    Set/himpunan otomatis membuang duplikat.
+    Urutkan hasilnya.
+    Gabungkan dengan spasi.
+  solution: "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n\t\"strconv\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tada := map[int]bool{}\n\txs := []int{}\n\tfor i := 0; i < n;\
+    \ i++ {\n\t\tvar x int\n\t\tfmt.Scan(&x)\n\t\tif !ada[x] {\n\t\t\tada[x] = true\n\t\t\txs = append(xs, x)\n\t\t}\n\t}\n\tsort.Ints(xs)\n\tout := make([]string, len(xs))\n\tfor i, x := range xs {\n\t\
+    \tout[i] = strconv.Itoa(x)\n\t}\n\tfmt.Println(strings.Join(out, \" \"))\n}\n"
+- id: go-m1-diatas
+  type: write
+  title: Di Atas Rata-rata
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - |-
+    5
+    10 20 30 40 50
+  - |-
+    3
+    5 5 5
+  - |-
+    4
+    1 1 1 9
+  hints: |
+    Hitung rata-rata dulu (desimal).
+    Lalu hitung nilai > rata-rata.
+    Butuh dua kali menelusuri data.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]float64, n)\n\ttotal := 0.0\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t\ttotal += xs[i]\n\t\
+    }\n\trata := total / float64(n)\n\tc := 0\n\tfor _, x := range xs {\n\t\tif x > rata {\n\t\t\tc++\n\t\t}\n\t}\n\tfmt.Println(c)\n}\n"
+- id: go-m1-predict
+  type: predict
+  title: Koleksi Berbagi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ta := []int{1, 2, 3}\n\tb := a\n\tb[0] = 9\n\tc := make([]int, len(a))\n\tcopy(c, a)\n\tc[1] = 7\n\tfmt.Println(a, b, c)\n\tm := map[string]int{\"\
+    x\": 1}\n\tn := m\n\tn[\"x\"] = 5\n\tfmt.Println(m[\"x\"], len(m), m[\"y\"])\n}\n"
+  hints: |
+    Perhatikan apakah koleksi disalin atau dibagi (referensi).
+    Mengubah lewat referensi terlihat dari nama lain.
+    Telusuri isi koleksi setelah tiap perubahan.
+  solution: x
+- id: go-m1-bug
+  type: bughunt
+  title: Indeks Melewati Batas
+  difficulty: 2
+  prompt: Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]int, n)\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t}\n\ttotal := 0\n\tfor i := 0; i <= len(xs);\
+    \ i++ {\n\t\ttotal += xs[i]\n\t}\n\tfmt.Println(total)\n}\n"
+  bug_line: 13
+  tests:
+  - |-
+    3
+    1 2 3
+  - |-
+    1
+    5
+  - |-
+    4
+    2 2 2 2
+  hints: |
+    Indeks terakhir = panjang - 1.
+    Kondisi loop memakai <=.
+    Gunakan < panjang.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\txs := make([]int, n)\n\tfor i := range xs {\n\t\tfmt.Scan(&xs[i])\n\t}\n\ttotal := 0\n\tfor i := 0; i < len(xs);\
+    \ i++ {\n\t\ttotal += xs[i]\n\t}\n\tfmt.Println(total)\n}\n"

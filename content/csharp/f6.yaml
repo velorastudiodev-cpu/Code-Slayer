@@ -1,0 +1,175 @@
+lesson:
+- text: C# punya for, while, do-while, dan foreach. foreach menelusuri setiap elemen koleksi tanpa indeks. break keluar dari loop, continue lanjut ke putaran berikutnya.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            for (int i = 1; i <= 3; i++) Console.Write(i + " ");
+            int n = 10;
+            while (n > 1) n /= 2;
+            Console.WriteLine("| " + n);
+            foreach (var nama in new[] { "Tengen", "Zenitsu" }) Console.WriteLine(nama);
+        }
+    }
+- text: new string(c, n) membuat teks berisi karakter c sebanyak n kali, praktis untuk pola bintang.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine(new string('*', 4));
+            Console.WriteLine(new string('-', 2) + ">");
+        }
+    }
+exercises:
+- id: cs-f6-segitiga
+  type: write
+  title: Formasi Segitiga
+  difficulty: 1
+  prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '3'
+  - '1'
+  - '5'
+  hints: |
+    Loop i dari 1 sampai n.
+    Baris ke-i = "*" diulang i kali.
+    Setiap baris diakhiri newline.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            for (int i = 1; i <= n; i++) Console.WriteLine(new string('*', i));
+        }
+    }
+- id: cs-f6-prima
+  type: write
+  title: Uji Bilangan Prima
+  difficulty: 2
+  prompt: Baca n (n ≤ 10^9). Cetak "prima" atau "bukan". Cukup periksa pembagi sampai akar n.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '7'
+  - '1'
+  - '91'
+  - '2'
+  - '999999937'
+  - '1000000000'
+  hints: |
+    1 bukan prima.
+    Loop d mulai 2 selama d * d <= n.
+    Pakai tipe 64-bit supaya d * d tidak overflow.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long n = long.Parse(t[0]);
+            bool prima = n > 1;
+            for (long d = 2; d * d <= n; d++)
+                if (n % d == 0) { prima = false; break; }
+            Console.WriteLine(prima ? "prima" : "bukan");
+        }
+    }
+- id: cs-f6-predict
+  type: predict
+  title: Loop Berlapis
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (i == 1) continue;
+                if (i == 4) break;
+                Console.Write(i + " ");
+            }
+            int n = 0;
+            do { n++; } while (n < 0);
+            Console.WriteLine("| " + n);
+        }
+    }
+  hints: |
+    continue melompati sisa satu putaran.
+    break menghentikan loop sepenuhnya.
+    Telusuri nilai i satu per satu.
+  solution: x
+- id: cs-f6-bug
+  type: bughunt
+  title: Satu Tebasan Hilang
+  difficulty: 1
+  prompt: Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            long total = 0;
+            for (int i = 1; i < n; i++) total += i;
+            Console.WriteLine(total);
+        }
+    }
+  bug_line: 10
+  tests:
+  - '3'
+  - '10'
+  - '1'
+  hints: |
+    Apakah n sendiri ikut dijumlah?
+    Batas loop berhenti sebelum n.
+    Ganti batasnya supaya n ikut.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            long total = 0;
+            for (int i = 1; i <= n; i++) total += i;
+            Console.WriteLine(total);
+        }
+    }

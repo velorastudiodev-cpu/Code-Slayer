@@ -1,0 +1,5045 @@
+{
+ "hash": "08fadbbaa161",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Program Python dijalankan baris demi baris dari atas ke bawah. print() mencetak sesuatu ke layar lalu pindah ke baris baru. Teks (string) diapit tanda kutip ganda atau tunggal. Baris yang diawali # adalah komentar dan tidak dijalankan.",
+     "code": "# komentar tidak dijalankan\nprint(\"Halo, Slayer!\")\nprint('Kisatsutai siap!')\n"
+    },
+    {
+     "text": "print() bisa menerima beberapa nilai sekaligus, dan nilai-nilai itu dipisah spasi. Parameter sep mengganti pemisahnya, sedangkan end mengganti akhiran baris (defaultnya baris baru).",
+     "code": "print(\"Tanjiro\", \"Kamado\")\nprint(\"2026\", \"10\", \"30\", sep=\"-\")\nprint(\"Kaa\", end=\"! \")\nprint(\"Kaa!\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-halo",
+     "type": "write",
+     "title": "Salam Pertama Seorang Slayer",
+     "difficulty": 1,
+     "story": "Gagak Kasugai menunggu laporan pertamamu.",
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\" (tanpa tanda kutip).",
+     "lang": "python",
+     "starter": "# Tulis kodemu di sini\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "Fungsi untuk mencetak ke layar di Python adalah print.",
+      "Teks harus diapit tanda kutip, misalnya print(\"...\").",
+      "print(\"Halo, Slayer!\")"
+     ],
+     "solutions": [
+      "print(\"Halo, Slayer!\")"
+     ],
+     "concepts": [
+      "print",
+      "string"
+     ],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    },
+    {
+     "id": "py-f1-dua-baris",
+     "type": "write",
+     "title": "Kakak dan Adik",
+     "difficulty": 1,
+     "prompt": "Cetak \"Tanjiro\" di baris pertama dan \"Nezuko\" di baris kedua.",
+     "lang": "python",
+     "tests": [
+      {
+       "expected": "Tanjiro\nNezuko\n"
+      }
+     ],
+     "hints": [
+      "Setiap print() menghasilkan satu baris.",
+      "Pakai dua kali print().",
+      "print(\"Tanjiro\") lalu print(\"Nezuko\")"
+     ],
+     "solutions": [
+      "print(\"Tanjiro\")\nprint(\"Nezuko\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    },
+    {
+     "id": "py-f1-sep",
+     "type": "write",
+     "title": "Tanggal Final Selection",
+     "difficulty": 1,
+     "prompt": "Cetak tanggal 2026-10-30 dengan SATU print yang menerima tiga argumen \"2026\", \"10\", \"30\" dan parameter sep.",
+     "lang": "python",
+     "tests": [
+      {
+       "expected": "2026-10-30\n"
+      }
+     ],
+     "hints": [
+      "sep menentukan teks di antara argumen.",
+      "Pemisahnya tanda minus.",
+      "print(\"2026\", \"10\", \"30\", sep=\"-\")"
+     ],
+     "solutions": [
+      "print(\"2026\", \"10\", \"30\", sep=\"-\")"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    },
+    {
+     "id": "py-f1-predict-end",
+     "type": "predict",
+     "title": "Akhiran yang Tersembunyi",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "print(\"A\", end=\"\")\nprint(\"B\")\nprint(\"C\", \"D\", sep=\"\")\n",
+     "tests": [
+      {
+       "expected": "AB\nCD\n"
+      }
+     ],
+     "hints": [
+      "end=\"\" berarti print tidak pindah baris.",
+      "print(\"B\") menyambung di baris yang sama dengan A.",
+      "sep=\"\" menempelkan C dan D tanpa spasi."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    },
+    {
+     "id": "py-f1-bug-kutip",
+     "type": "bughunt",
+     "title": "Iblis Pencuri Kutip",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"Halo\" lalu \"Slayer\". Temukan baris yang salah dan perbaiki.",
+     "lang": "python",
+     "starter": "print(\"Halo\")\nprint(Slayer)\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "expected": "Halo\nSlayer\n"
+      }
+     ],
+     "hints": [
+      "Baca pesan error-nya, NameError berarti Python mengira itu nama variabel.",
+      "Teks harus diapit tanda kutip.",
+      "print(\"Slayer\")"
+     ],
+     "solutions": [
+      "print(\"Halo\")\nprint(\"Slayer\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    },
+    {
+     "id": "py-f1-parsons",
+     "type": "parsons",
+     "title": "Urutan Barisan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak daftar 1. Tanjiro, 2. Zenitsu, 3. Inosuke sesuai urutan nomor.",
+     "lang": "python",
+     "tests": [
+      {
+       "expected": "1. Tanjiro\n2. Zenitsu\n3. Inosuke\n"
+      }
+     ],
+     "hints": [
+      "Program berjalan dari atas ke bawah.",
+      "Baris dengan nomor 1 harus paling atas.",
+      "Urutkan berdasarkan nomornya."
+     ],
+     "solutions": [
+      "print(\"1. Tanjiro\")\nprint(\"2. Zenitsu\")\nprint(\"3. Inosuke\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    },
+    {
+     "id": "py-f1-typing",
+     "type": "typing",
+     "title": "Ketik Kilat Pertama",
+     "difficulty": 1,
+     "prompt": "Ketik ulang kode berikut secepat dan setepat mungkin. Akurasi minimal 95%.",
+     "lang": "python",
+     "code": "print(\"Halo, Slayer!\")\nprint(\"Kaa!\", \"Misi baru\")\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Variabel adalah nama untuk menyimpan nilai, dibuat dengan tanda =. Tipe dasar Python adalah int (bilangan bulat), float (desimal), str (teks), dan bool (True/False). Fungsi type() memberi tahu tipe sebuah nilai.",
+     "code": "nama = \"Tanjiro\"\numur = 15\ntinggi = 165.5\nprint(nama, umur, tinggi)\nprint(type(umur), type(tinggi), type(nama))\n"
+    },
+    {
+     "text": "Tipe bisa diubah dengan int(), float(), dan str(). f-string, yaitu string berawalan f, menyisipkan nilai variabel lewat kurung kurawal. Ini cara paling rapi menggabung teks dan angka.",
+     "code": "umur = 15\nprint(\"Umur: \" + str(umur))\nprint(f\"Tahun depan {umur + 1} tahun\")\nprint(int(\"42\") + 1, float(\"2.5\") * 2)\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-f2-tukar",
+     "type": "write",
+     "title": "Tukar Posisi",
+     "difficulty": 1,
+     "prompt": "Input berisi dua baris teks a dan b. Cetak b di baris pertama, lalu a di baris kedua.",
+     "lang": "python",
+     "starter": "a = input()\nb = input()\n",
+     "tests": [
+      {
+       "input": "x\ny",
+       "expected": "y\nx\n"
+      },
+      {
+       "input": "Tanjiro\nNezuko",
+       "expected": "Nezuko\nTanjiro\n"
+      },
+      {
+       "input": "Gagak\nKaa",
+       "expected": "Kaa\nGagak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Kamu sudah punya a dan b.",
+      "Urutan print menentukan urutan baris.",
+      "print(b) lalu print(a)"
+     ],
+     "solutions": [
+      "a = input()\nb = input()\nprint(b)\nprint(a)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f2"
+    },
+    {
+     "id": "py-f2-fstring",
+     "type": "write",
+     "title": "Kartu Identitas Slayer",
+     "difficulty": 1,
+     "prompt": "Baris pertama berisi nama, baris kedua umur. Cetak \"Nama: <nama>, umur <umur> tahun\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Tanjiro\n15",
+       "expected": "Nama: Tanjiro, umur 15 tahun\n"
+      },
+      {
+       "input": "Rengoku\n20",
+       "expected": "Nama: Rengoku, umur 20 tahun\n"
+      },
+      {
+       "input": "Kanao\n16",
+       "expected": "Nama: Kanao, umur 16 tahun\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua baris dengan dua kali input().",
+      "Pakai f-string supaya rapi.",
+      "print(f\"Nama: {nama}, umur {umur} tahun\")"
+     ],
+     "solutions": [
+      "nama = input()\numur = input()\nprint(f\"Nama: {nama}, umur {umur} tahun\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f2"
+    },
+    {
+     "id": "py-f2-tipe",
+     "type": "predict",
+     "title": "Mengenali Wujud Iblis",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "print(type(7), type(7.0), type(\"7\"), type(True))",
+     "tests": [
+      {
+       "expected": "<class 'int'> <class 'float'> <class 'str'> <class 'bool'>\n"
+      }
+     ],
+     "hints": [
+      "Angka tanpa titik adalah int.",
+      "Angka dengan titik adalah float.",
+      "Nilai di dalam kutip adalah str, True adalah bool."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f2"
+    },
+    {
+     "id": "py-f2-bug-umur",
+     "type": "bughunt",
+     "title": "Umur yang Tidak Bisa Bertambah",
+     "difficulty": 1,
+     "prompt": "Program membaca umur lalu mencetak umur tahun depan. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "umur = input()\nprint(\"Tahun depan:\", umur + 1)\n",
+     "bug_line": 1,
+     "tests": [
+      {
+       "input": "15",
+       "expected": "Tahun depan: 16\n"
+      },
+      {
+       "input": "0",
+       "expected": "Tahun depan: 1\n"
+      },
+      {
+       "input": "99",
+       "expected": "Tahun depan: 100\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apa tipe hasil input()?",
+      "String tidak bisa ditambah dengan angka.",
+      "umur = int(input())"
+     ],
+     "solutions": [
+      "umur = int(input())\nprint(\"Tahun depan:\", umur + 1)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f2"
+    },
+    {
+     "id": "py-f2-konversi",
+     "type": "write",
+     "title": "Memotong Desimal",
+     "difficulty": 2,
+     "prompt": "Input berupa satu bilangan desimal positif. Cetak bagian bulatnya di baris pertama dan hasil pembulatannya (round) di baris kedua.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3.7",
+       "expected": "3\n4\n"
+      },
+      {
+       "input": "10.2",
+       "expected": "10\n10\n"
+      },
+      {
+       "input": "7.9",
+       "expected": "7\n8\n",
+       "hidden": true
+      },
+      {
+       "input": "0.4",
+       "expected": "0\n0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah input ke float dulu.",
+      "int(x) membuang bagian desimal.",
+      "round(x) membulatkan ke bilangan terdekat."
+     ],
+     "solutions": [
+      "x = float(input())\nprint(int(x))\nprint(round(x))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f2"
+    },
+    {
+     "id": "py-f2-parsons",
+     "type": "parsons",
+     "title": "Menghitung Huruf Nama",
+     "difficulty": 1,
+     "prompt": "Susun program yang membaca sebuah nama lalu mencetak \"<nama> punya <n> huruf\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Tanjiro",
+       "expected": "Tanjiro punya 7 huruf\n"
+      },
+      {
+       "input": "Rengoku",
+       "expected": "Rengoku punya 7 huruf\n"
+      },
+      {
+       "input": "Ai",
+       "expected": "Ai punya 2 huruf\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca nama terlebih dahulu.",
+      "len() menghitung panjang string.",
+      "print ada di baris terakhir."
+     ],
+     "solutions": [
+      "nama = input()\npanjang = len(nama)\nprint(nama, \"punya\", panjang, \"huruf\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f2"
+    },
+    {
+     "id": "py-f2-typing",
+     "type": "typing",
+     "title": "Ketik Variabel",
+     "difficulty": 1,
+     "prompt": "Ketik ulang kode berikut, termasuk f-string-nya. Akurasi minimal 95%.",
+     "lang": "python",
+     "code": "nama = \"Tanjiro\"\numur = 15\nprint(f\"{nama} berumur {umur}\")\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator aritmetika Python adalah + - * / // % dan **. Operator / selalu menghasilkan float, // membagi lalu membulatkan ke bawah, % memberi sisa bagi, dan ** adalah pangkat. Urutan pengerjaannya sama seperti matematika, dan kurung didahulukan.",
+     "code": "print(7 / 2, 7 // 2, 7 % 2, 2 ** 10)\nprint(2 + 3 * 4, (2 + 3) * 4)\n"
+    },
+    {
+     "text": "Operator perbandingan (== != < > <= >=) menghasilkan True atau False. Hasilnya bisa digabung dengan and, or, dan not. Python juga mendukung perbandingan berantai seperti 10 <= x <= 20.",
+     "code": "x = 15\nprint(x > 10, x == 15, x != 15)\nprint(10 <= x <= 20, x % 2 == 0 or x > 100, not x > 10)\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Input berupa total detik. Cetak dalam format J:M:D (jam:menit:detik), tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      },
+      {
+       "input": "7200",
+       "expected": "2:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 jam = 3600 detik dan 1 menit = 60 detik.",
+      "Pakai // untuk jam, lalu % untuk sisanya.",
+      "j = t // 3600; m = t % 3600 // 60; d = t % 60"
+     ],
+     "solutions": [
+      "t = int(input())\nprint(f\"{t // 3600}:{t % 3600 // 60}:{t % 60}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f3"
+    },
+    {
+     "id": "py-f3-rentang",
+     "type": "write",
+     "title": "Penjaga Gerbang",
+     "difficulty": 1,
+     "prompt": "Baca bilangan bulat n. Cetak True jika n berada di antara 10 dan 20 (inklusif) DAN genap. Selain itu cetak False.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "12",
+       "expected": "True\n"
+      },
+      {
+       "input": "13",
+       "expected": "False\n"
+      },
+      {
+       "input": "22",
+       "expected": "False\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "True\n",
+       "hidden": true
+      },
+      {
+       "input": "20",
+       "expected": "True\n",
+       "hidden": true
+      },
+      {
+       "input": "8",
+       "expected": "False\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ada dua syarat yang harus benar sekaligus.",
+      "Genap berarti n % 2 == 0.",
+      "print(10 <= n <= 20 and n % 2 == 0)"
+     ],
+     "solutions": [
+      "n = int(input())\nprint(10 <= n <= 20 and n % 2 == 0)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f3"
+    },
+    {
+     "id": "py-f3-predict",
+     "type": "predict",
+     "title": "Empat Jurus Pembagian",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "print(7 / 2, 7 // 2, -7 // 2, 7 % 3)",
+     "tests": [
+      {
+       "expected": "3.5 3 -4 1\n"
+      }
+     ],
+     "hints": [
+      "/ selalu menghasilkan float.",
+      "// membulatkan ke BAWAH, termasuk untuk bilangan negatif.",
+      "7 % 3 adalah sisa dari 7 dibagi 3."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f3"
+    },
+    {
+     "id": "py-f3-bug-rata",
+     "type": "bughunt",
+     "title": "Rata-rata yang Kebesaran",
+     "difficulty": 1,
+     "prompt": "Program membaca tiga bilangan lalu mencetak rata-ratanya. Hasilnya selalu terlalu besar. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "a, b, c = map(int, input().split())\nrata = a + b + c / 3\nprint(rata)\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "3 6 9",
+       "expected": "6.0\n"
+      },
+      {
+       "input": "1 2 3",
+       "expected": "2.0\n"
+      },
+      {
+       "input": "10 10 10",
+       "expected": "10.0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ingat urutan operasi: mana yang dikerjakan duluan, + atau /?",
+      "Saat ini hanya c yang dibagi 3.",
+      "Beri kurung: (a + b + c) / 3"
+     ],
+     "solutions": [
+      "a, b, c = map(int, input().split())\nrata = (a + b + c) / 3\nprint(rata)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f3"
+    },
+    {
+     "id": "py-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Input suhu dalam Celsius (bilangan bulat). Cetak suhu dalam Fahrenheit dengan 1 angka desimal. Rumus F = C * 9 / 5 + 32.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah input ke int atau float.",
+      "Hitung pakai rumus yang diberikan.",
+      "print(f\"{f:.1f}\") mencetak 1 desimal."
+     ],
+     "solutions": [
+      "c = int(input())\nf = c * 9 / 5 + 32\nprint(f\"{f:.1f}\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f3"
+    },
+    {
+     "id": "py-f3-parsons",
+     "type": "parsons",
+     "title": "Lapangan Latihan",
+     "difficulty": 1,
+     "prompt": "Susun program yang membaca panjang dan lebar sebuah lapangan, lalu mencetak luas lalu kelilingnya.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n14\n"
+      },
+      {
+       "input": "10 2",
+       "expected": "20\n24\n"
+      },
+      {
+       "input": "1 1",
+       "expected": "1\n4\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca input sebelum menghitung.",
+      "Luas harus dihitung sebelum dicetak.",
+      "Luas dicetak lebih dulu daripada keliling."
+     ],
+     "solutions": [
+      "p, l = map(int, input().split())\nluas = p * l\nkeliling = 2 * (p + l)\nprint(luas)\nprint(keliling)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "input() membaca satu baris dari pengguna dan SELALU mengembalikan string. Untuk mendapat angka, bungkus dengan int() atau float(). Di aplikasi ini, input dibaca dari kotak input tes, sama seperti judge di TOKI atau Codeforces.",
+     "code": "teks = \"42\"\nprint(teks + teks)\nprint(int(teks) + int(teks))\n"
+    },
+    {
+     "text": "Kalau satu baris berisi beberapa nilai, pecah dengan .split(). Hasilnya list string. map(int, ...) mengubah semua bagiannya menjadi int sekaligus, lalu nilainya bisa dibongkar ke beberapa variabel.",
+     "code": "baris = \"3 4 5\"\na, b, c = map(int, baris.split())\nprint(a + b + c)\nprint(baris.split())\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "story": "Dua pedang Nichirin baru ditempa. Berapa total bobotnya?",
+     "prompt": "Input berisi dua bilangan bulat a dan b dalam satu baris, dipisah spasi. Cetak a + b.",
+     "lang": "python",
+     "starter": "a, b = input().split()\n# ubah ke int lalu cetak jumlahnya\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      },
+      {
+       "input": "100000 23",
+       "expected": "100023\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "input() selalu menghasilkan string. \"3\" + \"4\" = \"34\", bukan 7.",
+      "Ubah tiap bagian dengan int(...).",
+      "a, b = map(int, input().split()) lalu print(a + b)"
+     ],
+     "solutions": [
+      "a, b = map(int, input().split())\nprint(a + b)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f4"
+    },
+    {
+     "id": "py-f4-sapa",
+     "type": "write",
+     "title": "Sapaan Gagak",
+     "difficulty": 1,
+     "prompt": "Baca sebuah nama, lalu cetak \"Halo, <nama>!\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Tanjiro",
+       "expected": "Halo, Tanjiro!\n"
+      },
+      {
+       "input": "Zenitsu",
+       "expected": "Halo, Zenitsu!\n"
+      },
+      {
+       "input": "Nezuko",
+       "expected": "Halo, Nezuko!\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan hasil input() ke variabel.",
+      "Gabungkan dengan f-string.",
+      "print(f\"Halo, {nama}!\")"
+     ],
+     "solutions": [
+      "nama = input()\nprint(f\"Halo, {nama}!\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f4"
+    },
+    {
+     "id": "py-f4-tiga-baris",
+     "type": "write",
+     "title": "Tiga Laporan",
+     "difficulty": 1,
+     "prompt": "Input berisi tiga baris, masing-masing satu bilangan bulat. Cetak jumlah ketiganya.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "1\n2\n3",
+       "expected": "6\n"
+      },
+      {
+       "input": "10\n-5\n0",
+       "expected": "5\n"
+      },
+      {
+       "input": "100\n200\n300",
+       "expected": "600\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Satu input() membaca satu baris.",
+      "Panggil input() tiga kali.",
+      "int(input()) + int(input()) + int(input())"
+     ],
+     "solutions": [
+      "a = int(input())\nb = int(input())\nc = int(input())\nprint(a + b + c)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f4"
+    },
+    {
+     "id": "py-f4-predict",
+     "type": "predict",
+     "title": "Teks atau Angka?",
+     "difficulty": 1,
+     "prompt": "Dengan input di bawah, tulis output persis dari kode ini.",
+     "lang": "python",
+     "code": "a, b = input().split()\nprint(a + b)\nprint(int(a) + int(b))\n",
+     "tests": [
+      {
+       "input": "5 7",
+       "expected": "57\n12\n"
+      }
+     ],
+     "hints": [
+      "split() menghasilkan string.",
+      "String + string berarti digabung.",
+      "Setelah int(), + menjadi penjumlahan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f4"
+    },
+    {
+     "id": "py-f4-bug-kali",
+     "type": "bughunt",
+     "title": "Perkalian yang Gagal",
+     "difficulty": 1,
+     "prompt": "Program membaca dua bilangan dalam satu baris lalu mencetak hasil kalinya. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "a, b = input().split()\nprint(a * b)\n",
+     "bug_line": 1,
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "5 0",
+       "expected": "0\n"
+      },
+      {
+       "input": "-2 6",
+       "expected": "-12\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca pesan error-nya: tipe apa yang sedang dikali?",
+      "String tidak bisa dikali string.",
+      "a, b = map(int, input().split())"
+     ],
+     "solutions": [
+      "a, b = map(int, input().split())\nprint(a * b)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f4"
+    },
+    {
+     "id": "py-f4-parsons",
+     "type": "parsons",
+     "title": "Terkuat dan Terlemah",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, baris kedua berisi n bilangan. Susun program yang mencetak nilai terbesar lalu nilai terkecil.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3\n5 1 9",
+       "expected": "9\n1\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7\n7\n"
+      },
+      {
+       "input": "4\n-1 -5 -3 -2",
+       "expected": "-1\n-5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca n dulu karena baris pertama berisi n.",
+      "Daftar angka dibaca dari baris kedua.",
+      "max dicetak sebelum min."
+     ],
+     "solutions": [
+      "n = int(input())\nangka = list(map(int, input().split()))\nprint(max(angka))\nprint(min(angka))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if menjalankan blok kode hanya kalau kondisinya True. Blok ditandai titik dua di akhir baris dan indentasi 4 spasi. elif memeriksa kondisi berikutnya, dan else menangkap sisanya. Hanya cabang pertama yang benar yang dijalankan.",
+     "code": "nilai = 78\nif nilai >= 85:\n    print(\"A\")\nelif nilai >= 70:\n    print(\"B\")\nelse:\n    print(\"C\")\n"
+    },
+    {
+     "text": "Kondisi bisa digabung dengan and dan or, atau dibuat bersarang (if di dalam if). Nilai seperti 0, string kosong, dan list kosong dianggap False. Nilai lainnya dianggap True.",
+     "code": "umur, punya_pedang = 15, True\nif umur >= 13 and punya_pedang:\n    print(\"Boleh ikut Final Selection\")\nif not \"\":\n    print(\"string kosong dianggap False\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-bug-genap",
+     "type": "bughunt",
+     "title": "Iblis Pembalik Genap",
+     "difficulty": 1,
+     "story": "Seekor iblis membalik hasil pemeriksaan genap-ganjil di markas Kisatsutai.",
+     "prompt": "Program harus membaca bilangan bulat n lalu mencetak \"genap\" atau \"ganjil\". Temukan barisnya, lalu perbaiki.",
+     "lang": "python",
+     "starter": "n = int(input())\nif n % 2 == 1:\n    print(\"genap\")\nelse:\n    print(\"ganjil\")\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "4",
+       "expected": "genap\n"
+      },
+      {
+       "input": "7",
+       "expected": "ganjil\n"
+      },
+      {
+       "input": "0",
+       "expected": "genap\n",
+       "hidden": true
+      },
+      {
+       "input": "-3",
+       "expected": "ganjil\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Coba telusuri dengan n = 4. Berapa 4 % 2?",
+      "Bilangan genap punya sisa bagi 0 terhadap 2.",
+      "Ganti kondisinya menjadi n % 2 == 0."
+     ],
+     "solutions": [
+      "n = int(input())\nif n % 2 == 0:\n    print(\"genap\")\nelse:\n    print(\"ganjil\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f5"
+    },
+    {
+     "id": "py-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi dulu.",
+      "Pakai if, elif, elif, else.",
+      "Cabang pertama yang benar yang dijalankan, sisanya dilewati."
+     ],
+     "solutions": [
+      "n = int(input())\nif n >= 85:\n    print(\"A\")\nelif n >= 70:\n    print(\"B\")\nelif n >= 55:\n    print(\"C\")\nelse:\n    print(\"D\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f5"
+    },
+    {
+     "id": "py-f5-kabisat",
+     "type": "write",
+     "title": "Tahun Kabisat",
+     "difficulty": 2,
+     "prompt": "Baca tahun. Cetak \"kabisat\" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu cetak \"bukan\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2100",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Habis dibagi berarti % ... == 0.",
+      "Gabungkan syarat dengan or dan and.",
+      "tahun % 400 == 0 or (tahun % 4 == 0 and tahun % 100 != 0)"
+     ],
+     "solutions": [
+      "t = int(input())\nif t % 400 == 0 or (t % 4 == 0 and t % 100 != 0):\n    print(\"kabisat\")\nelse:\n    print(\"bukan\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f5",
+     "gallery": [
+      {
+       "style": "readable",
+       "note": "Aturan dipecah jadi tiga pertanyaan berurutan, persis seperti cara manusia mengecek kalender. Lebih panjang, tapi setiap cabang mudah diuji sendiri.",
+       "code": "t = int(input())\nif t % 400 == 0:\n    print(\"kabisat\")\nelif t % 100 == 0:\n    print(\"bukan\")\nelif t % 4 == 0:\n    print(\"kabisat\")\nelse:\n    print(\"bukan\")\n"
+      },
+      {
+       "style": "idiomatic",
+       "note": "Jangan menulis ulang yang sudah ada di pustaka standar. calendar.isleap sudah teruji dan langsung terbaca maksudnya.",
+       "code": "import calendar\nprint(\"kabisat\" if calendar.isleap(int(input())) else \"bukan\")\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f5-predict",
+     "type": "predict",
+     "title": "Dua Gerbang",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "x = 7\nif x > 5:\n    print(\"A\")\nif x > 3:\n    print(\"B\")\nelif x > 1:\n    print(\"C\")\nelse:\n    print(\"D\")\n",
+     "tests": [
+      {
+       "expected": "A\nB\n"
+      }
+     ],
+     "hints": [
+      "Ada dua if terpisah, bukan satu rantai.",
+      "if kedua punya rantai elif/else sendiri.",
+      "Dalam satu rantai, hanya cabang pertama yang benar yang jalan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f5"
+    },
+    {
+     "id": "py-f5-max3",
+     "type": "write",
+     "title": "Pedang Terpanjang",
+     "difficulty": 2,
+     "prompt": "Baca tiga bilangan bulat dalam satu baris. Cetak yang terbesar TANPA memakai max().",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3 9 2",
+       "expected": "9\n"
+      },
+      {
+       "input": "5 5 1",
+       "expected": "5\n"
+      },
+      {
+       "input": "-1 -7 -3",
+       "expected": "-1\n",
+       "hidden": true
+      },
+      {
+       "input": "4 8 8",
+       "expected": "8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Anggap a yang terbesar dulu.",
+      "Bandingkan dengan b dan c satu per satu.",
+      "if b > m: m = b, dan lakukan hal yang sama untuk c"
+     ],
+     "solutions": [
+      "a, b, c = map(int, input().split())\nm = a\nif b > m:\n    m = b\nif c > m:\n    m = c\nprint(m)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f5",
+     "gallery": [
+      {
+       "style": "idiomatic",
+       "note": "Ekspresi kondisional (x if syarat else y) meringkas dua if menjadi dua baris tanpa variabel sementara yang berubah-ubah.",
+       "code": "a, b, c = map(int, input().split())\nm = a if a > b else b\nprint(m if m > c else c)\n"
+      },
+      {
+       "style": "readable",
+       "note": "Mengurutkan lalu ambil elemen terakhir sangat jelas maksudnya, tapi kerjanya O(n log n) dan lebih boros daripada membandingkan. Untuk tiga angka tidak terasa; untuk sejuta angka terasa.",
+       "code": "angka = sorted(map(int, input().split()))\nprint(angka[-1])\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f5-parsons",
+     "type": "parsons",
+     "title": "Tanda Bilangan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak \"positif\", \"negatif\", atau \"nol\" sesuai bilangan input.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca n dulu.",
+      "Urutannya if, elif, lalu else.",
+      "Setiap print berada di bawah kondisinya."
+     ],
+     "solutions": [
+      "n = int(input())\nif n > 0:\n    print(\"positif\")\nelif n < 0:\n    print(\"negatif\")\nelse:\n    print(\"nol\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "for mengulang untuk setiap nilai dalam sebuah urutan. range(a, b, s) menghasilkan a, a+s, dan seterusnya, berhenti SEBELUM b. Pola paling umum adalah akumulasi, yaitu membuat variabel total di luar loop lalu menambahkannya di dalam loop.",
+     "code": "total = 0\nfor i in range(1, 6):\n    total += i\nprint(total)\nfor i in range(10, 0, -3):\n    print(i, end=\" \")\n"
+    },
+    {
+     "text": "while mengulang selama kondisinya True. Pastikan ada yang berubah di dalam loop supaya suatu saat berhenti, kalau tidak terjadi infinite loop. break keluar dari loop, continue lompat ke putaran berikutnya.",
+     "code": "n = 3\nwhile n > 0:\n    print(\"Tebasan\", n)\n    n -= 1\nfor i in range(10):\n    if i == 2:\n        continue\n    if i == 5:\n        break\n    print(i, end=\" \")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-predict-range",
+     "type": "predict",
+     "title": "Langkah Pernapasan Air",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari kode berikut, satu nilai per baris.",
+     "lang": "python",
+     "code": "for i in range(1, 10, 3):\n    print(i)\n",
+     "tests": [
+      {
+       "expected": "1\n4\n7\n"
+      }
+     ],
+     "hints": [
+      "range(start, stop, step) mulai dari start dan naik sebesar step.",
+      "range berhenti SEBELUM mencapai stop.",
+      "1, lalu 4, lalu 7. Berikutnya 10, tapi 10 tidak termasuk."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f6"
+    },
+    {
+     "id": "py-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 2,
+     "story": "Para kadet berbaris membentuk segitiga di Gunung Fujikasane.",
+     "prompt": "Baca n, lalu cetak segitiga bintang n baris. Baris ke-i berisi i buah tanda *.",
+     "lang": "python",
+     "starter": "n = int(input())\n",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai loop dari 1 sampai n.",
+      "String bisa dikali bilangan, \"*\" * 3 menghasilkan \"***\".",
+      "for i in range(1, n + 1) lalu print(\"*\" * i)"
+     ],
+     "solutions": [
+      "n = int(input())\nfor i in range(1, n + 1):\n    print(\"*\" * i)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f6",
+     "gallery": [
+      {
+       "style": "fastest",
+       "note": "Bangun seluruh teks dulu, lalu print sekali. Untuk n besar, satu print jauh lebih cepat daripada n kali print.",
+       "code": "n = int(input())\nprint(\"\\n\".join(\"*\" * i for i in range(1, n + 1)))\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f6-jumlah-genap",
+     "type": "write",
+     "title": "Tebasan Genap",
+     "difficulty": 1,
+     "prompt": "Baca n. Cetak jumlah semua bilangan genap dari 1 sampai n.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "10",
+       "expected": "30\n"
+      },
+      {
+       "input": "1",
+       "expected": "0\n"
+      },
+      {
+       "input": "7",
+       "expected": "12\n",
+       "hidden": true
+      },
+      {
+       "input": "100",
+       "expected": "2550\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Buat total = 0 sebelum loop.",
+      "Tambahkan hanya bilangan yang genap.",
+      "range(2, n + 1, 2) langsung memberi bilangan genap."
+     ],
+     "solutions": [
+      "n = int(input())\nprint(sum(range(2, n + 1, 2)))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f6",
+     "gallery": [
+      {
+       "style": "fastest",
+       "note": "Bilangan genap sampai n adalah 2·(1 + 2 + … + k) dengan k = n // 2, jadi jumlahnya k·(k+1). O(1): n = 10^18 pun selesai seketika.",
+       "code": "k = int(input()) // 2\nprint(k * (k + 1))\n"
+      },
+      {
+       "style": "readable",
+       "note": "Loop eksplisit dengan if. Paling dekat dengan kalimat soalnya, cocok saat baru belajar, tapi O(n) dan lebih panjang.",
+       "code": "n = int(input())\ntotal = 0\nfor i in range(1, n + 1):\n    if i % 2 == 0:\n        total += i\nprint(total)\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f6-faktor",
+     "type": "write",
+     "title": "Pembagi Sejati",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≥ 1). Cetak semua pembagi n dari kecil ke besar dalam satu baris, dipisah spasi.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "12",
+       "expected": "1 2 3 4 6 12\n"
+      },
+      {
+       "input": "7",
+       "expected": "1 7\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      },
+      {
+       "input": "36",
+       "expected": "1 2 3 4 6 9 12 18 36\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa setiap i dari 1 sampai n.",
+      "i adalah pembagi jika n % i == 0.",
+      "print(i, end=\" \") lalu print() di akhir, atau kumpulkan di list."
+     ],
+     "solutions": [
+      "n = int(input())\nprint(*[i for i in range(1, n + 1) if n % i == 0])\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f6",
+     "gallery": [
+      {
+       "style": "fastest",
+       "note": "Pembagi selalu berpasangan (i dan n // i), jadi cukup cek sampai √n. Dari O(n) menjadi O(√n); untuk n = 10^12 bedanya sejuta kali lipat.",
+       "code": "n = int(input())\nkecil, besar = [], []\ni = 1\nwhile i * i <= n:\n    if n % i == 0:\n        kecil.append(i)\n        if i != n // i:\n            besar.append(n // i)\n    i += 1\nprint(*(kecil + besar[::-1]))\n"
+      },
+      {
+       "style": "readable",
+       "note": "Loop biasa dengan list. Sama cepatnya dengan versi list comprehension; pilih yang paling nyaman dibaca timmu.",
+       "code": "n = int(input())\npembagi = []\nfor i in range(1, n + 1):\n    if n % i == 0:\n        pembagi.append(str(i))\nprint(\" \".join(pembagi))\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f6-bug-mundur",
+     "type": "bughunt",
+     "title": "Hitung Mundur Kebablasan",
+     "difficulty": 1,
+     "prompt": "Program menghitung mundur dari n sampai 1, lalu mencetak \"Serang!\". Ternyata ada angka yang ikut tercetak padahal tidak seharusnya. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "n = int(input())\nwhile n >= 0:\n    print(n)\n    n -= 1\nprint(\"Serang!\")\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "3\n2\n1\nSerang!\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\nSerang!\n"
+      },
+      {
+       "input": "5",
+       "expected": "5\n4\n3\n2\n1\nSerang!\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Angka terakhir sebelum \"Serang!\" seharusnya 1.",
+      "Kapan loop berhenti?",
+      "while n > 0"
+     ],
+     "solutions": [
+      "n = int(input())\nwhile n > 0:\n    print(n)\n    n -= 1\nprint(\"Serang!\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f6"
+    },
+    {
+     "id": "py-f6-parsons",
+     "type": "parsons",
+     "title": "Uji Bilangan Prima",
+     "difficulty": 2,
+     "prompt": "Susun program yang mencetak \"prima\" jika n bilangan prima, selain itu \"bukan\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "prima\n"
+      },
+      {
+       "input": "1",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "9",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "97",
+       "expected": "prima\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Anggap prima dulu (kecuali n ≤ 1).",
+      "Cari pembagi dari 2 sampai n - 1.",
+      "Satu pembagi saja sudah cukup untuk membuatnya bukan prima."
+     ],
+     "solutions": [
+      "n = int(input())\nprima = n > 1\nfor i in range(2, n):\n    if n % i == 0:\n        prima = False\nprint(\"prima\" if prima else \"bukan\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f6"
+    },
+    {
+     "id": "py-f6-typing",
+     "type": "typing",
+     "title": "Ketik Loop Berindentasi",
+     "difficulty": 2,
+     "prompt": "Ketik ulang kode berikut. Indentasi pakai 4 spasi (tombol Tab = 4 spasi).",
+     "lang": "python",
+     "code": "for i in range(1, 6):\n    if i % 2 == 0:\n        print(i, \"genap\")\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f6"
+    },
+    {
+     "id": "py-f6-translate",
+     "type": "translate",
+     "title": "Terjemahkan Jumlah Kuadrat",
+     "difficulty": 1,
+     "prompt": "Tulis ulang program JavaScript ini dalam Python. Output-nya harus sama persis.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "14\n"
+      },
+      {
+       "input": "10",
+       "expected": "385\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "readline() di JS sama dengan input() di Python.",
+      "for (let i = 1; i <= n; i++) sama dengan for i in range(1, n + 1).",
+      "console.log menjadi print."
+     ],
+     "solutions": [
+      "n = int(input())\ntotal = 0\nfor i in range(1, n + 1):\n    total += i * i\nprint(total)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "from_lang": "javascript",
+     "from_code": "const n = Number(readline())\nlet total = 0\nfor (let i = 1; i <= n; i++) total += i * i\nconsole.log(total)\n",
+     "track": "python",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi dibuat dengan def, punya parameter, dan mengembalikan nilai lewat return. Fungsi membuat kode bisa dipakai ulang dan mudah diuji. Variabel yang dibuat di dalam fungsi hanya hidup di dalam fungsi itu.",
+     "code": "def luas_persegi(sisi):\n    return sisi * sisi\nprint(luas_persegi(3), luas_persegi(5))\n"
+    },
+    {
+     "text": "Parameter bisa punya nilai default, dan argumen bisa diberikan dengan nama. Fungsi juga boleh memanggil dirinya sendiri (rekursi), asalkan ada kondisi berhenti (base case).",
+     "code": "def sapa(nama, salam=\"Halo\"):\n    return f\"{salam}, {nama}!\"\nprint(sapa(\"Tanjiro\"), sapa(salam=\"Kaa\", nama=\"Gagak\"))\ndef faktorial(n):\n    return 1 if n <= 1 else n * faktorial(n - 1)\nprint(faktorial(5))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-parsons-faktorial",
+     "type": "parsons",
+     "title": "Susun Jurus Faktorial",
+     "difficulty": 2,
+     "story": "Gulungan jurus faktorial robek dan barisnya tercecer.",
+     "prompt": "Susun baris-baris berikut menjadi program yang membaca n lalu mencetak n! (faktorial).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "10",
+       "expected": "3628800\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Fungsi harus didefinisikan (def) sebelum dipanggil.",
+      "Variabel hasil harus diberi nilai awal sebelum loop.",
+      "return berada setelah loop, sejajar dengan for."
+     ],
+     "solutions": [
+      "def faktorial(n):\n    hasil = 1\n    for i in range(2, n + 1):\n        hasil *= i\n    return hasil\nn = int(input())\nprint(faktorial(n))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f7"
+    },
+    {
+     "id": "py-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fpb(a, b) dengan algoritma Euclid, lalu baca dua bilangan dan cetak FPB-nya.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Euclid: fpb(a, b) = fpb(b, a % b).",
+      "Berhenti saat b == 0; jawabannya a.",
+      "while b: a, b = b, a % b"
+     ],
+     "solutions": [
+      "def fpb(a, b):\n    while b:\n        a, b = b, a % b\n    return a\na, b = map(int, input().split())\nprint(fpb(a, b))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f7",
+     "gallery": [
+      {
+       "style": "idiomatic",
+       "note": "math.gcd sudah ada sejak Python 3.5 (ditulis dalam C, jadi lebih cepat). Di soal ini kamu diminta menulis Euclid sendiri; di proyek nyata, pakai pustaka.",
+       "code": "from math import gcd\na, b = map(int, input().split())\nprint(gcd(a, b))\n"
+      },
+      {
+       "style": "readable",
+       "note": "Versi rekursif paling mirip definisi matematisnya: fpb(a, 0) = a, fpb(a, b) = fpb(b, a mod b).",
+       "code": "def fpb(a, b):\n    if b == 0:\n        return a\n    return fpb(b, a % b)\na, b = map(int, input().split())\nprint(fpb(a, b))\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f7-predict",
+     "type": "predict",
+     "title": "Argumen Bernama",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "def f(x, y=10):\n    return x + y\nprint(f(1), f(1, 2), f(y=5, x=3))\n",
+     "tests": [
+      {
+       "expected": "11 3 8\n"
+      }
+     ],
+     "hints": [
+      "Kalau y tidak diisi, nilainya 10.",
+      "f(1, 2) mengisi y dengan 2.",
+      "Argumen bernama boleh ditulis dalam urutan apa pun."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f7"
+    },
+    {
+     "id": "py-f7-bug-return",
+     "type": "bughunt",
+     "title": "Kembali Terlalu Cepat",
+     "difficulty": 2,
+     "prompt": "Fungsi jumlah() seharusnya menjumlahkan semua angka, tapi hasilnya hanya angka pertama. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "def jumlah(daftar):\n    total = 0\n    for x in daftar:\n        total += x\n        return total\nangka = list(map(int, input().split()))\nprint(jumlah(angka))\n",
+     "bug_line": 5,
+     "tests": [
+      {
+       "input": "1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "5",
+       "expected": "5\n"
+      },
+      {
+       "input": "10 20",
+       "expected": "30\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Kapan return dijalankan?",
+      "return di dalam loop langsung menghentikan fungsi.",
+      "Geser return supaya sejajar dengan for."
+     ],
+     "solutions": [
+      "def jumlah(daftar):\n    total = 0\n    for x in daftar:\n        total += x\n    return total\nangka = list(map(int, input().split()))\nprint(jumlah(angka))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f7"
+    },
+    {
+     "id": "py-f7-palindrom",
+     "type": "write",
+     "title": "Kata Cermin",
+     "difficulty": 1,
+     "prompt": "Tulis fungsi palindrom(s) yang mengembalikan True jika s sama dibaca dari depan dan belakang. Baca satu kata (huruf kecil), cetak \"ya\" atau \"tidak\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "katak",
+       "expected": "ya\n"
+      },
+      {
+       "input": "slayer",
+       "expected": "tidak\n"
+      },
+      {
+       "input": "a",
+       "expected": "ya\n",
+       "hidden": true
+      },
+      {
+       "input": "kodok",
+       "expected": "ya\n",
+       "hidden": true
+      },
+      {
+       "input": "ab",
+       "expected": "tidak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "s[::-1] membalik string.",
+      "Bandingkan s dengan kebalikannya.",
+      "return s == s[::-1]"
+     ],
+     "solutions": [
+      "def palindrom(s):\n    return s == s[::-1]\nprint(\"ya\" if palindrom(input()) else \"tidak\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "f7",
+     "gallery": [
+      {
+       "style": "fastest",
+       "note": "Dua penunjuk dari ujung ke tengah. Tidak membuat salinan string dan berhenti di perbedaan pertama. Untuk kata pendek, s[::-1] tetap lebih cepat karena berjalan di C.",
+       "code": "def palindrom(s):\n    i, j = 0, len(s) - 1\n    while i < j:\n        if s[i] != s[j]:\n            return False\n        i += 1\n        j -= 1\n    return True\nprint(\"ya\" if palindrom(input()) else \"tidak\")\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f7-fibonacci",
+     "type": "write",
+     "title": "Spiral Fibonacci",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fib(n) dengan fib(0) = 0, fib(1) = 1, fib(n) = fib(n-1) + fib(n-2). Baca n (0 ≤ n ≤ 30), cetak fib(n).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "0",
+       "expected": "0\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n"
+      },
+      {
+       "input": "10",
+       "expected": "55\n",
+       "hidden": true
+      },
+      {
+       "input": "20",
+       "expected": "6765\n",
+       "hidden": true
+      },
+      {
+       "input": "30",
+       "expected": "832040\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Base case: n = 0 dan n = 1.",
+      "Rekursi untuk n = 30 lambat; coba pakai loop.",
+      "a, b = 0, 1 lalu ulangi n kali: a, b = b, a + b"
+     ],
+     "solutions": [
+      "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\nprint(fib(int(input())))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "f7",
+     "gallery": [
+      {
+       "style": "readable",
+       "note": "Rekursi persis seperti definisinya. Tanpa @cache kompleksitasnya O(2^n); dengan @cache setiap fib(k) dihitung sekali sehingga menjadi O(n).",
+       "code": "from functools import cache\n\n@cache\ndef fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nprint(fib(int(input())))\n"
+      }
+     ]
+    },
+    {
+     "id": "py-f7-translate",
+     "type": "translate",
+     "title": "Terjemahkan Fibonacci",
+     "difficulty": 2,
+     "prompt": "Tulis ulang fungsi JavaScript ini dalam Python.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "0",
+       "expected": "0\n"
+      },
+      {
+       "input": "30",
+       "expected": "832040\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "function menjadi def.",
+      "Destructuring [a, b] = [b, a + b] menjadi a, b = b, a + b.",
+      "Kurung kurawal diganti indentasi."
+     ],
+     "solutions": [
+      "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\nprint(fib(int(input())))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "from_lang": "javascript",
+     "from_code": "function fib(n) {\n  let [a, b] = [0, 1]\n  for (let i = 0; i < n; i++) [a, b] = [b, a + b]\n  return a\n}\nconsole.log(fib(Number(readline())))\n",
+     "track": "python",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "l1": {
+   "lesson": [
+    {
+     "text": "Comprehension adalah cara ringkas membuat list, dict, atau set dari urutan lain, misalnya [ekspresi for x in data if syarat]. Hasilnya sama dengan loop + append, tapi lebih pendek dan lebih cepat.",
+     "code": "angka = range(1, 11)\nprint([x * x for x in angka if x % 2 == 0])\nprint({x: x * x for x in range(4)})\n"
+    },
+    {
+     "text": "Generator menghasilkan nilai satu per satu saat dibutuhkan, jadi hemat memori. Fungsi dengan yield otomatis menjadi generator. Generator expression ditulis seperti comprehension, tapi memakai kurung biasa.",
+     "code": "def hitung_mundur(n):\n    while n > 0:\n        yield n\n        n -= 1\nprint(list(hitung_mundur(3)))\nprint(sum(x * x for x in range(1_000_000)))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-l1-kuadrat",
+     "type": "write",
+     "title": "Kuadrat Genap",
+     "difficulty": 1,
+     "prompt": "Baca n. Cetak list kuadrat bilangan genap dari 1 sampai n (format list Python), memakai list comprehension.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "6",
+       "expected": "[4, 16, 36]\n"
+      },
+      {
+       "input": "1",
+       "expected": "[]\n"
+      },
+      {
+       "input": "10",
+       "expected": "[4, 16, 36, 64, 100]\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Bentuknya [x * x for x in ... if ...].",
+      "range(1, n + 1) memberi 1 sampai n.",
+      "print([x * x for x in range(1, n + 1) if x % 2 == 0])"
+     ],
+     "solutions": [
+      "n = int(input())\nprint([x * x for x in range(1, n + 1) if x % 2 == 0])\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "l1"
+    },
+    {
+     "id": "py-l1-dict",
+     "type": "write",
+     "title": "Kamus Panjang Kata",
+     "difficulty": 2,
+     "prompt": "Baca satu baris kata. Buat dict kata ke panjangnya dengan dict comprehension, lalu cetak \"<kata>:<panjang>\" urut menurut abjad.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "air:3\napi:3\npetir:5\n"
+      },
+      {
+       "input": "nezuko",
+       "expected": "nezuko:6\n"
+      },
+      {
+       "input": "b a b",
+       "expected": "a:1\nb:1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "{k: len(k) for k in kata}",
+      "sorted(d.items()) mengurutkan menurut kunci.",
+      "print(f\"{k}:{v}\")"
+     ],
+     "solutions": [
+      "d = {k: len(k) for k in input().split()}\nfor k, v in sorted(d.items()):\n    print(f\"{k}:{v}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l1"
+    },
+    {
+     "id": "py-l1-predict",
+     "type": "predict",
+     "title": "Tiga Bentuk Ringkas",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "print([x * 2 for x in range(4)], sum(x for x in range(5)), {k: k * k for k in range(3)})\n",
+     "tests": [
+      {
+       "expected": "[0, 2, 4, 6] 10 {0: 0, 1: 1, 2: 4}\n"
+      }
+     ],
+     "hints": [
+      "range(4) adalah 0, 1, 2, 3.",
+      "sum dari 0 sampai 4.",
+      "dict comprehension mencetak {kunci: nilai, ...}."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l1"
+    },
+    {
+     "id": "py-l1-generator",
+     "type": "write",
+     "title": "Generator Fibonacci",
+     "difficulty": 2,
+     "prompt": "Tulis generator fib(n) yang menghasilkan n bilangan Fibonacci pertama (0, 1, 1, 2, ...). Baca n, cetak hasilnya dipisah spasi.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "0 1 1 2 3 5 8\n"
+      },
+      {
+       "input": "1",
+       "expected": "0\n"
+      },
+      {
+       "input": "2",
+       "expected": "0 1\n",
+       "hidden": true
+      },
+      {
+       "input": "12",
+       "expected": "0 1 1 2 3 5 8 13 21 34 55 89\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai yield di dalam loop.",
+      "a, b = 0, 1 lalu yield a, kemudian a, b = b, a + b.",
+      "print(*fib(n))"
+     ],
+     "solutions": [
+      "def fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        yield a\n        a, b = b, a + b\nprint(*fib(int(input())))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l1"
+    },
+    {
+     "id": "py-l1-bug-yield",
+     "type": "bughunt",
+     "title": "Generator yang Pulang Duluan",
+     "difficulty": 2,
+     "prompt": "genap(n) seharusnya menghasilkan semua bilangan genap di bawah n, tapi programnya error. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "def genap(n):\n    for i in range(n):\n        if i % 2 == 0:\n            return i\nprint(list(genap(int(input()))))\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "[0, 2, 4]\n"
+      },
+      {
+       "input": "1",
+       "expected": "[0]\n"
+      },
+      {
+       "input": "10",
+       "expected": "[0, 2, 4, 6, 8]\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "return menghentikan fungsi dan hanya mengembalikan satu nilai.",
+      "Generator memakai kata kunci lain.",
+      "yield i"
+     ],
+     "solutions": [
+      "def genap(n):\n    for i in range(n):\n        if i % 2 == 0:\n            yield i\nprint(list(genap(int(input()))))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l1"
+    }
+   ]
+  },
+  "l2": {
+   "lesson": [
+    {
+     "text": "Di Python, fungsi adalah nilai biasa. Fungsi bisa disimpan di variabel, dikirim sebagai argumen, dan dikembalikan oleh fungsi lain. Decorator adalah fungsi yang menerima fungsi lalu mengembalikan versi yang \"dibungkus\". Sintaks @nama di atas def adalah singkatan dari f = nama(f).",
+     "code": "def teriak(f):\n    def pembungkus(*args):\n        return f(*args).upper() + \"!\"\n    return pembungkus\n@teriak\ndef sapa(nama):\n    return f\"halo {nama}\"\nprint(sapa(\"zenitsu\"))\n"
+    },
+    {
+     "text": "Context manager mengatur persiapan dan pembersihan otomatis lewat with, seperti file yang otomatis ditutup. Dengan @contextmanager, kode sebelum yield adalah persiapan, dan kode sesudahnya adalah pembersihan.",
+     "code": "from contextlib import contextmanager\n@contextmanager\ndef misi(nama):\n    print(\"berangkat:\", nama)\n    yield\n    print(\"pulang:\", nama)\nwith misi(\"Natagumo\"):\n    print(\"bertarung...\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-l2-teriak",
+     "type": "write",
+     "title": "Decorator Teriak",
+     "difficulty": 2,
+     "prompt": "Lengkapi decorator teriak supaya hasil fungsi berubah menjadi huruf besar. Baca nama, lalu cetak sapa(nama). Contoh: \"HALO, TANJIRO\".",
+     "lang": "python",
+     "starter": "def teriak(f):\n    pass  # lengkapi\n@teriak\ndef sapa(nama):\n    return f\"halo, {nama}\"\nprint(sapa(input()))\n",
+     "tests": [
+      {
+       "input": "tanjiro",
+       "expected": "HALO, TANJIRO\n"
+      },
+      {
+       "input": "Nezuko",
+       "expected": "HALO, NEZUKO\n"
+      },
+      {
+       "input": "kaa",
+       "expected": "HALO, KAA\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Decorator harus mengembalikan fungsi baru.",
+      "Fungsi baru memanggil f lalu mengubah hasilnya.",
+      "def w(*a): return f(*a).upper(), lalu return w"
+     ],
+     "solutions": [
+      "def teriak(f):\n    def w(*a):\n        return f(*a).upper()\n    return w\n@teriak\ndef sapa(nama):\n    return f\"halo, {nama}\"\nprint(sapa(input()))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l2"
+    },
+    {
+     "id": "py-l2-predict",
+     "type": "predict",
+     "title": "Jejak Decorator",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "def log(f):\n    def w(*a):\n        print(\"mulai\", f.__name__)\n        r = f(*a)\n        print(\"selesai\")\n        return r\n    return w\n@log\ndef tambah(a, b):\n    return a + b\nprint(tambah(2, 3))\n",
+     "tests": [
+      {
+       "expected": "mulai tambah\nselesai\n5\n"
+      }
+     ],
+     "hints": [
+      "Memanggil tambah sebenarnya memanggil w.",
+      "w mencetak sebelum dan sesudah memanggil f.",
+      "Hasil 5 baru dicetak setelah w selesai."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l2"
+    },
+    {
+     "id": "py-l2-bingkai",
+     "type": "write",
+     "title": "Bingkai Gulungan",
+     "difficulty": 2,
+     "prompt": "Buat context manager bingkai(judul) dengan @contextmanager yang mencetak \"== <judul> ==\" sebelum blok dan \"== akhir ==\" sesudahnya. Baca judul, lalu di dalam with cetak \"isi\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Misi",
+       "expected": "== Misi ==\nisi\n== akhir ==\n"
+      },
+      {
+       "input": "Laporan Gagak",
+       "expected": "== Laporan Gagak ==\nisi\n== akhir ==\n"
+      }
+     ],
+     "hints": [
+      "from contextlib import contextmanager",
+      "Cetak judul sebelum yield, dan \"== akhir ==\" sesudahnya.",
+      "with bingkai(input()): print(\"isi\")"
+     ],
+     "solutions": [
+      "from contextlib import contextmanager\n@contextmanager\ndef bingkai(judul):\n    print(f\"== {judul} ==\")\n    yield\n    print(\"== akhir ==\")\nwith bingkai(input()):\n    print(\"isi\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l2"
+    },
+    {
+     "id": "py-l2-bug-ulang",
+     "type": "bughunt",
+     "title": "Decorator Berparameter",
+     "difficulty": 3,
+     "prompt": "@ulang(3) seharusnya membuat kaa() dijalankan 3 kali, tapi program error. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "def ulang(n):\n    def dekor(f):\n        def w(*a):\n            for _ in range(n):\n                f(*a)\n        return w\n    return f\n@ulang(3)\ndef kaa():\n    print(\"Kaa!\")\nkaa()\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "expected": "Kaa!\nKaa!\nKaa!\n"
+      }
+     ],
+     "hints": [
+      "Ada tiga lapis fungsi, dan setiap lapis mengembalikan lapis di dalamnya.",
+      "ulang(n) harus mengembalikan decorator-nya.",
+      "return dekor"
+     ],
+     "solutions": [
+      "def ulang(n):\n    def dekor(f):\n        def w(*a):\n            for _ in range(n):\n                f(*a)\n        return w\n    return dekor\n@ulang(3)\ndef kaa():\n    print(\"Kaa!\")\nkaa()\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "l2"
+    },
+    {
+     "id": "py-l2-parsons",
+     "type": "parsons",
+     "title": "Lipat Dua",
+     "difficulty": 2,
+     "prompt": "Susun program dengan decorator kali_dua yang menggandakan hasil fungsi tambah_satu.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "8\n"
+      },
+      {
+       "input": "0",
+       "expected": "2\n"
+      },
+      {
+       "input": "-5",
+       "expected": "-8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Decorator didefinisikan sebelum dipakai.",
+      "@kali_dua tepat di atas def tambah_satu.",
+      "print paling akhir."
+     ],
+     "solutions": [
+      "def kali_dua(f):\n    def w(x):\n        return f(x) * 2\n    return w\n@kali_dua\ndef tambah_satu(x):\n    return x + 1\nprint(tambah_satu(int(input())))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l2"
+    }
+   ]
+  },
+  "l3": {
+   "lesson": [
+    {
+     "text": "Tes otomatis memeriksa apakah kode berperilaku sesuai harapan. Bentuk paling sederhana adalah assert kondisi, yang diam kalau benar dan melempar AssertionError kalau salah. Tes yang baik mencakup kasus biasa DAN kasus tepi seperti list kosong, angka 0, atau angka negatif.",
+     "code": "def maks(daftar):\n    return max(daftar) if daftar else None\nassert maks([3, 9, 2]) == 9\nassert maks([-5]) == -5\nassert maks([]) is None\nprint(\"semua tes lolos\")\n"
+    },
+    {
+     "text": "Di proyek nyata, tes dikumpulkan dengan unittest atau pytest dan dijalankan otomatis setiap kode berubah. Prinsipnya tetap sama, yaitu panggil fungsi dengan input tertentu lalu bandingkan hasilnya dengan harapan.",
+     "code": "import unittest\nclass TesTambah(unittest.TestCase):\n    def test_dasar(self):\n        self.assertEqual(1 + 1, 2)\nhasil = unittest.main(argv=[\"x\"], exit=False, verbosity=0).result\nprint(\"gagal:\", len(hasil.failures))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-l3-prima",
+     "type": "write",
+     "title": "Lolos Uji Prima",
+     "difficulty": 2,
+     "prompt": "Lengkapi fungsi adalah_prima(n) sampai semua assert lolos. Program akan mencetak OK.",
+     "lang": "python",
+     "starter": "def adalah_prima(n):\n    pass  # lengkapi\nassert adalah_prima(2)\nassert adalah_prima(97)\nassert not adalah_prima(1)\nassert not adalah_prima(0)\nassert not adalah_prima(91)\nassert not adalah_prima(-7)\nprint(\"OK\")\n",
+     "tests": [
+      {
+       "expected": "OK\n"
+      }
+     ],
+     "hints": [
+      "Bilangan ≤ 1 bukan prima.",
+      "Cukup periksa pembagi sampai akar n.",
+      "return n > 1 and all(n % d for d in range(2, int(n ** 0.5) + 1))"
+     ],
+     "solutions": [
+      "def adalah_prima(n):\n    return n > 1 and all(n % d for d in range(2, int(n ** 0.5) + 1))\nassert adalah_prima(2)\nassert adalah_prima(97)\nassert not adalah_prima(1)\nassert not adalah_prima(0)\nassert not adalah_prima(91)\nassert not adalah_prima(-7)\nprint(\"OK\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l3",
+     "gallery": [
+      {
+       "style": "readable",
+       "note": "Loop eksplisit dengan return lebih awal. Lebih panjang daripada all(...), tapi setiap kasus tepi (n ≤ 1) terlihat jelas.",
+       "code": "def adalah_prima(n):\n    if n < 2:\n        return False\n    d = 2\n    while d * d <= n:\n        if n % d == 0:\n            return False\n        d += 1\n    return True\nassert adalah_prima(2)\nassert adalah_prima(97)\nassert not adalah_prima(1)\nassert not adalah_prima(0)\nassert not adalah_prima(91)\nassert not adalah_prima(-7)\nprint(\"OK\")\n"
+      }
+     ]
+    },
+    {
+     "id": "py-l3-rata",
+     "type": "write",
+     "title": "Kasus Tepi Rata-rata",
+     "difficulty": 1,
+     "prompt": "Lengkapi rata2(daftar) sampai semua assert lolos, termasuk kasus list kosong.",
+     "lang": "python",
+     "starter": "def rata2(daftar):\n    return sum(daftar) / len(daftar)\nassert rata2([2, 4]) == 3\nassert rata2([5]) == 5\nassert rata2([]) == 0\nprint(\"OK\")\n",
+     "tests": [
+      {
+       "expected": "OK\n"
+      }
+     ],
+     "hints": [
+      "Apa yang terjadi kalau len(daftar) == 0?",
+      "Tangani list kosong secara khusus.",
+      "if not daftar: return 0"
+     ],
+     "solutions": [
+      "def rata2(daftar):\n    if not daftar:\n        return 0\n    return sum(daftar) / len(daftar)\nassert rata2([2, 4]) == 3\nassert rata2([5]) == 5\nassert rata2([]) == 0\nprint(\"OK\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "l3"
+    },
+    {
+     "id": "py-l3-predict",
+     "type": "predict",
+     "title": "Laporan Penguji",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "def tes(nama, hasil, harapan):\n    print(nama, \"LOLOS\" if hasil == harapan else \"GAGAL\")\ntes(\"tambah\", 2 + 2, 4)\ntes(\"bagi\", 7 // 2, 3.5)\ntes(\"upper\", \"a\".upper(), \"A\")\n",
+     "tests": [
+      {
+       "expected": "tambah LOLOS\nbagi GAGAL\nupper LOLOS\n"
+      }
+     ],
+     "hints": [
+      "Bandingkan hasil dan harapan untuk tiap tes.",
+      "7 // 2 adalah 3, bukan 3.5.",
+      "Hanya satu tes yang gagal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l3"
+    },
+    {
+     "id": "py-l3-bug-range",
+     "type": "bughunt",
+     "title": "Tes Menangkap Iblis",
+     "difficulty": 1,
+     "prompt": "Tes membuktikan jumlah_sampai(n) salah, karena seharusnya menjumlah 1 sampai n. Temukan bug-nya sampai OK tercetak.",
+     "lang": "python",
+     "starter": "def jumlah_sampai(n):\n    return sum(range(n))\nassert jumlah_sampai(1) == 1\nassert jumlah_sampai(4) == 10\nprint(\"OK\")\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "expected": "OK\n"
+      }
+     ],
+     "hints": [
+      "range(n) berhenti sebelum n.",
+      "n sendiri tidak ikut dijumlah.",
+      "sum(range(1, n + 1))"
+     ],
+     "solutions": [
+      "def jumlah_sampai(n):\n    return sum(range(1, n + 1))\nassert jumlah_sampai(1) == 1\nassert jumlah_sampai(4) == 10\nprint(\"OK\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "l3"
+    },
+    {
+     "id": "py-l3-hitung-kata",
+     "type": "write",
+     "title": "Penghitung Kata Teruji",
+     "difficulty": 2,
+     "prompt": "Lengkapi hitung_kata(s) yang mengembalikan dict kata ke jumlahnya (tidak membedakan huruf besar/kecil, abaikan spasi berlebih) sampai semua assert lolos.",
+     "lang": "python",
+     "starter": "def hitung_kata(s):\n    pass  # lengkapi\nassert hitung_kata(\"\") == {}\nassert hitung_kata(\"Kaa kaa\") == {\"kaa\": 2}\nassert hitung_kata(\"  air   api air \") == {\"air\": 2, \"api\": 1}\nprint(\"OK\")\n",
+     "tests": [
+      {
+       "expected": "OK\n"
+      }
+     ],
+     "hints": [
+      "split() tanpa argumen sudah mengabaikan spasi berlebih.",
+      "lower() setiap kata.",
+      "d[k] = d.get(k, 0) + 1"
+     ],
+     "solutions": [
+      "def hitung_kata(s):\n    d = {}\n    for k in s.lower().split():\n        d[k] = d.get(k, 0) + 1\n    return d\nassert hitung_kata(\"\") == {}\nassert hitung_kata(\"Kaa kaa\") == {\"kaa\": 2}\nassert hitung_kata(\"  air   api air \") == {\"air\": 2, \"api\": 1}\nprint(\"OK\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l3"
+    }
+   ]
+  },
+  "l4": {
+   "lesson": [
+    {
+     "text": "Membaca traceback dimulai dari BAWAH. Baris terakhir menyebut jenis error dan pesannya, dan baris di atasnya menunjukkan letaknya di kodemu. Cocokkan nomor baris, lalu periksa nilai variabel di titik itu.",
+     "code": "def bagi(a, b):\n    return a / b\ntry:\n    bagi(1, 0)\nexcept ZeroDivisionError as e:\n    print(type(e).__name__, \"-\", e)\n"
+    },
+    {
+     "text": "Teknik debugging paling sederhana adalah print nilai variabel di titik-titik penting, atau menelusuri kode baris per baris di kepala (trace table). Bug klasik antara lain off-by-one pada range, pembagian bulat yang tidak disengaja, default argumen mutable, dan mengubah list saat sedang diiterasi.",
+     "code": "total = 0\nfor i in range(1, 4):\n    total += i\n    print(f\"i={i} total={total}\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-l4-bug-mutable",
+     "type": "bughunt",
+     "title": "Kantong Bersama",
+     "difficulty": 3,
+     "prompt": "Setiap pemanggilan tambah(k) seharusnya mengembalikan list baru berisi satu item, tapi list-nya terus bertambah. Temukan baris penyebabnya.",
+     "lang": "python",
+     "starter": "def tambah(x, daftar=[]):\n    daftar = daftar\n    daftar.append(x)\n    return daftar\nfor k in input().split():\n    print(tambah(k))\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "a b c",
+       "expected": "['a']\n['b']\n['c']\n"
+      },
+      {
+       "input": "x",
+       "expected": "['x']\n"
+      }
+     ],
+     "hints": [
+      "Default argumen [] dibuat SEKALI saja, lalu dipakai bersama oleh semua pemanggilan.",
+      "daftar = daftar tidak membuat salinan.",
+      "daftar = list(daftar) membuat salinan baru setiap kali."
+     ],
+     "solutions": [
+      "def tambah(x, daftar=[]):\n    daftar = list(daftar)\n    daftar.append(x)\n    return daftar\nfor k in input().split():\n    print(tambah(k))\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-bug-offbyone",
+     "type": "bughunt",
+     "title": "Satu Langkah Kurang",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak setiap kata dengan nomor urut mulai 1, tapi kata pertama hilang. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "kata = input().split()\nfor i in range(1, len(kata)):\n    print(i + 1, kata[i])\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "1 air\n2 api\n3 petir\n"
+      },
+      {
+       "input": "satu",
+       "expected": "1 satu\n"
+      }
+     ],
+     "hints": [
+      "Indeks list dimulai dari 0.",
+      "range(1, ...) melewatkan indeks 0.",
+      "for i in range(len(kata)):"
+     ],
+     "solutions": [
+      "kata = input().split()\nfor i in range(len(kata)):\n    print(i + 1, kata[i])\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-bug-bagi",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 1,
+     "prompt": "Rata-rata seharusnya punya 2 desimal yang benar, tapi selalu berakhir .00. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "n = int(input())\nnilai = list(map(int, input().split()))\nrata = sum(nilai) // n\nprint(f\"{rata:.2f}\")\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "3\n1 2 4",
+       "expected": "2.33\n"
+      },
+      {
+       "input": "2\n5 6",
+       "expected": "5.50\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apa beda / dan //?",
+      "// membuang bagian desimal.",
+      "rata = sum(nilai) / n"
+     ],
+     "solutions": [
+      "n = int(input())\nnilai = list(map(int, input().split()))\nrata = sum(nilai) / n\nprint(f\"{rata:.2f}\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-predict",
+     "type": "predict",
+     "title": "List yang Menyusut",
+     "difficulty": 3,
+     "prompt": "Bug klasik, yaitu menghapus item saat sedang mengulang list yang sama. Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "x = [1, 2, 3]\nfor i in x:\n    x.remove(i)\nprint(x)\n",
+     "tests": [
+      {
+       "expected": "[2]\n"
+      }
+     ],
+     "hints": [
+      "Loop memakai posisi indeks yang terus bertambah.",
+      "Setelah 1 dihapus, 2 bergeser ke indeks 0.",
+      "Putaran kedua mengambil indeks 1, yaitu angka 3."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-dua-bug",
+     "type": "write",
+     "title": "Dua Iblis Sekaligus",
+     "difficulty": 2,
+     "prompt": "Fungsi rata_rata di bawah punya DUA bug. Perbaiki sampai rata-rata yang dibulatkan 2 desimal tercetak benar.",
+     "lang": "python",
+     "starter": "def rata_rata(nilai):\n    total = 0\n    for i in range(1, len(nilai)):\n        total += i\n    return total / len(nilai)\nnilai = list(map(int, input().split()))\nprint(round(rata_rata(nilai), 2))\n",
+     "tests": [
+      {
+       "input": "2 4 6",
+       "expected": "4.0\n"
+      },
+      {
+       "input": "5",
+       "expected": "5.0\n"
+      },
+      {
+       "input": "1 2",
+       "expected": "1.5\n",
+       "hidden": true
+      },
+      {
+       "input": "10 20 30 40",
+       "expected": "25.0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Elemen mana saja yang dijumlah? Apakah indeks 0 ikut?",
+      "Yang dijumlah indeks i, bukan nilai[i].",
+      "for x in nilai: total += x"
+     ],
+     "solutions": [
+      "def rata_rata(nilai):\n    total = 0\n    for x in nilai:\n        total += x\n    return total / len(nilai)\nnilai = list(map(int, input().split()))\nprint(round(rata_rata(nilai), 2))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-review-cari",
+     "type": "review",
+     "title": "Review Fungsi Pencari",
+     "difficulty": 2,
+     "prompt": "Fungsi ini seharusnya mengembalikan indeks x atau -1. Tandai baris yang bermasalah.",
+     "lang": "python",
+     "code": "def cari_index(daftar, x):\n    for i in range(len(daftar)):\n        if daftar[i] == x:\n            return i\n        else:\n            return -1\n",
+     "tests": [],
+     "hints": [
+      "Kapan fungsi ini berhenti?",
+      "Telusuri dengan x berada di indeks 2.",
+      "Ada dua baris yang terkait."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "issues": [
+      {
+       "line": 5,
+       "text": "else di dalam loop tidak diperlukan."
+      },
+      {
+       "line": 6,
+       "text": "return -1 di dalam loop membuat pencarian berhenti setelah elemen pertama. Pindahkan ke luar loop."
+      }
+     ],
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-review-typo",
+     "type": "review",
+     "title": "Review Kode Tugas",
+     "difficulty": 3,
+     "prompt": "Tandai semua baris yang mengandung bug.",
+     "lang": "python",
+     "code": "def tambah_tugas(tugas, daftar=[]):\n    daftar.append(tugas)\n    return daftar\ntotal = 0\nfor x in range(10):\n    total =+ x\nprint(total)\n",
+     "tests": [],
+     "hints": [
+      "Ada bug klasik di parameter default.",
+      "Perhatikan urutan simbol = dan +.",
+      "Ada dua baris bermasalah."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "issues": [
+      {
+       "line": 1,
+       "text": "Default argumen mutable [] dipakai bersama semua pemanggilan. Pakai daftar=None."
+      },
+      {
+       "line": 6,
+       "text": "=+ adalah assignment nilai +x, bukan penambahan. Seharusnya +=."
+      }
+     ],
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-readerror-str",
+     "type": "readerror",
+     "title": "Teks Bertemu Angka",
+     "difficulty": 1,
+     "prompt": "Program ini crash dengan input 15. Baca pesan error-nya.",
+     "lang": "python",
+     "code": "umur = input()\nprint(\"Tahun depan: \" + umur + 1)\n",
+     "tests": [
+      {
+       "input": "15",
+       "expected": ""
+      }
+     ],
+     "hints": [
+      "Baca jenis error di baris terakhir.",
+      "Apa tipe hasil input()?",
+      "str + int tidak diizinkan."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "error": "Traceback (most recent call last):\n  File \"<kode>\", line 2, in <module>\n    print(\"Tahun depan: \" + umur + 1)\n          ~~~~~~~~~~~~~~~~~~~~~~~^~~\nTypeError: can only concatenate str (not \"int\") to str",
+     "options": [
+      "umur bertipe str. Ubah dengan int(umur), lalu cetak dengan f-string atau str().",
+      "print tidak bisa mencetak angka.",
+      "Tanda + tidak boleh dipakai lebih dari sekali dalam satu baris.",
+      "input() harus diberi teks pertanyaan."
+     ],
+     "explain": "TypeError karena menggabung str dengan int. input() selalu menghasilkan str.",
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-readerror-index",
+     "type": "readerror",
+     "title": "Satu Langkah Terlalu Jauh",
+     "difficulty": 1,
+     "prompt": "Baca pesan error-nya lalu tentukan perbaikannya.",
+     "lang": "python",
+     "code": "skor = [90, 75, 80]\nfor i in range(len(skor) + 1):\n    print(skor[i])\n",
+     "tests": [],
+     "hints": [
+      "Berapa indeks terakhir yang valid?",
+      "len(skor) = 3, jadi indeks maksimal 2.",
+      "Periksa batas range."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "error": "Traceback (most recent call last):\n  File \"<kode>\", line 3, in <module>\n    print(skor[i])\n          ~~~~^^^\nIndexError: list index out of range",
+     "options": [
+      "range(len(skor) + 1) menghasilkan indeks 3 yang tidak ada. Pakai range(len(skor)) atau for s in skor.",
+      "List tidak boleh berisi angka lebih dari 50.",
+      "print harus dipanggil di luar loop.",
+      "skor harus diubah menjadi tuple."
+     ],
+     "explain": "IndexError. Indeks valid 0 sampai len - 1.",
+     "track": "python",
+     "chapter": "l4"
+    },
+    {
+     "id": "py-l4-readerror-attr",
+     "type": "readerror",
+     "title": "Method yang Tidak Ada",
+     "difficulty": 1,
+     "prompt": "Baca pesan error-nya lalu tentukan perbaikannya.",
+     "lang": "python",
+     "code": "pasukan = \"Tanjiro\"\npasukan.append(\"Zenitsu\")\nprint(pasukan)\n",
+     "tests": [],
+     "hints": [
+      "Apa tipe pasukan?",
+      "Method append milik list.",
+      "Pesan menyebut 'str' object."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "error": "Traceback (most recent call last):\n  File \"<kode>\", line 2, in <module>\n    pasukan.append(\"Zenitsu\")\n    ^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'append'",
+     "options": [
+      "pasukan adalah str, bukan list. Buat list dengan pasukan = [\"Tanjiro\"] lalu append.",
+      "append harus ditulis Append.",
+      "Nama di dalam kutip tidak boleh lebih dari 5 huruf.",
+      "print tidak bisa mencetak list."
+     ],
+     "explain": "AttributeError, karena str tidak punya method append. Hanya list yang punya.",
+     "track": "python",
+     "chapter": "l4"
+    }
+   ]
+  },
+  "l5": {
+   "lesson": [
+    {
+     "text": "Kecepatan program ditentukan oleh algoritmanya. Mengulang n kali adalah O(n), sedangkan loop bersarang adalah O(n²). Untuk n = 1.000.000, selisihnya sejuta kali lipat. Rumus matematika bahkan bisa O(1).",
+     "code": "n = 10 ** 12\nprint(n * (n + 1) // 2)\n"
+    },
+    {
+     "text": "Pilih struktur data yang tepat. Memeriksa x in list itu O(n), sedangkan x in set atau dict rata-rata O(1). Fungsi bawaan seperti sum, sorted, dan max ditulis dalam C sehingga jauh lebih cepat daripada loop manual.",
+     "code": "import time\ndata = list(range(100_000))\ns = set(data)\nt = time.time(); [x in s for x in range(0, 100_000, 7)]; print(\"set :\", round(time.time() - t, 4), \"dtk\")\nt = time.time(); [x in data for x in range(0, 100_000, 700)]; print(\"list:\", round(time.time() - t, 4), \"dtk (100x lebih sedikit cek)\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-l5-deret",
+     "type": "write",
+     "title": "Sejuta Juta Tebasan",
+     "difficulty": 2,
+     "prompt": "Baca n (1 ≤ n ≤ 10^12). Cetak 1 + 2 + ... + n. Loop pasti kehabisan waktu, jadi cari rumusnya.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n"
+      },
+      {
+       "input": "1000000000000",
+       "expected": "500000000000500000000000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Gauss, 1 + ... + n = n(n+1)/2.",
+      "Pakai // supaya hasilnya int.",
+      "print(n * (n + 1) // 2)"
+     ],
+     "solutions": [
+      "n = int(input())\nprint(n * (n + 1) // 2)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l5"
+    },
+    {
+     "id": "py-l5-saringan",
+     "type": "write",
+     "title": "Saringan Eratosthenes",
+     "difficulty": 3,
+     "prompt": "Baca n (n ≤ 3.000.000). Cetak banyaknya bilangan prima ≤ n. Cek satu per satu terlalu lambat, jadi gunakan saringan (sieve).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "10",
+       "expected": "4\n"
+      },
+      {
+       "input": "100",
+       "expected": "25\n"
+      },
+      {
+       "input": "1",
+       "expected": "0\n",
+       "hidden": true
+      },
+      {
+       "input": "3000000",
+       "expected": "216816\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Buat penanda prima untuk 0 sampai n, awalnya semua True.",
+      "Untuk setiap prima p, coret p*p, p*p+p, ... sebagai bukan prima.",
+      "bytearray dan slicing s[p*p::p] = bytes(...) sangat cepat."
+     ],
+     "solutions": [
+      "n = int(input())\nif n < 2:\n    print(0)\nelse:\n    s = bytearray([1]) * (n + 1)\n    s[0] = s[1] = 0\n    for p in range(2, int(n ** 0.5) + 1):\n        if s[p]:\n            s[p * p::p] = bytes(len(range(p * p, n + 1, p)))\n    print(sum(s))\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "l5"
+    },
+    {
+     "id": "py-l5-fib-mod",
+     "type": "write",
+     "title": "Fibonacci Raksasa",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≤ 1.000.000). Cetak Fibonacci ke-n modulo 1.000.000.007 (fib(0) = 0, fib(1) = 1).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "0",
+       "expected": "0\n"
+      },
+      {
+       "input": "1000000",
+       "expected": "918091266\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Rekursi biasa mustahil untuk n sebesar ini.",
+      "Iterasi dengan dua variabel, O(n).",
+      "Ambil modulo di setiap langkah supaya angkanya tetap kecil."
+     ],
+     "solutions": [
+      "n = int(input())\na, b = 0, 1\nM = 1_000_000_007\nfor _ in range(n):\n    a, b = b, (a + b) % M\nprint(a)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l5"
+    },
+    {
+     "id": "py-l5-predict",
+     "type": "predict",
+     "title": "Langkah Pembagian Dua",
+     "difficulty": 1,
+     "prompt": "Berapa langkah yang dibutuhkan? (Inilah intuisi O(log n).) Tulis output persis.",
+     "lang": "python",
+     "code": "langkah = 0\nn = 1024\nwhile n > 1:\n    n //= 2\n    langkah += 1\nprint(langkah)\n",
+     "tests": [
+      {
+       "expected": "10\n"
+      }
+     ],
+     "hints": [
+      "Setiap langkah membagi n dengan 2.",
+      "1024 = 2 pangkat berapa?",
+      "Jumlah langkahnya sama dengan pangkat itu."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "l5"
+    },
+    {
+     "id": "py-l5-bug-memo",
+     "type": "bughunt",
+     "title": "Ingatan yang Dimatikan",
+     "difficulty": 2,
+     "prompt": "Fungsi jalan(n) menghitung banyak cara naik tangga n anak tangga (1 atau 2 langkah), tapi untuk n besar tidak pernah selesai. Temukan baris yang membuatnya lambat.",
+     "lang": "python",
+     "starter": "from functools import lru_cache\n# @lru_cache(None)\ndef jalan(n):\n    if n <= 1:\n        return 1\n    return jalan(n - 1) + jalan(n - 2)\nprint(jalan(int(input())))\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "8\n"
+      },
+      {
+       "input": "10",
+       "expected": "89\n"
+      },
+      {
+       "input": "90",
+       "expected": "4660046610375530309\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Fungsi ini menghitung ulang nilai yang sama berkali-kali.",
+      "lru_cache menyimpan hasil yang sudah dihitung.",
+      "Aktifkan decoratornya, yaitu hapus tanda #."
+     ],
+     "solutions": [
+      "from functools import lru_cache\n@lru_cache(None)\ndef jalan(n):\n    if n <= 1:\n        return 1\n    return jalan(n - 1) + jalan(n - 2)\nprint(jalan(int(input())))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "l5"
+    },
+    {
+     "id": "py-l5-refactor-join",
+     "type": "refactor",
+     "title": "Gabung String dengan join",
+     "difficulty": 2,
+     "prompt": "Menggabung string dengan + di dalam loop berpotensi O(n²). Refactor memakai \",\".join(...) dengan output tetap sama.",
+     "lang": "python",
+     "starter": "n = int(input())\nhasil = \"\"\nfor i in range(1, n + 1):\n    hasil = hasil + str(i) + \",\"\nprint(hasil[:-1])\n",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "1,2,3,4,5\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n"
+      },
+      {
+       "input": "12",
+       "expected": "1,2,3,4,5,6,7,8,9,10,11,12\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Buat urutan string dulu.",
+      "\",\".join(...) menggabungkan dengan koma.",
+      "str(i) for i in range(1, n + 1)"
+     ],
+     "solutions": [
+      "n = int(input())\nprint(\",\".join(str(i) for i in range(1, n + 1)))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "rules": [
+      {
+       "text": "Memakai join",
+       "require": "join\\("
+      },
+      {
+       "text": "Tanpa hasil = hasil + ... di dalam loop",
+       "forbid": "hasil\\s*=\\s*hasil\\s*\\+"
+      }
+     ],
+     "track": "python",
+     "chapter": "l5"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "list adalah urutan nilai yang bisa diubah, ditulis [a, b, c]. Indeksnya dimulai dari 0, dan indeks negatif dihitung dari belakang. Method penting list adalah append, pop, sort, dan len(). Hati-hati, b = a tidak menyalin list, keduanya menunjuk list yang sama.",
+     "code": "pasukan = [\"Tanjiro\", \"Zenitsu\"]\npasukan.append(\"Inosuke\")\nprint(pasukan[0], pasukan[-1], len(pasukan))\nsalinan = pasukan.copy()\nsalinan.pop()\nprint(pasukan, salinan)\n"
+    },
+    {
+     "text": "dict memetakan kunci ke nilai, misalnya umur[\"Tanjiro\"] berisi 15. Pakai d.get(k, default) supaya aman kalau kunci tidak ada. set menyimpan nilai unik tanpa urutan. tuple seperti list tapi tidak bisa diubah.",
+     "code": "umur = {\"Tanjiro\": 15, \"Rengoku\": 20}\numur[\"Kanao\"] = 16\nprint(umur.get(\"Giyu\", \"?\"), len(umur))\nfor nama, u in umur.items():\n    print(nama, u)\nprint(sorted(set([3, 1, 3, 2, 1])))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-m1-balik",
+     "type": "write",
+     "title": "Barisan Terbalik",
+     "difficulty": 1,
+     "prompt": "Baca deretan bilangan dalam satu baris. Cetak dalam urutan terbalik, dipisah spasi.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "1 2 3",
+       "expected": "3 2 1\n"
+      },
+      {
+       "input": "5",
+       "expected": "5\n"
+      },
+      {
+       "input": "9 -1 4 4",
+       "expected": "4 4 -1 9\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah input menjadi list dengan split().",
+      "Slicing [::-1] membalik list.",
+      "print(*daftar[::-1])"
+     ],
+     "solutions": [
+      "a = input().split()\nprint(*a[::-1])\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m1"
+    },
+    {
+     "id": "py-m1-frekuensi",
+     "type": "write",
+     "title": "Sensus Kata",
+     "difficulty": 2,
+     "prompt": "Baca satu baris kata. Untuk setiap kata unik (sesuai urutan kemunculan pertama), cetak \"<kata> <jumlah>\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "kaa kaa gagak kaa",
+       "expected": "kaa 3\ngagak 1\n"
+      },
+      {
+       "input": "a b c",
+       "expected": "a 1\nb 1\nc 1\n"
+      },
+      {
+       "input": "slayer slayer",
+       "expected": "slayer 2\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai dict untuk menghitung.",
+      "dict di Python mengingat urutan kunci pertama kali dimasukkan.",
+      "hitung[k] = hitung.get(k, 0) + 1"
+     ],
+     "solutions": [
+      "hitung = {}\nfor k in input().split():\n    hitung[k] = hitung.get(k, 0) + 1\nfor k, v in hitung.items():\n    print(k, v)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m1",
+     "gallery": [
+      {
+       "style": "idiomatic",
+       "note": "Counter adalah dict khusus untuk menghitung. Urutan kemunculan pertama tetap terjaga karena dict di Python mengingat urutan sisip.",
+       "code": "from collections import Counter\nfor kata, n in Counter(input().split()).items():\n    print(kata, n)\n"
+      }
+     ]
+    },
+    {
+     "id": "py-m1-unik",
+     "type": "write",
+     "title": "Iblis Berbeda",
+     "difficulty": 1,
+     "prompt": "Baca deretan bilangan. Cetak berapa banyak bilangan yang berbeda.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "1 2 2 3 3 3",
+       "expected": "3\n"
+      },
+      {
+       "input": "7 7 7",
+       "expected": "1\n"
+      },
+      {
+       "input": "1 2 3 4",
+       "expected": "4\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "set hanya menyimpan nilai unik.",
+      "len() menghitung isi set.",
+      "print(len(set(input().split())))"
+     ],
+     "solutions": [
+      "print(len(set(input().split())))"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m1",
+     "gallery": [
+      {
+       "style": "readable",
+       "note": "Versi tanpa set. Mudah dipahami tapi O(n²), karena `in` pada list mengecek satu per satu. set membuatnya O(n).",
+       "code": "dilihat = []\nfor x in input().split():\n    if x not in dilihat:\n        dilihat.append(x)\nprint(len(dilihat))\n"
+      }
+     ]
+    },
+    {
+     "id": "py-m1-predict",
+     "type": "predict",
+     "title": "Bayangan List",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "a = [3, 1, 2]\nb = a\nb.append(0)\nc = sorted(a)\nprint(a, c)\n",
+     "tests": [
+      {
+       "expected": "[3, 1, 2, 0] [0, 1, 2, 3]\n"
+      }
+     ],
+     "hints": [
+      "b = a tidak membuat salinan.",
+      "append lewat b juga mengubah a.",
+      "sorted() membuat list BARU yang terurut, a tidak berubah urutannya."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m1"
+    },
+    {
+     "id": "py-m1-bug-get",
+     "type": "bughunt",
+     "title": "Catatan yang Hilang",
+     "difficulty": 1,
+     "prompt": "Program mencari nilai seorang slayer. Kalau namanya tidak ada, harus mencetak -1, tapi program malah error. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "nilai = {\"Tanjiro\": 90, \"Zenitsu\": 75, \"Inosuke\": 70}\nnama = input()\nprint(nilai[nama])\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "Tanjiro",
+       "expected": "90\n"
+      },
+      {
+       "input": "Giyu",
+       "expected": "-1\n"
+      },
+      {
+       "input": "Inosuke",
+       "expected": "70\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "KeyError muncul kalau kunci tidak ada.",
+      "dict punya method yang menerima nilai default.",
+      "print(nilai.get(nama, -1))"
+     ],
+     "solutions": [
+      "nilai = {\"Tanjiro\": 90, \"Zenitsu\": 75, \"Inosuke\": 70}\nnama = input()\nprint(nilai.get(nama, -1))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m1"
+    },
+    {
+     "id": "py-m1-parsons",
+     "type": "parsons",
+     "title": "Peringkat Kedua",
+     "difficulty": 2,
+     "prompt": "Susun program yang mencetak bilangan terbesar kedua yang berbeda, atau \"tidak ada\" jika tidak ada.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3 1 4 4 2",
+       "expected": "3\n"
+      },
+      {
+       "input": "5 5",
+       "expected": "tidak ada\n"
+      },
+      {
+       "input": "1 2",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Buang duplikat dulu, lalu urutkan.",
+      "Periksa banyaknya nilai unik sebelum mengambil indeks.",
+      "unik[-2] adalah terbesar kedua."
+     ],
+     "solutions": [
+      "angka = list(map(int, input().split()))\nunik = sorted(set(angka))\nif len(unik) < 2:\n    print(\"tidak ada\")\nelse:\n    print(unik[-2])\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "String adalah urutan karakter. Indeks dan slicing berlaku sama seperti list, misalnya s[0], s[-1], s[1:4], dan s[::-1]. String tidak bisa diubah, jadi setiap method menghasilkan string baru.",
+     "code": "s = \"Kimetsu\"\nprint(s[0], s[-1], s[1:4], s[::-1], len(s))\nprint(s.upper(), s.lower(), s.replace(\"tsu\", \"TSU\"))\n"
+    },
+    {
+     "text": "split() memecah string menjadi list, dan \"pemisah\".join(list) menggabungkannya kembali. strip() membuang spasi di tepi. Kamu juga bisa mengulang setiap karakter dengan for dan memeriksanya dengan isdigit(), isalpha(), atau in.",
+     "code": "kata = \"  air api petir  \".strip().split()\nprint(kata, \"-\".join(kata))\nprint(sum(1 for c in \"Nezuko\" if c in \"aiueo\"))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-m2-vokal",
+     "type": "write",
+     "title": "Napas Vokal",
+     "difficulty": 1,
+     "prompt": "Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o), tanpa membedakan huruf besar dan kecil.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Kamado Tanjiro",
+       "expected": "6\n"
+      },
+      {
+       "input": "xyz",
+       "expected": "0\n"
+      },
+      {
+       "input": "AIUEO aiueo",
+       "expected": "10\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah ke huruf kecil dulu dengan lower().",
+      "Ulangi setiap karakter dan periksa apakah ada di \"aiueo\".",
+      "sum(1 for c in s.lower() if c in \"aiueo\")"
+     ],
+     "solutions": [
+      "s = input().lower()\nprint(sum(1 for c in s if c in \"aiueo\"))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m2",
+     "gallery": [
+      {
+       "style": "idiomatic",
+       "note": "Di Python, True bernilai 1, jadi sum() atas ekspresi boolean langsung menghitung yang benar.",
+       "code": "print(sum(c in \"aiueo\" for c in input().lower()))\n"
+      },
+      {
+       "style": "readable",
+       "note": "Penghitung manual. Paling mudah di-debug langkah demi langkah di Step Debugger.",
+       "code": "teks = input().lower()\njumlah = 0\nfor huruf in teks:\n    if huruf in \"aiueo\":\n        jumlah += 1\nprint(jumlah)\n"
+      }
+     ]
+    },
+    {
+     "id": "py-m2-kapital",
+     "type": "write",
+     "title": "Nama Resmi",
+     "difficulty": 1,
+     "prompt": "Baca nama lengkap (huruf kecil semua). Cetak dengan huruf pertama setiap kata dikapitalkan.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "kamado tanjiro",
+       "expected": "Kamado Tanjiro\n"
+      },
+      {
+       "input": "agatsuma zenitsu",
+       "expected": "Agatsuma Zenitsu\n"
+      },
+      {
+       "input": "nezuko",
+       "expected": "Nezuko\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pecah menjadi kata dengan split().",
+      "capitalize() mengkapitalkan huruf pertama.",
+      "\" \".join(k.capitalize() for k in kata)"
+     ],
+     "solutions": [
+      "print(\" \".join(k.capitalize() for k in input().split()))"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m2"
+    },
+    {
+     "id": "py-m2-predict",
+     "type": "predict",
+     "title": "Membedah Kimetsu",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "s = \"Kimetsu\"\nprint(s[0], s[-1], s[2:5], s[::-1])\n",
+     "tests": [
+      {
+       "expected": "K u met ustemiK\n"
+      }
+     ],
+     "hints": [
+      "Indeks dimulai dari 0.",
+      "s[2:5] mengambil indeks 2, 3, 4.",
+      "[::-1] membalik string."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m2"
+    },
+    {
+     "id": "py-m2-bug-palindrom",
+     "type": "bughunt",
+     "title": "Cermin Retak",
+     "difficulty": 2,
+     "prompt": "Program memeriksa palindrom tanpa membedakan huruf besar/kecil, tapi \"Kodok\" dianggap bukan palindrom. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "s = input()\nt = s.lower()\nprint(\"ya\" if s == t[::-1] else \"tidak\")\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "Kodok",
+       "expected": "ya\n"
+      },
+      {
+       "input": "abc",
+       "expected": "tidak\n"
+      },
+      {
+       "input": "Ana",
+       "expected": "ya\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Variabel mana yang sudah huruf kecil?",
+      "s masih punya huruf besar.",
+      "Bandingkan t dengan t[::-1]."
+     ],
+     "solutions": [
+      "s = input()\nt = s.lower()\nprint(\"ya\" if t == t[::-1] else \"tidak\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m2"
+    },
+    {
+     "id": "py-m2-rle",
+     "type": "write",
+     "title": "Sandi Gagak",
+     "difficulty": 3,
+     "prompt": "Kompres string dengan run-length encoding: setiap kelompok huruf sama berurutan ditulis sebagai huruf diikuti jumlahnya. Contoh: aaabcc menjadi a3b1c2.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "aaabcc",
+       "expected": "a3b1c2\n"
+      },
+      {
+       "input": "a",
+       "expected": "a1\n"
+      },
+      {
+       "input": "zzzzzz",
+       "expected": "z6\n",
+       "hidden": true
+      },
+      {
+       "input": "abab",
+       "expected": "a1b1a1b1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Lacak huruf saat ini dan berapa kali ia muncul berturut-turut.",
+      "Saat huruf berganti, simpan pasangan sebelumnya.",
+      "Jangan lupa menyimpan kelompok terakhir setelah loop selesai."
+     ],
+     "solutions": [
+      "s = input()\nhasil = \"\"\ni = 0\nwhile i < len(s):\n    j = i\n    while j < len(s) and s[j] == s[i]:\n        j += 1\n    hasil += s[i] + str(j - i)\n    i = j\nprint(hasil)\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "m2",
+     "gallery": [
+      {
+       "style": "idiomatic",
+       "note": "itertools.groupby mengelompokkan elemen berurutan yang sama, pas untuk run-length encoding. Tidak ada indeks yang bisa meleset satu.",
+       "code": "from itertools import groupby\nprint(\"\".join(h + str(len(list(g))) for h, g in groupby(input())))\n"
+      },
+      {
+       "style": "fastest",
+       "note": "Kumpulkan potongan di list lalu join sekali. Menyambung string dengan += berulang bisa O(n²) di interpreter selain CPython.",
+       "code": "s = input()\nbagian = []\nn = 1\nfor i in range(1, len(s) + 1):\n    if i < len(s) and s[i] == s[i - 1]:\n        n += 1\n    else:\n        bagian.append(s[i - 1] + str(n))\n        n = 1\nprint(\"\".join(bagian))\n"
+      }
+     ]
+    },
+    {
+     "id": "py-m2-parsons",
+     "type": "parsons",
+     "title": "Kalimat Terbalik",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak banyaknya kata, lalu kalimat dengan urutan kata dibalik.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "3\npetir api air\n"
+      },
+      {
+       "input": "satu",
+       "expected": "1\nsatu\n"
+      },
+      {
+       "input": "a b c d",
+       "expected": "4\nd c b a\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Bersihkan dan pecah kalimat menjadi kata dulu.",
+      "Jumlah kata dicetak lebih dulu.",
+      "reversed() membalik urutan."
+     ],
+     "solutions": [
+      "kalimat = input().strip()\nkata = kalimat.split()\nprint(len(kata))\nprint(\" \".join(reversed(kata)))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m2"
+    },
+    {
+     "id": "py-m2-translate",
+     "type": "translate",
+     "title": "Terjemahkan Penghitung Vokal",
+     "difficulty": 2,
+     "prompt": "Tulis ulang program JavaScript ini dalam Python (tidak membedakan huruf besar/kecil).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Kamado Tanjiro",
+       "expected": "6\n"
+      },
+      {
+       "input": "xyz",
+       "expected": "0\n"
+      },
+      {
+       "input": "AIUEO",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Regex gi berarti semua kemunculan, tanpa membedakan besar/kecil.",
+      "Di Python, ubah ke lower() lalu hitung karakter yang ada di \"aiueo\".",
+      "sum(1 for c in s.lower() if c in \"aiueo\")"
+     ],
+     "solutions": [
+      "s = input()\nprint(sum(1 for c in s.lower() if c in \"aiueo\"))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "from_lang": "javascript",
+     "from_code": "const s = readline()\nconsole.log((s.match(/[aiueo]/gi) ?? []).length)\n",
+     "track": "python",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "Error saat program berjalan disebut exception. Dengan try/except, kamu bisa menangkapnya supaya program tidak berhenti. Tangkap jenis yang spesifik seperti ValueError atau ZeroDivisionError, bukan semua error sekaligus.",
+     "code": "for teks in [\"42\", \"abc\"]:\n    try:\n        print(int(teks) * 2)\n    except ValueError:\n        print(\"bukan angka:\", teks)\n"
+    },
+    {
+     "text": "else dijalankan kalau tidak ada error, dan finally SELALU dijalankan. raise melempar exception sendiri, misalnya untuk menolak data yang tidak valid.",
+     "code": "def umur_valid(n):\n    if n < 0:\n        raise ValueError(\"umur negatif\")\n    return n\ntry:\n    umur_valid(-1)\nexcept ValueError as e:\n    print(\"Ditolak:\", e)\nfinally:\n    print(\"selesai\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-m3-bagi-aman",
+     "type": "write",
+     "title": "Pembagian Aman",
+     "difficulty": 2,
+     "prompt": "Baca dua baris a dan b. Cetak a // b. Jika b = 0 cetak \"tidak bisa dibagi nol\". Jika salah satunya bukan bilangan bulat cetak \"input tidak valid\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "10\n3",
+       "expected": "3\n"
+      },
+      {
+       "input": "5\n0",
+       "expected": "tidak bisa dibagi nol\n"
+      },
+      {
+       "input": "x\n2",
+       "expected": "input tidak valid\n",
+       "hidden": true
+      },
+      {
+       "input": "-7\n2",
+       "expected": "-4\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Bungkus int() dan pembagian dengan try.",
+      "Ada dua jenis error yang perlu ditangkap.",
+      "except ZeroDivisionError: ... except ValueError: ..."
+     ],
+     "solutions": [
+      "try:\n    a = int(input())\n    b = int(input())\n    print(a // b)\nexcept ZeroDivisionError:\n    print(\"tidak bisa dibagi nol\")\nexcept ValueError:\n    print(\"input tidak valid\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m3"
+    },
+    {
+     "id": "py-m3-jumlah-valid",
+     "type": "write",
+     "title": "Menyaring Laporan Palsu",
+     "difficulty": 2,
+     "prompt": "Baca satu baris berisi token. Jumlahkan token yang merupakan bilangan bulat, dan hitung yang bukan. Cetak \"jumlah <J>, salah <S>\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "1 2 x 3",
+       "expected": "jumlah 6, salah 1\n"
+      },
+      {
+       "input": "a b",
+       "expected": "jumlah 0, salah 2\n"
+      },
+      {
+       "input": "10 -5",
+       "expected": "jumlah 5, salah 0\n",
+       "hidden": true
+      },
+      {
+       "input": "7",
+       "expected": "jumlah 7, salah 0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Coba int() pada setiap token di dalam try.",
+      "Kalau gagal, tambah penghitung salah.",
+      "except ValueError: salah += 1"
+     ],
+     "solutions": [
+      "jumlah = salah = 0\nfor t in input().split():\n    try:\n        jumlah += int(t)\n    except ValueError:\n        salah += 1\nprint(f\"jumlah {jumlah}, salah {salah}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m3"
+    },
+    {
+     "id": "py-m3-predict",
+     "type": "predict",
+     "title": "Jalur Exception",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "try:\n    print(\"A\")\n    x = 1 / 0\n    print(\"B\")\nexcept ZeroDivisionError:\n    print(\"C\")\nelse:\n    print(\"D\")\nfinally:\n    print(\"E\")\n",
+     "tests": [
+      {
+       "expected": "A\nC\nE\n"
+      }
+     ],
+     "hints": [
+      "Setelah error, sisa blok try dilewati.",
+      "else hanya jalan kalau TIDAK ada error.",
+      "finally selalu jalan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m3"
+    },
+    {
+     "id": "py-m3-bug-except",
+     "type": "bughunt",
+     "title": "Jaring yang Salah Ukuran",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"umur tidak valid\" untuk input negatif atau bukan angka, tapi malah crash. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "def umur_valid(s):\n    n = int(s)\n    if n < 0:\n        raise ValueError(\"negatif\")\n    return n\ntry:\n    print(umur_valid(input()))\nexcept TypeError:\n    print(\"umur tidak valid\")\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "input": "17",
+       "expected": "17\n"
+      },
+      {
+       "input": "-3",
+       "expected": "umur tidak valid\n"
+      },
+      {
+       "input": "abc",
+       "expected": "umur tidak valid\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Exception apa yang dilempar int(\"abc\") dan raise di fungsi?",
+      "except hanya menangkap jenis yang disebut.",
+      "except ValueError:"
+     ],
+     "solutions": [
+      "def umur_valid(s):\n    n = int(s)\n    if n < 0:\n        raise ValueError(\"negatif\")\n    return n\ntry:\n    print(umur_valid(input()))\nexcept ValueError:\n    print(\"umur tidak valid\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m3"
+    },
+    {
+     "id": "py-m3-raise",
+     "type": "write",
+     "title": "Penjaga Gerbang Data",
+     "difficulty": 3,
+     "prompt": "Tulis fungsi akar(n) yang melempar ValueError jika n negatif dan mengembalikan akar bulatnya (isqrt) jika tidak. Baris pertama input berisi k, lalu k baris bilangan. Untuk tiap bilangan cetak hasilnya atau \"error\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3\n16\n-4\n10",
+       "expected": "4\nerror\n3\n"
+      },
+      {
+       "input": "1\n0",
+       "expected": "0\n"
+      },
+      {
+       "input": "2\n-1\n99",
+       "expected": "error\n9\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "math.isqrt(n) memberi akar bulat.",
+      "Panggil akar() di dalam try untuk setiap baris.",
+      "raise ValueError(\"negatif\") di dalam fungsi jika n < 0."
+     ],
+     "solutions": [
+      "import math\ndef akar(n):\n    if n < 0:\n        raise ValueError(\"negatif\")\n    return math.isqrt(n)\nfor _ in range(int(input())):\n    try:\n        print(akar(int(input())))\n    except ValueError:\n        print(\"error\")\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "m3"
+    },
+    {
+     "id": "py-m3-parsons",
+     "type": "parsons",
+     "title": "try-except-else-finally",
+     "difficulty": 2,
+     "prompt": "Susun program: coba baca bilangan n; kalau gagal cetak \"bukan angka\", kalau berhasil cetak n * 2; apa pun hasilnya cetak \"selesai\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "21",
+       "expected": "42\nselesai\n"
+      },
+      {
+       "input": "x",
+       "expected": "bukan angka\nselesai\n"
+      }
+     ],
+     "hints": [
+      "try membungkus int(input()).",
+      "except ditulis sebelum else.",
+      "finally paling akhir."
+     ],
+     "solutions": [
+      "try:\n    n = int(input())\nexcept ValueError:\n    print(\"bukan angka\")\nelse:\n    print(n * 2)\nfinally:\n    print(\"selesai\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "open(nama, mode) membuka file. Mode \"w\" menulis ulang, \"a\" menambah di akhir, dan \"r\" (default) membaca. Selalu pakai with supaya file otomatis ditutup walau terjadi error. Di aplikasi ini file disimpan di folder /tmp milik sandbox.",
+     "code": "with open(\"/tmp/catatan.txt\", \"w\") as f:\n    f.write(\"Misi 1: Gunung Natagumo\\n\")\n    f.write(\"Misi 2: Kereta Mugen\\n\")\nwith open(\"/tmp/catatan.txt\") as f:\n    for baris in f:\n        print(baris.strip())\n"
+    },
+    {
+     "text": "f.read() membaca semuanya sebagai satu string, sedangkan f.readlines() membaca list baris. Untuk membaca SELURUH input sekaligus, pakai sys.stdin.read(). Modul csv membantu membaca data berformat koma.",
+     "code": "import csv, io\ndata = io.StringIO(\"nama,nilai\\nTanjiro,90\\nZenitsu,75\\n\")\nfor baris in csv.DictReader(data):\n    print(baris[\"nama\"], int(baris[\"nilai\"]) + 5)\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-m4-tulis-baca",
+     "type": "write",
+     "title": "Buku Catatan Misi",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, lalu n baris catatan. Tulis semuanya ke /tmp/misi.txt (satu catatan per baris), lalu baca ulang file itu dan cetak setiap baris diawali nomornya, \"1. ...\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "2\nNatagumo\nKereta Mugen",
+       "expected": "1. Natagumo\n2. Kereta Mugen\n"
+      },
+      {
+       "input": "1\nDistrik Hiburan",
+       "expected": "1. Distrik Hiburan\n"
+      },
+      {
+       "input": "3\na\nb\nc",
+       "expected": "1. a\n2. b\n3. c\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Tulis dengan mode \"w\" dan tambahkan \"\\n\" di setiap baris.",
+      "Baca ulang dengan open(...) tanpa mode.",
+      "enumerate(f, 1) memberi nomor mulai dari 1."
+     ],
+     "solutions": [
+      "n = int(input())\nwith open(\"/tmp/misi.txt\", \"w\") as f:\n    for _ in range(n):\n        f.write(input() + \"\\n\")\nwith open(\"/tmp/misi.txt\") as f:\n    for i, baris in enumerate(f, 1):\n        print(f\"{i}. {baris.strip()}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m4"
+    },
+    {
+     "id": "py-m4-statistik",
+     "type": "write",
+     "title": "Statistik Gulungan",
+     "difficulty": 2,
+     "prompt": "Baca SELURUH input (beberapa baris) dengan sys.stdin.read(), simpan ke /tmp/gulungan.txt, lalu baca ulang file itu dan cetak \"<jumlah baris> <jumlah kata>\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "air api\npetir",
+       "expected": "2 3\n"
+      },
+      {
+       "input": "satu",
+       "expected": "1 1\n"
+      },
+      {
+       "input": "a b c\n\nd e",
+       "expected": "3 5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "import sys lalu teks = sys.stdin.read().",
+      "splitlines() memecah per baris, split() memecah per kata.",
+      "print(len(isi.splitlines()), len(isi.split()))"
+     ],
+     "solutions": [
+      "import sys\nwith open(\"/tmp/gulungan.txt\", \"w\") as f:\n    f.write(sys.stdin.read())\nwith open(\"/tmp/gulungan.txt\") as f:\n    isi = f.read()\nprint(len(isi.splitlines()), len(isi.split()))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m4"
+    },
+    {
+     "id": "py-m4-predict",
+     "type": "predict",
+     "title": "Tulis, Tambah, Baca",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "with open(\"/tmp/a.txt\", \"w\") as f:\n    f.write(\"satu\\n\")\n    f.write(\"dua\\n\")\nwith open(\"/tmp/a.txt\", \"a\") as f:\n    f.write(\"tiga\\n\")\nwith open(\"/tmp/a.txt\", \"w\") as f:\n    f.write(\"empat\\n\")\nwith open(\"/tmp/a.txt\") as f:\n    print(len(f.readlines()))\n",
+     "tests": [
+      {
+       "expected": "1\n"
+      }
+     ],
+     "hints": [
+      "Mode \"w\" menghapus isi lama.",
+      "Perhatikan pembukaan file yang terakhir sebelum dibaca.",
+      "Hanya baris setelah \"w\" terakhir yang tersisa."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m4"
+    },
+    {
+     "id": "py-m4-bug-newline",
+     "type": "bughunt",
+     "title": "Log yang Menempel",
+     "difficulty": 1,
+     "prompt": "Program menulis 3 baris log lalu menghitung barisnya. Seharusnya 3, tapi hasilnya 1. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "with open(\"/tmp/log.txt\", \"w\") as f:\n    for i in range(3):\n        f.write(\"baris \" + str(i))\nwith open(\"/tmp/log.txt\") as f:\n    print(len(f.readlines()))\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "expected": "3\n"
+      }
+     ],
+     "hints": [
+      "write() tidak menambahkan baris baru otomatis.",
+      "Ketiga teks tertulis menempel dalam satu baris.",
+      "f.write(\"baris \" + str(i) + \"\\n\")"
+     ],
+     "solutions": [
+      "with open(\"/tmp/log.txt\", \"w\") as f:\n    for i in range(3):\n        f.write(\"baris \" + str(i) + \"\\n\")\nwith open(\"/tmp/log.txt\") as f:\n    print(len(f.readlines()))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m4"
+    },
+    {
+     "id": "py-m4-csv",
+     "type": "write",
+     "title": "Rekap Nilai CSV",
+     "difficulty": 3,
+     "prompt": "Input berupa data CSV dengan header \"nama,nilai\". Cetak rata-rata nilai dengan 2 desimal, lalu nama dengan nilai tertinggi (yang pertama jika seri).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "nama,nilai\nTanjiro,90\nZenitsu,75\nInosuke,80",
+       "expected": "81.67\nTanjiro\n"
+      },
+      {
+       "input": "nama,nilai\nKanao,100",
+       "expected": "100.00\nKanao\n"
+      },
+      {
+       "input": "nama,nilai\nA,70\nB,70",
+       "expected": "70.00\nA\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "csv.DictReader(sys.stdin) membaca baris sebagai dict.",
+      "Ubah nilai ke int.",
+      "max(data, key=...) mencari yang tertinggi, dan yang pertama menang jika seri."
+     ],
+     "solutions": [
+      "import csv, sys\ndata = [(r[\"nama\"], int(r[\"nilai\"])) for r in csv.DictReader(sys.stdin)]\nprint(f\"{sum(v for _, v in data) / len(data):.2f}\")\nprint(max(data, key=lambda x: x[1])[0])\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "m4"
+    },
+    {
+     "id": "py-m4-parsons",
+     "type": "parsons",
+     "title": "Arsip Huruf Besar",
+     "difficulty": 2,
+     "prompt": "Susun program yang menyimpan seluruh input ke /tmp/x.txt, lalu membacanya kembali dan mencetaknya dalam huruf besar.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "halo\nslayer",
+       "expected": "HALO\nSLAYER\n"
+      },
+      {
+       "input": "kaa",
+       "expected": "KAA\n"
+      }
+     ],
+     "hints": [
+      "import diletakkan paling atas.",
+      "Tulis file dulu, baru baca.",
+      "upper() mengubah ke huruf besar."
+     ],
+     "solutions": [
+      "import sys\ndata = sys.stdin.read().splitlines()\nwith open(\"/tmp/x.txt\", \"w\") as f:\n    f.write(\"\\n\".join(data))\nwith open(\"/tmp/x.txt\") as f:\n    print(f.read().upper())\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m4"
+    }
+   ]
+  },
+  "m5": {
+   "lesson": [
+    {
+     "text": "Modul adalah file Python berisi fungsi dan variabel yang bisa dipakai ulang. import math memuat seluruh modul, sedangkan from math import sqrt mengambil satu nama saja. Pustaka standar Python sangat kaya, misalnya math, collections, itertools, datetime, dan json.",
+     "code": "import math\nfrom collections import Counter\nprint(math.sqrt(81), math.pi)\nprint(Counter(\"kamado\").most_common(2))\n"
+    },
+    {
+     "text": "Package adalah folder berisi modul. Di proyek nyata, pustaka luar dipasang dengan pip lalu di-import seperti biasa. Blok if __name__ == \"__main__\" menjalankan kode hanya saat file dijalankan langsung, bukan saat di-import.",
+     "code": "from datetime import date\nimport itertools\nprint(date(2026, 10, 30) - date(2026, 1, 1))\nprint(list(itertools.combinations(\"ABC\", 2)))\nif __name__ == \"__main__\":\n    print(\"dijalankan langsung\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-m5-lingkaran",
+     "type": "write",
+     "title": "Lingkaran Pernapasan",
+     "difficulty": 1,
+     "prompt": "Baca jari-jari r. Cetak luas lingkaran (pakai math.pi) dengan 2 angka desimal.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "1",
+       "expected": "3.14\n"
+      },
+      {
+       "input": "7",
+       "expected": "153.94\n"
+      },
+      {
+       "input": "0",
+       "expected": "0.00\n",
+       "hidden": true
+      },
+      {
+       "input": "2.5",
+       "expected": "19.63\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "import math",
+      "Luas = pi * r * r.",
+      "print(f\"{luas:.2f}\")"
+     ],
+     "solutions": [
+      "import math\nr = float(input())\nprint(f\"{math.pi * r * r:.2f}\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m5"
+    },
+    {
+     "id": "py-m5-counter",
+     "type": "write",
+     "title": "Huruf Paling Sering",
+     "difficulty": 2,
+     "prompt": "Baca satu kata. Cetak huruf yang paling sering muncul beserta jumlahnya: \"<huruf> <jumlah>\". Jika seri, pilih huruf terkecil menurut abjad.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "kamado",
+       "expected": "a 2\n"
+      },
+      {
+       "input": "banana",
+       "expected": "a 3\n"
+      },
+      {
+       "input": "abc",
+       "expected": "a 1\n",
+       "hidden": true
+      },
+      {
+       "input": "zzaa",
+       "expected": "a 2\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "collections.Counter menghitung huruf.",
+      "Urutkan berdasarkan (-jumlah, huruf).",
+      "min(c.items(), key=lambda x: (-x[1], x[0]))"
+     ],
+     "solutions": [
+      "from collections import Counter\nc = Counter(input())\nh, n = min(c.items(), key=lambda x: (-x[1], x[0]))\nprint(h, n)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m5",
+     "gallery": [
+      {
+       "style": "readable",
+       "note": "Urutkan berdasarkan (−jumlah, huruf) lalu ambil yang pertama. Aturan seri terlihat langsung dari kunci pengurutan.",
+       "code": "from collections import Counter\nurut = sorted(Counter(input()).items(), key=lambda x: (-x[1], x[0]))\nprint(*urut[0])\n"
+      },
+      {
+       "style": "fastest",
+       "note": "Tanpa import, satu kali lewat untuk menghitung, satu kali lewat untuk memilih. Seri ditangani dengan membandingkan huruf.",
+       "code": "hitung = {}\nfor h in input():\n    hitung[h] = hitung.get(h, 0) + 1\nterbaik = None\nfor h, n in hitung.items():\n    if terbaik is None or n > hitung[terbaik] or (n == hitung[terbaik] and h < terbaik):\n        terbaik = h\nprint(terbaik, hitung[terbaik])\n"
+      }
+     ]
+    },
+    {
+     "id": "py-m5-predict",
+     "type": "predict",
+     "title": "Jurus Modul math",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "import math\nprint(math.sqrt(16), math.floor(2.7), math.ceil(2.1), math.gcd(12, 18))\n",
+     "tests": [
+      {
+       "expected": "4.0 2 3 6\n"
+      }
+     ],
+     "hints": [
+      "sqrt selalu mengembalikan float.",
+      "floor membulatkan ke bawah, ceil ke atas.",
+      "gcd adalah FPB."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m5"
+    },
+    {
+     "id": "py-m5-bug-tanggal",
+     "type": "bughunt",
+     "title": "Hitung Hari Menuju Misi",
+     "difficulty": 2,
+     "prompt": "Program membaca dua tanggal (format YYYY-MM-DD) dan harus mencetak selisih harinya sebagai bilangan saja. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "from datetime import date\na = date.fromisoformat(input())\nb = date.fromisoformat(input())\nprint(b - a)\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "2026-01-01\n2026-01-11",
+       "expected": "10\n"
+      },
+      {
+       "input": "2024-02-28\n2024-03-01",
+       "expected": "2\n"
+      },
+      {
+       "input": "2026-10-30\n2026-10-30",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "b - a menghasilkan timedelta, bukan bilangan.",
+      "timedelta punya atribut days.",
+      "print((b - a).days)"
+     ],
+     "solutions": [
+      "from datetime import date\na = date.fromisoformat(input())\nb = date.fromisoformat(input())\nprint((b - a).days)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m5"
+    },
+    {
+     "id": "py-m5-permutasi",
+     "type": "write",
+     "title": "Formasi Pasukan",
+     "difficulty": 2,
+     "prompt": "Baca sebuah kata. Cetak semua susunan (permutasi) hurufnya yang berbeda, urut menurut abjad, satu per baris.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "abc",
+       "expected": "abc\nacb\nbac\nbca\ncab\ncba\n"
+      },
+      {
+       "input": "aab",
+       "expected": "aab\naba\nbaa\n"
+      },
+      {
+       "input": "z",
+       "expected": "z\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "itertools.permutations menghasilkan semua susunan.",
+      "Gabungkan tiap susunan dengan \"\".join, lalu buang duplikat dengan set.",
+      "for p in sorted(set(...)): print(p)"
+     ],
+     "solutions": [
+      "from itertools import permutations\nfor p in sorted(set(\"\".join(x) for x in permutations(input()))):\n    print(p)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m5"
+    },
+    {
+     "id": "py-m5-parsons",
+     "type": "parsons",
+     "title": "Dua Kata Terpopuler",
+     "difficulty": 2,
+     "prompt": "Susun program yang mencetak dua kata paling sering beserta jumlahnya.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "a b a c b a",
+       "expected": "a 3\nb 2\n"
+      },
+      {
+       "input": "kaa kaa gagak",
+       "expected": "kaa 2\ngagak 1\n"
+      }
+     ],
+     "hints": [
+      "import paling atas.",
+      "Hitung dulu sebelum mengambil most_common.",
+      "Loop terakhir mencetak hasilnya."
+     ],
+     "solutions": [
+      "from collections import Counter\nkata = input().split()\nhitung = Counter(kata)\nfor k, v in hitung.most_common(2):\n    print(k, v)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m5"
+    }
+   ]
+  },
+  "m6": {
+   "lesson": [
+    {
+     "text": "Class adalah cetak biru objek. __init__ dijalankan saat objek dibuat dan menyimpan data di self. Method adalah fungsi milik class yang parameter pertamanya self, yaitu objek itu sendiri.",
+     "code": "class Slayer:\n    def __init__(self, nama, rank=\"Mizunoto\"):\n        self.nama = nama\n        self.rank = rank\n    def sapa(self):\n        return f\"Aku {self.nama}, rank {self.rank}\"\nprint(Slayer(\"Tanjiro\").sapa())\n"
+    },
+    {
+     "text": "Pewarisan (class Anak(Induk)) mewarisi method induk dan boleh menimpanya. super() memanggil versi induk. __str__ menentukan tampilan objek saat di-print.",
+     "code": "class Hewan:\n    def __init__(self, nama):\n        self.nama = nama\n    def __str__(self):\n        return f\"{self.nama} berkata {self.suara()}\"\n    def suara(self):\n        return \"...\"\nclass Gagak(Hewan):\n    def suara(self):\n        return \"Kaa!\"\nprint(Gagak(\"Matsuemon\"))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-m6-rekening",
+     "type": "write",
+     "title": "Kas Kisatsutai",
+     "difficulty": 2,
+     "prompt": "Buat class Rekening dengan method setor(x) dan tarik(x). Baris pertama n, lalu n perintah \"setor X\" atau \"tarik X\". Jika saldo kurang untuk tarik, cetak \"saldo kurang\" dan abaikan. Di akhir cetak saldonya.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3\nsetor 100\ntarik 30\ntarik 100",
+       "expected": "saldo kurang\n70\n"
+      },
+      {
+       "input": "1\ntarik 5",
+       "expected": "saldo kurang\n0\n"
+      },
+      {
+       "input": "4\nsetor 10\nsetor 20\ntarik 30\nsetor 1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan self.saldo = 0 di __init__.",
+      "tarik memeriksa saldo sebelum mengurangi.",
+      "Pecah tiap perintah menjadi aksi dan jumlah dengan split()."
+     ],
+     "solutions": [
+      "class Rekening:\n    def __init__(self):\n        self.saldo = 0\n    def setor(self, x):\n        self.saldo += x\n    def tarik(self, x):\n        if x > self.saldo:\n            print(\"saldo kurang\")\n        else:\n            self.saldo -= x\nr = Rekening()\nfor _ in range(int(input())):\n    aksi, x = input().split()\n    getattr(r, aksi)(int(x))\nprint(r.saldo)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m6"
+    },
+    {
+     "id": "py-m6-str",
+     "type": "write",
+     "title": "Papan Nama",
+     "difficulty": 1,
+     "prompt": "Buat class Slayer(nama, rank) dengan __str__ yang mengembalikan \"<nama> (<rank>)\". Baris pertama n, lalu n baris \"nama rank\". Cetak setiap objek.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "2\nTanjiro Mizunoto\nGiyu Hashira",
+       "expected": "Tanjiro (Mizunoto)\nGiyu (Hashira)\n"
+      },
+      {
+       "input": "1\nKanao Tsuguko",
+       "expected": "Kanao (Tsuguko)\n"
+      }
+     ],
+     "hints": [
+      "__str__ harus mengembalikan string, bukan mencetak.",
+      "print(obj) otomatis memanggil __str__.",
+      "return f\"{self.nama} ({self.rank})\""
+     ],
+     "solutions": [
+      "class Slayer:\n    def __init__(self, nama, rank):\n        self.nama, self.rank = nama, rank\n    def __str__(self):\n        return f\"{self.nama} ({self.rank})\"\nfor _ in range(int(input())):\n    print(Slayer(*input().split()))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m6"
+    },
+    {
+     "id": "py-m6-predict",
+     "type": "predict",
+     "title": "Satu Objek Dua Nama",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "class A:\n    def __init__(self):\n        self.x = 1\n    def naik(self):\n        self.x += 1\n        return self\na = A()\nb = a\nb.naik().naik()\nprint(a.x)\n",
+     "tests": [
+      {
+       "expected": "3\n"
+      }
+     ],
+     "hints": [
+      "b = a membuat dua nama untuk objek yang sama.",
+      "naik() mengembalikan self, jadi bisa dirantai.",
+      "Ada dua kali naik."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m6"
+    },
+    {
+     "id": "py-m6-bug-self",
+     "type": "bughunt",
+     "title": "Lupa Diri",
+     "difficulty": 1,
+     "prompt": "Method luas() error dengan NameError. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "class Persegi:\n    def __init__(self, s):\n        self.s = s\n    def luas(self):\n        return s * s\np = Persegi(int(input()))\nprint(p.luas())\n",
+     "bug_line": 5,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "9\n"
+      },
+      {
+       "input": "5",
+       "expected": "25\n"
+      },
+      {
+       "input": "0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Di dalam method, data objek diakses lewat self.",
+      "s hanya ada di dalam __init__ sebagai parameter.",
+      "return self.s * self.s"
+     ],
+     "solutions": [
+      "class Persegi:\n    def __init__(self, s):\n        self.s = s\n    def luas(self):\n        return self.s * self.s\np = Persegi(int(input()))\nprint(p.luas())\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "m6"
+    },
+    {
+     "id": "py-m6-pewarisan",
+     "type": "write",
+     "title": "Suara Penghuni Markas",
+     "difficulty": 2,
+     "prompt": "Buat class Hewan dengan method suara() yang mengembalikan \"...\", lalu turunannya Gagak (\"Kaa!\"), Kucing (\"Meong\"), dan Babi (\"Ngik!\"). Input berisi beberapa nama jenis dalam satu baris (gagak/kucing/babi/lainnya). Cetak suara masing-masing per baris. Jenis yang tidak dikenal memakai Hewan.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "gagak kucing",
+       "expected": "Kaa!\nMeong\n"
+      },
+      {
+       "input": "babi rubah gagak",
+       "expected": "Ngik!\n...\nKaa!\n"
+      },
+      {
+       "input": "ikan",
+       "expected": "...\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Buat dict yang memetakan nama ke class.",
+      "jenis.get(nama, Hewan) memilih class default.",
+      "Panggil Class() lalu .suara()."
+     ],
+     "solutions": [
+      "class Hewan:\n    def suara(self):\n        return \"...\"\nclass Gagak(Hewan):\n    def suara(self):\n        return \"Kaa!\"\nclass Kucing(Hewan):\n    def suara(self):\n        return \"Meong\"\nclass Babi(Hewan):\n    def suara(self):\n        return \"Ngik!\"\njenis = {\"gagak\": Gagak, \"kucing\": Kucing, \"babi\": Babi}\nfor nama in input().split():\n    print(jenis.get(nama, Hewan)().suara())\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m6"
+    },
+    {
+     "id": "py-m6-parsons",
+     "type": "parsons",
+     "title": "Jarak Dua Titik",
+     "difficulty": 2,
+     "prompt": "Susun program dengan class Titik yang menghitung jarak Manhattan antara dua titik dari input.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "0 0\n3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "1 1\n1 1",
+       "expected": "0\n"
+      },
+      {
+       "input": "-2 5\n3 -1",
+       "expected": "11\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Definisi class dan method-nya ada di atas.",
+      "__init__ ditulis sebelum jarak.",
+      "Objek dibuat dari input sebelum dicetak."
+     ],
+     "solutions": [
+      "class Titik:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    def jarak(self, o):\n        return abs(self.x - o.x) + abs(self.y - o.y)\na = Titik(*map(int, input().split()))\nb = Titik(*map(int, input().split()))\nprint(a.jarak(b))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "m6"
+    }
+   ]
+  },
+  "p1": {
+   "lesson": [
+    {
+     "text": "Programmer profesional memakai alat bantu. pip dan venv untuk dependensi, argparse untuk membaca argumen command line, logging untuk catatan yang bisa diatur levelnya, black dan ruff untuk format dan lint, serta mypy untuk memeriksa type hint.",
+     "code": "import argparse\np = argparse.ArgumentParser()\np.add_argument(\"--nama\", default=\"Slayer\")\np.add_argument(\"--ulang\", type=int, default=1)\na = p.parse_args([\"--nama\", \"Tanjiro\", \"--ulang\", \"2\"])\nfor _ in range(a.ulang):\n    print(\"Halo\", a.nama)\n"
+    },
+    {
+     "text": "logging lebih baik daripada print untuk aplikasi nyata, karena levelnya bisa diatur (DEBUG, INFO, WARNING, ERROR) dan formatnya konsisten. json dipakai untuk menyimpan dan bertukar data terstruktur.",
+     "code": "import json, logging, sys\nlogging.basicConfig(stream=sys.stdout, level=logging.INFO, format=\"%(levelname)s %(message)s\")\nlogging.debug(\"tidak tampil\")\nlogging.info(\"misi dimulai\")\nprint(json.dumps({\"nama\": \"Giyu\", \"rank\": \"Hashira\"}))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-p1-argparse",
+     "type": "write",
+     "title": "Perintah Markas",
+     "difficulty": 2,
+     "prompt": "Input berisi argumen CLI dalam satu baris. Pakai argparse dengan --nama (wajib), --umur (int, default 0), dan --verbose (flag). Cetak \"<nama> <umur>\", lalu \"verbose aktif\" jika flag ada.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "--nama Tanjiro --umur 15 --verbose",
+       "expected": "Tanjiro 15\nverbose aktif\n"
+      },
+      {
+       "input": "--nama Giyu",
+       "expected": "Giyu 0\n"
+      },
+      {
+       "input": "--umur 20 --nama Rengoku",
+       "expected": "Rengoku 20\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "p.parse_args(input().split()) membaca argumen dari input.",
+      "required=True untuk --nama dan type=int untuk --umur.",
+      "action=\"store_true\" untuk flag."
+     ],
+     "solutions": [
+      "import argparse\np = argparse.ArgumentParser()\np.add_argument(\"--nama\", required=True)\np.add_argument(\"--umur\", type=int, default=0)\np.add_argument(\"--verbose\", action=\"store_true\")\na = p.parse_args(input().split())\nprint(a.nama, a.umur)\nif a.verbose:\n    print(\"verbose aktif\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p1"
+    },
+    {
+     "id": "py-p1-logging",
+     "type": "write",
+     "title": "Catatan Berlevel",
+     "difficulty": 2,
+     "prompt": "Atur logging ke stdout dengan format \"%(levelname)s:%(message)s\" dan level WARNING. Input berisi baris \"LEVEL pesan\". Log setiap baris dengan levelnya, sehingga hanya WARNING ke atas yang tampil.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "INFO mulai\nWARNING stamina rendah\nERROR pedang patah",
+       "expected": "WARNING:stamina rendah\nERROR:pedang patah\n"
+      },
+      {
+       "input": "DEBUG x\nINFO y\nCRITICAL z",
+       "expected": "CRITICAL:z\n"
+      }
+     ],
+     "hints": [
+      "logging.basicConfig(stream=sys.stdout, level=logging.WARNING, format=...)",
+      "getattr(logging, \"WARNING\") memberi angka levelnya.",
+      "logging.log(level, pesan)"
+     ],
+     "solutions": [
+      "import logging, sys\nlogging.basicConfig(stream=sys.stdout, level=logging.WARNING, format=\"%(levelname)s:%(message)s\")\nfor baris in sys.stdin.read().splitlines():\n    lvl, pesan = baris.split(\" \", 1)\n    logging.log(getattr(logging, lvl), pesan)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p1"
+    },
+    {
+     "id": "py-p1-predict",
+     "type": "predict",
+     "title": "Type Hint Bukan Penjaga",
+     "difficulty": 2,
+     "prompt": "Type hint hanya catatan untuk alat seperti mypy. Python sendiri tidak memaksanya. Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "def tambah(a: int, b: int) -> int:\n    return a + b\nprint(tambah(\"Kaa\", \"!\"))\nprint(tambah.__annotations__[\"return\"].__name__)\n",
+     "tests": [
+      {
+       "expected": "Kaa!\nint\n"
+      }
+     ],
+     "hints": [
+      "Saat program berjalan, anotasi tidak diperiksa.",
+      "\"Kaa\" + \"!\" adalah penggabungan string.",
+      "__annotations__ menyimpan hint-nya."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p1"
+    },
+    {
+     "id": "py-p1-json",
+     "type": "write",
+     "title": "Rapikan Laporan JSON",
+     "difficulty": 1,
+     "prompt": "Input berupa satu baris JSON berisi objek. Cetak ulang dengan indentasi 2 spasi dan kunci terurut.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "{\"rank\": \"Hashira\", \"nama\": \"Giyu\", \"umur\": 21}",
+       "expected": "{\n  \"nama\": \"Giyu\",\n  \"rank\": \"Hashira\",\n  \"umur\": 21\n}\n"
+      },
+      {
+       "input": "{\"b\": [1, 2], \"a\": {\"y\": 1, \"x\": 2}}",
+       "expected": "{\n  \"a\": {\n    \"x\": 2,\n    \"y\": 1\n  },\n  \"b\": [\n    1,\n    2\n  ]\n}\n"
+      }
+     ],
+     "hints": [
+      "json.loads mengubah teks menjadi dict.",
+      "json.dumps punya parameter indent dan sort_keys.",
+      "print(json.dumps(d, indent=2, sort_keys=True))"
+     ],
+     "solutions": [
+      "import json\nprint(json.dumps(json.loads(input()), indent=2, sort_keys=True))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "p1"
+    },
+    {
+     "id": "py-p1-bug-type",
+     "type": "bughunt",
+     "title": "Argumen Bertipe Salah",
+     "difficulty": 1,
+     "prompt": "--n 21 seharusnya mencetak 42, tapi hasilnya 2121. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "import argparse\np = argparse.ArgumentParser()\np.add_argument(\"--n\", type=str)\na = p.parse_args(input().split())\nprint(a.n * 2)\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "--n 21",
+       "expected": "42\n"
+      },
+      {
+       "input": "--n 0",
+       "expected": "0\n"
+      },
+      {
+       "input": "--n -5",
+       "expected": "-10\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Argumen CLI selalu berupa string.",
+      "argparse bisa mengubah tipenya otomatis.",
+      "type=int"
+     ],
+     "solutions": [
+      "import argparse\np = argparse.ArgumentParser()\np.add_argument(\"--n\", type=int)\na = p.parse_args(input().split())\nprint(a.n * 2)\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "p1"
+    }
+   ]
+  },
+  "p2": {
+   "lesson": [
+    {
+     "text": "Kode \"pythonic\" memakai fitur bahasa secara wajar. enumerate untuk indeks dan nilai, zip untuk mengiterasi beberapa list bersamaan, unpacking a, *b = ..., comprehension, serta any dan all. Kode seperti ini lebih pendek dan lebih mudah dibaca.",
+     "code": "nama = [\"Tanjiro\", \"Zenitsu\"]\nskor = [90, 75]\nfor i, (n, s) in enumerate(zip(nama, skor), 1):\n    print(i, n, s)\npertama, *sisa = [1, 2, 3, 4]\nprint(pertama, sisa, any(x > 3 for x in sisa))\n"
+    },
+    {
+     "text": "Prinsip lain adalah EAFP, yaitu lebih mudah minta maaf daripada izin (coba dulu, tangani exception). Pakai nama yang jelas, buat fungsi kecil yang fokus, dan manfaatkan pustaka standar sebelum menulis sendiri.",
+     "code": "data = {\"Tanjiro\": 15}\ntry:\n    print(data[\"Giyu\"])\nexcept KeyError:\n    print(\"tidak ada\")\nprint(max([\"air\", \"petir\", \"api\"], key=len))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-p2-enumerate",
+     "type": "write",
+     "title": "Daftar Bernomor",
+     "difficulty": 1,
+     "prompt": "Baca satu baris kata. Cetak setiap kata dengan format \"<nomor>. <kata>\" mulai dari 1, memakai enumerate.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "1. air\n2. api\n3. petir\n"
+      },
+      {
+       "input": "kaa",
+       "expected": "1. kaa\n"
+      }
+     ],
+     "hints": [
+      "enumerate(daftar, 1) mulai dari 1.",
+      "for i, k in enumerate(...)",
+      "print(f\"{i}. {k}\")"
+     ],
+     "solutions": [
+      "for i, k in enumerate(input().split(), 1):\n    print(f\"{i}. {k}\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-zip",
+     "type": "write",
+     "title": "Papan Skor",
+     "difficulty": 2,
+     "prompt": "Baris 1 berisi nama-nama, baris 2 berisi skor masing-masing. Cetak \"<nama>: <skor>\" urut dari skor tertinggi. Jika skor seri, urut menurut nama.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Tanjiro Zenitsu Inosuke\n90 75 90",
+       "expected": "Inosuke: 90\nTanjiro: 90\nZenitsu: 75\n"
+      },
+      {
+       "input": "A\n1",
+       "expected": "A: 1\n"
+      }
+     ],
+     "hints": [
+      "zip menggabungkan nama dan skor menjadi pasangan.",
+      "sorted dengan key=lambda p: (-p[1], p[0]).",
+      "Ubah skor ke int dulu."
+     ],
+     "solutions": [
+      "nama = input().split()\nskor = map(int, input().split())\nfor n, s in sorted(zip(nama, skor), key=lambda p: (-p[1], p[0])):\n    print(f\"{n}: {s}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-predict",
+     "type": "predict",
+     "title": "Bongkar Muatan",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "a, *b, c = [1, 2, 3, 4, 5]\nprint(a, b, c)\nprint(any(x > 4 for x in b), all(x > 1 for x in b))\n",
+     "tests": [
+      {
+       "expected": "1 [2, 3, 4] 5\nFalse True\n"
+      }
+     ],
+     "hints": [
+      "a mengambil yang pertama, c yang terakhir.",
+      "*b mengambil sisanya sebagai list.",
+      "b berisi 2, 3, 4."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-parsons",
+     "type": "parsons",
+     "title": "Akumulasi Poin",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, lalu n baris \"nama poin\". Susun program yang menjumlahkan poin per nama dan mencetaknya urut menurut nama.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "4\nTanjiro 5\nZenitsu 3\nTanjiro 2\nInosuke 4",
+       "expected": "Inosuke 4\nTanjiro 7\nZenitsu 3\n"
+      },
+      {
+       "input": "1\nA 1",
+       "expected": "A 1\n"
+      }
+     ],
+     "hints": [
+      "Siapkan dict kosong sebelum loop.",
+      "Di dalam loop, pecah baris lalu tambahkan poinnya.",
+      "Loop pencetakan ada di akhir."
+     ],
+     "solutions": [
+      "n = int(input())\nskor = {}\nfor _ in range(n):\n    nama, nilai = input().split()\n    skor[nama] = skor.get(nama, 0) + int(nilai)\nfor nama, total in sorted(skor.items()):\n    print(nama, total)\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-terpanjang",
+     "type": "write",
+     "title": "Satu Baris yang Bersih",
+     "difficulty": 1,
+     "prompt": "Baca satu baris kata. Cetak kata terpanjang (yang muncul pertama jika seri). Coba selesaikan dalam satu ekspresi dengan max(..., key=...).",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "petir\n"
+      },
+      {
+       "input": "aa bb",
+       "expected": "aa\n"
+      },
+      {
+       "input": "nezuko kamado tanjiro",
+       "expected": "tanjiro\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "max bisa menerima key.",
+      "key=len membandingkan panjangnya.",
+      "print(max(input().split(), key=len))"
+     ],
+     "solutions": [
+      "print(max(input().split(), key=len))"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-refactor-enumerate",
+     "type": "refactor",
+     "title": "Refactor Penomoran",
+     "difficulty": 1,
+     "prompt": "Kode ini benar tapi tidak pythonic. Refactor memakai enumerate tanpa penghitung manual. Output harus tetap sama.",
+     "lang": "python",
+     "starter": "kata = input().split()\ni = 0\nfor k in kata:\n    print(str(i + 1) + \". \" + k)\n    i = i + 1\n",
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "1. air\n2. api\n3. petir\n"
+      },
+      {
+       "input": "kaa",
+       "expected": "1. kaa\n"
+      }
+     ],
+     "hints": [
+      "enumerate(daftar, 1) mulai dari 1.",
+      "for i, k in enumerate(...)",
+      "Gunakan f-string."
+     ],
+     "solutions": [
+      "for i, k in enumerate(input().split(), 1):\n    print(f\"{i}. {k}\")\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "rules": [
+      {
+       "text": "Memakai enumerate",
+       "require": "enumerate\\("
+      },
+      {
+       "text": "Tanpa penghitung manual (i = i + 1)",
+       "forbid": "i\\s*=\\s*i\\s*\\+"
+      }
+     ],
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-refactor-comprehension",
+     "type": "refactor",
+     "title": "Refactor ke Comprehension",
+     "difficulty": 2,
+     "prompt": "Ringkas kode ini menjadi list comprehension. Output harus tetap sama.",
+     "lang": "python",
+     "starter": "angka = list(map(int, input().split()))\nhasil = []\nfor x in angka:\n    if x % 2 == 0:\n        hasil.append(x * x)\nprint(hasil)\n",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "[4, 16]\n"
+      },
+      {
+       "input": "1 3",
+       "expected": "[]\n"
+      },
+      {
+       "input": "10",
+       "expected": "[100]\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Bentuknya [ekspresi for x in data if syarat].",
+      "Ekspresinya x * x dengan syarat x % 2 == 0.",
+      "print([...]) langsung."
+     ],
+     "solutions": [
+      "angka = list(map(int, input().split()))\nprint([x * x for x in angka if x % 2 == 0])\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "rules": [
+      {
+       "text": "Maksimal 2 baris kode",
+       "max_lines": 2
+      },
+      {
+       "text": "Tanpa .append",
+       "forbid": "\\.append\\("
+      }
+     ],
+     "track": "python",
+     "chapter": "p2"
+    },
+    {
+     "id": "py-p2-review",
+     "type": "review",
+     "title": "Review Gaya Kode",
+     "difficulty": 1,
+     "prompt": "Kode ini berjalan benar tapi tidak sesuai best practice Python. Tandai baris yang perlu diperbaiki.",
+     "lang": "python",
+     "code": "def Hitung_Total(L):\n    t = 0\n    for i in range(len(L)):\n        t = t + L[i]\n    return t\n",
+     "tests": [],
+     "hints": [
+      "Lihat konvensi penamaan PEP 8.",
+      "Apakah ada fungsi bawaan untuk menjumlahkan?",
+      "Ada dua baris."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "issues": [
+      {
+       "line": 1,
+       "text": "Nama fungsi sebaiknya snake_case (hitung_total), dan parameter L tidak deskriptif."
+      },
+      {
+       "line": 3,
+       "text": "Loop indeks tidak perlu. Seluruh fungsi cukup return sum(daftar)."
+      }
+     ],
+     "track": "python",
+     "chapter": "p2"
+    }
+   ]
+  },
+  "p3": {
+   "lesson": [
+    {
+     "text": "Design pattern adalah solusi umum untuk masalah desain yang berulang. Di Python, banyak pattern jadi sangat sederhana karena fungsi adalah nilai. Strategy cukup berupa dict yang memetakan nama ke fungsi, dan Factory cukup berupa dict yang memetakan nama ke class.",
+     "code": "import operator\nOPS = {\"+\": operator.add, \"-\": operator.sub, \"*\": operator.mul}\nprint(OPS[\"*\"](6, 7))\n"
+    },
+    {
+     "text": "Observer membuat banyak pihak bisa \"berlangganan\" sebuah kejadian. Saat kejadian terjadi, semua pelanggan diberi tahu. Pola ini dipakai di UI, notifikasi, dan sistem event.",
+     "code": "pelanggan = []\ndef langganan(f):\n    pelanggan.append(f)\ndef kabarkan(pesan):\n    for f in pelanggan:\n        f(pesan)\nlangganan(lambda p: print(\"Tanjiro dengar:\", p))\nlangganan(lambda p: print(\"Zenitsu dengar:\", p))\nkabarkan(\"iblis di utara!\")\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-p3-strategy",
+     "type": "write",
+     "title": "Kalkulator Strategi",
+     "difficulty": 2,
+     "prompt": "Setiap baris input berisi \"a op b\". Hitung dengan dict strategi untuk op di antara +, -, *, //. Jika op tidak dikenal, cetak \"operator tidak dikenal\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "3 + 4\n10 // 3\n2 ^ 5",
+       "expected": "7\n3\noperator tidak dikenal\n"
+      },
+      {
+       "input": "6 * 7",
+       "expected": "42\n"
+      }
+     ],
+     "hints": [
+      "Buat dict yang memetakan simbol ke fungsi (lambda atau modul operator).",
+      "Baca semua baris dengan sys.stdin.",
+      "Periksa op in OPS sebelum memanggil."
+     ],
+     "solutions": [
+      "import sys, operator\nOPS = {\"+\": operator.add, \"-\": operator.sub, \"*\": operator.mul, \"//\": operator.floordiv}\nfor baris in sys.stdin.read().splitlines():\n    a, op, b = baris.split()\n    print(OPS[op](int(a), int(b)) if op in OPS else \"operator tidak dikenal\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p3"
+    },
+    {
+     "id": "py-p3-observer",
+     "type": "write",
+     "title": "Jaringan Gagak",
+     "difficulty": 3,
+     "prompt": "Perintah per baris berupa \"sub <nama>\" (berlangganan) atau \"pub <pesan...>\" (umumkan). Untuk setiap pub, setiap pelanggan (sesuai urutan berlangganan) mencetak \"<nama> menerima: <pesan>\". Jika belum ada pelanggan, cetak \"tidak ada yang mendengar\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "pub halo\nsub Tanjiro\nsub Zenitsu\npub iblis di utara",
+       "expected": "tidak ada yang mendengar\nTanjiro menerima: iblis di utara\nZenitsu menerima: iblis di utara\n"
+      },
+      {
+       "input": "sub A\npub x\npub y",
+       "expected": "A menerima: x\nA menerima: y\n"
+      }
+     ],
+     "hints": [
+      "Simpan pelanggan di list.",
+      "split(\" \", 1) memisahkan perintah dari sisa teks.",
+      "Untuk pub, loop semua pelanggan."
+     ],
+     "solutions": [
+      "import sys\npelanggan = []\nfor baris in sys.stdin.read().splitlines():\n    cmd, arg = baris.split(\" \", 1)\n    if cmd == \"sub\":\n        pelanggan.append(arg)\n    elif not pelanggan:\n        print(\"tidak ada yang mendengar\")\n    else:\n        for p in pelanggan:\n            print(f\"{p} menerima: {arg}\")\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "p3"
+    },
+    {
+     "id": "py-p3-factory",
+     "type": "write",
+     "title": "Pabrik Bentuk",
+     "difficulty": 2,
+     "prompt": "Setiap baris berisi bentuk dan ukurannya, yaitu \"persegi s\", \"lingkaran r\", atau \"segitiga a t\". Buat class untuk tiap bentuk dengan method luas(), pilih class lewat dict (factory), lalu cetak luasnya dengan 2 desimal.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "persegi 3\nlingkaran 1\nsegitiga 3 4",
+       "expected": "9.00\n3.14\n6.00\n"
+      },
+      {
+       "input": "lingkaran 2.5",
+       "expected": "19.63\n"
+      }
+     ],
+     "hints": [
+      "Setiap class menerima angka di __init__.",
+      "BENTUK = {\"persegi\": Persegi, ...}",
+      "BENTUK[nama](*map(float, angka)).luas()"
+     ],
+     "solutions": [
+      "import math, sys\nclass Persegi:\n    def __init__(self, s): self.s = s\n    def luas(self): return self.s ** 2\nclass Lingkaran:\n    def __init__(self, r): self.r = r\n    def luas(self): return math.pi * self.r ** 2\nclass Segitiga:\n    def __init__(self, a, t): self.a, self.t = a, t\n    def luas(self): return self.a * self.t / 2\nBENTUK = {\"persegi\": Persegi, \"lingkaran\": Lingkaran, \"segitiga\": Segitiga}\nfor baris in sys.stdin.read().splitlines():\n    nama, *angka = baris.split()\n    print(f\"{BENTUK[nama](*map(float, angka)).luas():.2f}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p3"
+    },
+    {
+     "id": "py-p3-predict",
+     "type": "predict",
+     "title": "Penghitung Tertutup",
+     "difficulty": 3,
+     "prompt": "Closure menyimpan state, dan inilah dasar banyak pattern. Tulis output persis dari kode berikut.",
+     "lang": "python",
+     "code": "def pembuat():\n    hitung = 0\n    def tambah():\n        nonlocal hitung\n        hitung += 1\n        return hitung\n    return tambah\na = pembuat()\nb = pembuat()\na()\na()\nprint(a(), b())\n",
+     "tests": [
+      {
+       "expected": "3 1\n"
+      }
+     ],
+     "hints": [
+      "Setiap pemanggilan pembuat() punya hitung sendiri.",
+      "a dipanggil tiga kali.",
+      "b baru dipanggil sekali."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "p3"
+    },
+    {
+     "id": "py-p3-bug-strategy",
+     "type": "bughunt",
+     "title": "Strategi yang Langsung Dijalankan",
+     "difficulty": 2,
+     "prompt": "Kalkulator strategi ini error bahkan sebelum membaca input. Temukan bug-nya.",
+     "lang": "python",
+     "starter": "def tambah(a, b): return a + b\ndef kurang(a, b): return a - b\nOPS = {\"+\": tambah(), \"-\": kurang}\na, op, b = input().split()\nprint(OPS[op](int(a), int(b)))\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "3 + 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 - 15",
+       "expected": "-5\n"
+      }
+     ],
+     "hints": [
+      "Apa beda tambah dan tambah()?",
+      "Dict harus menyimpan fungsinya, bukan hasil memanggilnya.",
+      "{\"+\": tambah, \"-\": kurang}"
+     ],
+     "solutions": [
+      "def tambah(a, b): return a + b\ndef kurang(a, b): return a - b\nOPS = {\"+\": tambah, \"-\": kurang}\na, op, b = input().split()\nprint(OPS[op](int(a), int(b)))\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p3"
+    }
+   ]
+  },
+  "p4": {
+   "lesson": [
+    {
+     "text": "Project nyata dibangun bertahap. Mulai dari versi terkecil yang berjalan, lalu tambah fitur satu per satu sambil memastikan fitur lama tetap benar. Bab ini membangun aplikasi to-do di command line, lalu inventaris toko dan alat analisis teks.",
+     "code": "tugas = []\nfor perintah in [\"tambah latihan\", \"tambah misi\", \"lihat\"]:\n    aksi, _, isi = perintah.partition(\" \")\n    if aksi == \"tambah\":\n        tugas.append(isi)\n    elif aksi == \"lihat\":\n        for i, t in enumerate(tugas, 1):\n            print(f\"{i}. {t}\")\n"
+    },
+    {
+     "text": "Pisahkan logika (fungsi yang mengolah data) dari input/output (membaca perintah dan mencetak). Dengan begitu logikanya mudah diuji dan bisa dipakai ulang, misalnya untuk antarmuka web nanti.",
+     "code": "def proses(state, perintah):\n    aksi, _, isi = perintah.partition(\" \")\n    if aksi == \"tambah\":\n        state.append(isi)\n    return state\nprint(proses([], \"tambah tebas iblis\"))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "py-p4-todo1",
+     "type": "write",
+     "title": "To-do Tahap 1: Tambah & Lihat",
+     "difficulty": 2,
+     "prompt": "Setiap baris adalah perintah. \"tambah <teks>\" menambah tugas. \"lihat\" mencetak semua tugas \"<no>. <teks>\", atau \"(kosong)\" jika belum ada.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "lihat\ntambah latihan napas\ntambah misi Natagumo\nlihat",
+       "expected": "(kosong)\n1. latihan napas\n2. misi Natagumo\n"
+      },
+      {
+       "input": "tambah a\nlihat\ntambah b\nlihat",
+       "expected": "1. a\n1. a\n2. b\n"
+      }
+     ],
+     "hints": [
+      "Simpan tugas dalam list.",
+      "partition(\" \") memisahkan perintah dari teks.",
+      "enumerate(tugas, 1) untuk nomor."
+     ],
+     "solutions": [
+      "import sys\ntugas = []\nfor baris in sys.stdin.read().splitlines():\n    aksi, _, isi = baris.partition(\" \")\n    if aksi == \"tambah\":\n        tugas.append(isi)\n    elif aksi == \"lihat\":\n        if not tugas:\n            print(\"(kosong)\")\n        for i, t in enumerate(tugas, 1):\n            print(f\"{i}. {t}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p4"
+    },
+    {
+     "id": "py-p4-todo2",
+     "type": "write",
+     "title": "To-do Tahap 2: Tandai Selesai",
+     "difficulty": 2,
+     "prompt": "Lanjutkan tahap 1. \"selesai <no>\" menandai tugas selesai. \"lihat\" kini mencetak \"<no>. [x] <teks>\" untuk yang selesai dan \"<no>. [ ] <teks>\" untuk yang belum.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "tambah latihan\ntambah misi\nselesai 2\nlihat",
+       "expected": "1. [ ] latihan\n2. [x] misi\n"
+      },
+      {
+       "input": "lihat\ntambah a\nselesai 1\nselesai 1\nlihat",
+       "expected": "(kosong)\n1. [x] a\n"
+      }
+     ],
+     "hints": [
+      "Simpan setiap tugas sebagai pasangan [teks, selesai].",
+      "Nomor tugas dimulai 1, sedangkan indeks list dimulai 0.",
+      "\"x\" if selesai else \" \""
+     ],
+     "solutions": [
+      "import sys\ntugas = []\nfor baris in sys.stdin.read().splitlines():\n    aksi, _, isi = baris.partition(\" \")\n    if aksi == \"tambah\":\n        tugas.append([isi, False])\n    elif aksi == \"selesai\":\n        tugas[int(isi) - 1][1] = True\n    elif aksi == \"lihat\":\n        if not tugas:\n            print(\"(kosong)\")\n        for i, (t, s) in enumerate(tugas, 1):\n            print(f\"{i}. [{'x' if s else ' '}] {t}\")\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "python",
+     "chapter": "p4"
+    },
+    {
+     "id": "py-p4-todo3",
+     "type": "write",
+     "title": "To-do Tahap 3: Hapus & Ringkas",
+     "difficulty": 3,
+     "prompt": "Lanjutkan tahap 2. Tambahkan \"hapus <no>\" dan \"ringkas\" yang mencetak \"<s> selesai dari <n>\". Untuk selesai/hapus dengan nomor di luar jangkauan, cetak \"nomor tidak valid\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "tambah a\ntambah b\ntambah c\nselesai 1\nhapus 2\nlihat\nringkas\nhapus 9",
+       "expected": "1. [x] a\n2. [ ] c\n1 selesai dari 2\nnomor tidak valid\n"
+      },
+      {
+       "input": "ringkas\nselesai 1\ntambah x\nlihat",
+       "expected": "0 selesai dari 0\nnomor tidak valid\n1. [ ] x\n"
+      }
+     ],
+     "hints": [
+      "Buat fungsi kecil yang memeriksa nomor valid (1 ≤ no ≤ len).",
+      "pop(no - 1) menghapus item.",
+      "sum(1 for _, s in tugas if s) menghitung yang selesai."
+     ],
+     "solutions": [
+      "import sys\ntugas = []\ndef valid(no):\n    return 1 <= no <= len(tugas)\nfor baris in sys.stdin.read().splitlines():\n    aksi, _, isi = baris.partition(\" \")\n    if aksi == \"tambah\":\n        tugas.append([isi, False])\n    elif aksi in (\"selesai\", \"hapus\"):\n        no = int(isi)\n        if not valid(no):\n            print(\"nomor tidak valid\")\n        elif aksi == \"selesai\":\n            tugas[no - 1][1] = True\n        else:\n            tugas.pop(no - 1)\n    elif aksi == \"lihat\":\n        if not tugas:\n            print(\"(kosong)\")\n        for i, (t, s) in enumerate(tugas, 1):\n            print(f\"{i}. [{'x' if s else ' '}] {t}\")\n    elif aksi == \"ringkas\":\n        print(f\"{sum(1 for _, s in tugas if s)} selesai dari {len(tugas)}\")\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "p4"
+    },
+    {
+     "id": "py-p4-inventaris",
+     "type": "write",
+     "title": "Inventaris Desa Penempa",
+     "difficulty": 3,
+     "prompt": "Perintah per baris. \"beli <item> <qty>\" menambah stok. \"jual <item> <qty>\" mengurangi stok, dan jika stok kurang cetak \"stok <item> kurang\". \"laporan\" mencetak \"<item> <stok>\" untuk item dengan stok > 0, urut menurut nama, atau \"(gudang kosong)\".",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "beli pedang 5\nbeli haori 2\njual pedang 3\njual haori 5\nlaporan",
+       "expected": "stok haori kurang\nhaori 2\npedang 2\n"
+      },
+      {
+       "input": "laporan\nbeli a 1\njual a 1\nlaporan",
+       "expected": "(gudang kosong)\n(gudang kosong)\n"
+      }
+     ],
+     "hints": [
+      "Pakai dict item ke stok.",
+      "Periksa stok sebelum menjual.",
+      "sorted(stok.items()) lalu saring yang > 0."
+     ],
+     "solutions": [
+      "import sys\nstok = {}\nfor baris in sys.stdin.read().splitlines():\n    aksi, *arg = baris.split()\n    if aksi == \"beli\":\n        stok[arg[0]] = stok.get(arg[0], 0) + int(arg[1])\n    elif aksi == \"jual\":\n        item, qty = arg[0], int(arg[1])\n        if stok.get(item, 0) < qty:\n            print(f\"stok {item} kurang\")\n        else:\n            stok[item] -= qty\n    elif aksi == \"laporan\":\n        ada = [(k, v) for k, v in sorted(stok.items()) if v > 0]\n        if not ada:\n            print(\"(gudang kosong)\")\n        for k, v in ada:\n            print(k, v)\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "p4"
+    },
+    {
+     "id": "py-p4-analisis",
+     "type": "write",
+     "title": "Analis Gulungan",
+     "difficulty": 3,
+     "prompt": "Baca seluruh teks. Ubah ke huruf kecil, ganti semua karakter selain huruf dan spasi menjadi spasi, lalu cetak 3 kata paling sering dalam format \"<kata> <jumlah>\". Jika seri, urut menurut abjad.",
+     "lang": "python",
+     "tests": [
+      {
+       "input": "Air, api! Air... petir? Api api.",
+       "expected": "api 3\nair 2\npetir 1\n"
+      },
+      {
+       "input": "Kaa kaa KAA\ngagak gagak burung",
+       "expected": "kaa 3\ngagak 2\nburung 1\n"
+      }
+     ],
+     "hints": [
+      "Pakai re.sub(r\"[^a-z\\s]\", \" \", teks.lower()).",
+      "Counter menghitung kata.",
+      "sorted(c.items(), key=lambda x: (-x[1], x[0]))[:3]"
+     ],
+     "solutions": [
+      "import re, sys\nfrom collections import Counter\nteks = re.sub(r\"[^a-z\\s]\", \" \", sys.stdin.read().lower())\nc = Counter(teks.split())\nfor k, v in sorted(c.items(), key=lambda x: (-x[1], x[0]))[:3]:\n    print(k, v)\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "python",
+     "chapter": "p4"
+    }
+   ]
+  }
+ }
+}

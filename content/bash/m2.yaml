@@ -1,0 +1,37 @@
+lesson:
+- text: Setiap program yang berjalan adalah proses dengan PID. ps aux melihat semua proses, kill PID menghentikannya, & menjalankan di latar belakang, jobs melihat job, $! adalah PID job terakhir.
+  code: |
+    ps aux
+    sleep 60 &
+    jobs
+    kill %1
+exercises:
+- id: bash-m2-ps
+  type: write
+  title: Proses Mencurigakan
+  difficulty: 2
+  prompt: Tampilkan baris proses milik user slayer dari ps aux (tanpa header).
+  starter: |
+    # tulis perintahmu di sini
+  sim_only: true
+  hints: |
+    ps aux menampilkan semua proses.
+    Kolom pertama adalah user.
+    awk '$1 == "slayer"'
+  solution: |
+    ps aux | awk '$1 == "slayer"'
+- id: bash-m2-kill
+  type: quiz
+  title: Menghentikan Proses
+  difficulty: 1
+  prompt: Perintah untuk menghentikan proses dengan PID 4242 adalah...
+  options:
+  - kill 4242
+  - stop 4242
+  - ps -k 4242
+  - rm 4242
+  explain: kill mengirim sinyal (bawaan SIGTERM) ke proses.
+  hints: |
+    Namanya cukup brutal.
+    Butuh PID.
+    kill 4242

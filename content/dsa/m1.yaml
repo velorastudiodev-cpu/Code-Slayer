@@ -1,0 +1,129 @@
+lesson:
+  - text: Linked list adalah rangkaian simpul, dan setiap simpul menyimpan nilai serta penunjuk ke simpul berikutnya. Menyisip atau menghapus di depan bernilai O(1) tanpa menggeser elemen lain, tapi mengakses elemen ke-i bernilai O(n) karena harus menelusuri dari head.
+    code: |
+      class Node:
+          def __init__(self, val, next=None):
+              self.val, self.next = val, next
+      head = Node(1, Node(2, Node(3)))
+      cur = head
+      while cur:
+          print(cur.val, end=" -> ")
+          cur = cur.next
+      print("None")
+exercises:
+  - id: dsa-m1-balik
+    type: write
+    title: Balik Rantai Gagak
+    difficulty: 3
+    prompt: Lengkapi fungsi balik(head) yang membalik linked list dengan mengubah penunjuk next (tanpa membuat list Python baru), lalu kembalikan head yang baru.
+    starter: |
+      class Node:
+          def __init__(self, val, next=None):
+              self.val, self.next = val, next
+
+      def balik(head):
+          pass  # lengkapi
+
+      head = None
+      for v in reversed(input().split()):
+          head = Node(v, head)
+      head = balik(head)
+      out = []
+      while head:
+          out.append(head.val)
+          head = head.next
+      print(*out)
+    tests: ["1 2 3 4", "a", "x y"]
+    hints: |
+      Simpan tiga penunjuk, yaitu prev, cur, dan nxt.
+      Simpan cur.next ke nxt SEBELUM mengubahnya.
+      cur.next = prev, lalu majukan prev dan cur.
+    solution: |
+      class Node:
+          def __init__(self, val, next=None):
+              self.val, self.next = val, next
+
+      def balik(head):
+          prev, cur = None, head
+          while cur:
+              nxt = cur.next
+              cur.next = prev
+              prev, cur = cur, nxt
+          return prev
+
+      head = None
+      for v in reversed(input().split()):
+          head = Node(v, head)
+      head = balik(head)
+      out = []
+      while head:
+          out.append(head.val)
+          head = head.next
+      print(*out)
+  - id: dsa-m1-tengah
+    type: write
+    title: Titik Tengah Rantai
+    difficulty: 2
+    prompt: Bangun linked list dari input, lalu cetak nilai simpul tengahnya dengan pointer lambat & cepat. Jika panjangnya genap, cetak tengah yang kedua.
+    tests: ["1 2 3 4 5", "1 2 3 4", "7"]
+    hints: |
+      slow maju 1 langkah, fast maju 2 langkah.
+      Saat fast mencapai ujung, slow berada di tengah.
+      while fast and fast.next.
+    solution: |
+      class Node:
+          def __init__(self, val, next=None):
+              self.val, self.next = val, next
+      head = None
+      for v in reversed(input().split()):
+          head = Node(v, head)
+      slow = fast = head
+      while fast and fast.next:
+          slow, fast = slow.next, fast.next.next
+      print(slow.val)
+  - id: dsa-m1-fill-panjang
+    type: fill
+    title: Menghitung Panjang Rantai
+    difficulty: 1
+    prompt: Lengkapi penelusuran linked list untuk menghitung panjangnya.
+    code: |
+      class Node:
+          def __init__(self, val, next=None):
+              self.val, self.next = val, next
+      head = None
+      for v in reversed(input().split()):
+          head = Node(v, head)
+      n = 0
+      cur = head
+      while ⟦cur⟧:
+          n += 1
+          cur = ⟦cur.next⟧
+      print(n)
+    tests: ["a b c", "x", "1 2 3 4 5 6"]
+    hints: |
+      Telusuri selama cur bukan None.
+      Pindah ke simpul berikutnya lewat next.
+      cur = cur.next
+  - id: dsa-m1-review
+    type: review
+    title: Review Pembalik Rantai
+    difficulty: 3
+    prompt: Fungsi ini seharusnya membalik linked list. Tandai baris yang salah.
+    code: |
+      def balik(head):
+          prev = None
+          cur = head
+          while cur:
+              cur.next = prev
+              prev = cur
+              cur = cur.next
+          return prev
+    issues:
+      - line: 5
+        text: cur.next ditimpa sebelum disimpan, sehingga sisa rantai hilang. Simpan dulu nxt = cur.next.
+      - line: 7
+        text: cur.next sekarang menunjuk prev, jadi loop berjalan mundur atau berhenti. Seharusnya cur = nxt.
+    hints: |
+      Apa isi cur.next setelah baris 5?
+      Ke mana cur bergerak di baris 7?
+      Ada dua baris yang terkait.

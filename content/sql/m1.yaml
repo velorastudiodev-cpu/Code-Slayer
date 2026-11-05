@@ -1,0 +1,95 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: INSERT INTO menambah baris, UPDATE ... SET mengubah, DELETE FROM menghapus. UPDATE dan DELETE tanpa WHERE mengenai SEMUA baris, jadi selalu periksa WHERE-nya.
+  code: |
+    INSERT INTO slayer (nama, pernapasan, umur) VALUES ('Genya', 'Angin', 16);
+    UPDATE slayer SET umur = umur + 1 WHERE nama = 'Genya';
+    SELECT nama, umur FROM slayer WHERE nama = 'Genya';
+exercises:
+- id: sql-m1-insert
+  type: write
+  title: Anggota Baru
+  difficulty: 1
+  prompt: Tambahkan slayer bernama 'Genya' dengan pernapasan 'Angin', umur 16, dan pangkat_id 1. (Daftar nama akan diperiksa setelah kodemu.)
+  tests: &id001
+  - ''
+  - INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);
+  samples: 1
+  after: |
+    SELECT nama, pernapasan, umur, pangkat_id FROM slayer ORDER BY id;
+  hints: |
+    INSERT INTO tabel (kolom, ...) VALUES (nilai, ...).
+    id terisi otomatis kalau tidak ditulis.
+    Urutan nilai harus sama dengan urutan kolom.
+  solution: |
+    INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Genya', 'Angin', 16, 1);
+- id: sql-m1-update
+  type: write
+  title: Ulang Tahun Aliran Air
+  difficulty: 1
+  prompt: Tambah 1 tahun ke umur semua slayer pernapasan 'Air'. (Hasil diperiksa setelah kodemu.)
+  tests: *id001
+  samples: 1
+  after: |
+    SELECT nama, umur FROM slayer ORDER BY id;
+  hints: |
+    UPDATE tabel SET kolom = nilai WHERE syarat.
+    Nilai baru boleh dihitung dari nilai lama.
+    umur = umur + 1 WHERE pernapasan = 'Air'
+  solution: |
+    UPDATE slayer SET umur = umur + 1 WHERE pernapasan = 'Air';
+- id: sql-m1-delete
+  type: write
+  title: Hapus Misi Gagal
+  difficulty: 1
+  prompt: Hapus semua misi yang gagal (berhasil = 0). (Isi tabel misi diperiksa setelah kodemu.)
+  tests:
+  - ''
+  - INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (2, 3, '2026-06-03', 0, 0);
+  samples: 1
+  after: |
+    SELECT id, berhasil FROM misi ORDER BY id;
+  hints: |
+    DELETE FROM tabel WHERE syarat.
+    Tanpa WHERE semua baris terhapus!
+    WHERE berhasil = 0
+  solution: |
+    DELETE FROM misi WHERE berhasil = 0;
+- id: sql-m1-bug
+  type: bughunt
+  title: Kenaikan Pangkat Massal
+  difficulty: 2
+  prompt: Hanya Tanjiro yang seharusnya naik ke pangkat_id 3, tapi semua slayer ikut naik. Temukan baris yang salah.
+  starter: |
+    UPDATE slayer
+    SET pangkat_id = 3
+    WHERE nama = nama;
+  bug_line: 3
+  tests: *id001
+  after: |
+    SELECT nama, pangkat_id FROM slayer ORDER BY id;
+  hints: |
+    nama = nama selalu benar untuk setiap baris.
+    Bandingkan dengan teks yang tepat.
+    WHERE nama = 'Tanjiro'
+  solution: |
+    UPDATE slayer
+    SET pangkat_id = 3
+    WHERE nama = 'Tanjiro';

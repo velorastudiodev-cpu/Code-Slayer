@@ -1,0 +1,103 @@
+lesson:
+  - text: Di aplikasi ini (dan di judge JS seperti Codeforces), input dibaca per baris dengan readline(). Hasilnya selalu string, atau null kalau input sudah habis. Di Node.js asli kamu akan memakai modul readline atau fs.readFileSync(0).
+    code: |
+      const baris = "42"
+      console.log(baris + baris, Number(baris) + Number(baris))
+  - text: 'Satu baris dengan beberapa nilai dipecah dengan .split(" "), lalu diubah dengan .map(Number). Destructuring const [a, b] = ... membongkar hasilnya ke beberapa variabel.'
+    code: |
+      const baris = "3 4 5"
+      const [a, b, c] = baris.split(" ").map(Number)
+      console.log(a + b + c, baris.split(" "))
+exercises:
+  - id: js-f4-jumlah
+    type: write
+    title: Menjumlah Dua Bilah
+    difficulty: 1
+    prompt: Baca dua bilangan dalam satu baris, lalu cetak jumlahnya.
+    tests: ["3 4", "10 -2", "0 0", "100000 23"]
+    hints: |
+      readline().split(" ") memecah per spasi.
+      .map(Number) mengubah setiap bagian menjadi angka.
+      const [a, b] = ... lalu console.log(a + b)
+    solution: |
+      const [a, b] = readline().split(" ").map(Number)
+      console.log(a + b)
+  - id: js-f4-sapa
+    type: write
+    title: Sapaan Gagak
+    difficulty: 1
+    prompt: Baca nama, cetak "Halo, <nama>!".
+    tests: ["Tanjiro", "Kanao"]
+    hints: |
+      readline() membaca satu baris.
+      Pakai template literal.
+      console.log(`Halo, ${nama}!`)
+    solution: |
+      const nama = readline()
+      console.log(`Halo, ${nama}!`)
+  - id: js-f4-banyak-baris
+    type: write
+    title: Laporan Berjumlah n
+    difficulty: 2
+    prompt: Baris pertama berisi n, lalu n baris masing-masing satu bilangan. Cetak jumlahnya.
+    tests: ["3\n1\n2\n3", "1\n-5", "4\n10\n20\n30\n40"]
+    hints: |
+      Baca n dulu.
+      Ulangi readline() sebanyak n kali.
+      total += Number(readline())
+    solution: |
+      const n = Number(readline())
+      let total = 0
+      for (let i = 0; i < n; i++) total += Number(readline())
+      console.log(total)
+  - id: js-f4-predict
+    type: predict
+    title: Teks atau Angka?
+    difficulty: 1
+    prompt: Dengan input di bawah, tulis output persis dari kode berikut.
+    code: |
+      const [a, b] = readline().split(" ")
+      console.log(a + b)
+      console.log(Number(a) + Number(b))
+    tests: ["5 7"]
+    hints: |
+      split menghasilkan string.
+      String + string berarti digabung.
+      Setelah Number(), + menjadi penjumlahan.
+    solution: x
+  - id: js-f4-bug-map
+    type: bughunt
+    title: Penjumlahan yang Menempel
+    difficulty: 1
+    prompt: Program harus mencetak jumlah semua bilangan dalam satu baris, tapi hasilnya angka-angka yang menempel. Temukan bug-nya.
+    starter: |
+      const angka = readline().split(" ")
+      let total = 0
+      for (const x of angka) total = total + x
+      console.log(total)
+    bug_line: 3
+    tests: ["2 3 4", "5", "10 -1"]
+    hints: |
+      Apa tipe setiap x hasil split?
+      number + string menghasilkan string yang digabung.
+      total = total + Number(x)
+    solution: |
+      const angka = readline().split(" ")
+      let total = 0
+      for (const x of angka) total = total + Number(x)
+      console.log(total)
+  - id: js-f4-parsons
+    type: parsons
+    title: Terkuat dan Terlemah
+    difficulty: 2
+    prompt: Baris 1 berisi n, baris 2 berisi n bilangan. Susun program yang mencetak nilai terbesar lalu terkecil.
+    tests: ["3\n5 1 9", "4\n-1 -5 -3 -2"]
+    hints: |
+      n dibaca dari baris pertama.
+      Spread ...angka mengirim isi array ke Math.max.
+      max dicetak sebelum min.
+    solution: |
+      const n = Number(readline())
+      const angka = readline().split(" ").map(Number)
+      console.log(Math.max(...angka))
+      console.log(Math.min(...angka))

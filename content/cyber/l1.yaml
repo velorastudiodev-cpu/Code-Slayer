@@ -1,0 +1,58 @@
+lesson:
+- text: 'Reverse engineering: memahami program tanpa kode sumbernya. Mulai dari strings, lalu baca alur logika (pseudocode/assembly), cari perbandingan kunci, dan balik operasinya (XOR dibalik XOR, + dibalik
+    −).'
+exercises:
+- id: cy-lab-rev-balik
+  type: lab
+  title: Kunci Terbalik
+  difficulty: 1
+  prompt: 'Lab sandbox: Baca kodenya dan temukan kunci yang diterima. Flag = SLAYER{kunci}. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: rev-balik
+  hints: |
+    Ikuti apa yang dilakukan pada input.
+    split-reverse-join membalik string.
+    Balik string pembandingnya.
+- id: cy-lab-rev-xor
+  type: lab
+  title: Gembok Bitwise
+  difficulty: 2
+  prompt: 'Lab sandbox: Hitung kunci yang benar. Flag = SLAYER{kunci}. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: rev-xor
+  hints: |
+    XOR bisa dibalik dengan XOR yang sama.
+    Untuk setiap angka n, huruf = String.fromCharCode(n ^ 7).
+    Hasilnya nama lengkap tokoh utama (huruf kecil, pakai _).
+- id: cy-lab-rev-asm
+  type: lab
+  title: Gulungan Assembly
+  difficulty: 3
+  prompt: 'Lab sandbox: Hitung angka kuncinya. Flag = SLAYER{angka}. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: rev-asm
+  hints: |
+    Ikuti register: eax = kunci; eax *= 3; eax += 7; eax ^= 0x55.
+    Agar hasil akhir 0 maka eax sebelum XOR = 0x55 = 85.
+    3k + 7 = 85, jadi k = 26
+- id: cy-lab-cr-xor
+  type: lab
+  title: Satu Byte Rahasia
+  difficulty: 2
+  prompt: 'Lab sandbox: Temukan kuncinya (0–255) dan baca pesannya. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: cr-xor
+  hints: |
+    Flag selalu diawali SLAYER{.
+    S (0x53) XOR kunci = byte pertama (0x35).
+    kunci = 0x53 XOR 0x35 = 102
+- id: cy-l1-obf
+  type: predict
+  title: Kode Kabur
+  difficulty: 2
+  prompt: Tulis output persis dari kode berikut.
+  code: |
+    k = [83, 76, 65, 89, 69, 82]
+    print("".join(chr(x) for x in k))
+  lang: python
+  hints: |
+    chr mengubah angka menjadi huruf ASCII.
+    65 = A, 83 = S.
+    Gabungkan semuanya.
+  solution: x

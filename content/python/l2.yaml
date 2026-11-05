@@ -1,0 +1,142 @@
+lesson:
+  - text: Di Python, fungsi adalah nilai biasa. Fungsi bisa disimpan di variabel, dikirim sebagai argumen, dan dikembalikan oleh fungsi lain. Decorator adalah fungsi yang menerima fungsi lalu mengembalikan versi yang "dibungkus". Sintaks @nama di atas def adalah singkatan dari f = nama(f).
+    code: |
+      def teriak(f):
+          def pembungkus(*args):
+              return f(*args).upper() + "!"
+          return pembungkus
+      @teriak
+      def sapa(nama):
+          return f"halo {nama}"
+      print(sapa("zenitsu"))
+  - text: Context manager mengatur persiapan dan pembersihan otomatis lewat with, seperti file yang otomatis ditutup. Dengan @contextmanager, kode sebelum yield adalah persiapan, dan kode sesudahnya adalah pembersihan.
+    code: |
+      from contextlib import contextmanager
+      @contextmanager
+      def misi(nama):
+          print("berangkat:", nama)
+          yield
+          print("pulang:", nama)
+      with misi("Natagumo"):
+          print("bertarung...")
+exercises:
+  - id: py-l2-teriak
+    type: write
+    title: Decorator Teriak
+    difficulty: 2
+    prompt: 'Lengkapi decorator teriak supaya hasil fungsi berubah menjadi huruf besar. Baca nama, lalu cetak sapa(nama). Contoh: "HALO, TANJIRO".'
+    starter: |
+      def teriak(f):
+          pass  # lengkapi
+      @teriak
+      def sapa(nama):
+          return f"halo, {nama}"
+      print(sapa(input()))
+    tests: ["tanjiro", "Nezuko", "kaa"]
+    hints: |
+      Decorator harus mengembalikan fungsi baru.
+      Fungsi baru memanggil f lalu mengubah hasilnya.
+      def w(*a): return f(*a).upper(), lalu return w
+    solution: |
+      def teriak(f):
+          def w(*a):
+              return f(*a).upper()
+          return w
+      @teriak
+      def sapa(nama):
+          return f"halo, {nama}"
+      print(sapa(input()))
+  - id: py-l2-predict
+    type: predict
+    title: Jejak Decorator
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      def log(f):
+          def w(*a):
+              print("mulai", f.__name__)
+              r = f(*a)
+              print("selesai")
+              return r
+          return w
+      @log
+      def tambah(a, b):
+          return a + b
+      print(tambah(2, 3))
+    hints: |
+      Memanggil tambah sebenarnya memanggil w.
+      w mencetak sebelum dan sesudah memanggil f.
+      Hasil 5 baru dicetak setelah w selesai.
+    solution: x
+  - id: py-l2-bingkai
+    type: write
+    title: Bingkai Gulungan
+    difficulty: 2
+    prompt: 'Buat context manager bingkai(judul) dengan @contextmanager yang mencetak "== <judul> ==" sebelum blok dan "== akhir ==" sesudahnya. Baca judul, lalu di dalam with cetak "isi".'
+    tests: ["Misi", "Laporan Gagak"]
+    hints: |
+      from contextlib import contextmanager
+      Cetak judul sebelum yield, dan "== akhir ==" sesudahnya.
+      with bingkai(input()): print("isi")
+    solution: |
+      from contextlib import contextmanager
+      @contextmanager
+      def bingkai(judul):
+          print(f"== {judul} ==")
+          yield
+          print("== akhir ==")
+      with bingkai(input()):
+          print("isi")
+  - id: py-l2-bug-ulang
+    type: bughunt
+    title: Decorator Berparameter
+    difficulty: 3
+    prompt: '@ulang(3) seharusnya membuat kaa() dijalankan 3 kali, tapi program error. Temukan bug-nya.'
+    starter: |
+      def ulang(n):
+          def dekor(f):
+              def w(*a):
+                  for _ in range(n):
+                      f(*a)
+              return w
+          return f
+      @ulang(3)
+      def kaa():
+          print("Kaa!")
+      kaa()
+    bug_line: 7
+    hints: |
+      Ada tiga lapis fungsi, dan setiap lapis mengembalikan lapis di dalamnya.
+      ulang(n) harus mengembalikan decorator-nya.
+      return dekor
+    solution: |
+      def ulang(n):
+          def dekor(f):
+              def w(*a):
+                  for _ in range(n):
+                      f(*a)
+              return w
+          return dekor
+      @ulang(3)
+      def kaa():
+          print("Kaa!")
+      kaa()
+  - id: py-l2-parsons
+    type: parsons
+    title: Lipat Dua
+    difficulty: 2
+    prompt: Susun program dengan decorator kali_dua yang menggandakan hasil fungsi tambah_satu.
+    tests: ["3", "0", "-5"]
+    hints: |
+      Decorator didefinisikan sebelum dipakai.
+      @kali_dua tepat di atas def tambah_satu.
+      print paling akhir.
+    solution: |
+      def kali_dua(f):
+          def w(x):
+              return f(x) * 2
+          return w
+      @kali_dua
+      def tambah_satu(x):
+          return x + 1
+      print(tambah_satu(int(input())))

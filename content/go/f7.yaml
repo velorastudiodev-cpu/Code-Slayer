@@ -1,0 +1,68 @@
+lesson:
+- text: Fungsi ditulis func nama(param tipe) tipeKembali { }. Go bisa mengembalikan beberapa nilai sekaligus, pola yang dipakai untuk mengembalikan hasil + error.
+  code: "package main\n\nimport \"fmt\"\n\nfunc bagi(a, b int) (int, int) {\n\treturn a / b, a % b\n}\n\nfunc main() {\n\th, s := bagi(17, 5)\n\tfmt.Println(h, s)\n}\n"
+- text: Argumen dikirim sebagai salinan (pass by value). Untuk mengubah variabel pemanggil, kirim pointer (*int) dan alamatnya (&x). Fungsi juga boleh rekursif.
+  code: "package main\n\nimport \"fmt\"\n\nfunc gandakan(p *int) {\n\t*p *= 2\n}\n\nfunc main() {\n\tx := 21\n\tgandakan(&x)\n\tfmt.Println(x)\n}\n"
+exercises:
+- id: go-f7-fpb
+  type: write
+  title: FPB Dua Klan
+  difficulty: 2
+  prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - 12 18
+  - 7 13
+  - 100 75
+  - 0 5
+  hints: |
+    fpb(a, 0) = a.
+    fpb(a, b) = fpb(b, a % b).
+    Bisa rekursif atau dengan loop.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc fpb(a, b int) int {\n\tif b == 0 {\n\t\treturn a\n\t}\n\treturn fpb(b, a%b)\n}\n\nfunc main() {\n\tvar a, b int\n\tfmt.Scan(&a, &b)\n\tfmt.Println(fpb(a,\
+    \ b))\n}\n"
+- id: go-f7-faktorial
+  type: write
+  title: Faktorial Pernapasan
+  difficulty: 2
+  prompt: Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - '5'
+  - '0'
+  - '20'
+  hints: |
+    0! = 1 adalah base case.
+    n! = n × (n-1)!.
+    20! melebihi 32-bit: pakai 64-bit.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc faktorial(n int64) int64 {\n\tif n == 0 {\n\t\treturn 1\n\t}\n\treturn n * faktorial(n-1)\n}\n\nfunc main() {\n\tvar n int64\n\tfmt.Scan(&n)\n\tfmt.Println(faktorial(n))\n\
+    }\n"
+- id: go-f7-predict
+  type: predict
+  title: Salinan atau Asli?
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport \"fmt\"\n\nfunc latih(x int) int {\n\tx = x * 10\n\treturn x + 1\n}\n\nfunc main() {\n\ta := 3\n\tb := latih(a)\n\tfmt.Println(a, b)\n\tlatih(b)\n\tfmt.Println(b)\n}\n"
+  hints: |
+    Argumen bilangan dikirim sebagai salinan.
+    Mengubah salinan tidak mengubah variabel pemanggil.
+    Nilai yang dikembalikan lain cerita.
+  solution: x
+- id: go-f7-bug
+  type: bughunt
+  title: Rekursi Tanpa Ujung
+  difficulty: 2
+  prompt: pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc pangkat(a, n int) int {\n\tif n == -1 {\n\t\treturn 1\n\t}\n\treturn a * pangkat(a, n-1)\n}\n\nfunc main() {\n\tvar a, n int\n\tfmt.Scan(&a, &n)\n\tfmt.Println(pangkat(a,\
+    \ n))\n}\n"
+  bug_line: 6
+  tests:
+  - 2 10
+  - 3 0
+  - 5 3
+  hints: |
+    Setiap rekursi butuh base case.
+    Kapan rekursi harus berhenti?
+    Saat n == 0, kembalikan 1.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc pangkat(a, n int) int {\n\tif n == 0 {\n\t\treturn 1\n\t}\n\treturn a * pangkat(a, n-1)\n}\n\nfunc main() {\n\tvar a, n int\n\tfmt.Scan(&a, &n)\n\tfmt.Println(pangkat(a,\
+    \ n))\n}\n"

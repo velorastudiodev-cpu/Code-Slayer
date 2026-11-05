@@ -1,0 +1,91 @@
+lesson:
+- text: Program Rust dimulai dari fn main(). println! adalah macro (tanda !) yang mencetak lalu newline; print! tanpa newline. {} adalah tempat nilai disisipkan.
+  code: |
+    fn main() {
+        println!("Pernapasan Batu, {}", "Bentuk Pertama");
+        print!("tanpa ");
+        print!("newline\n");
+    }
+- text: 'Format: {} nilai biasa, {:.2} desimal 2 angka, {:>5} rata kanan lebar 5. Sejak Rust 2021, nama variabel boleh ditulis langsung di dalam kurung kurawal: {nama}.'
+  code: |
+    fn main() {
+        let nama = "Gyomei";
+        let doa = 108;
+        println!("{nama} berdoa {} kali, rata-rata {:.1} per jam", doa, doa as f64 / 24.0);
+    }
+exercises:
+- id: rs-f1-halo
+  type: write
+  title: Salam Pertama
+  difficulty: 1
+  prompt: Cetak tepat satu baris "Halo, Slayer!".
+  starter: |
+    fn main() {
+        // tulis kodemu di sini
+    }
+  hints: |
+    Gunakan fungsi cetak baris bawaan bahasa ini.
+    Teks harus persis sama, termasuk koma dan tanda seru.
+    Satu baris saja, diakhiri newline.
+  solution: |
+    fn main() {
+        println!("Halo, Slayer!");
+    }
+- id: rs-f1-format
+  type: write
+  title: Laporan Berformat
+  difficulty: 1
+  prompt: Dengan string berformat, cetak "Rengoku berumur 20 tahun, kekuatan 9.50" dari variabel nama = "Rengoku", umur = 20, dan kekuatan = 9.5.
+  starter: |
+    fn main() {
+        // tulis kodemu di sini
+    }
+  hints: |
+    Simpan ketiga nilai dalam variabel dulu.
+    Pakai format/interpolasi string, bukan menyambung manual.
+    Kekuatan dicetak dengan tepat 2 angka di belakang koma.
+  solution: |
+    fn main() {
+        let nama = "Rengoku";
+        let umur = 20;
+        let kekuatan = 9.5;
+        println!("{} berumur {} tahun, kekuatan {:.2}", nama, umur, kekuatan);
+    }
+- id: rs-f1-predict
+  type: predict
+  title: Baris yang Tidak Berganti
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn main() {
+        print!("Kaa");
+        print!("{}{}", "!", "!");
+        println!();
+        println!("misi {} selesai", 3);
+        println!("{}+{}={}", 2, 3, 2 + 3);
+    }
+  hints: |
+    Perhatikan perintah cetak mana yang menambah newline.
+    Perintah tanpa newline menyambung ke baris yang sama.
+    Hitung spasinya dengan teliti.
+  solution: x
+- id: rs-f1-bug
+  type: bughunt
+  title: Iblis Pemakan Tanda Kutip
+  difficulty: 1
+  prompt: Program harus mencetak "Kaa!" lalu "Misi!", tapi gagal dikompilasi. Temukan baris yang salah.
+  starter: |
+    fn main() {
+        println!("Kaa!");
+        println!("Misi!);
+    }
+  bug_line: 3
+  hints: |
+    Baca pesan error compiler: ia menunjuk nomor baris.
+    Setiap string harus dibuka DAN ditutup dengan tanda kutip.
+    Tambahkan tanda kutip penutup yang hilang.
+  solution: |
+    fn main() {
+        println!("Kaa!");
+        println!("Misi!");
+    }

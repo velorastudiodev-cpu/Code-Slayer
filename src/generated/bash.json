@@ -1,0 +1,1724 @@
+{
+ "hash": "c4dc5c196bb9",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Shell adalah juru bicara antara kamu dan sistem operasi. Kamu selalu \"berdiri\" di satu direktori: pwd menampilkannya, ls melihat isinya, cd berpindah. Path absolut dimulai dari / (akar), path relatif dari direktori sekarang. ~ adalah home, .. adalah direktori induk.",
+     "code": "pwd\nls\ncd /tmp\ncd ..\ncd ~\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f1-pwd",
+     "type": "write",
+     "title": "Di Mana Aku?",
+     "difficulty": 1,
+     "prompt": "Tampilkan path lengkap direktori kerja sekarang.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "/home/slayer\n"
+      }
+     ],
+     "hints": [
+      "Singkatan \"print working directory\".",
+      "Tiga huruf.",
+      "pwd"
+     ],
+     "solutions": [
+      "pwd\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f1"
+    },
+    {
+     "id": "bash-f1-ls",
+     "type": "write",
+     "title": "Isi Markas",
+     "difficulty": 1,
+     "prompt": "Tampilkan isi direktori markas (tanpa file tersembunyi), satu nama per baris.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "arsip\nmisi\nregu.txt\n"
+      }
+     ],
+     "hints": [
+      "ls menampilkan isi direktori.",
+      "Opsi -1 membuat satu per baris.",
+      "ls -1 markas"
+     ],
+     "solutions": [
+      "ls -1 markas\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f1"
+    },
+    {
+     "id": "bash-f1-hidden",
+     "type": "write",
+     "title": "Yang Tersembunyi",
+     "difficulty": 2,
+     "prompt": "Tampilkan SEMUA isi markas termasuk file tersembunyi (yang diawali titik), satu per baris, tanpa . dan ..",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": ".kunci\narsip\nmisi\nregu.txt\n"
+      }
+     ],
+     "hints": [
+      "File berawalan titik disembunyikan ls.",
+      "-a menampilkan semua, -A tanpa . dan ..",
+      "ls -1A markas"
+     ],
+     "solutions": [
+      "ls -1A markas\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f1"
+    },
+    {
+     "id": "bash-f1-cd",
+     "type": "write",
+     "title": "Masuk ke Misi",
+     "difficulty": 1,
+     "prompt": "Pindah ke direktori markas/misi lalu tampilkan isinya.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "daftar.txt\n"
+      }
+     ],
+     "hints": [
+      "cd untuk berpindah.",
+      "Path relatif dari posisimu.",
+      "cd markas/misi lalu ls"
+     ],
+     "solutions": [
+      "cd markas/misi\nls\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Membuat & mengelola file: mkdir (direktori, -p sekaligus induknya), touch (file kosong), cp (salin, -r untuk folder), mv (pindah/ganti nama), rm (hapus, -r folder). Tidak ada tempat sampah: rm itu permanen!",
+     "code": "mkdir -p proyek/src\ntouch proyek/README.md\ncp proyek/README.md proyek/CATATAN.md\nmv proyek/CATATAN.md proyek/docs.md\nrm proyek/docs.md\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f2-mkdir",
+     "type": "write",
+     "title": "Membangun Pos",
+     "difficulty": 1,
+     "prompt": "Buat direktori pos/utara/menara (sekaligus semua induknya), lalu tampilkan pohonnya dengan find pos.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "pos\npos/utara\npos/utara/menara\n"
+      }
+     ],
+     "hints": [
+      "Perlu membuat beberapa tingkat sekaligus.",
+      "mkdir punya opsi -p.",
+      "mkdir -p pos/utara/menara lalu find pos"
+     ],
+     "solutions": [
+      "mkdir -p pos/utara/menara\nfind pos\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f2"
+    },
+    {
+     "id": "bash-f2-cp",
+     "type": "write",
+     "title": "Gandakan Laporan",
+     "difficulty": 1,
+     "prompt": "Salin markas/regu.txt menjadi markas/regu-cadangan.txt, lalu tampilkan isi cadangannya.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "Tanjiro\nZenitsu\nInosuke\n"
+      }
+     ],
+     "hints": [
+      "cp sumber tujuan",
+      "Lalu cat hasilnya.",
+      "cp markas/regu.txt markas/regu-cadangan.txt"
+     ],
+     "solutions": [
+      "cp markas/regu.txt markas/regu-cadangan.txt\ncat markas/regu-cadangan.txt\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f2"
+    },
+    {
+     "id": "bash-f2-mv",
+     "type": "write",
+     "title": "Ganti Nama Arsip",
+     "difficulty": 2,
+     "prompt": "Ganti nama semua file di markas/arsip dari .log menjadi .txt (ada 2 file), lalu tampilkan isi direktorinya.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "2023.txt\n2024.txt\n"
+      }
+     ],
+     "hints": [
+      "mv bisa mengganti nama.",
+      "Loop for untuk setiap *.log.",
+      "${f%.log} membuang akhiran .log"
+     ],
+     "solutions": [
+      "cd markas/arsip\nfor f in *.log; do mv \"$f\" \"${f%.log}.txt\"; done\nls\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f2"
+    },
+    {
+     "id": "bash-f2-rm",
+     "type": "quiz",
+     "title": "Tanpa Tempat Sampah",
+     "difficulty": 1,
+     "prompt": "Apa yang terjadi setelah rm -r proyek/ di terminal Linux?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "rm tidak mengenal Trash.",
+      "-r = rekursif.",
+      "Permanen."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Folder dan isinya terhapus permanen (tidak ke tempat sampah)",
+      "Folder dipindah ke Trash",
+      "Hanya folder kosong yang terhapus",
+      "Linux meminta konfirmasi lewat GUI"
+     ],
+     "explain": "rm langsung menghapus. Biasakan cek dengan ls dulu, dan hati-hati dengan rm -rf.",
+     "track": "bash",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Setiap file punya pemilik, grup, dan izin untuk tiga pihak: user (u), group (g), others (o). r=4, w=2, x=1. 755 = rwxr-xr-x. chmod mengubah izin (angka atau simbol u+x), chown mengubah pemilik (hanya root).",
+     "code": "chmod 755 skrip.sh\nchmod u+x skrip.sh\nchmod 600 rahasia.txt\nstat -c %a rahasia.txt\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f3-chmod",
+     "type": "write",
+     "title": "Kunci Rapat",
+     "difficulty": 1,
+     "prompt": "Ubah izin markas/.kunci menjadi hanya bisa dibaca dan ditulis pemiliknya, lalu tampilkan izinnya dalam angka (stat -c %a).",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "600\n"
+      }
+     ],
+     "hints": [
+      "rw- untuk user, --- untuk group & others.",
+      "r=4, w=2 → 6.",
+      "chmod 600 lalu stat -c %a"
+     ],
+     "solutions": [
+      "chmod 600 markas/.kunci\nstat -c %a markas/.kunci\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f3"
+    },
+    {
+     "id": "bash-f3-exec",
+     "type": "write",
+     "title": "Skrip Siap Tempur",
+     "difficulty": 2,
+     "prompt": "Buat skrip halo.sh yang mencetak \"Kaa!\", beri izin eksekusi, lalu jalankan dengan ./halo.sh",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "Kaa!\n"
+      }
+     ],
+     "hints": [
+      "Tulis isi skrip dengan echo > file.",
+      "chmod +x memberi izin eksekusi.",
+      "Jalankan dengan ./halo.sh"
+     ],
+     "solutions": [
+      "echo 'echo Kaa!' > halo.sh\nchmod +x halo.sh\n./halo.sh\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f3"
+    },
+    {
+     "id": "bash-f3-755",
+     "type": "quiz",
+     "title": "Membaca Angka Izin",
+     "difficulty": 1,
+     "prompt": "Izin 754 berarti...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Pecah per digit.",
+      "r=4, w=2, x=1.",
+      "7=rwx, 5=r-x, 4=r--"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "user rwx, group r-x, others r--",
+      "user rwx, group rwx, others r--",
+      "user r-x, group r--, others rwx",
+      "semua bisa menulis"
+     ],
+     "explain": "7 = 4+2+1 (rwx), 5 = 4+1 (r-x), 4 = r--.",
+     "track": "bash",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Kekuatan shell ada di pipa: | mengalirkan output satu perintah menjadi input perintah lain. > menulis ke file (menimpa), >> menambah, < membaca dari file, 2> mengarahkan error. wc -l menghitung baris, sort mengurutkan, head/tail mengambil awal/akhir.",
+     "code": "cat regu.txt | sort | head -2\necho baru >> catatan.txt\nls tidak-ada 2> error.txt\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f4-wc",
+     "type": "write",
+     "title": "Hitung Misi",
+     "difficulty": 1,
+     "prompt": "Hitung jumlah baris di markas/misi/daftar.txt (cetak angkanya saja).",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "3\n"
+      }
+     ],
+     "hints": [
+      "wc -l menghitung baris.",
+      "Dengan < hanya angka yang dicetak.",
+      "wc -l < file"
+     ],
+     "solutions": [
+      "wc -l < markas/misi/daftar.txt\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f4"
+    },
+    {
+     "id": "bash-f4-sort",
+     "type": "write",
+     "title": "Urut Abjad",
+     "difficulty": 1,
+     "prompt": "Tampilkan isi markas/regu.txt terurut abjad terbalik (Z ke A).",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "Zenitsu\nTanjiro\nInosuke\n"
+      }
+     ],
+     "hints": [
+      "sort mengurutkan.",
+      "-r membalik urutan.",
+      "sort -r file"
+     ],
+     "solutions": [
+      "sort -r markas/regu.txt\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f4"
+    },
+    {
+     "id": "bash-f4-append",
+     "type": "write",
+     "title": "Tambah Anggota",
+     "difficulty": 2,
+     "prompt": "Tambahkan baris \"Kanao\" ke akhir markas/regu.txt TANPA menimpa isinya, lalu tampilkan isi file.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p markas/misi markas/arsip\nprintf \"Gunung Natagumo\\nDesa Asakusa\\nKereta Mugen\\n\" > markas/misi/daftar.txt\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > markas/regu.txt\necho \"rahasia\" > markas/.kunci\ntouch markas/arsip/2023.log markas/arsip/2024.log\n",
+     "tests": [
+      {
+       "expected": "Tanjiro\nZenitsu\nInosuke\nKanao\n"
+      }
+     ],
+     "hints": [
+      "> menimpa, >> menambah.",
+      "echo teks >> file",
+      "Lalu cat file."
+     ],
+     "solutions": [
+      "echo Kanao >> markas/regu.txt\ncat markas/regu.txt\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f4"
+    },
+    {
+     "id": "bash-f4-pipe",
+     "type": "write",
+     "title": "Nama Terpanjang",
+     "difficulty": 2,
+     "prompt": "Dari input (satu nama per baris), cetak nama yang paling panjang. Gunakan awk untuk panjang, sort, dan head.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "Tanjiro\nZenitsu\nInosuke\nRengoku Kyojuro\n",
+       "expected": "Rengoku\n"
+      },
+      {
+       "input": "Ai\nNezuko\nUzui\n",
+       "expected": "Nezuko\n"
+      }
+     ],
+     "hints": [
+      "awk bisa mencetak length.",
+      "Urutkan angka menurun.",
+      "Ambil baris pertama, buang kolom panjang."
+     ],
+     "solutions": [
+      "awk '{ print length, $0 }' | sort -rn | head -1 | cut -d' ' -f2\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "Variabel: nama=nilai (tanpa spasi di sekitar =), dibaca dengan $nama. Selalu kutip \"$nama\" agar spasi aman. $(perintah) menyimpan output perintah. read nama membaca satu baris input. Aritmetika: $(( a + b )).",
+     "code": "nama=\"Tanjiro\"\necho \"Halo, $nama\"\njumlah=$(wc -l < regu.txt)\nread kota\necho $(( 3 * 4 ))\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f5-read",
+     "type": "write",
+     "title": "Sapaan Gagak",
+     "difficulty": 1,
+     "prompt": "Baca satu nama dari input lalu cetak \"Kaa! Halo, <nama>!\"",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "Tanjiro\n",
+       "expected": "Kaa! Halo, Tanjiro!\n"
+      },
+      {
+       "input": "Rengoku Kyojuro\n",
+       "expected": "Kaa! Halo, Rengoku Kyojuro!\n"
+      }
+     ],
+     "hints": [
+      "read membaca satu baris.",
+      "Pakai $nama di dalam kutip ganda.",
+      "echo \"Kaa! Halo, $nama!\""
+     ],
+     "solutions": [
+      "read nama\necho \"Kaa! Halo, $nama!\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f5"
+    },
+    {
+     "id": "bash-f5-math",
+     "type": "write",
+     "title": "Jumlah Iblis",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan (satu per baris) lalu cetak jumlahnya.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "3\n4\n",
+       "expected": "7\n"
+      },
+      {
+       "input": "100\n-25\n",
+       "expected": "75\n"
+      }
+     ],
+     "hints": [
+      "Baca dua kali.",
+      "Aritmetika dengan $(( )).",
+      "echo $(( a + b ))"
+     ],
+     "solutions": [
+      "read a\nread b\necho $(( a + b ))\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f5"
+    },
+    {
+     "id": "bash-f5-spasi",
+     "type": "bughunt",
+     "title": "Spasi Terlarang",
+     "difficulty": 1,
+     "prompt": "Skrip harus mencetak \"Napas: Air\". Temukan barisnya yang salah.",
+     "lang": "bash",
+     "starter": "napas = \"Air\"\necho \"Napas: $napas\"\n",
+     "bug_line": 1,
+     "tests": [
+      {
+       "expected": "Napas: Air\n"
+      }
+     ],
+     "hints": [
+      "Bash sangat ketat soal spasi.",
+      "Assignment tidak boleh ada spasi di sekitar =.",
+      "napas=\"Air\""
+     ],
+     "solutions": [
+      "napas=\"Air\"\necho \"Napas: $napas\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f5"
+    },
+    {
+     "id": "bash-f5-predict",
+     "type": "predict",
+     "title": "Tebak Output",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "a=5\nb=$(( a * 2 ))\na=1\necho \"$a $b\"\n",
+     "tests": [
+      {
+       "expected": "1 10\n"
+      }
+     ],
+     "hints": [
+      "b dihitung saat baris itu dijalankan.",
+      "Mengubah a setelahnya tidak mengubah b.",
+      "b = 10"
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "if [ kondisi ]; then ... fi. Bandingkan angka dengan -eq -lt -gt, string dengan = atau !=, file dengan -f (file ada) -d (direktori). Loop: for x in a b c; do ...; done, for i in $(seq 1 5), while read baris; do ...; done.",
+     "code": "if [ \"$n\" -gt 10 ]; then echo besar; else echo kecil; fi\nfor i in $(seq 1 3); do echo \"Tebasan $i\"; done\nwhile read baris; do echo \"> $baris\"; done < file\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f6-genap",
+     "type": "write",
+     "title": "Genap atau Ganjil",
+     "difficulty": 1,
+     "prompt": "Baca bilangan n. Cetak \"genap\" atau \"ganjil\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "4\n",
+       "expected": "genap\n"
+      },
+      {
+       "input": "7\n",
+       "expected": "ganjil\n"
+      },
+      {
+       "input": "0\n",
+       "expected": "genap\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Sisa bagi 2.",
+      "if [ ... -eq 0 ]",
+      "$(( n % 2 ))"
+     ],
+     "solutions": [
+      "read n\nif [ $(( n % 2 )) -eq 0 ]; then echo genap; else echo ganjil; fi\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f6"
+    },
+    {
+     "id": "bash-f6-loop",
+     "type": "write",
+     "title": "Hitung Mundur",
+     "difficulty": 1,
+     "prompt": "Baca n lalu cetak n, n-1, ..., 1, lalu \"Tebas!\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "3\n",
+       "expected": "3\n2\n1\nTebas!\n"
+      },
+      {
+       "input": "1\n",
+       "expected": "1\nTebas!\n"
+      }
+     ],
+     "hints": [
+      "Loop menurun.",
+      "for (( ...; ...; i-- )) atau seq n -1 1.",
+      "Akhiri dengan echo \"Tebas!\""
+     ],
+     "solutions": [
+      "read n\nfor (( i = n; i >= 1; i-- )); do echo $i; done\necho \"Tebas!\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f6"
+    },
+    {
+     "id": "bash-f6-while",
+     "type": "write",
+     "title": "Nomori Baris",
+     "difficulty": 2,
+     "prompt": "Baca input baris demi baris dan cetak setiap baris dengan nomor: \"1. Tanjiro\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "Tanjiro\nZenitsu\n",
+       "expected": "1. Tanjiro\n2. Zenitsu\n"
+      },
+      {
+       "input": "Kanao\n",
+       "expected": "1. Kanao\n"
+      }
+     ],
+     "hints": [
+      "while read membaca baris demi baris.",
+      "Simpan penghitung.",
+      "IFS= read -r mempertahankan spasi."
+     ],
+     "solutions": [
+      "n=0\nwhile IFS= read -r baris; do\n  n=$(( n + 1 ))\n  echo \"$n. $baris\"\ndone\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f6"
+    },
+    {
+     "id": "bash-f6-parsons",
+     "type": "parsons",
+     "title": "Susun Patroli",
+     "difficulty": 1,
+     "prompt": "Susun skrip yang mencetak \"Pos 1\" sampai \"Pos 3\".",
+     "lang": "bash",
+     "tests": [
+      {
+       "expected": "Pos 1\nPos 2\nPos 3\n"
+      }
+     ],
+     "hints": [
+      "for ... do ... done",
+      "Isi loop di tengah.",
+      "done di akhir."
+     ],
+     "solutions": [
+      "for i in 1 2 3; do\n  echo \"Pos $i\"\ndone\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi mengelompokkan perintah: nama() { ...; }. Argumen dibaca dengan $1, $2, $@ (semua). Variabel di dalam fungsi sebaiknya local. return hanya untuk status 0–255; untuk \"mengembalikan\" teks, echo lalu tangkap dengan $(fungsi).",
+     "code": "sapa() {\n  local nama=$1\n  echo \"Halo, $nama\"\n}\nsapa Tanjiro\nhasil=$(sapa Nezuko)\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-f7-fungsi",
+     "type": "write",
+     "title": "Fungsi Kuadrat",
+     "difficulty": 1,
+     "prompt": "Buat fungsi kuadrat yang mencetak kuadrat argumennya. Baca n dari input lalu panggil kuadrat n.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "5\n",
+       "expected": "25\n"
+      },
+      {
+       "input": "12\n",
+       "expected": "144\n"
+      }
+     ],
+     "hints": [
+      "Argumen pertama: $1.",
+      "Aritmetika $(( ))",
+      "kuadrat \"$n\""
+     ],
+     "solutions": [
+      "kuadrat() {\n  echo $(( $1 * $1 ))\n}\nread n\nkuadrat \"$n\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "f7"
+    },
+    {
+     "id": "bash-f7-max",
+     "type": "write",
+     "title": "Pedang Terpanjang",
+     "difficulty": 2,
+     "prompt": "Buat fungsi terbesar yang menerima banyak angka sebagai argumen dan mencetak yang terbesar. Baca satu baris angka dari input lalu panggil terbesar dengan angka-angka itu.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "3 9 2\n",
+       "expected": "9\n"
+      },
+      {
+       "input": "-5 -1 -7\n",
+       "expected": "-1\n"
+      }
+     ],
+     "hints": [
+      "$@ berisi semua argumen.",
+      "Simpan maksimum sementara.",
+      "read -a membaca ke array."
+     ],
+     "solutions": [
+      "terbesar() {\n  local m=$1\n  for x in \"$@\"; do\n    if [ \"$x\" -gt \"$m\" ]; then m=$x; fi\n  done\n  echo \"$m\"\n}\nread -a angka\nterbesar \"${angka[@]}\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "f7"
+    },
+    {
+     "id": "bash-f7-local",
+     "type": "quiz",
+     "title": "Variabel Bocor",
+     "difficulty": 2,
+     "prompt": "Mengapa variabel di dalam fungsi sebaiknya dideklarasikan dengan local?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Default variabel bash: global.",
+      "Fungsi bisa tidak sengaja menimpa variabel pemanggil.",
+      "local membatasi ke fungsi."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Tanpa local, variabel itu global dan bisa menimpa variabel di luar fungsi",
+      "local membuat fungsi lebih cepat",
+      "Bash mewajibkannya",
+      "local membuat variabel jadi konstanta"
+     ],
+     "explain": "Di Bash, semua variabel global secara bawaan, termasuk yang dibuat di dalam fungsi.",
+     "track": "bash",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "l1": {
+   "lesson": [
+    {
+     "text": "Pengolahan teks lanjut: cut -d -f (kolom), tr (ganti/hapus karakter), sort -t, -k (urut per kolom), uniq -c, paste, dan awk dengan array asosiatif untuk mengelompokkan.",
+     "code": "cut -d, -f1 regu.csv\ntr 'a-z' 'A-Z' < regu.txt\nsort -t, -k3 -n regu.csv\nawk -F, '{ n[$2]++ } END { for (k in n) print k, n[k] }' data.csv\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-l1-cut",
+     "type": "write",
+     "title": "Ambil Nama",
+     "difficulty": 1,
+     "prompt": "Tampilkan kolom nama dari regu.csv tanpa header.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > regu.csv <<'EOF'\nnama,napas,misi\nTanjiro,Air,12\nZenitsu,Petir,9\nInosuke,Binatang,11\nKanao,Bunga,15\nGenya,Senjata,7\nEOF\n",
+     "tests": [
+      {
+       "expected": "Tanjiro\nZenitsu\nInosuke\nKanao\nGenya\n"
+      }
+     ],
+     "hints": [
+      "tail -n +2 mulai baris 2.",
+      "cut -d, -f1",
+      "Gabungkan dengan pipa."
+     ],
+     "solutions": [
+      "tail -n +2 regu.csv | cut -d, -f1\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "l1"
+    },
+    {
+     "id": "bash-l1-sortk",
+     "type": "write",
+     "title": "Peringkat Misi",
+     "difficulty": 2,
+     "prompt": "Tampilkan baris regu.csv (tanpa header) terurut menurut jumlah misi dari terbesar.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > regu.csv <<'EOF'\nnama,napas,misi\nTanjiro,Air,12\nZenitsu,Petir,9\nInosuke,Binatang,11\nKanao,Bunga,15\nGenya,Senjata,7\nEOF\n",
+     "tests": [
+      {
+       "expected": "Kanao,Bunga,15\nTanjiro,Air,12\nInosuke,Binatang,11\nZenitsu,Petir,9\nGenya,Senjata,7\n"
+      }
+     ],
+     "hints": [
+      "Lewati header.",
+      "Pemisah koma: -t,",
+      "Kolom 3, angka, terbalik: -k3 -rn"
+     ],
+     "solutions": [
+      "tail -n +2 regu.csv | sort -t, -k3 -rn\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "l1"
+    },
+    {
+     "id": "bash-l1-tr",
+     "type": "write",
+     "title": "Teriakan Inosuke",
+     "difficulty": 1,
+     "prompt": "Ubah input menjadi huruf besar semua.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "babi hutan menyerang!\n",
+       "expected": "BABI HUTAN MENYERANG!\n"
+      },
+      {
+       "input": "Gomen\n",
+       "expected": "GOMEN\n"
+      }
+     ],
+     "hints": [
+      "tr menerjemahkan karakter.",
+      "Rentang a-z ke A-Z.",
+      "tr 'a-z' 'A-Z'"
+     ],
+     "solutions": [
+      "tr 'a-z' 'A-Z'\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "l1"
+    },
+    {
+     "id": "bash-l1-group",
+     "type": "write",
+     "title": "Kelompok Status",
+     "difficulty": 3,
+     "prompt": "Dari akses.log, hitung jumlah request per kode status. Cetak \"status jumlah\" terurut menurut status.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > akses.log <<'EOF'\n10.0.0.5 - - [05/Nov/2026:10:00:01] \"GET / HTTP/1.1\" 200 512\n10.0.0.9 - - [05/Nov/2026:10:00:03] \"GET /misi HTTP/1.1\" 200 1024\n10.0.0.5 - - [05/Nov/2026:10:00:07] \"POST /login HTTP/1.1\" 401 64\n10.6.6.6 - - [05/Nov/2026:10:00:08] \"GET /admin HTTP/1.1\" 403 32\n10.6.6.6 - - [05/Nov/2026:10:00:09] \"GET /admin HTTP/1.1\" 403 32\n10.0.0.9 - - [05/Nov/2026:10:00:12] \"GET /regu HTTP/1.1\" 200 2048\n10.6.6.6 - - [05/Nov/2026:10:00:15] \"GET /../etc/passwd HTTP/1.1\" 404 16\nEOF\n",
+     "tests": [
+      {
+       "expected": "200 3\n401 1\n403 2\n404 1\n"
+      }
+     ],
+     "hints": [
+      "Status ada di kolom kedua dari akhir: $(NF-1).",
+      "Array asosiatif menghitung.",
+      "Urutkan hasil akhir."
+     ],
+     "solutions": [
+      "awk '{ n[$(NF-1)]++ } END { for (s in n) print s, n[s] }' akses.log | sort\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "bash",
+     "chapter": "l1"
+    }
+   ]
+  },
+  "l2": {
+   "lesson": [
+    {
+     "text": "Debugging skrip: set -x mencetak setiap perintah sebelum dijalankan, set -e berhenti saat ada error, set -u error untuk variabel tak terdefinisi, set -o pipefail membuat pipa gagal jika salah satu bagian gagal. Biasakan set -euo pipefail di awal skrip.",
+     "code": "set -euo pipefail\nset -x\necho \"$nama\"   # error: nama belum didefinisikan\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-l2-e",
+     "type": "quiz",
+     "title": "Berhenti Saat Gagal",
+     "difficulty": 2,
+     "prompt": "Apa efek set -e?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "e untuk error/exit.",
+      "Status bukan 0 = gagal.",
+      "Berhenti."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Skrip berhenti begitu ada perintah yang gagal (status bukan 0)",
+      "Mencetak setiap perintah",
+      "Mengabaikan semua error",
+      "Mengaktifkan mode ekspor variabel"
+     ],
+     "explain": "Tanpa set -e, skrip terus berjalan walau perintah sebelumnya gagal, yang bisa berbahaya (misalnya cd gagal lalu rm -rf jalan di folder yang salah).",
+     "track": "bash",
+     "chapter": "l2"
+    },
+    {
+     "id": "bash-l2-u",
+     "type": "write",
+     "title": "Variabel Hantu",
+     "difficulty": 2,
+     "prompt": "Jalankan set -u lalu echo \"$hantu\" di dalam subshell ( ... ) dan cetak \"status: N\" dengan status keluar subshell itu.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "status: 1\n"
+      }
+     ],
+     "hints": [
+      "set -u membuat variabel tak terdefinisi menjadi error.",
+      "Bungkus dalam ( ) agar skrip utama tidak berhenti.",
+      "$? berisi status perintah terakhir."
+     ],
+     "solutions": [
+      "( set -u; echo \"$hantu\" ) 2>/dev/null\necho \"status: $?\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "l2"
+    }
+   ]
+  },
+  "l3": {
+   "lesson": [
+    {
+     "text": "Hardening dasar: matikan login root via SSH, pakai kunci bukan kata sandi, update rutin, firewall (ufw allow 22; ufw enable), izin file minimal, dan audit file yang bisa ditulis semua orang (find / -perm -o+w).",
+     "code": "sudo ufw allow 22/tcp\nsudo ufw enable\nsudo sed -i \"s/^PermitRootLogin.*/PermitRootLogin no/\" /etc/ssh/sshd_config\nfind / -type f -perm -o+w 2>/dev/null\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-l3-world",
+     "type": "write",
+     "title": "Audit Tulis Bebas",
+     "difficulty": 2,
+     "prompt": "Di direktori data/, tampilkan file (bukan direktori) yang bisa DITULIS oleh semua orang, terurut.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p data/a\necho x > data/aman.txt\necho y > data/bahaya.txt\necho z > data/a/juga-bahaya.txt\nchmod 644 data/aman.txt\nchmod 666 data/bahaya.txt\nchmod 646 data/a/juga-bahaya.txt\n",
+     "tests": [
+      {
+       "expected": "data/a/juga-bahaya.txt\ndata/bahaya.txt\n"
+      }
+     ],
+     "hints": [
+      "find punya -perm.",
+      "Bit tulis others: -o=w (atau -002).",
+      "Urutkan hasilnya."
+     ],
+     "solutions": [
+      "find data -type f -perm -o=w | sort\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "l3"
+    },
+    {
+     "id": "bash-l3-root",
+     "type": "quiz",
+     "title": "Pintu Depan",
+     "difficulty": 1,
+     "prompt": "Konfigurasi sshd yang disarankan untuk server publik adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Root jangan login langsung.",
+      "Kata sandi mudah ditebak.",
+      "Matikan keduanya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "PermitRootLogin no dan PasswordAuthentication no",
+      "PermitRootLogin yes agar admin mudah",
+      "Port 22 dibuka tanpa firewall",
+      "Memakai kata sandi pendek agar cepat"
+     ],
+     "explain": "Login root langsung dan kata sandi adalah sasaran brute force favorit. Pakai user biasa + sudo + kunci SSH.",
+     "track": "bash",
+     "chapter": "l3"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "Trio pengolah teks: grep (cari baris), sed (sunting aliran: s/lama/baru/g), awk (olah kolom: -F pemisah, $1 kolom pertama, NR nomor baris, blok END untuk ringkasan).",
+     "code": "grep -i iblis laporan.txt\nsed 's/Oni/Iblis/g' laporan.txt\nawk -F, '{ total += $3 } END { print total }' regu.csv\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-m1-grep",
+     "type": "write",
+     "title": "Akses Terlarang",
+     "difficulty": 1,
+     "prompt": "Dari akses.log, tampilkan baris dengan status 403.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > akses.log <<'EOF'\n10.0.0.5 - - [05/Nov/2026:10:00:01] \"GET / HTTP/1.1\" 200 512\n10.0.0.9 - - [05/Nov/2026:10:00:03] \"GET /misi HTTP/1.1\" 200 1024\n10.0.0.5 - - [05/Nov/2026:10:00:07] \"POST /login HTTP/1.1\" 401 64\n10.6.6.6 - - [05/Nov/2026:10:00:08] \"GET /admin HTTP/1.1\" 403 32\n10.6.6.6 - - [05/Nov/2026:10:00:09] \"GET /admin HTTP/1.1\" 403 32\n10.0.0.9 - - [05/Nov/2026:10:00:12] \"GET /regu HTTP/1.1\" 200 2048\n10.6.6.6 - - [05/Nov/2026:10:00:15] \"GET /../etc/passwd HTTP/1.1\" 404 16\nEOF\n",
+     "tests": [
+      {
+       "expected": "10.6.6.6 - - [05/Nov/2026:10:00:08] \"GET /admin HTTP/1.1\" 403 32\n10.6.6.6 - - [05/Nov/2026:10:00:09] \"GET /admin HTTP/1.1\" 403 32\n"
+      }
+     ],
+     "hints": [
+      "Status ada setelah tanda kutip penutup request.",
+      "grep pola file",
+      "grep '\" 403 ' akses.log"
+     ],
+     "solutions": [
+      "grep '\" 403 ' akses.log\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "bash",
+     "chapter": "m1"
+    },
+    {
+     "id": "bash-m1-awk",
+     "type": "write",
+     "title": "Total Misi",
+     "difficulty": 2,
+     "prompt": "Dari regu.csv (ada header), cetak total kolom misi.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > regu.csv <<'EOF'\nnama,napas,misi\nTanjiro,Air,12\nZenitsu,Petir,9\nInosuke,Binatang,11\nKanao,Bunga,15\nGenya,Senjata,7\nEOF\n",
+     "tests": [
+      {
+       "expected": "54\n"
+      }
+     ],
+     "hints": [
+      "Pemisah koma: -F,",
+      "Lewati header dengan NR > 1.",
+      "Jumlahkan $3 lalu cetak di END."
+     ],
+     "solutions": [
+      "awk -F, 'NR > 1 { t += $3 } END { print t }' regu.csv\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "m1"
+    },
+    {
+     "id": "bash-m1-sed",
+     "type": "write",
+     "title": "Ganti Napas",
+     "difficulty": 2,
+     "prompt": "Tampilkan regu.csv dengan semua kata \"Air\" diganti menjadi \"Air (Mizu)\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > regu.csv <<'EOF'\nnama,napas,misi\nTanjiro,Air,12\nZenitsu,Petir,9\nInosuke,Binatang,11\nKanao,Bunga,15\nGenya,Senjata,7\nEOF\n",
+     "tests": [
+      {
+       "expected": "nama,napas,misi\nTanjiro,Air (Mizu),12\nZenitsu,Petir,9\nInosuke,Binatang,11\nKanao,Bunga,15\nGenya,Senjata,7\n"
+      }
+     ],
+     "hints": [
+      "sed s/lama/baru/g",
+      "Tanda kurung tidak perlu di-escape di sed biasa.",
+      "sed 's/Air/Air (Mizu)/g' regu.csv"
+     ],
+     "solutions": [
+      "sed 's/Air/Air (Mizu)/g' regu.csv\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "m1"
+    },
+    {
+     "id": "bash-m1-top",
+     "type": "write",
+     "title": "Penyerang Teratas",
+     "difficulty": 3,
+     "prompt": "Dari akses.log, cetak IP yang paling sering muncul beserta jumlahnya dalam format \"3 10.6.6.6\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "cat > akses.log <<'EOF'\n10.0.0.5 - - [05/Nov/2026:10:00:01] \"GET / HTTP/1.1\" 200 512\n10.0.0.9 - - [05/Nov/2026:10:00:03] \"GET /misi HTTP/1.1\" 200 1024\n10.0.0.5 - - [05/Nov/2026:10:00:07] \"POST /login HTTP/1.1\" 401 64\n10.6.6.6 - - [05/Nov/2026:10:00:08] \"GET /admin HTTP/1.1\" 403 32\n10.6.6.6 - - [05/Nov/2026:10:00:09] \"GET /admin HTTP/1.1\" 403 32\n10.0.0.9 - - [05/Nov/2026:10:00:12] \"GET /regu HTTP/1.1\" 200 2048\n10.6.6.6 - - [05/Nov/2026:10:00:15] \"GET /../etc/passwd HTTP/1.1\" 404 16\nEOF\n",
+     "tests": [
+      {
+       "expected": "3 10.6.6.6\n"
+      }
+     ],
+     "hints": [
+      "Ambil kolom pertama.",
+      "sort | uniq -c menghitung.",
+      "Urutkan menurun dan ambil teratas."
+     ],
+     "solutions": [
+      "awk '{ print $1 }' akses.log | sort | uniq -c | sort -rn | head -1 | awk '{ print $1, $2 }'\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "bash",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "Setiap program yang berjalan adalah proses dengan PID. ps aux melihat semua proses, kill PID menghentikannya, & menjalankan di latar belakang, jobs melihat job, $! adalah PID job terakhir.",
+     "code": "ps aux\nsleep 60 &\njobs\nkill %1\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-m2-ps",
+     "type": "write",
+     "title": "Proses Mencurigakan",
+     "difficulty": 2,
+     "prompt": "Tampilkan baris proses milik user slayer dari ps aux (tanpa header).",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "slayer       312 -bash\n"
+      }
+     ],
+     "hints": [
+      "ps aux menampilkan semua proses.",
+      "Kolom pertama adalah user.",
+      "awk '$1 == \"slayer\"'"
+     ],
+     "solutions": [
+      "ps aux | awk '$1 == \"slayer\"'\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "m2"
+    },
+    {
+     "id": "bash-m2-kill",
+     "type": "quiz",
+     "title": "Menghentikan Proses",
+     "difficulty": 1,
+     "prompt": "Perintah untuk menghentikan proses dengan PID 4242 adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Namanya cukup brutal.",
+      "Butuh PID.",
+      "kill 4242"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "kill 4242",
+      "stop 4242",
+      "ps -k 4242",
+      "rm 4242"
+     ],
+     "explain": "kill mengirim sinyal (bawaan SIGTERM) ke proses.",
+     "track": "bash",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "Skrip menerima argumen: $1 $2 ... $# (jumlah), \"$@\" (semua). Baris pertama #!/bin/bash (shebang). Selalu validasi argumen dan keluar dengan exit 1 bila salah.",
+     "code": "#!/bin/bash\nif [ $# -lt 1 ]; then\n  echo \"Pakai: $0 nama\" >&2\n  exit 1\nfi\necho \"Halo, $1\"\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-m3-args",
+     "type": "write",
+     "title": "Jumlah Argumen",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi info yang mencetak \"Jumlah: N\" lalu setiap argumen di baris sendiri. Panggil: info Tanjiro \"Kamado Nezuko\" Zenitsu",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "Jumlah: 3\nTanjiro\nKamado Nezuko\nZenitsu\n"
+      }
+     ],
+     "hints": [
+      "$# = jumlah argumen.",
+      "\"$@\" mempertahankan argumen berspasi.",
+      "for a in \"$@\""
+     ],
+     "solutions": [
+      "info() {\n  echo \"Jumlah: $#\"\n  for a in \"$@\"; do echo \"$a\"; done\n}\ninfo Tanjiro \"Kamado Nezuko\" Zenitsu\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "m3"
+    },
+    {
+     "id": "bash-m3-getopts",
+     "type": "write",
+     "title": "Bendera Perintah",
+     "difficulty": 3,
+     "prompt": "Buat fungsi napas dengan opsi -n NAMA dan -k (keras). Cetak \"Napas NAMA\" dan tambah \"!!!\" bila -k. Panggil napas -n Air -k lalu napas -n Petir.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "Napas Air!!!\nNapas Petir\n"
+      }
+     ],
+     "hints": [
+      "getopts \"n:k\" — n butuh nilai.",
+      "OPTARG berisi nilai opsi.",
+      "local OPTIND agar fungsi bisa dipanggil ulang."
+     ],
+     "solutions": [
+      "napas() {\n  local OPTIND nama=\"\" keras=\"\"\n  while getopts \"n:k\" o; do\n    case $o in\n      n) nama=$OPTARG ;;\n      k) keras=\"!!!\" ;;\n    esac\n  done\n  echo \"Napas $nama$keras\"\n}\nnapas -n Air -k\nnapas -n Petir\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "bash",
+     "chapter": "m3"
+    },
+    {
+     "id": "bash-m3-kutip",
+     "type": "bughunt",
+     "title": "Nama Berspasi",
+     "difficulty": 2,
+     "prompt": "Fungsi harus mencetak setiap argumen di barisnya sendiri. Panggilan dengan \"Kamado Tanjiro\" malah terpecah.",
+     "lang": "bash",
+     "starter": "cetak() {\n  for a in $@; do echo \"$a\"; done\n}\ncetak \"Kamado Tanjiro\" Nezuko\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "expected": "Kamado Tanjiro\nNezuko\n"
+      }
+     ],
+     "hints": [
+      "$@ tanpa kutip dipecah lagi oleh spasi.",
+      "Kutip ganda mempertahankan argumen.",
+      "for a in \"$@\""
+     ],
+     "solutions": [
+      "cetak() {\n  for a in \"$@\"; do echo \"$a\"; done\n}\ncetak \"Kamado Tanjiro\" Nezuko\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "cron menjalankan perintah terjadwal. Format crontab: menit jam tgl bulan hari perintah. */5 * * * * = setiap 5 menit. 0 2 * * 1 = Senin jam 02:00. crontab -e menyunting, crontab -l melihat.",
+     "code": "# m h dom mon dow perintah\n*/5 * * * * /home/slayer/cek.sh\n0 2 * * 1 /home/slayer/backup.sh\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-m4-cron",
+     "type": "quiz",
+     "title": "Jadwal Patroli",
+     "difficulty": 1,
+     "prompt": "Baris crontab \"30 6 * * *\" berarti...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Kolom pertama menit.",
+      "Kolom kedua jam.",
+      "menit 30, jam 6."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Setiap hari pukul 06:30",
+      "Setiap 30 menit selama 6 jam",
+      "Tanggal 30 bulan 6",
+      "Setiap 6 menit lewat 30 detik"
+     ],
+     "explain": "Urutan: menit jam tanggal bulan hari-minggu.",
+     "track": "bash",
+     "chapter": "m4"
+    },
+    {
+     "id": "bash-m4-5",
+     "type": "answer",
+     "title": "Setiap Lima Menit",
+     "difficulty": 2,
+     "prompt": "Tulis 5 kolom jadwal crontab untuk \"setiap 5 menit\".",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Hanya kolom menit yang berubah.",
+      "Sintaks langkah: */N.",
+      "*/5 * * * *"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "*/5 * * * *"
+     ],
+     "explain": "*/5 pada kolom menit berarti setiap kelipatan 5 menit.",
+     "track": "bash",
+     "chapter": "m4"
+    },
+    {
+     "id": "bash-m4-cronparse",
+     "type": "write",
+     "title": "Membaca Crontab",
+     "difficulty": 2,
+     "prompt": "Dari input berformat crontab (abaikan baris komentar #), cetak perintah (kolom 6 dst) yang dijalankan setiap jam pada menit 0.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "# jadwal\n0 * * * * /bin/cek-gagak\n30 2 * * * /bin/backup\n0 * * * * /bin/hitung iblis\n",
+       "expected": "/bin/cek-gagak\n/bin/hitung iblis\n"
+      }
+     ],
+     "hints": [
+      "Buang komentar dengan grep -v.",
+      "Menit 0 dan jam *.",
+      "Kosongkan 5 kolom pertama lalu cetak sisanya."
+     ],
+     "solutions": [
+      "grep -v '^#' | awk '$1 == \"0\" && $2 == \"*\" { $1=$2=$3=$4=$5=\"\"; sub(/^ +/, \"\"); print }'\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "m4"
+    }
+   ]
+  },
+  "m5": {
+   "lesson": [
+    {
+     "text": "Paket dipasang dengan manajer paket (apt di Debian/Ubuntu): apt update, apt install nama, apt remove nama. Service dikelola systemd: systemctl status/start/stop/enable nama.",
+     "code": "sudo apt update\nsudo apt install htop\nsystemctl status ssh\nsudo systemctl enable --now nginx\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-m5-apt",
+     "type": "quiz",
+     "title": "Memasang Alat",
+     "difficulty": 1,
+     "prompt": "Urutan yang benar untuk memasang paket htop di Ubuntu adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Perbarui daftar paket dulu.",
+      "Butuh hak root.",
+      "apt update, apt install"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "sudo apt update lalu sudo apt install htop",
+      "apt get htop",
+      "install htop --force",
+      "sudo systemctl install htop"
+     ],
+     "explain": "apt update menyegarkan daftar paket, apt install memasang.",
+     "track": "bash",
+     "chapter": "m5"
+    },
+    {
+     "id": "bash-m5-enable",
+     "type": "quiz",
+     "title": "Hidup Setelah Reboot",
+     "difficulty": 2,
+     "prompt": "Agar service nginx otomatis berjalan setiap boot, gunakan...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "start ≠ enable.",
+      "Yang tetap setelah reboot.",
+      "enable"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "systemctl enable nginx",
+      "systemctl start nginx",
+      "service nginx restart",
+      "nginx --boot"
+     ],
+     "explain": "start hanya menyalakan sekarang; enable mendaftarkannya untuk boot.",
+     "track": "bash",
+     "chapter": "m5"
+    }
+   ]
+  },
+  "m6": {
+   "lesson": [
+    {
+     "text": "SSH (Secure Shell) membuka shell di server lain secara terenkripsi: ssh user@host. Lebih aman memakai kunci (ssh-keygen, lalu salin kunci publik ke ~/.ssh/authorized_keys) daripada kata sandi. Kunci privat jangan pernah dibagikan.",
+     "code": "ssh-keygen -t ed25519\nssh-copy-id slayer@markas.contoh\nssh slayer@markas.contoh\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-m6-key",
+     "type": "quiz",
+     "title": "Kunci Siapa?",
+     "difficulty": 1,
+     "prompt": "Berkas mana yang boleh disalin ke server agar kamu bisa login dengan kunci?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Satu boleh dibagikan, satu tidak.",
+      "Akhiran .pub",
+      "Kunci publik."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "id_ed25519.pub (kunci publik)",
+      "id_ed25519 (kunci privat)",
+      "known_hosts",
+      "/etc/passwd"
+     ],
+     "explain": "Kunci publik boleh dibagikan; kunci privat harus tetap di perangkatmu.",
+     "track": "bash",
+     "chapter": "m6"
+    },
+    {
+     "id": "bash-m6-perm",
+     "type": "quiz",
+     "title": "Izin Kunci Privat",
+     "difficulty": 2,
+     "prompt": "SSH menolak memakai kunci privat dengan izin 644. Izin yang benar adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Hanya pemilik.",
+      "rw untuk user saja.",
+      "600"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "600",
+      "644",
+      "777",
+      "755"
+     ],
+     "explain": "Kunci privat hanya boleh dibaca pemiliknya (600); SSH menolak kunci yang bisa dibaca orang lain.",
+     "track": "bash",
+     "chapter": "m6"
+    }
+   ]
+  },
+  "p1": {
+   "lesson": [
+    {
+     "text": "Alat CLI yang baik: punya --help, membaca stdin bila tidak ada file, menulis hasil ke stdout dan pesan ke stderr, serta mengembalikan status yang benar (0 sukses).",
+     "code": "usage() { echo \"Pakai: hitung [file]\" >&2; }\n[ \"${1:-}\" = \"--help\" ] && { usage; exit 0; }\nwc -l < \"${1:-/dev/stdin}\"\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-p1-stdin",
+     "type": "write",
+     "title": "Alat Ramah Pipa",
+     "difficulty": 2,
+     "prompt": "Buat fungsi hitung_kata yang menghitung kata dari stdin. Lalu cetak hasil hitung_kata untuk input yang diberikan dalam format \"kata: N\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "input": "satu dua tiga\nempat\n",
+       "expected": "kata: 4\n"
+      },
+      {
+       "input": "Kaa\n",
+       "expected": "kata: 1\n"
+      }
+     ],
+     "hints": [
+      "wc -w menghitung kata.",
+      "tr -d \" \" membuang spasi.",
+      "Tangkap output fungsi dengan $()."
+     ],
+     "solutions": [
+      "hitung_kata() {\n  wc -w | tr -d \" \"\n}\necho \"kata: $(hitung_kata)\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "p1"
+    },
+    {
+     "id": "bash-p1-stderr",
+     "type": "write",
+     "title": "Pesan ke Stderr",
+     "difficulty": 2,
+     "prompt": "Buat fungsi cek yang mencetak \"ERROR: kosong\" ke STDERR dan mengembalikan status 1 jika argumennya kosong, atau mencetak \"OK: <arg>\" bila tidak. Panggil cek \"\" lalu cek Nezuko, dan cetak status masing-masing (\"status 1\", \"status 0\"). Hanya stdout yang dinilai.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "status 1\nOK: Nezuko\nstatus 0\n"
+      }
+     ],
+     "hints": [
+      ">&2 mengirim ke stderr.",
+      "return 1 untuk gagal.",
+      "$? menyimpan status terakhir."
+     ],
+     "solutions": [
+      "cek() {\n  if [ -z \"$1\" ]; then echo \"ERROR: kosong\" >&2; return 1; fi\n  echo \"OK: $1\"\n}\ncek \"\" 2>/dev/null; echo \"status $?\"\ncek Nezuko; echo \"status $?\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "p1"
+    }
+   ]
+  },
+  "p2": {
+   "lesson": [
+    {
+     "text": "Praktik terbaik skrip: set -euo pipefail, kutip semua variabel, pakai $(...) bukan backtick, nama variabel jelas, fungsi kecil, mktemp untuk file sementara, trap untuk bersih-bersih, dan cek dengan shellcheck.",
+     "code": "#!/usr/bin/env bash\nset -euo pipefail\ntmp=$(mktemp)\ntrap 'rm -f \"$tmp\"' EXIT\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-p2-kutip",
+     "type": "quiz",
+     "title": "Kutip Semua",
+     "difficulty": 1,
+     "prompt": "rm $file berbahaya jika file berisi \"laporan lama.txt\" karena...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Spasi memecah kata.",
+      "Bisa menghapus file yang salah.",
+      "Kutip ganda."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Tanpa kutip, nama dipecah menjadi dua argumen: laporan dan lama.txt",
+      "rm tidak bisa menghapus file .txt",
+      "Spasi dilarang di Linux",
+      "rm akan meminta konfirmasi"
+     ],
+     "explain": "Word splitting memecah variabel tanpa kutip. Selalu tulis rm -- \"$file\".",
+     "track": "bash",
+     "chapter": "p2"
+    },
+    {
+     "id": "bash-p2-trap",
+     "type": "write",
+     "title": "Bersih-bersih Otomatis",
+     "difficulty": 3,
+     "prompt": "Di dalam subshell, buat file sementara sem.txt, pasang trap yang menghapusnya saat EXIT, tulis \"data\" ke dalamnya. Setelah subshell selesai, cetak \"ada\" jika sem.txt masih ada atau \"bersih\" bila sudah terhapus.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "tests": [
+      {
+       "expected": "bersih\n"
+      }
+     ],
+     "hints": [
+      "trap perintah EXIT",
+      "Subshell ( ... ) punya EXIT sendiri.",
+      "Cek dengan [ -f sem.txt ]."
+     ],
+     "solutions": [
+      "(\n  echo data > sem.txt\n  trap 'rm -f sem.txt' EXIT\n)\nif [ -f sem.txt ]; then echo ada; else echo bersih; fi\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "bash",
+     "chapter": "p2"
+    }
+   ]
+  },
+  "p3": {
+   "lesson": [
+    {
+     "text": "Project: alat backup kecil. Kumpulkan file sesuai pola, salin ke folder backup bertanggal, lalu tampilkan ringkasan. Di dunia nyata ditambah kompresi (tar -czf) dan rotasi backup lama.",
+     "code": "tujuan=\"backup/$(date +%F)\"\nmkdir -p \"$tujuan\"\ncp -r dokumen \"$tujuan\"/\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "bash-p3-backup",
+     "type": "write",
+     "title": "Backup Tahap 1",
+     "difficulty": 2,
+     "prompt": "Salin semua file .txt dari dok/ ke cadangan/ (buat foldernya), lalu cetak isi cadangan/ terurut dan baris \"N file dicadangkan\".",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p dok\necho a > dok/misi.txt\necho b > dok/regu.txt\necho c > dok/foto.png\necho d > dok/catatan.txt\n",
+     "tests": [
+      {
+       "expected": "catatan.txt\nmisi.txt\nregu.txt\n3 file dicadangkan\n"
+      }
+     ],
+     "hints": [
+      "mkdir -p cadangan",
+      "cp dok/*.txt cadangan/",
+      "Hitung dengan ls | wc -l."
+     ],
+     "solutions": [
+      "mkdir -p cadangan\ncp dok/*.txt cadangan/\nls cadangan | sort\necho \"$(ls cadangan | wc -l | tr -d \" \") file dicadangkan\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "bash",
+     "chapter": "p3"
+    },
+    {
+     "id": "bash-p3-rotasi",
+     "type": "write",
+     "title": "Backup Tahap 2: Rotasi",
+     "difficulty": 3,
+     "prompt": "Folder arsip/ berisi backup-1 sampai backup-5. Hapus semua kecuali 3 backup bernomor terbesar, lalu tampilkan sisa isinya terurut.",
+     "lang": "bash",
+     "starter": "# tulis perintahmu di sini\n",
+     "pre": "mkdir -p arsip/backup-1 arsip/backup-2 arsip/backup-3 arsip/backup-4 arsip/backup-5\n",
+     "tests": [
+      {
+       "expected": "backup-3\nbackup-4\nbackup-5\n"
+      }
+     ],
+     "hints": [
+      "Urutkan nomor dengan sort -t- -k2 -n.",
+      "head -n -3 = semua kecuali 3 terakhir.",
+      "xargs rm -r menghapus daftar itu."
+     ],
+     "solutions": [
+      "cd arsip\nls | sort -t- -k2 -n | head -n -3 | xargs rm -r\nls | sort\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "bash",
+     "chapter": "p3"
+    }
+   ]
+  }
+ }
+}

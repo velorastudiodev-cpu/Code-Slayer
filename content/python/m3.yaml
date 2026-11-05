@@ -1,0 +1,150 @@
+lesson:
+  - text: Error saat program berjalan disebut exception. Dengan try/except, kamu bisa menangkapnya supaya program tidak berhenti. Tangkap jenis yang spesifik seperti ValueError atau ZeroDivisionError, bukan semua error sekaligus.
+    code: |
+      for teks in ["42", "abc"]:
+          try:
+              print(int(teks) * 2)
+          except ValueError:
+              print("bukan angka:", teks)
+  - text: else dijalankan kalau tidak ada error, dan finally SELALU dijalankan. raise melempar exception sendiri, misalnya untuk menolak data yang tidak valid.
+    code: |
+      def umur_valid(n):
+          if n < 0:
+              raise ValueError("umur negatif")
+          return n
+      try:
+          umur_valid(-1)
+      except ValueError as e:
+          print("Ditolak:", e)
+      finally:
+          print("selesai")
+exercises:
+  - id: py-m3-bagi-aman
+    type: write
+    title: Pembagian Aman
+    difficulty: 2
+    prompt: Baca dua baris a dan b. Cetak a // b. Jika b = 0 cetak "tidak bisa dibagi nol". Jika salah satunya bukan bilangan bulat cetak "input tidak valid".
+    tests: ["10\n3", "5\n0", "x\n2", "-7\n2"]
+    hints: |
+      Bungkus int() dan pembagian dengan try.
+      Ada dua jenis error yang perlu ditangkap.
+      except ZeroDivisionError: ... except ValueError: ...
+    solution: |
+      try:
+          a = int(input())
+          b = int(input())
+          print(a // b)
+      except ZeroDivisionError:
+          print("tidak bisa dibagi nol")
+      except ValueError:
+          print("input tidak valid")
+  - id: py-m3-jumlah-valid
+    type: write
+    title: Menyaring Laporan Palsu
+    difficulty: 2
+    prompt: Baca satu baris berisi token. Jumlahkan token yang merupakan bilangan bulat, dan hitung yang bukan. Cetak "jumlah <J>, salah <S>".
+    tests: ["1 2 x 3", "a b", "10 -5", "7"]
+    hints: |
+      Coba int() pada setiap token di dalam try.
+      Kalau gagal, tambah penghitung salah.
+      except ValueError: salah += 1
+    solution: |
+      jumlah = salah = 0
+      for t in input().split():
+          try:
+              jumlah += int(t)
+          except ValueError:
+              salah += 1
+      print(f"jumlah {jumlah}, salah {salah}")
+  - id: py-m3-predict
+    type: predict
+    title: Jalur Exception
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      try:
+          print("A")
+          x = 1 / 0
+          print("B")
+      except ZeroDivisionError:
+          print("C")
+      else:
+          print("D")
+      finally:
+          print("E")
+    hints: |
+      Setelah error, sisa blok try dilewati.
+      else hanya jalan kalau TIDAK ada error.
+      finally selalu jalan.
+    solution: x
+  - id: py-m3-bug-except
+    type: bughunt
+    title: Jaring yang Salah Ukuran
+    difficulty: 2
+    prompt: Program harus mencetak "umur tidak valid" untuk input negatif atau bukan angka, tapi malah crash. Temukan bug-nya.
+    starter: |
+      def umur_valid(s):
+          n = int(s)
+          if n < 0:
+              raise ValueError("negatif")
+          return n
+      try:
+          print(umur_valid(input()))
+      except TypeError:
+          print("umur tidak valid")
+    bug_line: 8
+    tests: ["17", "-3", "abc"]
+    hints: |
+      Exception apa yang dilempar int("abc") dan raise di fungsi?
+      except hanya menangkap jenis yang disebut.
+      except ValueError:
+    solution: |
+      def umur_valid(s):
+          n = int(s)
+          if n < 0:
+              raise ValueError("negatif")
+          return n
+      try:
+          print(umur_valid(input()))
+      except ValueError:
+          print("umur tidak valid")
+  - id: py-m3-raise
+    type: write
+    title: Penjaga Gerbang Data
+    difficulty: 3
+    prompt: 'Tulis fungsi akar(n) yang melempar ValueError jika n negatif dan mengembalikan akar bulatnya (isqrt) jika tidak. Baris pertama input berisi k, lalu k baris bilangan. Untuk tiap bilangan cetak hasilnya atau "error".'
+    tests: ["3\n16\n-4\n10", "1\n0", "2\n-1\n99"]
+    hints: |
+      math.isqrt(n) memberi akar bulat.
+      Panggil akar() di dalam try untuk setiap baris.
+      raise ValueError("negatif") di dalam fungsi jika n < 0.
+    solution: |
+      import math
+      def akar(n):
+          if n < 0:
+              raise ValueError("negatif")
+          return math.isqrt(n)
+      for _ in range(int(input())):
+          try:
+              print(akar(int(input())))
+          except ValueError:
+              print("error")
+  - id: py-m3-parsons
+    type: parsons
+    title: try-except-else-finally
+    difficulty: 2
+    prompt: 'Susun program: coba baca bilangan n; kalau gagal cetak "bukan angka", kalau berhasil cetak n * 2; apa pun hasilnya cetak "selesai".'
+    tests: ["21", "x"]
+    hints: |
+      try membungkus int(input()).
+      except ditulis sebelum else.
+      finally paling akhir.
+    solution: |
+      try:
+          n = int(input())
+      except ValueError:
+          print("bukan angka")
+      else:
+          print(n * 2)
+      finally:
+          print("selesai")

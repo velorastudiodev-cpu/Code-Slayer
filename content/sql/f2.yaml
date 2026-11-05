@@ -1,0 +1,92 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: WHERE menyaring baris. Teks diapit kutip tunggal. Gabungkan syarat dengan AND / OR; BETWEEN a AND b mencakup kedua ujung; IN (..) mencocokkan daftar nilai.
+  code: |
+    SELECT nama FROM slayer WHERE pernapasan IN ('Air', 'Api') AND umur BETWEEN 16 AND 21;
+- text: 'NULL artinya "tidak ada nilai". Membandingkan dengan = NULL selalu gagal; gunakan IS NULL atau IS NOT NULL. LIKE mencocokkan pola: % = teks apa saja, _ = satu karakter.'
+  code: |
+    SELECT nama FROM iblis WHERE peringkat IS NULL OR nama LIKE 'R%';
+exercises:
+- id: sql-air
+  type: write
+  title: Pengguna Pernapasan Air
+  difficulty: 1
+  prompt: Tampilkan nama dan umur slayer dengan pernapasan 'Air', urut dari yang termuda (kalau sama, urut nama).
+  starter: |
+    SELECT nama, umur FROM slayer
+  tests: &id001
+  - ''
+  - INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);
+  samples: 1
+  hints: |
+    Saring baris dengan WHERE.
+    Teks di SQL diapit tanda kutip tunggal, misalnya 'Air'.
+    Tambahkan ORDER BY umur, nama.
+  solution: |
+    SELECT nama, umur FROM slayer WHERE pernapasan = 'Air' ORDER BY umur, nama;
+- id: sql-f2-rentang
+  type: write
+  title: Kadet Usia Tanggung
+  difficulty: 1
+  prompt: Tampilkan nama slayer berumur 16 sampai 19 tahun (termasuk keduanya), urut nama.
+  tests: *id001
+  samples: 1
+  hints: |
+    BETWEEN a AND b mencakup a dan b.
+    Atau umur >= 16 AND umur <= 19.
+    Urutkan dengan ORDER BY nama.
+  solution: |
+    SELECT nama FROM slayer WHERE umur BETWEEN 16 AND 19 ORDER BY nama;
+- id: sql-f2-null
+  type: write
+  title: Iblis Tanpa Gelar
+  difficulty: 2
+  prompt: Tampilkan nama iblis yang kolom peringkat-nya kosong (NULL), urut nama.
+  tests:
+  - ''
+  - INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL);
+  samples: 1
+  hints: |
+    NULL tidak bisa dibandingkan dengan =.
+    Gunakan IS NULL.
+    Urutkan dengan ORDER BY nama.
+  solution: |
+    SELECT nama FROM iblis WHERE peringkat IS NULL ORDER BY nama;
+- id: sql-f2-bug
+  type: bughunt
+  title: Kutip yang Hilang
+  difficulty: 1
+  prompt: Query harus menampilkan nama slayer pernapasan Petir, tapi error "no such column". Temukan baris yang salah.
+  starter: |
+    SELECT nama
+    FROM slayer
+    WHERE pernapasan = Petir
+    ORDER BY nama;
+  bug_line: 3
+  tests: *id001
+  hints: |
+    Pesan "no such column: Petir" berarti Petir dianggap nama kolom.
+    Teks harus diapit kutip tunggal.
+    pernapasan = 'Petir'
+  solution: |
+    SELECT nama
+    FROM slayer
+    WHERE pernapasan = 'Petir'
+    ORDER BY nama;

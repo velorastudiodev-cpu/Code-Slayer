@@ -1,0 +1,194 @@
+lesson:
+- text: 'Desain responsif menyesuaikan tampilan dengan lebar layar. Tambahkan <meta name="viewport" content="width=device-width, initial-scale=1"> agar HP tidak memperkecil halaman, lalu pakai @media (max-width:
+    600px) { ... } untuk aturan khusus layar kecil.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri { display: grid; grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 600px) {
+      .galeri { grid-template-columns: 1fr; }
+    }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+exercises:
+- id: web-m3-viewport
+  type: write
+  title: Kacamata untuk HP
+  difficulty: 1
+  prompt: Tambahkan meta viewport dengan content "width=device-width, initial-scale=1" di dalam head.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <h1>Korps</h1>
+    </body>
+    </html>
+  checks:
+  - sel: head > meta[name=viewport]
+    count: 1
+  - sel: meta[name=viewport]
+    attr: content
+    value: width=device-width, initial-scale=1
+  hints: |
+    Meta tag ada di head.
+    name="viewport".
+    content="width=device-width, initial-scale=1"
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Korps</title>
+    </head>
+    <body>
+      <h1>Korps</h1>
+    </body>
+    </html>
+- id: web-m3-galeri
+  type: write
+  title: Satu Kolom di HP
+  difficulty: 2
+  prompt: 'Galeri sudah tiga kolom. Tambahkan media query sehingga pada lebar maksimal 600px galeri menjadi satu kolom (grid-template-columns: 1fr).'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri { display: grid; grid-template-columns: repeat(3, 1fr); }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .galeri
+    css: grid-template-columns
+    value: repeat(3, 1fr)
+    width: 1024
+  - sel: .galeri
+    css: grid-template-columns
+    value: 1fr
+    width: 400
+  hints: |
+    @media (max-width: 600px) { ... }
+    Di dalamnya timpa grid-template-columns.
+    Satu kolom = 1fr.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .galeri { display: grid; grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 600px) {
+      .galeri { grid-template-columns: 1fr; }
+    }
+      </style>
+    </head>
+    <body>
+      <div class="galeri">
+        <div class="item">Tanjiro</div>
+        <div class="item">Zenitsu</div>
+        <div class="item">Inosuke</div>
+        <div class="item">Kanao</div>
+        <div class="item">Genya</div>
+        <div class="item">Nezuko</div>
+      </div>
+    </body>
+    </html>
+- id: web-m3-nav
+  type: write
+  title: Menu Bertumpuk
+  difficulty: 2
+  prompt: 'Menu nav ul sudah flex sebaris. Di layar maksimal 600px, ubah arahnya menjadi kolom (flex-direction: column).'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    nav ul { display: flex; gap: 12px; }
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+    </body>
+    </html>
+  checks:
+  - sel: nav ul
+    css: flex-direction
+    value: row
+    width: 1024
+  - sel: nav ul
+    css: flex-direction
+    value: column
+    width: 360
+  - sel: nav ul
+    css: display
+    value: flex
+    width: 360
+  hints: |
+    Media query untuk layar kecil.
+    flex-direction: column menumpuk item.
+    Di layar lebar tetap row.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    nav ul { display: flex; gap: 12px; }
+    @media (max-width: 600px) {
+      nav ul { flex-direction: column; }
+    }
+      </style>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#">Misi</a></li>
+          <li><a href="#">Korps</a></li>
+        </ul>
+      </nav>
+    </body>
+    </html>

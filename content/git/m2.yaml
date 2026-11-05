@@ -1,0 +1,84 @@
+lesson:
+- text: 'git reset memindahkan branch ke commit lain. --soft: perubahan tetap di staging; --mixed (bawaan): perubahan kembali ke working tree; --hard: perubahan DIBUANG. git revert membuat commit baru yang
+    membatalkan commit lama, aman untuk riwayat yang sudah dibagikan.'
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo rahasia > kunci.txt
+    git add kunci.txt
+    git commit -q -m "Tambah kunci"
+    git reset --soft HEAD~1
+    git status --short
+    git log --format=%s
+exercises:
+- id: git-m2-soft
+  type: write
+  title: Tarik Kembali, Simpan Perubahan
+  difficulty: 2
+  prompt: Commit terakhir "Tambah kunci" ternyata terlalu cepat. Batalkan commit itu, tapi perubahannya tetap di staging area.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo rahasia > kunci.txt
+    git add kunci.txt
+    git commit -q -m "Tambah kunci"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Pindahkan branch satu commit ke belakang.
+    Mode yang menjaga staging area.
+    git reset --soft HEAD~1
+  solution: |
+    git reset --soft HEAD~1
+- id: git-m2-revert
+  type: write
+  title: Batalkan dengan Jejak
+  difficulty: 2
+  prompt: Commit "Hapus peringatan" (commit terakhir) sudah di-push dan merusak sesuatu. Batalkan efeknya dengan commit baru (pesan bawaan Git), tanpa menulis ulang riwayat.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo "AWAS IBLIS" > peringatan.txt
+    git add peringatan.txt
+    git commit -q -m "Tambah peringatan"
+    git rm -q peringatan.txt
+    git commit -q -m "Hapus peringatan"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Jangan reset: riwayat sudah dibagikan.
+    Buat commit kebalikan.
+    git revert HEAD --no-edit
+  solution: |
+    git revert HEAD --no-edit
+- id: git-m2-hard
+  type: quiz
+  title: Pedang Bermata Dua
+  difficulty: 2
+  prompt: Kamu punya perubahan yang BELUM di-commit lalu menjalankan git reset --hard HEAD. Apa yang terjadi pada perubahan itu?
+  options:
+  - Hilang, dan tidak bisa dikembalikan lewat Git
+  - Pindah ke stash otomatis
+  - Tetap ada di working tree
+  - Menjadi commit baru
+  explain: --hard menyamakan working tree dan staging dengan commit tujuan. Perubahan yang belum pernah di-commit tidak tercatat di mana pun.
+  hints: |
+    --hard menimpa working tree.
+    Git hanya bisa mengembalikan yang pernah dicatat.
+    Belum di-commit = belum tercatat.

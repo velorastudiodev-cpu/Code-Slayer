@@ -1,0 +1,104 @@
+id: rest-router
+title: Pos Gagak (REST API)
+track: go
+lang: go
+requires: f7
+emoji: 📮
+story: Markas butuh layanan pencatat misi. Setiap baris input adalah satu request "METHOD PATH [body]"; cetak status code dan isi response.
+starter: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(), \"\
+  \ \", 3)\n\t\tfmt.Println(bagian)\n\t}\n}\n"
+stages:
+- title: GET & POST /misi
+  prompt: '"POST /misi <judul>" menyimpan misi dan mencetak "201 <id>" (id mulai 1). "GET /misi" mencetak "200 judul1,judul2,..." atau "200 (kosong)".'
+  tests:
+  - |-
+    GET /misi
+    POST /misi Natagumo
+    POST /misi Kereta Mugen
+    GET /misi
+  - |-
+    POST /misi Desa Penempa
+    GET /misi
+  hints: |
+    Pecah baris dengan strings.SplitN(..., " ", 3).
+    Simpan judul di slice.
+    id = urutan tambah.
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar judul []string\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\t\tbagian := strings.SplitN(sc.Text(),\
+    \ \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && path == \"/misi\":\n\t\t\tif len(judul) == 0 {\n\t\t\t\tfmt.Println(\"200 (kosong)\")\n\t\t\t} else\
+    \ {\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(judul, \",\"))\n\t\t\t}\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tjudul = append(judul, bagian[2])\n\t\t\tfmt.Printf(\"201 %d\\n\", len(judul))\n\
+    \t\t}\n\t}\n}\n"
+- title: GET /misi/{id}
+  prompt: '"GET /misi/<id>" mencetak "200 <judul>", "404 tidak ditemukan" kalau id tidak ada, atau "400 id tidak valid" kalau id bukan angka.'
+  tests:
+  - |-
+    POST /misi A
+    POST /misi B
+    GET /misi/2
+    GET /misi/9
+    GET /misi/abc
+  - GET /misi/1
+  hints: |
+    Simpan id bersama judul (struct).
+    strconv.Atoi untuk id.
+    Cari id di slice.
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype misi struct {\n\tid    int\n\tjudul string\n}\n\nfunc main() {\n\tvar data []misi\n\tnext\
+    \ := 1\n\tcari := func(id int) int {\n\t\tfor i, m := range data {\n\t\t\tif m.id == id {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn -1\n\t}\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\
+    \t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && path == \"/misi\":\n\t\t\tif len(data) == 0 {\n\t\t\t\tfmt.Println(\"\
+    200 (kosong)\")\n\t\t\t} else {\n\t\t\t\tvar j []string\n\t\t\t\tfor _, m := range data {\n\t\t\t\t\tj = append(j, m.judul)\n\t\t\t\t}\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(j, \",\"))\n\t\t\t\
+    }\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tdata = append(data, misi{next, bagian[2]})\n\t\t\tfmt.Printf(\"201 %d\\n\", next)\n\t\t\tnext++\n\t\tcase method == \"GET\" && strings.HasPrefix(path,\
+    \ \"/misi/\"):\n\t\t\tid, err := strconv.Atoi(strings.TrimPrefix(path, \"/misi/\"))\n\t\t\tif err != nil {\n\t\t\t\tfmt.Println(\"400 id tidak valid\")\n\t\t\t} else if i := cari(id); i < 0 {\n\t\t\t\
+    \tfmt.Println(\"404 tidak ditemukan\")\n\t\t\t} else {\n\t\t\t\tfmt.Println(\"200 \" + data[i].judul)\n\t\t\t}\n\t\t}\n\t}\n}\n"
+- title: DELETE & error rute
+  prompt: '"DELETE /misi/<id>" menghapus dan mencetak "204" (404/400 seperti GET). Method lain pada /misi atau /misi/<id> → "405 method tidak diizinkan"; path lain → "404 rute tidak ada". id TIDAK dipakai
+    ulang.'
+  tests:
+  - |-
+    POST /misi A
+    POST /misi B
+    DELETE /misi/1
+    GET /misi
+    DELETE /misi/1
+    PUT /misi/2
+    GET /iblis
+    POST /misi C
+    GET /misi/3
+  - |-
+    PATCH /misi
+    DELETE /misi/x
+  hints: |
+    Gabungkan GET & DELETE untuk /misi/<id>.
+    Hapus elemen slice: append(s[:i], s[i+1:]...).
+    Urutan case penting: rute spesifik dulu.
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype misi struct {\n\tid    int\n\tjudul string\n}\n\nfunc main() {\n\tvar data []misi\n\tnext\
+    \ := 1\n\tcari := func(id int) int {\n\t\tfor i, m := range data {\n\t\t\tif m.id == id {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn -1\n\t}\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\
+    \t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && path == \"/misi\":\n\t\t\tif len(data) == 0 {\n\t\t\t\tfmt.Println(\"\
+    200 (kosong)\")\n\t\t\t} else {\n\t\t\t\tvar j []string\n\t\t\t\tfor _, m := range data {\n\t\t\t\t\tj = append(j, m.judul)\n\t\t\t\t}\n\t\t\t\tfmt.Println(\"200 \" + strings.Join(j, \",\"))\n\t\t\t\
+    }\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tdata = append(data, misi{next, bagian[2]})\n\t\t\tfmt.Printf(\"201 %d\\n\", next)\n\t\t\tnext++\n\t\tcase strings.HasPrefix(path, \"/misi/\"\
+    ) && (method == \"GET\" || method == \"DELETE\"):\n\t\t\tid, err := strconv.Atoi(strings.TrimPrefix(path, \"/misi/\"))\n\t\t\tif err != nil {\n\t\t\t\tfmt.Println(\"400 id tidak valid\")\n\t\t\t} else\
+    \ if i := cari(id); i < 0 {\n\t\t\t\tfmt.Println(\"404 tidak ditemukan\")\n\t\t\t} else if method == \"GET\" {\n\t\t\t\tfmt.Println(\"200 \" + data[i].judul)\n\t\t\t} else {\n\t\t\t\tdata = append(data[:i],\
+    \ data[i+1:]...)\n\t\t\t\tfmt.Println(\"204\")\n\t\t\t}\n\t\tcase path == \"/misi\" || strings.HasPrefix(path, \"/misi/\"):\n\t\t\tfmt.Println(\"405 method tidak diizinkan\")\n\t\tdefault:\n\t\t\tfmt.Println(\"\
+    404 rute tidak ada\")\n\t\t}\n\t}\n}\n"
+- title: Pencarian
+  prompt: '"GET /misi?cari=<kata>" mencetak judul yang memuat kata itu (tidak peka huruf besar/kecil), dengan format sama seperti GET /misi.'
+  tests:
+  - |-
+    POST /misi Gunung Natagumo
+    POST /misi Kereta Mugen
+    POST /misi Gunung Fuji
+    GET /misi?cari=gunung
+    GET /misi?cari=iblis
+  - GET /misi?cari=x
+  hints: |
+    Pisahkan path dan query ?cari=.
+    strings.ToLower di kedua sisi.
+    Tanpa hasil → "200 (kosong)".
+  solution: "package main\n\nimport (\n\t\"bufio\"\n\t\"fmt\"\n\t\"os\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype misi struct {\n\tid    int\n\tjudul string\n}\n\nfunc main() {\n\tvar data []misi\n\tnext\
+    \ := 1\n\tcari := func(id int) int {\n\t\tfor i, m := range data {\n\t\t\tif m.id == id {\n\t\t\t\treturn i\n\t\t\t}\n\t\t}\n\t\treturn -1\n\t}\n\tsc := bufio.NewScanner(os.Stdin)\n\tfor sc.Scan() {\n\
+    \t\tbagian := strings.SplitN(sc.Text(), \" \", 3)\n\t\tmethod, path := bagian[0], bagian[1]\n\t\tswitch {\n\t\tcase method == \"GET\" && (path == \"/misi\" || strings.HasPrefix(path, \"/misi?cari=\"\
+    )):\n\t\t\tkata := strings.ToLower(strings.TrimPrefix(path, \"/misi?cari=\"))\n\t\t\tif path == \"/misi\" {\n\t\t\t\tkata = \"\"\n\t\t\t}\n\t\t\tvar j []string\n\t\t\tfor _, m := range data {\n\t\t\t\
+    \tif strings.Contains(strings.ToLower(m.judul), kata) {\n\t\t\t\t\tj = append(j, m.judul)\n\t\t\t\t}\n\t\t\t}\n\t\t\tif len(j) == 0 {\n\t\t\t\tfmt.Println(\"200 (kosong)\")\n\t\t\t} else {\n\t\t\t\t\
+    fmt.Println(\"200 \" + strings.Join(j, \",\"))\n\t\t\t}\n\t\tcase method == \"POST\" && path == \"/misi\":\n\t\t\tdata = append(data, misi{next, bagian[2]})\n\t\t\tfmt.Printf(\"201 %d\\n\", next)\n\t\
+    \t\tnext++\n\t\tcase strings.HasPrefix(path, \"/misi/\") && (method == \"GET\" || method == \"DELETE\"):\n\t\t\tid, err := strconv.Atoi(strings.TrimPrefix(path, \"/misi/\"))\n\t\t\tif err != nil {\n\
+    \t\t\t\tfmt.Println(\"400 id tidak valid\")\n\t\t\t} else if i := cari(id); i < 0 {\n\t\t\t\tfmt.Println(\"404 tidak ditemukan\")\n\t\t\t} else if method == \"GET\" {\n\t\t\t\tfmt.Println(\"200 \" +\
+    \ data[i].judul)\n\t\t\t} else {\n\t\t\t\tdata = append(data[:i], data[i+1:]...)\n\t\t\t\tfmt.Println(\"204\")\n\t\t\t}\n\t\tcase path == \"/misi\" || strings.HasPrefix(path, \"/misi/\"):\n\t\t\tfmt.Println(\"\
+    405 method tidak diizinkan\")\n\t\tdefault:\n\t\t\tfmt.Println(\"404 rute tidak ada\")\n\t\t}\n\t}\n}\n"

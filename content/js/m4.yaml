@@ -1,0 +1,120 @@
+lesson:
+  - text: Di Node.js, file dibaca dan ditulis dengan modul fs. readFileSync(path, "utf8") membaca isi sebagai string. writeFileSync menulis ulang file, appendFileSync menambah di akhir, dan existsSync memeriksa keberadaan file. Di aplikasi ini, require("fs") menyediakan fs versi memori yang API-nya sama.
+    code: |
+      const fs = require("fs")
+      fs.writeFileSync("misi.txt", "Natagumo\n")
+      fs.appendFileSync("misi.txt", "Kereta Mugen\n")
+      console.log(fs.readFileSync("misi.txt", "utf8").trim().split("\n"))
+      console.log(fs.existsSync("misi.txt"), fs.existsSync("x.txt"))
+  - text: Versi asinkron fs.promises.readFile mengembalikan Promise, jadi pakai await. Data terstruktur biasanya disimpan sebagai JSON, dengan JSON.stringify(obj, null, 2) untuk menulis dan JSON.parse untuk membaca.
+    code: |
+      const fs = require("fs")
+      fs.writeFileSync("data.json", JSON.stringify({ rank: "Hashira" }, null, 2))
+      const isi = await fs.promises.readFile("data.json", "utf8")
+      console.log(JSON.parse(isi).rank)
+exercises:
+  - id: js-m4-catatan
+    type: write
+    title: Buku Catatan Misi
+    difficulty: 2
+    prompt: Baris pertama berisi n, lalu n baris catatan. Tulis semuanya ke file misi.txt (satu per baris) dengan fs, baca ulang, lalu cetak "1. ...", "2. ...", dan seterusnya.
+    tests: ["2\nNatagumo\nKereta Mugen", "1\nDistrik Hiburan"]
+    hints: |
+      const fs = require("fs")
+      appendFileSync(nama, teks + "\n") di dalam loop.
+      readFileSync(..., "utf8").trim().split("\n")
+    solution: |
+      const fs = require("fs")
+      const n = Number(readline())
+      fs.writeFileSync("misi.txt", "")
+      for (let i = 0; i < n; i++) fs.appendFileSync("misi.txt", readline() + "\n")
+      fs.readFileSync("misi.txt", "utf8").trim().split("\n").forEach((b, i) => console.log(`${i + 1}. ${b}`))
+  - id: js-m4-json-simpan
+    type: write
+    title: Simpan Profil Slayer
+    difficulty: 2
+    prompt: 'Baca nama dan umur (2 baris). Simpan sebagai JSON {"nama", "umur" (number)} ke profil.json, baca ulang, lalu cetak "<nama> berumur <umur>" dan tipe umur hasil baca (typeof).'
+    tests: ["Tanjiro\n15", "Giyu\n21"]
+    hints: |
+      JSON.stringify({ nama, umur })
+      Umur harus Number sebelum disimpan.
+      JSON.parse mengembalikan number untuk angka.
+    solution: |
+      const fs = require("fs")
+      const nama = readline(), umur = Number(readline())
+      fs.writeFileSync("profil.json", JSON.stringify({ nama, umur }))
+      const p = JSON.parse(fs.readFileSync("profil.json", "utf8"))
+      console.log(`${p.nama} berumur ${p.umur}`)
+      console.log(typeof p.umur)
+  - id: js-m4-predict
+    type: predict
+    title: Tulis, Tambah, Timpa
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const fs = require("fs")
+      fs.writeFileSync("a.txt", "satu\n")
+      fs.appendFileSync("a.txt", "dua\n")
+      console.log(fs.readFileSync("a.txt", "utf8").split("\n").length)
+      fs.writeFileSync("a.txt", "tiga")
+      console.log(fs.readFileSync("a.txt", "utf8"), fs.existsSync("b.txt"))
+    hints: |
+      "satu\ndua\n".split("\n") menghasilkan 3 elemen, dan yang terakhir kosong.
+      writeFileSync menimpa isi lama.
+      b.txt tidak pernah dibuat.
+    solution: x
+  - id: js-m4-bug-append
+    type: bughunt
+    title: Log yang Tertimpa
+    difficulty: 1
+    prompt: Program mencatat 3 baris log lalu menghitung barisnya. Hasilnya selalu 1. Temukan bug-nya.
+    starter: |
+      const fs = require("fs")
+      fs.writeFileSync("log.txt", "")
+      for (let i = 0; i < 3; i++) fs.writeFileSync("log.txt", `baris ${i}\n`)
+      console.log(fs.readFileSync("log.txt", "utf8").trim().split("\n").length)
+    bug_line: 3
+    hints: |
+      writeFileSync menimpa isi file setiap kali dipanggil.
+      Untuk menambah, pakai fungsi lain.
+      fs.appendFileSync
+    solution: |
+      const fs = require("fs")
+      fs.writeFileSync("log.txt", "")
+      for (let i = 0; i < 3; i++) fs.appendFileSync("log.txt", `baris ${i}\n`)
+      console.log(fs.readFileSync("log.txt", "utf8").trim().split("\n").length)
+  - id: js-m4-csv
+    type: write
+    title: Rekap Nilai CSV
+    difficulty: 3
+    prompt: Input berupa CSV dengan header "nama,nilai". Simpan ke nilai.csv, baca ulang, lalu cetak rata-rata (2 desimal) dan nama dengan nilai tertinggi (yang pertama jika seri).
+    tests: ["nama,nilai\nTanjiro,90\nZenitsu,75\nInosuke,80", "nama,nilai\nA,70\nB,70"]
+    hints: |
+      Kumpulkan baris input sampai null, lalu tulis ke file.
+      Lewati header dengan slice(1).
+      reduce untuk mencari maksimum, pakai > supaya yang pertama menang.
+    solution: |
+      const fs = require("fs")
+      const baris = []
+      let b
+      while ((b = readline()) !== null) baris.push(b)
+      fs.writeFileSync("nilai.csv", baris.join("\n"))
+      const data = fs.readFileSync("nilai.csv", "utf8").split("\n").slice(1).map(l => l.split(","))
+      console.log((data.reduce((s, d) => s + Number(d[1]), 0) / data.length).toFixed(2))
+      console.log(data.reduce((m, d) => (Number(d[1]) > Number(m[1]) ? d : m))[0])
+  - id: js-m4-parsons
+    type: parsons
+    title: Arsip Huruf Besar
+    difficulty: 1
+    prompt: Susun program yang menyimpan satu baris input ke x.txt, lalu membacanya kembali dan mencetaknya dalam huruf besar.
+    tests: ["halo slayer", "kaa"]
+    hints: |
+      require paling atas.
+      Tulis sebelum membaca.
+      toUpperCase saat mencetak.
+    solution: |
+      const fs = require("fs")
+      const teks = readline()
+      fs.writeFileSync("x.txt", teks)
+      const isi = fs.readFileSync("x.txt", "utf8")
+      console.log(isi.toUpperCase())

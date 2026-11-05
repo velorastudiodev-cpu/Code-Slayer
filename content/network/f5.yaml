@@ -1,0 +1,86 @@
+lesson:
+- text: 'TCP menjamin data sampai lengkap dan berurutan: membuka koneksi dengan 3-way handshake (SYN, SYN-ACK, ACK), memberi nomor urut (sequence) pada setiap segmen, dan mengirim ulang yang hilang. UDP
+    mengirim begitu saja: lebih cepat, tanpa jaminan.'
+- text: Pilih TCP untuk web, email, transfer file (harus lengkap). Pilih UDP untuk video call, game online, DNS (lebih baik cepat daripada menunggu paket lama).
+  code: |
+    segmen = [(3, "dao"), (1, "Pedang"), (2, " Nichirin ")]
+    print("".join(data for _, data in sorted(segmen)))
+exercises:
+- id: net-f5-udp
+  type: quiz
+  title: Panggilan Video Gagak
+  difficulty: 1
+  prompt: Aplikasi video call biasanya memakai UDP. Alasan utamanya adalah...
+  options:
+  - Paket terlambat tidak berguna, lebih baik cepat walau ada yang hilang
+  - UDP lebih aman karena terenkripsi
+  - UDP menjamin semua paket sampai
+  - TCP tidak bisa mengirim gambar
+  explain: UDP tidak menunggu pengiriman ulang. Untuk suara/video waktu nyata, frame yang terlambat sudah tidak berguna.
+  hints: |
+    Pikirkan apa yang terjadi kalau satu paket hilang.
+    TCP akan menunggu paket itu dikirim ulang.
+    Kecepatan lebih penting dari kelengkapan.
+- id: net-f5-handshake
+  type: quiz
+  title: Salam Tiga Langkah
+  difficulty: 1
+  prompt: Urutan 3-way handshake TCP yang benar adalah...
+  options:
+  - SYN → SYN-ACK → ACK
+  - ACK → SYN → FIN
+  - SYN → ACK → SYN-ACK
+  - HELLO → OK → DATA
+  explain: Klien mengirim SYN, server menjawab SYN-ACK, klien mengakhiri dengan ACK. Setelah itu data bisa dikirim.
+  hints: |
+    Dimulai dengan permintaan sinkronisasi.
+    Server menjawab sekaligus mengakui.
+    Klien mengakui jawaban server.
+- id: net-f5-fin
+  type: answer
+  title: Pamit dengan Sopan
+  difficulty: 2
+  prompt: Flag TCP yang dipakai untuk MENUTUP koneksi secara normal adalah...
+  accept:
+  - FIN
+  explain: FIN = finish. RST dipakai untuk memutus paksa.
+  hints: |
+    Bukan SYN.
+    Singkatan dari finish.
+    Tiga huruf.
+- id: net-f5-urut
+  type: write
+  title: Menyusun Ulang Segmen
+  difficulty: 2
+  prompt: Baris pertama n. Lalu n baris berisi "nomor_urut data" (data tanpa spasi). Segmen datang acak dan bisa ada duplikat. Cetak data yang tersusun menurut nomor urut, tiap nomor sekali saja, digabung
+    tanpa spasi.
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    3
+    2 Nichi
+    1 Pedang
+    3 rin
+  - |-
+    4
+    2 b
+    2 b
+    1 a
+    3 c
+  - |-
+    1
+    7 tunggal
+  hints: |
+    Simpan dalam dict nomor → data, duplikat otomatis tertimpa.
+    Urutkan kunci dengan sorted.
+    Gabungkan dengan "".join(...).
+  solution: |
+    n = int(input())
+    segmen = {}
+    for _ in range(n):
+        no, data = input().split()
+        segmen[int(no)] = data
+    print("".join(segmen[k] for k in sorted(segmen)))

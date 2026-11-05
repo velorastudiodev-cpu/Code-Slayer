@@ -1,0 +1,173 @@
+lesson:
+- text: 'Operator aritmetika: + - * / %, juga += -= ++ --. Hati-hati: x++ menghasilkan nilai LAMA lalu menambah, ++x menambah dulu.'
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            int t = 3725;
+            Console.WriteLine($"{t / 3600} {t % 3600 / 60} {t % 60}");
+            int n = 5;
+            Console.WriteLine(n++);
+            Console.WriteLine(++n);
+        }
+    }
+- text: 'Perbandingan menghasilkan bool. Logika: && || !. Operator ternary memilih nilai: kondisi ? a : b.'
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            int umur = 16;
+            bool pedang = true;
+            Console.WriteLine(umur >= 15 && pedang);
+            Console.WriteLine(umur >= 18 ? "dewasa" : "muda");
+        }
+    }
+exercises:
+- id: cs-f3-detik
+  type: write
+  title: Jam Pertarungan
+  difficulty: 2
+  prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '3725'
+  - '59'
+  - '86399'
+  - '0'
+  hints: |
+    1 jam = 3600 detik, 1 menit = 60 detik.
+    Jam = t / 3600, menit = (t % 3600) / 60.
+    Detik = t % 60.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long d = long.Parse(t[0]);
+            Console.WriteLine($"{d / 3600}:{d % 3600 / 60}:{d % 60}");
+        }
+    }
+- id: cs-f3-suhu
+  type: write
+  title: Suhu Napas Api
+  difficulty: 1
+  prompt: Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - '100'
+  - '0'
+  - '-40'
+  - '37'
+  hints: |
+    Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.
+    Contoh: 37 menjadi 98.6.
+    Format 1 angka di belakang koma.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            double c = double.Parse(t[0]);
+            Console.WriteLine($"{c * 9 / 5 + 32:F1}");
+        }
+    }
+- id: cs-f3-predict
+  type: predict
+  title: Urutan Operasi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine($"{2 + 3 * 4} {(2 + 3) * 4}");
+            Console.WriteLine(20 - 6 / 2 % 2);
+            int n = 5;
+            int m = n++ + ++n;
+            Console.WriteLine($"{n} {m}");
+        }
+    }
+  hints: |
+    * / % dikerjakan sebelum + -.
+    Operator dengan derajat sama dikerjakan dari kiri.
+    Kurung mengubah urutan.
+  solution: x
+- id: cs-f3-bug
+  type: bughunt
+  title: Gerbang yang Salah Jaga
+  difficulty: 1
+  prompt: Program harus mencetak "masuk" hanya jika 1 ≤ n ≤ 10, selain itu "tolak". Tapi semua angka masuk. Temukan baris yang salah.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            if (n >= 1 || n <= 10)
+                Console.WriteLine("masuk");
+            else
+                Console.WriteLine("tolak");
+        }
+    }
+  bug_line: 9
+  tests:
+  - '5'
+  - '1'
+  - '10'
+  - '0'
+  - '11'
+  hints: |
+    Coba n = 11: apakah kedua syarat harus benar?
+    || (atau) cukup salah satu benar.
+    Gunakan && (dan).
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(t[0]);
+            if (n >= 1 && n <= 10)
+                Console.WriteLine("masuk");
+            else
+                Console.WriteLine("tolak");
+        }
+    }

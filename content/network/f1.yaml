@@ -1,0 +1,70 @@
+lesson:
+- text: 'Data yang dikirim lewat jaringan dibungkus berlapis (enkapsulasi). Model TCP/IP punya 4 lapisan: Application (HTTP, DNS), Transport (TCP, UDP), Internet (IP), dan Link (Ethernet, Wi-Fi). Model
+    OSI memecahnya lebih rinci menjadi 7 lapisan.'
+- text: 'Setiap perangkat bekerja di lapisan tertentu: switch membaca alamat MAC (Data Link, lapisan 2), router membaca alamat IP (Network, lapisan 3), sedangkan browser dan server web bekerja di lapisan
+    Application.'
+  code: |
+    lapisan = ["Application", "Transport", "Internet", "Link"]
+    data = "GET /misi"
+    for l in lapisan:
+        data = f"[{l}]{data}"
+    print(data)
+exercises:
+- id: net-f1-http
+  type: quiz
+  title: Lapisan Surat Gagak
+  difficulty: 1
+  prompt: HTTP, protokol yang dipakai browser untuk meminta halaman web, berada di lapisan mana pada model TCP/IP?
+  options:
+  - Application
+  - Transport
+  - Internet
+  - Link
+  explain: HTTP adalah protokol aplikasi. Ia memakai TCP (Transport) di bawahnya, yang dibawa oleh IP (Internet).
+  hints: |
+    Pikirkan siapa yang "berbicara" HTTP: aplikasinya.
+    TCP dan UDP ada di Transport.
+    Lapisan paling atas.
+- id: net-f1-router
+  type: quiz
+  title: Penjaga Persimpangan
+  difficulty: 1
+  prompt: Router menentukan ke mana paket diteruskan berdasarkan alamat IP tujuan. Router bekerja di lapisan OSI ke berapa?
+  options:
+  - Lapisan 3 (Network)
+  - Lapisan 2 (Data Link)
+  - Lapisan 4 (Transport)
+  - Lapisan 7 (Application)
+  explain: Alamat IP adalah urusan lapisan Network (3). Switch biasa bekerja di lapisan 2 dengan alamat MAC.
+  hints: |
+    Router membaca alamat IP.
+    Alamat IP ada di lapisan Network.
+    Network = lapisan 3.
+- id: net-f1-osi
+  type: answer
+  title: Tujuh Bentuk
+  difficulty: 1
+  prompt: Berapa jumlah lapisan pada model OSI? Jawab dengan angka.
+  accept:
+  - '7'
+  - tujuh
+  explain: 'OSI: Physical, Data Link, Network, Transport, Session, Presentation, Application.'
+  hints: |
+    Lebih banyak dari TCP/IP (4).
+    Dari Physical sampai Application.
+    Jawabannya satu angka.
+- id: net-f1-switch
+  type: quiz
+  title: Switch di Markas
+  difficulty: 2
+  prompt: Di jaringan lokal markas, perangkat yang meneruskan frame ke port yang tepat berdasarkan alamat MAC adalah...
+  options:
+  - Switch
+  - Router
+  - Modem
+  - Hub
+  explain: Switch mempelajari alamat MAC di setiap port, jadi frame hanya dikirim ke port tujuan. Hub mengirim ke semua port.
+  hints: |
+    Alamat MAC = lapisan 2.
+    Hub tidak "belajar", ia menyiarkan ke semua port.
+    Perangkat lapisan 2 yang pintar.

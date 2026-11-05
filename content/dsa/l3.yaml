@@ -1,0 +1,83 @@
+lesson:
+  - text: Dynamic Programming (DP) memecah masalah menjadi submasalah yang TUMPANG TINDIH, lalu menyimpan jawabannya supaya tidak dihitung ulang. Tentukan dulu state (misalnya dp[i] = jawaban untuk i), lalu transisinya (dp[i] dari dp sebelumnya), lalu base case. Fibonacci O(2ⁿ) menjadi O(n).
+    code: |
+      n = 50
+      dp = [0, 1]
+      for i in range(2, n + 1):
+          dp.append(dp[i - 1] + dp[i - 2])
+      print(dp[n])
+exercises:
+  - id: dsa-l3-tangga
+    type: write
+    title: Tangga Markas
+    difficulty: 2
+    prompt: Naik n anak tangga dengan langkah 1, 2, atau 3. Cetak banyaknya cara modulo 1.000.000.007 (n ≤ 10^6).
+    tests: ["3", "1", "10", "1000000"]
+    hints: |
+      dp[i] = dp[i-1] + dp[i-2] + dp[i-3].
+      dp[0] = 1 (diam di bawah adalah satu cara).
+      Ambil modulo setiap langkah.
+    solution: |
+      n = int(input())
+      M = 10**9 + 7
+      a, b, c = 1, 0, 0
+      for _ in range(n):
+          a, b, c = (a + b + c) % M, a, b
+      print(a)
+  - id: dsa-l3-lcs
+    type: write
+    title: Jejak Bersama
+    difficulty: 3
+    prompt: Baca dua kata (masing-masing ≤ 1000 huruf). Cetak panjang Longest Common Subsequence-nya.
+    tests: ["abcde\nace", "abc\nabc", "abc\ndef", "kamado\nmadoka"]
+    hints: |
+      dp[i][j] = LCS dari i huruf pertama a dan j huruf pertama b.
+      Kalau huruf sama, dp[i-1][j-1] + 1, selain itu max(dp[i-1][j], dp[i][j-1]).
+      Cukup simpan baris sebelumnya.
+    solution: |
+      a, b = input(), input()
+      prev = [0] * (len(b) + 1)
+      for i in range(1, len(a) + 1):
+          cur = [0] * (len(b) + 1)
+          for j in range(1, len(b) + 1):
+              cur[j] = prev[j - 1] + 1 if a[i - 1] == b[j - 1] else max(prev[j], cur[j - 1])
+          prev = cur
+      print(prev[-1])
+  - id: dsa-l3-fill-knapsack
+    type: fill
+    title: Ransel Desa Penempa
+    difficulty: 3
+    prompt: 'Lengkapi knapsack 0/1. Baris 1 berisi n dan W, lalu n baris "berat nilai". Cetak nilai maksimum dengan total berat ≤ W.'
+    code: |
+      n, W = map(int, input().split())
+      dp = [0] * (W + 1)
+      for _ in range(n):
+          w, v = map(int, input().split())
+          for c in range(W, ⟦w - 1⟧, -1):
+              dp[c] = max(dp[c], ⟦dp[c - w] + v⟧)
+      print(dp[W])
+    tests: ["3 5\n2 3\n3 4\n4 5", "1 1\n2 10", "2 10\n5 10\n5 10"]
+    hints: |
+      Loop kapasitas MUNDUR supaya setiap barang dipakai sekali.
+      Berhenti di w (c ≥ w), jadi batas range adalah w - 1.
+      Ambil barang berarti dp[c - w] + v.
+  - id: dsa-l3-koin-dp
+    type: write
+    title: Kembalian Tanpa Greedy
+    difficulty: 3
+    prompt: Baris 1 berisi nilai koin (bisa sistem apa pun), baris 2 berisi n (≤ 10^5). Cetak koin minimum untuk membayar n, atau -1 jika mustahil.
+    tests: ["1 3 4\n6", "2\n3", "1 5 10 25\n63", "7\n0"]
+    hints: |
+      dp[x] = koin minimum untuk membayar x, dengan dp[0] = 0.
+      dp[x] = min(dp[x - k] + 1) untuk setiap koin k ≤ x.
+      Pakai nilai besar (inf) untuk yang mustahil.
+    solution: |
+      koin = list(map(int, input().split()))
+      n = int(input())
+      INF = float("inf")
+      dp = [0] + [INF] * n
+      for x in range(1, n + 1):
+          for k in koin:
+              if k <= x and dp[x - k] + 1 < dp[x]:
+                  dp[x] = dp[x - k] + 1
+      print(dp[n] if dp[n] < INF else -1)

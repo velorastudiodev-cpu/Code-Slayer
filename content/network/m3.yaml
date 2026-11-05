@@ -1,0 +1,79 @@
+lesson:
+- text: Firewall memeriksa paket dengan daftar aturan berurutan; aturan PERTAMA yang cocok yang dipakai (first match), dan kalau tidak ada yang cocok berlaku kebijakan default. DROP membuang diam-diam,
+    REJECT menolak dengan memberi tahu pengirim.
+- text: NAT menerjemahkan alamat privat menjadi alamat publik router, sehingga banyak perangkat bisa berbagi satu IP publik. Efek sampingnya, perangkat di dalam tidak bisa dihubungi langsung dari luar tanpa
+    port forwarding.
+exercises:
+- id: net-m3-firewall
+  type: write
+  title: Gerbang Benteng
+  difficulty: 3
+  prompt: Baris pertama n, lalu n aturan "AKSI PROTO PORT" (AKSI ALLOW/DROP, PROTO tcp/udp/any, PORT angka atau *). Baris berikutnya q, lalu q paket "PROTO PORT". Untuk setiap paket cetak aksi dari aturan
+    pertama yang cocok, atau "DROP" (kebijakan default) kalau tidak ada.
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    3
+    ALLOW tcp 22
+    DROP tcp *
+    ALLOW udp 53
+    4
+    tcp 22
+    tcp 80
+    udp 53
+    udp 123
+  - |-
+    2
+    ALLOW any 443
+    DROP udp *
+    3
+    udp 443
+    udp 53
+    tcp 8080
+  hints: |
+    Telusuri aturan dari atas.
+    Cocok kalau proto sama (atau any) dan port sama (atau *).
+    Berhenti di aturan pertama yang cocok.
+  solution: |
+    aturan = [input().split() for _ in range(int(input()))]
+    for _ in range(int(input())):
+        proto, port = input().split()
+        aksi = "DROP"
+        for a, p, pt in aturan:
+            if p in (proto, "any") and pt in (port, "*"):
+                aksi = a
+                break
+        print(aksi)
+- id: net-m3-nat
+  type: quiz
+  title: Satu Wajah untuk Banyak Orang
+  difficulty: 1
+  prompt: Fungsi utama NAT di router rumah adalah...
+  options:
+  - Membuat banyak perangkat beralamat privat berbagi satu IP publik
+  - Mengenkripsi semua lalu lintas
+  - Mempercepat koneksi Wi-Fi
+  - Memblokir semua situs berbahaya
+  explain: NAT menulis ulang alamat sumber paket keluar menjadi IP publik router, lalu mencatat pasangan port untuk menerjemahkan balasannya.
+  hints: |
+    Alamat privat tidak bisa dirutekan di internet.
+    Router punya satu IP publik.
+    Banyak perangkat, satu alamat.
+- id: net-m3-drop
+  type: quiz
+  title: Diam atau Menolak
+  difficulty: 2
+  prompt: Port scanner melaporkan port 23 sebagai "filtered" (tidak ada jawaban), bukan "closed". Aturan firewall yang paling mungkin adalah...
+  options:
+  - DROP
+  - REJECT
+  - ALLOW
+  - NAT
+  explain: DROP membuang paket tanpa balasan sehingga scanner hanya bisa menebak (filtered). REJECT atau port tertutup mengirim balasan, sehingga terdeteksi closed.
+  hints: |
+    Tidak ada jawaban sama sekali.
+    REJECT memberi tahu pengirim.
+    Membuang diam-diam.

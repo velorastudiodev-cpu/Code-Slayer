@@ -1,0 +1,94 @@
+lesson:
+- text: 'Analisis log adalah pekerjaan harian tim keamanan (SOC). Pola mencurigakan: banyak 404 dari satu IP (pemindaian direktori), banyak login gagal (brute force), akses ke /admin atau berkas sensitif
+    (.env, backup).'
+  code: |
+    awk '$9 == 404 { print $1 }' access.log | sort | uniq -c | sort -rn
+exercises:
+- id: cy-l3-scan
+  type: write
+  title: Pemindai Direktori
+  difficulty: 2
+  prompt: Dari access.log, tampilkan IP yang menghasilkan status 404 beserta jumlahnya, urut dari terbanyak, dengan format "jumlah IP".
+  lang: bash
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > access.log <<'EOF'
+    10.0.0.5 - - [05/Nov/2026:10:00:01] "GET /index.html HTTP/1.1" 200 512
+    10.0.0.66 - - [05/Nov/2026:10:00:02] "GET /admin HTTP/1.1" 404 16
+    10.0.0.66 - - [05/Nov/2026:10:00:02] "GET /wp-login.php HTTP/1.1" 404 16
+    10.0.0.66 - - [05/Nov/2026:10:00:03] "GET /.env HTTP/1.1" 404 16
+    10.0.0.9 - - [05/Nov/2026:10:00:04] "GET /misi HTTP/1.1" 200 1024
+    10.0.0.66 - - [05/Nov/2026:10:00:04] "GET /backup.zip HTTP/1.1" 404 16
+    10.0.0.77 - - [05/Nov/2026:10:00:05] "GET /phpmyadmin HTTP/1.1" 404 16
+    10.0.0.5 - - [05/Nov/2026:10:00:06] "POST /login HTTP/1.1" 302 0
+    EOF
+  hints: |
+    Status ada di kolom kedua dari akhir.
+    Ambil IP-nya ($1).
+    sort | uniq -c | sort -rn
+  solution: |
+    awk '$(NF-1) == 404 { print $1 }' access.log | sort | uniq -c | sort -rn | awk '{ print $1, $2 }'
+- id: cy-l3-sensitif
+  type: write
+  title: Incaran Berkas Sensitif
+  difficulty: 2
+  prompt: Tampilkan path yang diminta (tanpa IP) dari access.log yang mengandung .env, backup, atau admin, satu per baris.
+  lang: bash
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > access.log <<'EOF'
+    10.0.0.5 - - [05/Nov/2026:10:00:01] "GET /index.html HTTP/1.1" 200 512
+    10.0.0.66 - - [05/Nov/2026:10:00:02] "GET /admin HTTP/1.1" 404 16
+    10.0.0.66 - - [05/Nov/2026:10:00:02] "GET /wp-login.php HTTP/1.1" 404 16
+    10.0.0.66 - - [05/Nov/2026:10:00:03] "GET /.env HTTP/1.1" 404 16
+    10.0.0.9 - - [05/Nov/2026:10:00:04] "GET /misi HTTP/1.1" 200 1024
+    10.0.0.66 - - [05/Nov/2026:10:00:04] "GET /backup.zip HTTP/1.1" 404 16
+    10.0.0.77 - - [05/Nov/2026:10:00:05] "GET /phpmyadmin HTTP/1.1" 404 16
+    10.0.0.5 - - [05/Nov/2026:10:00:06] "POST /login HTTP/1.1" 302 0
+    EOF
+  hints: |
+    Ambil bagian "GET /path".
+    cut kolom ke-2.
+    grep -E dengan alternatif |.
+  solution: |
+    grep -oE '"GET [^ ]+' access.log | cut -d' ' -f2 | grep -E '\.env|backup|admin'
+- id: cy-l3-py
+  type: write
+  title: Detektor Python
+  difficulty: 3
+  prompt: 'Baca log SSH dari input. Cetak IP yang gagal login ≥ 3 kali, terurut, satu per baris (format log: ... Failed password for USER from IP).'
+  lang: python
+  starter: |
+    import sys
+    from collections import Counter
+
+    log = sys.stdin.read().splitlines()
+    # tulis kodemu di sini
+  tests:
+  - |
+    a: Failed password for root from 10.6.6.6
+    b: Failed password for root from 10.6.6.6
+    c: Failed password for x from 10.4.4.4
+    d: Failed password for root from 10.6.6.6
+  - |
+    x: Accepted password for slayer from 10.0.0.5
+    y: Failed password for a from 10.1.1.1
+    y: Failed password for a from 10.1.1.1
+    y: Failed password for a from 10.1.1.1
+    y: Failed password for a from 10.2.2.2
+    y: Failed password for a from 10.2.2.2
+    y: Failed password for a from 10.2.2.2
+  hints: |
+    Saring baris "Failed password".
+    IP = kata terakhir.
+    Counter lalu ambil n ≥ 3, urutkan.
+  solution: |
+    import sys
+    from collections import Counter
+
+    log = sys.stdin.read().splitlines()
+    c = Counter(b.split()[-1] for b in log if "Failed password" in b)
+    for ip in sorted(ip for ip, n in c.items() if n >= 3):
+        print(ip)

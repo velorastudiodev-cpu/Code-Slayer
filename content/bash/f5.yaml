@@ -1,0 +1,84 @@
+lesson:
+- text: 'Variabel: nama=nilai (tanpa spasi di sekitar =), dibaca dengan $nama. Selalu kutip "$nama" agar spasi aman. $(perintah) menyimpan output perintah. read nama membaca satu baris input. Aritmetika:
+    $(( a + b )).'
+  code: |
+    nama="Tanjiro"
+    echo "Halo, $nama"
+    jumlah=$(wc -l < regu.txt)
+    read kota
+    echo $(( 3 * 4 ))
+exercises:
+- id: bash-f5-read
+  type: write
+  title: Sapaan Gagak
+  difficulty: 1
+  prompt: Baca satu nama dari input lalu cetak "Kaa! Halo, <nama>!"
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    Tanjiro
+  - |
+    Rengoku Kyojuro
+  hints: |
+    read membaca satu baris.
+    Pakai $nama di dalam kutip ganda.
+    echo "Kaa! Halo, $nama!"
+  solution: |
+    read nama
+    echo "Kaa! Halo, $nama!"
+- id: bash-f5-math
+  type: write
+  title: Jumlah Iblis
+  difficulty: 1
+  prompt: Baca dua bilangan (satu per baris) lalu cetak jumlahnya.
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    3
+    4
+  - |
+    100
+    -25
+  hints: |
+    Baca dua kali.
+    Aritmetika dengan $(( )).
+    echo $(( a + b ))
+  solution: |
+    read a
+    read b
+    echo $(( a + b ))
+- id: bash-f5-spasi
+  type: bughunt
+  title: Spasi Terlarang
+  difficulty: 1
+  prompt: 'Skrip harus mencetak "Napas: Air". Temukan barisnya yang salah.'
+  starter: |
+    napas = "Air"
+    echo "Napas: $napas"
+  bug_line: 1
+  tests:
+  - ''
+  hints: |
+    Bash sangat ketat soal spasi.
+    Assignment tidak boleh ada spasi di sekitar =.
+    napas="Air"
+  solution: |
+    napas="Air"
+    echo "Napas: $napas"
+- id: bash-f5-predict
+  type: predict
+  title: Tebak Output
+  difficulty: 1
+  prompt: Tulis output persis dari skrip berikut.
+  code: |
+    a=5
+    b=$(( a * 2 ))
+    a=1
+    echo "$a $b"
+  hints: |
+    b dihitung saat baris itu dijalankan.
+    Mengubah a setelahnya tidak mengubah b.
+    b = 10
+  solution: x

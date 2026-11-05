@@ -1,0 +1,89 @@
+lesson:
+- text: 'Kekuatan shell ada di pipa: | mengalirkan output satu perintah menjadi input perintah lain. > menulis ke file (menimpa), >> menambah, < membaca dari file, 2> mengarahkan error. wc -l menghitung
+    baris, sort mengurutkan, head/tail mengambil awal/akhir.'
+  code: |
+    cat regu.txt | sort | head -2
+    echo baru >> catatan.txt
+    ls tidak-ada 2> error.txt
+exercises:
+- id: bash-f4-wc
+  type: write
+  title: Hitung Misi
+  difficulty: 1
+  prompt: Hitung jumlah baris di markas/misi/daftar.txt (cetak angkanya saja).
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    wc -l menghitung baris.
+    Dengan < hanya angka yang dicetak.
+    wc -l < file
+  solution: |
+    wc -l < markas/misi/daftar.txt
+- id: bash-f4-sort
+  type: write
+  title: Urut Abjad
+  difficulty: 1
+  prompt: Tampilkan isi markas/regu.txt terurut abjad terbalik (Z ke A).
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    sort mengurutkan.
+    -r membalik urutan.
+    sort -r file
+  solution: |
+    sort -r markas/regu.txt
+- id: bash-f4-append
+  type: write
+  title: Tambah Anggota
+  difficulty: 2
+  prompt: Tambahkan baris "Kanao" ke akhir markas/regu.txt TANPA menimpa isinya, lalu tampilkan isi file.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    > menimpa, >> menambah.
+    echo teks >> file
+    Lalu cat file.
+  solution: |
+    echo Kanao >> markas/regu.txt
+    cat markas/regu.txt
+- id: bash-f4-pipe
+  type: write
+  title: Nama Terpanjang
+  difficulty: 2
+  prompt: Dari input (satu nama per baris), cetak nama yang paling panjang. Gunakan awk untuk panjang, sort, dan head.
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    Tanjiro
+    Zenitsu
+    Inosuke
+    Rengoku Kyojuro
+  - |
+    Ai
+    Nezuko
+    Uzui
+  hints: |
+    awk bisa mencetak length.
+    Urutkan angka menurun.
+    Ambil baris pertama, buang kolom panjang.
+  solution: |
+    awk '{ print length, $0 }' | sort -rn | head -1 | cut -d' ' -f2

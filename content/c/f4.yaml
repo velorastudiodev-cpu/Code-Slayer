@@ -1,0 +1,140 @@
+lesson:
+  - text: scanf membaca input sesuai format, misalnya %d untuk int, %lf untuk double, dan %s untuk satu kata. Variabel biasa harus diberi & (alamatnya) supaya scanf bisa mengisinya, tapi array char tidak perlu &. scanf mengembalikan banyaknya nilai yang berhasil dibaca.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n = 0;
+          int terbaca = sscanf("42 tebasan", "%d", &n);
+          printf("%d %d\n", n, terbaca);
+          return 0;
+      }
+  - text: Untuk membaca sampai input habis, ulangi selama scanf berhasil membaca, yaitu while (scanf("%d", &x) == 1). Ini pola umum di soal kompetisi (TOKI, Codeforces) untuk membaca n bilangan atau data sampai EOF.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          const char *data = "3 1 4";
+          int x, total = 0, offset = 0, pakai;
+          while (sscanf(data + offset, "%d%n", &x, &pakai) == 1) { total += x; offset += pakai; }
+          printf("%d\n", total);
+          return 0;
+      }
+exercises:
+  - id: c-f4-jumlah
+    type: write
+    title: Menjumlah Dua Bilah
+    difficulty: 1
+    prompt: Baca dua bilangan bulat, cetak jumlahnya.
+    tests: ["3 4", "10 -2", "0 0"]
+    hints: |
+      scanf("%d %d", &a, &b)
+      Jangan lupa & sebelum nama variabel.
+      printf("%d\n", a + b);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int a, b;
+          scanf("%d %d", &a, &b);
+          printf("%d\n", a + b);
+          return 0;
+      }
+  - id: c-f4-n-bilangan
+    type: write
+    title: Laporan Berjumlah n
+    difficulty: 2
+    prompt: Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.
+    tests: ["3\n1 9 2", "1\n-5", "5\n-1 -2 -3 -4 -5"]
+    hints: |
+      Baca n, lalu baca n kali di dalam loop.
+      Simpan nilai terbesar mulai dari bilangan pertama.
+      if (i == 0 || x > maks) maks = x;
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n, x, total = 0, maks = 0;
+          scanf("%d", &n);
+          for (int i = 0; i < n; i++) {
+              scanf("%d", &x);
+              total += x;
+              if (i == 0 || x > maks) maks = x;
+          }
+          printf("%d %d\n", total, maks);
+          return 0;
+      }
+  - id: c-f4-eof
+    type: write
+    title: Sampai Gulungan Habis
+    difficulty: 2
+    prompt: Input berisi sejumlah bilangan bulat (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal).
+    tests: ["1 2 3 4", "10", "5\n6\n7"]
+    hints: |
+      Ulangi selama scanf berhasil membaca satu bilangan.
+      while (scanf("%d", &x) == 1)
+      Bagi dengan (double) supaya desimal tidak hilang.
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int x, n = 0;
+          long long total = 0;
+          while (scanf("%d", &x) == 1) { total += x; n++; }
+          printf("%d %.2f\n", n, (double)total / n);
+          return 0;
+      }
+  - id: c-f4-bug
+    type: bughunt
+    title: Alamat yang Terlupa
+    difficulty: 1
+    prompt: Program membaca umur lalu mencetak umur tahun depan, tapi crash atau mencetak angka aneh. Temukan bug-nya.
+    starter: |
+      #include <stdio.h>
+
+      int main(void) {
+          int umur = 0;
+          scanf("%d", umur);
+          printf("%d\n", umur + 1);
+          return 0;
+      }
+    bug_line: 5
+    tests: ["15", "0", "99"]
+    hints: |
+      scanf butuh ALAMAT variabel supaya bisa mengisinya.
+      Alamat didapat dengan operator &.
+      scanf("%d", &umur);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int umur = 0;
+          scanf("%d", &umur);
+          printf("%d\n", umur + 1);
+          return 0;
+      }
+  - id: c-f4-readerror
+    type: readerror
+    title: Segfault dari scanf
+    difficulty: 2
+    prompt: Dengan input 15, program crash. Baca pesan error-nya.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int umur = 0;
+          scanf("%d", umur);
+          printf("%d\n", umur + 1);
+          return 0;
+      }
+    tests: ["15"]
+    options:
+      - scanf butuh alamat variabel. Tulis &umur, bukan umur.
+      - printf tidak bisa mencetak umur + 1.
+      - int harus diganti long.
+      - return 0 menyebabkan crash.
+    explain: Tanpa &, scanf menulis ke alamat 0 (nilai umur) sehingga terjadi Segmentation fault.
+    hints: |
+      Segmentation fault berarti akses memori yang tidak valid.
+      Ke mana scanf menulis nilai yang dibaca?
+      Operator & memberi alamat variabel.

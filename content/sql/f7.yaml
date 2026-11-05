@@ -1,0 +1,85 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: Subquery adalah query di dalam query. Di WHERE, subquery bisa menghasilkan satu nilai (dibandingkan dengan > atau =) atau daftar nilai (dipakai dengan IN / NOT IN).
+  code: |
+    SELECT nama, umur FROM slayer WHERE umur > (SELECT AVG(umur) FROM slayer) ORDER BY nama;
+- text: EXISTS (subquery) bernilai benar kalau subquery menghasilkan minimal satu baris. Subquery boleh merujuk tabel di luar (correlated subquery).
+  code: |
+    SELECT nama FROM iblis i WHERE EXISTS (SELECT 1 FROM misi m WHERE m.iblis_id = i.id AND m.berhasil = 0);
+exercises:
+- id: sql-f7-diatas
+  type: write
+  title: Lebih Tua dari Rata-rata
+  difficulty: 2
+  prompt: Tampilkan nama slayer yang umurnya di atas rata-rata umur semua slayer, urut nama.
+  tests:
+  - ''
+  - INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);
+  samples: 1
+  hints: |
+    Hitung rata-rata dengan subquery.
+    Bandingkan umur > (SELECT AVG(umur) FROM slayer).
+    Urutkan nama.
+  solution: |
+    SELECT nama FROM slayer WHERE umur > (SELECT AVG(umur) FROM slayer) ORDER BY nama;
+- id: sql-f7-bebas
+  type: write
+  title: Iblis yang Belum Diburu
+  difficulty: 2
+  prompt: Tampilkan nama iblis yang tidak pernah muncul di tabel misi, urut nama.
+  tests:
+  - ''
+  - INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL);
+  - INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL); INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02',
+    1, 300);
+  samples: 1
+  hints: |
+    Ambil semua iblis_id dari misi.
+    Gunakan NOT IN.
+    Urutkan nama.
+  solution: |
+    SELECT nama FROM iblis WHERE id NOT IN (SELECT iblis_id FROM misi) ORDER BY nama;
+- id: sql-f7-terbesar
+  type: write
+  title: Upah Tertinggi
+  difficulty: 2
+  prompt: Tampilkan nama slayer dan koban dari misi dengan koban terbesar (kalau ada yang sama, tampilkan semuanya, urut nama).
+  tests:
+  - ''
+  - INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);
+  samples: 1
+  hints: |
+    Cari dulu MAX(koban) dengan subquery.
+    Lalu ambil misi yang koban-nya sama dengan nilai itu.
+    JOIN ke slayer untuk namanya.
+  solution: |
+    SELECT s.nama, m.koban FROM misi m JOIN slayer s ON s.id = m.slayer_id WHERE m.koban = (SELECT MAX(koban) FROM misi) ORDER BY s.nama;
+- id: sql-f7-exists
+  type: predict
+  title: Pernah Gagal
+  difficulty: 2
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    SELECT nama FROM slayer s WHERE EXISTS (SELECT 1 FROM misi m WHERE m.slayer_id = s.id AND m.berhasil = 0) ORDER BY nama;
+  hints: |
+    Cari misi dengan berhasil = 0.
+    Lihat slayer_id dari misi-misi itu.
+    EXISTS benar kalau ada minimal satu misi gagal.
+  solution: x

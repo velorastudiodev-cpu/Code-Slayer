@@ -1,0 +1,167 @@
+lesson:
+- text: 'C# bertipe statis: int (32-bit), long (64-bit), double, bool, string. var membiarkan compiler menebak tipe dari nilainya, tapi tipenya tetap pasti dan tidak bisa berubah.'
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            int umur = 15;
+            var nama = "Tanjiro";
+            double tinggi = 165.5;
+            long besar = 3000000000L;
+            Console.WriteLine($"{nama} {umur} {tinggi} {besar * 2}");
+        }
+    }
+- text: 'int.Parse / long.Parse / double.Parse mengubah teks menjadi angka. Pembagian int / int membuang desimal; ubah dulu ke double: (double)a / b.'
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            int a = 7, b = 2;
+            Console.WriteLine($"{a / b} {a % b}");
+            Console.WriteLine((double)a / b);
+            Console.WriteLine(int.Parse("41") + 1);
+        }
+    }
+exercises:
+- id: cs-f2-baca
+  type: write
+  title: Kartu Identitas
+  difficulty: 1
+  prompt: Input berisi nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - Tanjiro 15
+  - Kanao 16
+  - Gyomei 27
+  hints: |
+    Baca dua nilai: teks lalu bilangan bulat.
+    Ubah umur menjadi angka sebelum ditambah 1.
+    Contoh: "Tanjiro akan berumur 16 tahun".
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            string nama = t[0];
+            int umur = int.Parse(t[1]);
+            Console.WriteLine($"{nama} akan berumur {umur + 1} tahun");
+        }
+    }
+- id: cs-f2-besar
+  type: write
+  title: Jarak Antar Bintang
+  difficulty: 2
+  prompt: Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - 3 4
+  - 2000000000 2000000000
+  - -5 100000
+  hints: |
+    2 miliar × 2 miliar = 4 × 10^18.
+    Batas int 32-bit sekitar 2,1 miliar.
+    Pakai tipe bilangan bulat 64-bit.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            long a = long.Parse(t[0]);
+            long b = long.Parse(t[1]);
+            Console.WriteLine(a * b);
+        }
+    }
+- id: cs-f2-predict
+  type: predict
+  title: Pembagian Bulat
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine($"{17 / 5} {17 % 5}");
+            Console.WriteLine(17.0 / 5);
+            int x = 9;
+            int y = x / 2 * 2;
+            Console.WriteLine($"{y} {x - y}");
+        }
+    }
+  hints: |
+    Pembagian dua bilangan bulat membuang bagian desimal.
+    Sisa bagi memakai operator %.
+    Kalau salah satu operand desimal, hasilnya desimal.
+  solution: x
+- id: cs-f2-bug
+  type: bughunt
+  title: Rata-rata Terpotong
+  difficulty: 2
+  prompt: Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int a = int.Parse(t[0]), b = int.Parse(t[1]), c = int.Parse(t[2]);
+            double rata = (a + b + c) / 3;
+            Console.WriteLine($"{rata:F2}");
+        }
+    }
+  bug_line: 9
+  tests:
+  - 1 2 4
+  - 5 5 6
+  - 3 3 3
+  hints: |
+    1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.
+    Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.
+    Ubah jumlahnya ke tipe desimal dulu, baru dibagi.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            int a = int.Parse(t[0]), b = int.Parse(t[1]), c = int.Parse(t[2]);
+            double rata = (a + b + c) / 3.0;
+            Console.WriteLine($"{rata:F2}");
+        }
+    }

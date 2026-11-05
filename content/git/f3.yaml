@@ -1,0 +1,89 @@
+lesson:
+- text: git log menampilkan riwayat, terbaru di atas. --oneline meringkas jadi satu baris, --format=%s hanya menampilkan pesan. HEAD menunjuk commit yang sedang kamu pakai; HEAD~1 = satu commit sebelumnya.
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo "Kaa! Kaa!" >> misi.txt
+    git commit -q -am "Tambah teriakan"
+    git log --format="%s"
+    git log --oneline | wc -l
+- text: git commit --amend mengganti commit TERAKHIR (pesan dan/atau isinya). Aman untuk commit yang belum di-push; jangan dipakai untuk commit yang sudah dibagikan ke orang lain.
+exercises:
+- id: git-f3-amend
+  type: write
+  title: Salah Ketik
+  difficulty: 1
+  prompt: Commit terakhir berpesan "Tmabah peta" (salah ketik). Perbaiki pesannya menjadi "Tambah peta" tanpa membuat commit baru.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo "peta" > peta.txt
+    git add peta.txt
+    git commit -q -m "Tmabah peta"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Commit terakhir bisa diganti.
+    Opsi --amend.
+    git commit --amend -m "pesan baru"
+  solution: |
+    git commit --amend -m "Tambah peta"
+- id: git-f3-log
+  type: predict
+  title: Riwayat Terbalik
+  difficulty: 1
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    echo 2 >> misi.txt
+    git commit -q -am "Kedua"
+    echo 3 >> misi.txt
+    git commit -q -am "Ketiga"
+    git log --format=%s
+    git log --format=%s HEAD~1 | head -1
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+  hints: |
+    git log menampilkan yang terbaru di atas.
+    HEAD~1 = satu commit sebelum HEAD.
+    Commit pertama bernama "Misi pertama".
+  solution: x
+- id: git-f3-head
+  type: quiz
+  title: Di Mana HEAD?
+  difficulty: 2
+  prompt: 'Riwayat: A ← B ← C (HEAD). Apa yang ditunjuk HEAD~2?'
+  options:
+  - A
+  - B
+  - C
+  - Commit setelah C
+  explain: '~n berarti mundur n kali lewat parent pertama: HEAD~1 = B, HEAD~2 = A.'
+  hints: |
+    ~1 = satu langkah ke belakang.
+    Mundur dua kali dari C.
+    C → B → A.
+- id: git-f3-oneline
+  type: answer
+  title: Riwayat Ringkas
+  difficulty: 1
+  prompt: Opsi git log yang menampilkan setiap commit dalam SATU baris (hash pendek + pesan) adalah...
+  accept:
+  - --oneline
+  - git log --oneline
+  explain: git log --oneline cocok untuk melihat riwayat panjang dengan cepat.
+  hints: |
+    Satu baris.
+    Satu kata, diawali --.
+    --oneline

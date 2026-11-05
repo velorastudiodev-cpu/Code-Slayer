@@ -1,0 +1,179 @@
+lesson:
+- text: 'Box model: setiap elemen adalah kotak berlapis: content, padding (ruang dalam), border (garis), margin (ruang luar). margin: 0 auto pada elemen block berlebar tetap membuatnya berada di tengah.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .kartu {
+      width: 260px;
+      padding: 16px;
+      border: 3px solid #222;
+      margin: 0 auto;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="kartu">
+        <h2>Kamado Tanjiro</h2>
+        <p>Pernapasan Air</p>
+      </div>
+    </body>
+    </html>
+- text: 'box-sizing: border-box membuat width sudah termasuk padding dan border, sehingga ukuran kotak lebih mudah ditebak. Banyak proyek memasangnya ke semua elemen: * { box-sizing: border-box }.'
+exercises:
+- id: web-f6-kartu
+  type: write
+  title: Kartu Slayer
+  difficulty: 1
+  prompt: Beri .kartu padding 16px, border 2px solid black, dan margin 8px.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .kartu {
+
+    }
+      </style>
+    </head>
+    <body>
+      <div class="kartu">
+        <h2>Kamado Tanjiro</h2>
+        <p>Pernapasan Air</p>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .kartu
+    css: padding-top
+    value: 16px
+  - sel: .kartu
+    css: padding-left
+    value: 16px
+  - sel: .kartu
+    css: border-top-style
+    value: solid
+  - sel: .kartu
+    css: border-bottom-width
+    value: 2px
+  - sel: .kartu
+    css: margin-right
+    value: 8px
+  hints: |
+    padding = ruang di dalam border.
+    border: tebal gaya warna.
+    margin = ruang di luar border.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .kartu {
+      padding: 16px;
+      border: 2px solid black;
+      margin: 8px;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="kartu">
+        <h2>Kamado Tanjiro</h2>
+        <p>Pernapasan Air</p>
+      </div>
+    </body>
+    </html>
+- id: web-f6-tengah
+  type: write
+  title: Di Tengah Panggung
+  difficulty: 2
+  prompt: Buat .kartu lebarnya 300px dan berada di tengah secara horizontal memakai margin (atas-bawah 0).
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .kartu {
+
+    }
+      </style>
+    </head>
+    <body>
+      <div class="kartu">
+        <h2>Kamado Tanjiro</h2>
+        <p>Pernapasan Air</p>
+      </div>
+    </body>
+    </html>
+  checks:
+  - sel: .kartu
+    css: width
+    value: 300px
+  - sel: .kartu
+    css: margin-left
+    value: auto
+  - sel: .kartu
+    css: margin-right
+    value: auto
+  - sel: .kartu
+    css: margin-top
+    value: '0'
+  hints: |
+    Elemen block butuh lebar tetap untuk ditengahkan.
+    margin kiri dan kanan auto.
+    margin: 0 auto;
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+    .kartu {
+      width: 300px;
+      margin: 0 auto;
+    }
+      </style>
+    </head>
+    <body>
+      <div class="kartu">
+        <h2>Kamado Tanjiro</h2>
+        <p>Pernapasan Air</p>
+      </div>
+    </body>
+    </html>
+- id: web-f6-boxsizing
+  type: quiz
+  title: Lebar yang Jujur
+  difficulty: 2
+  prompt: 'Sebuah kotak punya width: 200px, padding: 20px, border: 5px. Dengan box-sizing: border-box, berapa lebar total yang terlihat?'
+  options:
+  - 200px
+  - 250px
+  - 240px
+  - 210px
+  explain: Dengan border-box, width SUDAH termasuk padding dan border; area konten yang menyusut menjadi 150px. Tanpa border-box (content-box) lebarnya 200 + 2×20 + 2×5 = 250px.
+  hints: |
+    border-box = width mencakup semuanya.
+    Konten yang mengecil.
+    Lebar total tetap sesuai width.
+- id: web-f6-padding
+  type: answer
+  title: Ruang Dalam
+  difficulty: 1
+  prompt: Properti CSS untuk ruang di antara isi dan border elemen adalah...
+  accept:
+  - padding
+  explain: padding = ruang dalam; margin = ruang luar (di luar border).
+  hints: |
+    Bukan margin.
+    Bantalan.
+    padding

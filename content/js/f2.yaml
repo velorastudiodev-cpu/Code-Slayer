@@ -1,0 +1,115 @@
+lesson:
+  - text: Variabel dibuat dengan let (nilainya boleh diubah) atau const (tidak boleh di-assign ulang). Biasakan memakai const dan ganti ke let hanya kalau perlu. Tipe dasarnya adalah number, string, boolean, undefined, dan null. typeof memberi tahu tipe sebuah nilai.
+    code: |
+      const nama = "Inosuke"
+      let umur = 15
+      umur = umur + 1
+      console.log(nama, umur, typeof nama, typeof umur, typeof true)
+  - text: Number("42") atau parseInt mengubah teks menjadi angka, dan String(x) mengubah angka menjadi teks. Hasil konversi yang gagal adalah NaN (Not a Number). Semua angka di JS adalah number, jadi tidak ada int dan float terpisah.
+    code: |
+      console.log(Number("42") + 1, parseInt("15 tahun"), Number("abc"))
+      console.log(String(7) + 7, 7 / 2)
+exercises:
+  - id: js-f2-tukar
+    type: write
+    title: Tukar Pedang
+    difficulty: 1
+    prompt: Input berisi dua baris teks a dan b. Cetak b lalu a, masing-masing di barisnya sendiri.
+    starter: |
+      const a = readline()
+      const b = readline()
+    tests: ["x\ny", "Tanjiro\nNezuko"]
+    hints: |
+      readline() membaca satu baris.
+      Urutan console.log menentukan urutan output.
+      console.log(b) lalu console.log(a)
+    solution: |
+      const a = readline()
+      const b = readline()
+      console.log(b)
+      console.log(a)
+  - id: js-f2-identitas
+    type: write
+    title: Kartu Identitas
+    difficulty: 1
+    prompt: 'Baris pertama berisi nama, baris kedua umur. Cetak "Nama: <nama>, umur <umur + 1> tahun depan".'
+    tests: ["Tanjiro\n15", "Rengoku\n20"]
+    hints: |
+      readline() menghasilkan string.
+      Ubah umur dengan Number() sebelum ditambah.
+      console.log(`Nama: ${nama}, umur ${umur + 1} tahun depan`)
+    solution: |
+      const nama = readline()
+      const umur = Number(readline())
+      console.log(`Nama: ${nama}, umur ${umur + 1} tahun depan`)
+  - id: js-f2-predict
+    type: predict
+    title: Wujud Asli
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      console.log(typeof 7, typeof "7", typeof true, typeof undefined)
+      console.log(typeof null, typeof NaN)
+    hints: |
+      Semua angka bertipe "number", termasuk NaN.
+      typeof undefined adalah "undefined".
+      typeof null adalah "object", sebuah keanehan historis.
+    solution: x
+  - id: js-f2-bug-const
+    type: bughunt
+    title: Penghitung Membeku
+    difficulty: 1
+    prompt: Program menambah skor sebanyak input lalu mencetaknya, tapi error. Temukan bug-nya.
+    starter: |
+      const skor = 10
+      skor = skor + Number(readline())
+      console.log(skor)
+    bug_line: 1
+    tests: ["5", "0", "-3"]
+    hints: |
+      Baca pesan error-nya, mengenai assignment ke konstanta.
+      const tidak bisa diisi ulang.
+      let skor = 10
+    solution: |
+      let skor = 10
+      skor = skor + Number(readline())
+      console.log(skor)
+  - id: js-f2-konversi
+    type: write
+    title: Gabung atau Jumlah
+    difficulty: 1
+    prompt: Baca dua baris berisi angka. Cetak hasil penggabungannya sebagai teks di baris pertama, lalu jumlahnya sebagai angka di baris kedua.
+    tests: ["5\n7", "10\n-2"]
+    hints: |
+      readline() memberi string, dan + pada string menggabungkan.
+      Number() mengubah menjadi angka.
+      console.log(a + b) lalu console.log(Number(a) + Number(b))
+    solution: |
+      const a = readline()
+      const b = readline()
+      console.log(a + b)
+      console.log(Number(a) + Number(b))
+  - id: js-f2-parsons
+    type: parsons
+    title: Panjang Nama
+    difficulty: 1
+    prompt: Susun program yang membaca nama lalu mencetak "<nama> punya <n> huruf".
+    tests: ["Zenitsu", "Ai"]
+    hints: |
+      Baca nama dulu.
+      .length memberi panjang string.
+      console.log paling akhir.
+    solution: |
+      const nama = readline()
+      const panjang = nama.length
+      console.log(`${nama} punya ${panjang} huruf`)
+  - id: js-f2-typing
+    type: typing
+    title: Ketik Deklarasi
+    difficulty: 1
+    prompt: Ketik ulang kode berikut. Akurasi minimal 95%.
+    code: |
+      const nama = "Zenitsu"
+      let umur = 16
+      umur++
+      console.log(nama, umur)

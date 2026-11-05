@@ -1,0 +1,201 @@
+lesson:
+- text: 'Judul bertingkat <h1>-<h6> membentuk kerangka isi: satu <h1> per halaman, lalu <h2> untuk bagian, <h3> untuk sub-bagian. Daftar memakai <ul> (titik) atau <ol> (bernomor) dengan <li> di dalamnya.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <h1>Korps</h1>
+      <h2>Hashira</h2>
+      <ol>
+        <li>Giyu</li>
+        <li>Rengoku</li>
+      </ol>
+    </body>
+    </html>
+- text: Link memakai <a href="alamat">teks</a>. target="_blank" membuka tab baru; tambahkan rel="noopener" supaya halaman tujuan tidak bisa mengendalikan tab asal.
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <p>Kunjungi <a href="https://korps.id" target="_blank" rel="noopener">markas</a>.</p>
+    </body>
+    </html>
+exercises:
+- id: web-f2-link
+  type: write
+  title: Jalan ke Markas
+  difficulty: 1
+  prompt: Buat link dengan teks "Markas" yang menuju https://korps.id, terbuka di tab baru, dan aman (rel="noopener").
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: a
+    text: Markas
+  - sel: a
+    attr: href
+    value: https://korps.id
+  - sel: a
+    attr: target
+    value: _blank
+  - sel: a
+    attr: rel
+    value: noopener
+  hints: |
+    <a href="...">teks</a>
+    target="_blank" untuk tab baru.
+    rel="noopener" untuk keamanan.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <a href="https://korps.id" target="_blank" rel="noopener">Markas</a>
+    </body>
+    </html>
+- id: web-f2-daftar
+  type: write
+  title: Daftar Regu
+  difficulty: 1
+  prompt: 'Buat daftar TIDAK bernomor berisi tiga nama: Tanjiro, Zenitsu, Inosuke (berurutan).'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: ul > li
+    count: 3
+  - sel: ul > li:nth-child(1)
+    text: Tanjiro
+  - sel: ul > li:nth-child(3)
+    text: Inosuke
+  - sel: ol
+    count: 0
+  hints: |
+    Daftar titik = <ul>.
+    Setiap item = <li>.
+    Urutan harus sama.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <ul>
+        <li>Tanjiro</li>
+        <li>Zenitsu</li>
+        <li>Inosuke</li>
+      </ul>
+    </body>
+    </html>
+- id: web-f2-judul
+  type: write
+  title: Kerangka Laporan
+  difficulty: 2
+  prompt: 'Buat satu <h1> "Laporan Misi" lalu dua <h2>: "Lokasi" dan "Hasil", masing-masing diikuti satu <p>.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+      <style>
+
+      </style>
+    </head>
+    <body>
+      <!-- tulis HTML-mu di sini -->
+    </body>
+    </html>
+  checks:
+  - sel: h1
+    count: 1
+  - sel: h1
+    text: Laporan Misi
+  - sel: h2
+    count: 2
+  - sel: h2 + p
+    count: 2
+  - sel: h2:nth-of-type(2)
+    text: Hasil
+  hints: |
+    Hanya satu h1.
+    Setiap h2 langsung diikuti p.
+    h2 kedua bertuliskan Hasil.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <h1>Laporan Misi</h1>
+      <h2>Lokasi</h2>
+      <p>Gunung Natagumo.</p>
+      <h2>Hasil</h2>
+      <p>Rui tertebas.</p>
+    </body>
+    </html>
+- id: web-f2-bug
+  type: bughunt
+  title: Link yang Mati
+  difficulty: 1
+  prompt: Link ke markas tidak bisa diklik karena salah ketik nama atribut. Temukan baris yang salah.
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <body>
+      <a herf="https://korps.id">Markas</a>
+    </body>
+    </html>
+  bug_line: 4
+  checks:
+  - sel: a
+    attr: href
+    value: https://korps.id
+  hints: |
+    Atribut alamat link punya nama khusus.
+    Ejaannya h-r-e-f.
+    href = hypertext reference.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <body>
+      <a href="https://korps.id">Markas</a>
+    </body>
+    </html>

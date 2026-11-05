@@ -1,0 +1,179 @@
+id: kalkulator
+title: Sempoa Desa Penempa
+track: c
+lang: c
+requires: f7
+emoji: 🧮
+story: 'Para penempa pedang menghitung bahan setiap hari. Buat kalkulator baris perintah: setiap baris input berisi satu operasi "a op b".'
+starter: |
+  #include <stdio.h>
+  #include <string.h>
+  #include <stdlib.h>
+
+  int main(void) {
+      char a[32], b[32];
+      char op;
+      while (scanf("%31s %c %31s", a, &op, b) == 3) {
+          // tulis kodemu di sini
+      }
+      return 0;
+  }
+stages:
+- title: Empat operasi
+  prompt: Untuk setiap baris "a op b" dengan op salah satu + - * / (bilangan bulat, pembagian dibulatkan ke nol), cetak hasilnya. Angka bisa sangat besar (pakai long long).
+  tests:
+  - |-
+    3 + 4
+    10 - 25
+    6 * 7
+    20 / 3
+  - |-
+    -7 / 2
+    3000000000 * 3
+  hints: |
+    Baca a dan b sebagai teks dulu, lalu atoll.
+    Pilih operasi dengan if/else if.
+    Cetak dengan %lld.
+  solution: |
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>
+
+    long long nilai(const char *s, long long ans) { (void)ans; return atoll(s); }
+
+    int main(void) {
+        char a[32], b[32];
+        char op;
+        long long ans = 0;
+        while (scanf("%31s %c %31s", a, &op, b) == 3) {
+            long long x = nilai(a, ans), y = nilai(b, ans), r;
+            if (op == '+') r = x + y;
+            else if (op == '-') r = x - y;
+            else if (op == '*') r = x * y;
+            else if (op == '/') r = x / y;
+            else continue;
+            printf("%lld\n", r);
+            ans = r;
+        }
+        return 0;
+    }
+- title: Penjaga kesalahan
+  prompt: 'Pembagian dengan nol mencetak "error: bagi nol"; operator lain yang tidak dikenal mencetak "error: operator". Program tetap lanjut ke baris berikutnya.'
+  tests:
+  - |-
+    8 / 0
+    5 + 5
+    2 x 3
+  - |-
+    1 / 1
+    9 / 0
+  hints: |
+    Periksa pembagi sebelum membagi.
+    Cabang else untuk operator tak dikenal.
+    continue melompat ke baris berikutnya.
+  solution: |
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>
+
+    long long nilai(const char *s, long long ans) { (void)ans; return atoll(s); }
+
+    int main(void) {
+        char a[32], b[32];
+        char op;
+        long long ans = 0;
+        while (scanf("%31s %c %31s", a, &op, b) == 3) {
+            long long x = nilai(a, ans), y = nilai(b, ans), r;
+            if ((op == '/' || op == '%') && y == 0) { printf("error: bagi nol\n"); continue; }
+            if (op == '+') r = x + y;
+            else if (op == '-') r = x - y;
+            else if (op == '*') r = x * y;
+            else if (op == '/') r = x / y;
+            else { printf("error: operator\n"); continue; }
+            printf("%lld\n", r);
+            ans = r;
+        }
+        return 0;
+    }
+- title: Sisa & pangkat
+  prompt: Tambahkan operator % (sisa bagi, juga error bila pembagi nol) dan ^ (pangkat bilangan bulat, b ≥ 0).
+  tests:
+  - |-
+    17 % 5
+    2 ^ 10
+    7 ^ 0
+    5 % 0
+  - |-
+    3 ^ 3
+    10 % 3
+  hints: |
+    % sama dengan sisa bagi di C.
+    Pangkat: kalikan berulang.
+    x^0 = 1.
+  solution: |
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>
+
+    long long nilai(const char *s, long long ans) { (void)ans; return atoll(s); }
+
+    int main(void) {
+        char a[32], b[32];
+        char op;
+        long long ans = 0;
+        while (scanf("%31s %c %31s", a, &op, b) == 3) {
+            long long x = nilai(a, ans), y = nilai(b, ans), r;
+            if ((op == '/' || op == '%') && y == 0) { printf("error: bagi nol\n"); continue; }
+            if (op == '+') r = x + y;
+            else if (op == '-') r = x - y;
+            else if (op == '*') r = x * y;
+            else if (op == '/') r = x / y;
+            else if (op == '%') r = x % y;
+            else if (op == '^') { r = 1; for (long long i = 0; i < y; i++) r *= x; }
+            else { printf("error: operator\n"); continue; }
+            printf("%lld\n", r);
+            ans = r;
+        }
+        return 0;
+    }
+- title: Kata ans
+  prompt: Kata "ans" boleh menggantikan angka mana pun dan bernilai hasil sukses terakhir (awalnya 0). Hasil error tidak mengubah ans.
+  tests:
+  - |-
+    5 * 4
+    ans + 1
+    ans / 0
+    ans - ans
+  - |-
+    ans + 7
+    ans ^ 2
+  hints: |
+    Simpan hasil terakhir di variabel ans.
+    strcmp(s, "ans") == 0.
+    Jangan ubah ans saat error.
+  solution: |
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>
+
+    long long nilai(const char *s, long long ans) { return strcmp(s, "ans") == 0 ? ans : atoll(s); }
+
+    int main(void) {
+        char a[32], b[32];
+        char op;
+        long long ans = 0;
+        while (scanf("%31s %c %31s", a, &op, b) == 3) {
+            long long x = nilai(a, ans), y = nilai(b, ans), r;
+            if ((op == '/' || op == '%') && y == 0) { printf("error: bagi nol\n"); continue; }
+            if (op == '+') r = x + y;
+            else if (op == '-') r = x - y;
+            else if (op == '*') r = x * y;
+            else if (op == '/') r = x / y;
+            else if (op == '%') r = x % y;
+            else if (op == '^') { r = 1; for (long long i = 0; i < y; i++) r *= x; }
+            else { printf("error: operator\n"); continue; }
+            printf("%lld\n", r);
+            ans = r;
+        }
+        return 0;
+    }

@@ -1,0 +1,1509 @@
+# Soal asli beratribusi dari arsip resmi TLX TOKI (tlx.toki.id), diambil lewat API publik TLX.
+# Ringkasan ditulis sendiri (konteks singkat); pernyataan lengkap, data uji, dan penilaian resmi ada di tautan.
+# Hak cipta soal milik TOKI / IOI. Dikerjakan & dinilai di TLX, lalu user menandai Accepted di aplikasi.
+problems:
+- id: osnp-2026-a
+  stage: provinsi
+  source: OSN-P Informatika 2026
+  year: 2026
+  title: Kotak Telur
+  link: https://tlx.toki.id/problems/osnp-2026/A
+  summary: Rak telur berupa string A (ayam) dan B (bebek); Pak Dengklek membeli telur dengan aturan toko tertentu.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2026-b
+  stage: provinsi
+  source: OSN-P Informatika 2026
+  year: 2026
+  title: Lagi-Lagi Berbagi Candil
+  link: https://tlx.toki.id/problems/osnp-2026/B
+  summary: Membeli kotak candil dari N merek (isi A_i per kotak, stok tak terbatas) agar bisa dibagi rata ke M bebek.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2026-c
+  stage: provinsi
+  source: OSN-P Informatika 2026
+  year: 2026
+  title: Kali Pembagi
+  link: https://tlx.toki.id/problems/osnp-2026/C
+  summary: 'Permainan Kali Pembagi: ubah bilangan N menjadi M lewat operasi kali/bagi dengan aturan tertentu.'
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2026-d
+  stage: provinsi
+  source: OSN-P Informatika 2026
+  year: 2026
+  title: Makan Bebek Gratis
+  link: https://tlx.toki.id/problems/osnp-2026/D
+  summary: Program makan gratis untuk N sekolah dengan ruang kelas berisi sejumlah murid, dengan anggaran terbatas.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2026-e
+  stage: provinsi
+  source: OSN-P Informatika 2026
+  year: 2026
+  title: Pagar Bambu
+  link: https://tlx.toki.id/problems/osnp-2026/E
+  summary: Membagi pagar bambu (N bilah dengan tinggi H_i) menjadi beberapa pagar baru yang memenuhi syarat.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2026-f
+  stage: provinsi
+  source: OSN-P Informatika 2026
+  year: 2026
+  title: Juru Masak
+  link: https://tlx.toki.id/problems/osnp-2026/F
+  summary: N juru masak berlabel senior/junior (string L) diatur dalam restoran sesuai aturan kerja.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2025-a
+  stage: provinsi
+  source: OSN-P Informatika 2025
+  year: 2025
+  title: String Cantik OSN-P
+  link: https://tlx.toki.id/problems/osnp-2025/A
+  summary: Mengubah string menjadi "string cantik OSN-P" (memuat O, S, N, P dan P hanya di akhir) dengan operasi minimal.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2025-b
+  stage: provinsi
+  source: OSN-P Informatika 2025
+  year: 2025
+  title: Gudang Penyimpanan Kardus
+  link: https://tlx.toki.id/problems/osnp-2025/B
+  summary: Menyusun N kardus berukuran P×L di gudang tanpa menumpuk yang rapuh; cari ukuran gudang.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2025-c
+  stage: provinsi
+  source: OSN-P Informatika 2025
+  year: 2025
+  title: Balada Kemasan Telur
+  link: https://tlx.toki.id/problems/osnp-2025/C
+  summary: Belanja kemasan telur p×p (p prima, harga p) dengan modal N rupiah untuk memaksimalkan telur.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2025-d
+  stage: provinsi
+  source: OSN-P Informatika 2025
+  year: 2025
+  title: Telur Kemasan Balado
+  link: https://tlx.toki.id/problems/osnp-2025/D
+  summary: Barisan N telur varian Asli/Balado; menata ulang atau memilih telur sesuai aturan penjualan.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2025-e
+  stage: provinsi
+  source: OSN-P Informatika 2025
+  year: 2025
+  title: Tebas Tebang Bambu
+  link: https://tlx.toki.id/problems/osnp-2025/E
+  summary: N bilah bambu dijual dalam ikatan dengan syarat panjang; tebas/potong bambu agar laku semua.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2025-f
+  stage: provinsi
+  source: OSN-P Informatika 2025
+  year: 2025
+  title: Kandang Ayam Kandang Bebek
+  link: https://tlx.toki.id/problems/osnp-2025/F
+  summary: Pekarangan 2×N berisi ayam dan bebek; membuat kandang dengan pembatas sesuai syarat.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2024-a
+  stage: provinsi
+  source: OSN-P Informatika 2024
+  year: 2024
+  title: String Cantik OSN
+  link: https://tlx.toki.id/problems/osnp-2024/A
+  summary: Hapus huruf seminimal mungkin agar string menjadi "string cantik OSN" (setiap 3 huruf berurutan memuat O, S, N).
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2024-b
+  stage: provinsi
+  source: OSN-P Informatika 2024
+  year: 2024
+  title: Berbagi Banyak Candil
+  link: https://tlx.toki.id/problems/osnp-2024/B
+  summary: Membagi C candil sebanyak mungkin ke bebek yang jumlahnya tidak diketahui pasti (antara 1 dan B).
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2024-c
+  stage: provinsi
+  source: OSN-P Informatika 2024
+  year: 2024
+  title: Tebas Tebang Pohon
+  link: https://tlx.toki.id/problems/osnp-2024/C
+  summary: Menebang N pohon dengan cara unik (memilih ketinggian potong) untuk mendapatkan kayu kandang.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2024-d
+  stage: provinsi
+  source: OSN-P Informatika 2024
+  year: 2024
+  title: Kalkulator Pengubah Basis
+  link: https://tlx.toki.id/problems/osnp-2024/D
+  summary: Kalkulator mengubah X dari basis 10 ke basis B; analisis tampilan hasil konversinya.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2024-e
+  stage: provinsi
+  source: OSN-P Informatika 2024
+  year: 2024
+  title: Gosip Gulali
+  link: https://tlx.toki.id/problems/osnp-2024/E
+  summary: Memilih jenis gulali (dengan tingkat kemanisan) untuk N bebek penggemar gulali.
+  tl_ms: 3000
+  ml_kb: 262144
+- id: osnp-2024-f
+  stage: provinsi
+  source: OSN-P Informatika 2024
+  year: 2024
+  title: Maju Tak Papan
+  link: https://tlx.toki.id/problems/osnp-2024/F
+  summary: Mengisi papan N×M dengan angka sesuai aturan pergerakan maju.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2023-b1
+  stage: provinsi
+  source: OSN-P Informatika 2023 - Bagian B
+  year: 2023
+  title: Menjual Kentang
+  link: https://tlx.toki.id/problems/osnp-2023/B1
+  summary: Mengangkut dua truk kentang Wonosobo untuk dijual di Jakarta dengan keuntungan maksimal.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: osnp-2023-b2
+  stage: provinsi
+  source: OSN-P Informatika 2023 - Bagian B
+  year: 2023
+  title: Masa Pertumbuhan
+  link: https://tlx.toki.id/problems/osnp-2023/B2
+  summary: Tinggi pohon kelapa berubah tiap hari (tumbuh K lalu berubah lagi) selama N hari; hitung tingginya.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: osnp-2023-b3
+  stage: provinsi
+  source: OSN-P Informatika 2023 - Bagian B
+  year: 2023
+  title: Pembangkit Listrik
+  link: https://tlx.toki.id/problems/osnp-2023/B3
+  summary: Merencanakan jaringan listrik agar N desa terpencil semuanya teraliri dengan biaya minimum.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: osnp-2023-b4
+  stage: provinsi
+  source: OSN-P Informatika 2023 - Bagian B
+  year: 2023
+  title: Mengumpulkan Artefak
+  link: https://tlx.toki.id/problems/osnp-2023/B4
+  summary: Situs artefak di garis bilangan (koordinat A_i, nilai B_i); kumpulkan nilai maksimum dari posisi X.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: osnp-2023-b5
+  stage: provinsi
+  source: OSN-P Informatika 2023 - Bagian B
+  year: 2023
+  title: Membeli Oleh-Oleh
+  link: https://tlx.toki.id/problems/osnp-2023/B5
+  summary: Negara berbentuk pohon (N kota, N−1 jalan); rencana perjalanan membeli oleh-oleh.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osnp-2022-b1
+  stage: provinsi
+  source: OSN-P Informatika 2022 - Bagian B
+  year: 2022
+  title: Lampu Hias
+  link: https://tlx.toki.id/problems/osnp-2022/B1
+  summary: Tiga lampu menyala tiap P, Q, R detik; kapan dan berapa kali mereka menyala bersamaan.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osnp-2022-b2
+  stage: provinsi
+  source: OSN-P Informatika 2022 - Bagian B
+  year: 2022
+  title: Mengangkut Bebek
+  link: https://tlx.toki.id/problems/osnp-2022/B2
+  summary: Memesan kandang berkapasitas tertentu untuk mengangkut semua bebek dengan biaya minimal.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osnp-2022-b3
+  stage: provinsi
+  source: OSN-P Informatika 2022 - Bagian B
+  year: 2022
+  title: Dewan Perwakilan Bebek
+  link: https://tlx.toki.id/problems/osnp-2022/B3
+  summary: Memilih dewan dari N bebek dengan ego E_i agar selisih ego maksimum−minimum memenuhi syarat.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osnp-2022-b4
+  stage: provinsi
+  source: OSN-P Informatika 2022 - Bagian B
+  year: 2022
+  title: Memasang Karpet
+  link: https://tlx.toki.id/problems/osnp-2022/B4
+  summary: Menghitung banyak cara menutup jembatan M×N dengan dua jenis karpet yang bisa dirotasi.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osnp-2022-b5
+  stage: provinsi
+  source: OSN-P Informatika 2022 - Bagian B
+  year: 2022
+  title: Melompati Lapangan
+  link: https://tlx.toki.id/problems/osnp-2022/B5
+  summary: Melompat di lapangan N×M berisi nilai A[i][j] dengan aturan lompatan tertentu.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: ksnp-2021-b1
+  stage: provinsi
+  source: KSN-P Informatika 2021 - Bagian B
+  year: 2021
+  title: Buah
+  link: https://tlx.toki.id/problems/ksnp-2021/B1
+  summary: N apel merah (berat A) dan N apel hijau (berat B); pilih sebagian agar beratnya memenuhi syarat.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: ksnp-2021-b2
+  stage: provinsi
+  source: KSN-P Informatika 2021 - Bagian B
+  year: 2021
+  title: Kartu
+  link: https://tlx.toki.id/problems/ksnp-2021/B2
+  summary: 'Permainan kartu bilangan asli: setiap ronde menjumlahkan kartu dan menambah kartu baru.'
+  tl_ms: 1000
+  ml_kb: 65536
+- id: ksnp-2021-b3
+  stage: provinsi
+  source: KSN-P Informatika 2021 - Bagian B
+  year: 2021
+  title: Vitamin
+  link: https://tlx.toki.id/problems/ksnp-2021/B3
+  summary: Memilih vitamin (harga, kandungan, dosis tinggi/rendah) dengan batasan dosis tinggi.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: ksnp-2021-b4
+  stage: provinsi
+  source: KSN-P Informatika 2021 - Bagian B
+  year: 2021
+  title: Paket
+  link: https://tlx.toki.id/problems/ksnp-2021/B4
+  summary: Paket i dan j (i<j) bisa diantar bersama bila B_i ≥ B_j; cari banyak pengantaran minimal.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: ksnp-2021-b5
+  stage: provinsi
+  source: KSN-P Informatika 2021 - Bagian B
+  year: 2021
+  title: Suhu
+  link: https://tlx.toki.id/problems/ksnp-2021/B5
+  summary: Suhu pengunjung kursi (i, j) = (B+j)/(A+i); hitung statistik suhu di ruang tunggu N×M.
+  tl_ms: 5000
+  ml_kb: 65536
+- id: ksnp-2020-b1
+  stage: provinsi
+  source: KSN-P Informatika 2020 - Bagian B
+  year: 2020
+  title: Lari Jauh
+  link: https://tlx.toki.id/problems/ksnp-2020/B1
+  summary: Lomba lari dengan N patok berjarak A_i; tentukan posisi K bebek peserta.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: ksnp-2020-b2
+  stage: provinsi
+  source: KSN-P Informatika 2020 - Bagian B
+  year: 2020
+  title: Lampu Hias Warna-Warni
+  link: https://tlx.toki.id/problems/ksnp-2020/B2
+  summary: Menyusun barisan lampu warna A–Z dari N lampu sesuai aturan pola tiga lampu pertama.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: ksnp-2020-b3
+  stage: provinsi
+  source: KSN-P Informatika 2020 - Bagian B
+  year: 2020
+  title: Kerja Freelance
+  link: https://tlx.toki.id/problems/ksnp-2020/B3
+  summary: Memilih pekerjaan freelance untuk memaksimalkan pendapatan dengan batasan waktu.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: ksnp-2020-b4
+  stage: provinsi
+  source: KSN-P Informatika 2020 - Bagian B
+  year: 2020
+  title: Katak Super
+  link: https://tlx.toki.id/problems/ksnp-2020/B4
+  summary: 'Permainan "Katak Super": bantu katak menyeberang dengan lompatan sesuai aturan.'
+  tl_ms: 2000
+  ml_kb: 65536
+- id: ksnp-2020-b5
+  stage: provinsi
+  source: KSN-P Informatika 2020 - Bagian B
+  year: 2020
+  title: 'Pencarian Strain Berbahaya Besar '
+  link: https://tlx.toki.id/problems/ksnp-2020/B5
+  summary: Menentukan tingkat keganasan jenis virus berdasarkan aturan turunan antarjenis.
+  tl_ms: 2000
+  ml_kb: 65536
+- id: ksnp-2020-b6
+  stage: provinsi
+  source: KSN-P Informatika 2020 - Bagian B
+  year: 2020
+  title: Mewarnai Kanvas
+  link: https://tlx.toki.id/problems/ksnp-2020/B6
+  summary: Mewarnai kanvas 1×N dengan alat terbatas untuk mencapai pola target.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2026-1a
+  stage: nasional
+  source: OSN Informatika 2026
+  year: 2026
+  title: DANgdut XORe
+  link: https://tlx.toki.id/problems/osn-2026/1A
+  summary: 'Kuis di panggung N×M: kumpulkan poin petak dengan operasi XOR untuk skor terbaik.'
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2026-1b
+  stage: nasional
+  source: OSN Informatika 2026
+  year: 2026
+  title: Pesta Permen
+  link: https://tlx.toki.id/problems/osn-2026/1B
+  summary: N bebek dengan A_i permen; setiap hari satu bebek berpesta dan mengundang yang lain, permen berpindah.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2026-1c
+  stage: nasional
+  source: OSN Informatika 2026
+  year: 2026
+  title: Menara Air
+  link: https://tlx.toki.id/problems/osn-2026/1C
+  summary: Membangun menara air di grid raksasa 10^9×10^9 agar kebutuhan air kota terpenuhi.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2026-2a
+  stage: nasional
+  source: OSN Informatika 2026
+  year: 2026
+  title: Pohon Sawo
+  link: https://tlx.toki.id/problems/osn-2026/2A
+  summary: Menyusun barisan banyak pohon sawo A_1..A_N yang memenuhi dua kondisi untuk setiap posisi.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2026-2b
+  stage: nasional
+  source: OSN Informatika 2026
+  year: 2026
+  title: Pertahanan Anggaran
+  link: https://tlx.toki.id/problems/osn-2026/2B
+  summary: Barisan anggaran N tahun; tahun tertentu harus "dipertahankan" sesuai definisi soal.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2026-2c
+  stage: nasional
+  source: OSN Informatika 2026
+  year: 2026
+  title: Mikroba Jawa
+  link: https://tlx.toki.id/problems/osn-2026/2C
+  summary: Danau-danau membentuk pohon aliran sungai; permainan memindahkan mikroba melawan Pak Dengklek.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2025-1a
+  stage: nasional
+  source: OSN Informatika 2025
+  year: 2025
+  title: Taman Hujan
+  link: https://tlx.toki.id/problems/osn-2025/1A
+  summary: Jalan-jalan di taman bermain berupa graf (N wahana, M jalan setapak) saat hujan.
+  tl_ms: 1500
+  ml_kb: 262144
+- id: osn-2025-1b
+  stage: nasional
+  source: OSN Informatika 2025
+  year: 2025
+  title: Larik Tarik
+  link: https://tlx.toki.id/problems/osn-2025/1B
+  summary: Operasi "tarik" pada larik (array) seperti meracik mi tarik; cari hasil atau jumlah operasi.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2025-1c
+  stage: nasional
+  source: OSN Informatika 2025
+  year: 2025
+  title: Mikroba Brantas
+  link: https://tlx.toki.id/problems/osn-2025/1C
+  summary: Permainan mikroba di Sungai Brantas antara kamu dan Pak Dengklek; tentukan strategi menang.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2025-2a
+  stage: nasional
+  source: OSN Informatika 2025
+  year: 2025
+  title: Festival KPK
+  link: https://tlx.toki.id/problems/osn-2025/2A
+  summary: 'Festival KPK: N lapak dan kelipatan persekutuan terkecil; hitung atau pilih lapak.'
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2025-2b
+  stage: nasional
+  source: OSN Informatika 2025
+  year: 2025
+  title: Pertahanan Malang
+  link: https://tlx.toki.id/problems/osn-2025/2B
+  summary: Q hari serangan prajurit berkekuatan A_i; jawab kueri pertahanan kota secara efisien.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2025-2c
+  stage: nasional
+  source: OSN Informatika 2025
+  year: 2025
+  title: Tukar XOR
+  link: https://tlx.toki.id/problems/osn-2025/2C
+  summary: Barisan berpanjang 2^k dengan operasi tukar berbasis XOR indeks.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2024-1a
+  stage: nasional
+  source: OSN Informatika 2024
+  year: 2024
+  title: Pemerintahan Pusat
+  link: https://tlx.toki.id/problems/osn-2024/1A
+  summary: Struktur kabinet berbentuk pohon (setiap anggota i ≥ 2 punya atasan); analisis hierarkinya.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2024-1b
+  stage: nasional
+  source: OSN Informatika 2024
+  year: 2024
+  title: Pertahanan Batavia
+  link: https://tlx.toki.id/problems/osn-2024/1B
+  summary: Barisan prajurit dengan komando perputaran dan komando lain; jawab kueri kekuatan.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2024-1c
+  stage: nasional
+  source: OSN Informatika 2024
+  year: 2024
+  title: Batik Betawi
+  link: https://tlx.toki.id/problems/osn-2024/1C
+  summary: Kain batik ajaib berupa grid N×M dengan pola yang berubah.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2024-2a
+  stage: nasional
+  source: OSN Informatika 2024
+  year: 2024
+  title: Mobil Manual
+  link: https://tlx.toki.id/problems/osn-2024/2A
+  summary: Mobil manual dengan N posisi gigi; aturan perpindahan gigi dan biayanya.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2024-2b
+  stage: nasional
+  source: OSN Informatika 2024
+  year: 2024
+  title: Kereta Rel Listrik
+  link: https://tlx.toki.id/problems/osn-2024/2B
+  summary: N stasiun di garis lurus dan M rute kereta (A_i, B_i, C_i, D_i); cari perjalanan terbaik.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2024-2c
+  stage: nasional
+  source: OSN Informatika 2024
+  year: 2024
+  title: Mikroba Ciliwung
+  link: https://tlx.toki.id/problems/osn-2024/2C
+  summary: Sampel mikroba di papan kaca N×M; mengamati penyebaran atau kelompoknya.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2023-1a
+  stage: nasional
+  source: OSN Informatika 2023
+  year: 2023
+  title: Pertahanan Bogor
+  link: https://tlx.toki.id/problems/osn-2023/1A
+  summary: Kapal pertahanan bergerak di sungai sepanjang 10^9 bagian menghadapi monster setiap hari.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2023-1b
+  stage: nasional
+  source: OSN Informatika 2023
+  year: 2023
+  title: Semut Kesepian
+  link: https://tlx.toki.id/problems/osn-2023/1B
+  summary: Sarang semut berupa graf (N ruangan, M terowongan); semut bergerak dan bisa "kesepian".
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2023-1c
+  stage: nasional
+  source: OSN Informatika 2023
+  year: 2023
+  title: Kota Hujan
+  link: https://tlx.toki.id/problems/osn-2023/1C
+  summary: Lahan N×N dengan tanaman ajaib yang tumbuh saat terkena hujan.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2023-2a
+  stage: nasional
+  source: OSN Informatika 2023
+  year: 2023
+  title: Kelap-Kelip Televisi
+  link: https://tlx.toki.id/problems/osn-2023/2A
+  summary: Atraksi televisi yang tersusun persegi dan berkelap-kelip dengan pola tertentu.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2023-2b
+  stage: nasional
+  source: OSN Informatika 2023
+  year: 2023
+  title: Berbagi Lapis Talas
+  link: https://tlx.toki.id/problems/osn-2023/2B
+  summary: N kelinci (tua ke muda) yang berkembang biak tanpa pasangan berbagi lapis talas.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2023-2c
+  stage: nasional
+  source: OSN Informatika 2023
+  year: 2023
+  title: Pengiriman Satu Hari
+  link: https://tlx.toki.id/problems/osn-2023/2C
+  summary: Pengiriman sepatu dari Jakarta ke Puncak dalam satu hari dengan jadwal kurir.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2022-1a
+  stage: nasional
+  source: OSN Informatika 2022
+  year: 2022
+  title: Membangun Pertahanan
+  link: https://tlx.toki.id/problems/osn-2022/1A
+  summary: Membangun pertahanan pada N lahan berjajar barat–timur dengan panjang tertentu.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2022-1b
+  stage: nasional
+  source: OSN Informatika 2022
+  year: 2022
+  title: Membangun Terowongan
+  link: https://tlx.toki.id/problems/osn-2022/1B
+  summary: Membangun terowongan antar N lokasi tambang dengan biaya C_{u,v} yang memiliki sifat khusus.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2022-1c
+  stage: nasional
+  source: OSN Informatika 2022
+  year: 2022
+  title: Membangun Mercusuar
+  link: https://tlx.toki.id/problems/osn-2022/1C
+  summary: N mercusuar berjajar dengan tinggi A_i dan pemancar; hitung jangkauan sinyal.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2022-2a
+  stage: nasional
+  source: OSN Informatika 2022
+  year: 2022
+  title: Membangun Jembatan
+  link: https://tlx.toki.id/problems/osn-2022/2A
+  summary: Pelabuhan dengan ketinggian H_i terhubung M ruas jalan; membangun jembatan.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: osn-2022-2b
+  stage: nasional
+  source: OSN Informatika 2022
+  year: 2022
+  title: Membangun Gunungan Buah
+  link: https://tlx.toki.id/problems/osn-2022/2B
+  summary: N kios berjajar menjual buah jenis A_i; menyusun gunungan buah.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2022-2c
+  stage: nasional
+  source: OSN Informatika 2022
+  year: 2022
+  title: Membangun Jalan
+  link: https://tlx.toki.id/problems/osn-2022/2C
+  summary: Membangun jalan dari material (kerikil, aspal) yang dibeli dari N toko.
+  tl_ms: 2000
+  ml_kb: 524288
+- id: ksn-2021-1a
+  stage: nasional
+  source: KSN Informatika 2021
+  year: 2021
+  title: Pertahanan Mandiri
+  link: https://tlx.toki.id/problems/ksn-2021/1A
+  summary: Menyusun jadwal minum vitamin A atau B tiap hari agar memenuhi aturan resep.
+  tl_ms: 3000
+  ml_kb: 524288
+- id: ksn-2021-1b
+  stage: nasional
+  source: KSN Informatika 2021
+  year: 2021
+  title: Lautan Biner
+  link: https://tlx.toki.id/problems/ksn-2021/1B
+  summary: Kepulauan berupa matriks N×M biner (laut/daratan); analisis pulau.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: ksn-2021-1c
+  stage: nasional
+  source: KSN Informatika 2021
+  year: 2021
+  title: Mewarnai Bola
+  link: https://tlx.toki.id/problems/ksn-2021/1C
+  summary: Mewarnai N bola identik sehingga bahan berbeda mendapat warna berbeda (lewat pertanyaan).
+  tl_ms: 1000
+  ml_kb: 262144
+- id: ksn-2021-2a
+  stage: nasional
+  source: KSN Informatika 2021
+  year: 2021
+  title: Permutasi Mandiri
+  link: https://tlx.toki.id/problems/ksn-2021/2A
+  summary: Permutasi 1..N dengan operasi penghapusan elemen sesuai aturan.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: ksn-2021-2b
+  stage: nasional
+  source: KSN Informatika 2021
+  year: 2021
+  title: Daratan Biner
+  link: https://tlx.toki.id/problems/ksn-2021/2B
+  summary: N pulau dengan nilai keindahan A_i dan harta B_i; kumpulkan harta maksimum.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: ksn-2021-2c
+  stage: nasional
+  source: KSN Informatika 2021
+  year: 2021
+  title: Mengirim Bola
+  link: https://tlx.toki.id/problems/ksn-2021/2C
+  summary: Terbang dengan ransel roket melewati N bukit (tinggi H_i) untuk mengirim bola.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: ksn-2020-1a
+  stage: nasional
+  source: KSN Informatika 2020
+  year: 2020
+  title: Pertahanan Negara
+  link: https://tlx.toki.id/problems/ksn-2020/1A
+  summary: Wilayah persegi panjang (0,0)–(N,M) di bidang Kartesius; menempatkan pertahanan.
+- id: ksn-2020-1b
+  stage: nasional
+  source: KSN Informatika 2020
+  year: 2020
+  title: Tumpukan Balok
+  link: https://tlx.toki.id/problems/ksn-2020/1B
+  summary: N tumpukan balok (tinggi H_i) diambil dengan pola berjalan tertentu; simulasikan secara efisien.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: ksn-2020-1c
+  stage: nasional
+  source: KSN Informatika 2020
+  year: 2020
+  title: Menjaga Jarak
+  link: https://tlx.toki.id/problems/ksn-2020/1C
+  summary: Antrean N pengunjung dengan tingkat kesehatan H_i; aturan menjaga jarak.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: ksn-2020-2a
+  stage: nasional
+  source: KSN Informatika 2020
+  year: 2020
+  title: Makhluk Jahat
+  link: https://tlx.toki.id/problems/ksn-2020/2A
+  summary: Penyihir dengan K jenis elemen sihir (awalnya menguasai 4) melawan makhluk jahat.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: ksn-2020-2b
+  stage: nasional
+  source: KSN Informatika 2020
+  year: 2020
+  title: Pilar Ajaib
+  link: https://tlx.toki.id/problems/ksn-2020/2B
+  summary: Sinar cahaya dan pilar ajaib di bidang Kartesius; pantulan dan jangkauan cahaya.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: ksn-2020-2c
+  stage: nasional
+  source: KSN Informatika 2020
+  year: 2020
+  title: Mencari Bola
+  link: https://tlx.toki.id/problems/ksn-2020/2C
+  summary: 'Interaktif: temukan K kotak berisi bola dari N kotak dengan pertanyaan seminimal mungkin.'
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2019-1a
+  stage: nasional
+  source: OSN Informatika 2019
+  year: 2019
+  title: Mengumpulkan Peserta
+  link: https://tlx.toki.id/problems/osn-2019/1A
+  summary: Kursi lomba R×C berisi peserta; kumpulkan peserta dengan langkah minimum.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2019-1b
+  stage: nasional
+  source: OSN Informatika 2019
+  year: 2019
+  title: Pertahanan Manado
+  link: https://tlx.toki.id/problems/osn-2019/1B
+  summary: Meracik ramuan dari N jenis obat dengan harga beli dan aturan peracikan.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2019-1c
+  stage: nasional
+  source: OSN Informatika 2019
+  year: 2019
+  title: Rekreasi OSN
+  link: https://tlx.toki.id/problems/osn-2019/1C
+  summary: Tempat rekreasi berupa grid R×C; rencanakan rute rekreasi peserta.
+- id: osn-2019-2a
+  stage: nasional
+  source: OSN Informatika 2019
+  year: 2019
+  title: Tempat Wisata
+  link: https://tlx.toki.id/problems/osn-2019/2A
+  summary: N turis dan M tempat wisata; turis ke-i mengunjungi rentang tempat tertentu.
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2019-2b
+  stage: nasional
+  source: OSN Informatika 2019
+  year: 2019
+  title: Mencari Emas
+  link: https://tlx.toki.id/problems/osn-2019/2B
+  summary: 'Interaktif: temukan dua potongan emas di grid R×C dengan detektor.'
+  tl_ms: 1000
+  ml_kb: 262144
+- id: osn-2019-2c
+  stage: nasional
+  source: OSN Informatika 2019
+  year: 2019
+  title: Penyebaran Hoaks
+  link: https://tlx.toki.id/problems/osn-2019/2C
+  summary: N pengguna medsos online pada jam tertentu tiap hari; hitung penyebaran hoaks.
+  tl_ms: 2000
+  ml_kb: 262144
+- id: osn-2018-1a
+  stage: nasional
+  source: OSN Informatika 2018
+  year: 2018
+  title: Jembatan Layang
+  link: https://tlx.toki.id/problems/osn-2018/1A
+  summary: Dua gedung asrama N lantai dihubungkan K jembatan layang; cari waktu tempuh minimum.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2018-1b
+  stage: nasional
+  source: OSN Informatika 2018
+  year: 2018
+  title: Pertahanan Padang
+  link: https://tlx.toki.id/problems/osn-2018/1B
+  summary: '"Sajak biner": string 0/1 diawali 1; hitung atau bangun sajak yang memenuhi syarat.'
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2018-1c
+  stage: nasional
+  source: OSN Informatika 2018
+  year: 2018
+  title: Ojek Daring
+  link: https://tlx.toki.id/problems/osn-2018/1C
+  summary: Graf V kota dan E jalan berbobot; layanan ojek daring dengan aturan biaya.
+  tl_ms: 500
+  ml_kb: 131072
+- id: osn-2018-2a
+  stage: nasional
+  source: OSN Informatika 2018
+  year: 2018
+  title: Hiasan Atap
+  link: https://tlx.toki.id/problems/osn-2018/2A
+  summary: Menyusun balok 1×N sampai 1×1 untuk hiasan atap sesuai aturan pemasangan.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2018-2b
+  stage: nasional
+  source: OSN Informatika 2018
+  year: 2018
+  title: Permainan Pajel
+  link: https://tlx.toki.id/problems/osn-2018/2B
+  summary: Permainan soliter Pajel pada papan N×N; warnai petak sesuai aturan.
+- id: osn-2018-2c
+  stage: nasional
+  source: OSN Informatika 2018
+  year: 2018
+  title: Festival FPB
+  link: https://tlx.toki.id/problems/osn-2018/2C
+  summary: N rumah dengan A[i] anggota; kueri harian berbasis FPB dalam rentang rumah.
+  tl_ms: 1000
+  ml_kb: 131072
+- id: osn-2017-1a
+  stage: nasional
+  source: OSN Informatika 2017
+  year: 2017
+  title: Pertahanan Pekanbaru
+  link: https://tlx.toki.id/problems/osn-2017/1A
+  summary: Mengalahkan makhluk jahat yang bersembunyi sebelum menyerang Pekanbaru.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2017-1b
+  stage: nasional
+  source: OSN Informatika 2017
+  year: 2017
+  title: Menukar Kotak
+  link: https://tlx.toki.id/problems/osn-2017/1B
+  summary: Permen di N kandang berjejer; tukar isi kotak untuk mencapai susunan tujuan.
+  tl_ms: 1500
+  ml_kb: 65536
+- id: osn-2017-1c
+  stage: nasional
+  source: OSN Informatika 2017
+  year: 2017
+  title: Daratan dan Es
+  link: https://tlx.toki.id/problems/osn-2017/1C
+  summary: Permainan "Daratan dan Es" di dunia grid dengan aturan bergerak di atas es.
+  tl_ms: 200
+  ml_kb: 16384
+- id: osn-2017-2a
+  stage: nasional
+  source: OSN Informatika 2017
+  year: 2017
+  title: Laskar Bebek
+  link: https://tlx.toki.id/problems/osn-2017/2A
+  summary: Membariskan N bebek (tinggi A[i]) agar terurut tidak menurun dengan operasi tertentu.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2017-2b
+  stage: nasional
+  source: OSN Informatika 2017
+  year: 2017
+  title: Labirin Dengklek
+  link: https://tlx.toki.id/problems/osn-2017/2B
+  summary: Teka-teki labirin N×M untuk bebek-bebek.
+  tl_ms: 2000
+  ml_kb: 131072
+- id: osn-2017-2c
+  stage: nasional
+  source: OSN Informatika 2017
+  year: 2017
+  title: Aritmetika Bebek
+  link: https://tlx.toki.id/problems/osn-2017/2C
+  summary: Teka-teki aritmetika dari bebek yang pulang dari Pekanbaru.
+  tl_ms: 3000
+  ml_kb: 131072
+- id: osn-2016-1a
+  stage: nasional
+  source: OSN Informatika 2016
+  year: 2016
+  title: Pasar 16 Ilir
+  link: https://tlx.toki.id/problems/osn-2016/1A
+  summary: Belanja penganan di pasar dengan daftar harga dan diskon dari sebagian pemilik toko.
+  tl_ms: 1500
+  ml_kb: 65536
+- id: osn-2016-1b
+  stage: nasional
+  source: OSN Informatika 2016
+  year: 2016
+  title: Menjinakkan Bom
+  link: https://tlx.toki.id/problems/osn-2016/1B
+  summary: 'Interaktif: menjinakkan bom di Jembatan Ampera dengan tebakan yang terbatas.'
+  tl_ms: 100
+  ml_kb: 16384
+- id: osn-2016-1c
+  stage: nasional
+  source: OSN Informatika 2016
+  year: 2016
+  title: Pos Wisata Sungai
+  link: https://tlx.toki.id/problems/osn-2016/1C
+  summary: Pengendalian pos wisata sungai lewat operasi bit.
+  tl_ms: 1000
+  ml_kb: 65536
+- id: osn-2016-2a
+  stage: nasional
+  source: OSN Informatika 2016
+  year: 2016
+  title: Robot Pempek
+  link: https://tlx.toki.id/problems/osn-2016/2A
+  summary: Robot penangkap ikan di sungai untuk membuat pempek.
+  tl_ms: 1500
+  ml_kb: 131072
+- id: osn-2016-2b
+  stage: nasional
+  source: OSN Informatika 2016
+  year: 2016
+  title: Belanja Suvenir
+  link: https://tlx.toki.id/problems/osn-2016/2B
+  summary: Rombongan wisata mengunjungi N toko suvenir berurutan; maksimalkan belanja.
+  tl_ms: 1000
+  ml_kb: 131072
+- id: osn-2016-2c
+  stage: nasional
+  source: OSN Informatika 2016
+  year: 2016
+  title: Wisata Palembang
+  link: https://tlx.toki.id/problems/osn-2016/2C
+  summary: Merencanakan rute keliling N−1 lokasi kuliner di Palembang.
+- id: ioi-2016-d1-1
+  stage: internasional
+  source: IOI 2016
+  year: 2016
+  title: Detecting Molecules
+  link: https://tlx.toki.id/problems/ioi-2016/D1-1
+  summary: 'Molecules: pilih subset berat molekul yang jumlahnya berada di rentang [l, u].'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2016-d1-2
+  stage: internasional
+  source: IOI 2016
+  year: 2016
+  title: Roller Coaster Railroad
+  link: https://tlx.toki.id/problems/ioi-2016/D1-2
+  summary: 'Roller Coaster Railroad: urutkan bagian lintasan (kecepatan masuk/keluar) dengan biaya pengereman minimum.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2016-d1-3
+  stage: internasional
+  source: IOI 2016
+  year: 2016
+  title: Shortcut
+  link: https://tlx.toki.id/problems/ioi-2016/D1-3
+  summary: 'Shortcut: tambah satu jalur ekspres pada jalur utama bercabang agar diameter jaringan minimum.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2016-d2-1
+  stage: internasional
+  source: IOI 2016
+  year: 2016
+  title: Paint By Numbers
+  link: https://tlx.toki.id/problems/ioi-2016/D2-1
+  summary: 'Paint By Numbers: nonogram satu baris dengan petak tak diketahui; tentukan petak yang pasti hitam/putih.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2016-d2-2
+  stage: internasional
+  source: IOI 2016
+  year: 2016
+  title: Unscrambling a Messy Bug
+  link: https://tlx.toki.id/problems/ioi-2016/D2-2
+  summary: 'Unscrambling a Messy Bug (interaktif): tebak permutasi bit dari kueri ke struktur data.'
+  tags:
+  - interaktif
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2016-d2-3
+  stage: internasional
+  source: IOI 2016
+  year: 2016
+  title: Aliens
+  link: https://tlx.toki.id/problems/ioi-2016/D2-3
+  summary: 'Aliens: tutup titik-titik dengan ≤ k persegi pada diagonal, minimalkan luas (teknik "Aliens trick").'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2017-d1-1
+  stage: internasional
+  source: IOI 2017
+  year: 2017
+  title: Nowruz
+  link: https://tlx.toki.id/problems/ioi-2017/D1-1
+  summary: 'Nowruz (output-only): bangun labirin pohon di grid dengan sebanyak mungkin daun.'
+  tags:
+  - output-only
+- id: ioi-2017-d1-2
+  stage: internasional
+  source: IOI 2017
+  year: 2017
+  title: Wiring
+  link: https://tlx.toki.id/problems/ioi-2017/D1-2
+  summary: 'Wiring: hubungkan titik merah dan biru pada garis dengan total panjang kabel minimum.'
+  tl_ms: 1000
+  ml_kb: 262144
+- id: ioi-2017-d1-3
+  stage: internasional
+  source: IOI 2017
+  year: 2017
+  title: Toy Train
+  link: https://tlx.toki.id/problems/ioi-2017/D1-3
+  summary: 'Toy Train: permainan dua pemain pada graf berarah dengan stasiun pengisian; siapa menang.'
+  tl_ms: 2000
+  ml_kb: 262144
+- id: ioi-2017-d2-1
+  stage: internasional
+  source: IOI 2017
+  year: 2017
+  title: The Big Prize
+  link: https://tlx.toki.id/problems/ioi-2017/D2-1
+  summary: 'The Big Prize (interaktif): temukan kotak hadiah termahal dengan kueri terbatas.'
+  tags:
+  - interaktif
+  tl_ms: 1000
+  ml_kb: 1048576
+- id: ioi-2017-d2-2
+  stage: internasional
+  source: IOI 2017
+  year: 2017
+  title: Simurgh
+  link: https://tlx.toki.id/problems/ioi-2017/D2-2
+  summary: 'Simurgh (interaktif): temukan spanning tree "jalan emas" lewat kueri jumlah.'
+  tags:
+  - interaktif
+  tl_ms: 3000
+  ml_kb: 1048576
+- id: ioi-2017-d2-3
+  stage: internasional
+  source: IOI 2017
+  year: 2017
+  title: Ancient Books
+  link: https://tlx.toki.id/problems/ioi-2017/D2-3
+  summary: 'Ancient Books: urutkan buku di rak dengan berjalan dan membawa buku, minimalkan langkah.'
+  tl_ms: 2000
+  ml_kb: 1048576
+- id: ioi-2018-d1-1
+  stage: internasional
+  source: IOI 2018
+  year: 2018
+  title: Combo
+  link: https://tlx.toki.id/problems/ioi-2018/D1-1
+  summary: 'Combo (interaktif): tebak string rahasia dari tombol A/B/X/Y dengan sedikit kueri.'
+  tags:
+  - interaktif
+  tl_ms: 1000
+  ml_kb: 274432
+- id: ioi-2018-d1-2
+  stage: internasional
+  source: IOI 2018
+  year: 2018
+  title: Seats
+  link: https://tlx.toki.id/problems/ioi-2018/D1-2
+  summary: 'Seats: setelah setiap pertukaran kursi, hitung prefiks peserta yang membentuk persegi panjang.'
+  tl_ms: 3000
+  ml_kb: 274432
+- id: ioi-2018-d1-3
+  stage: internasional
+  source: IOI 2018
+  year: 2018
+  title: Werewolf
+  link: https://tlx.toki.id/problems/ioi-2018/D1-3
+  summary: 'Werewolf: kueri perjalanan wujud manusia (kota ≥ L) lalu serigala (kota ≤ R) di graf.'
+  tl_ms: 4000
+  ml_kb: 549888
+- id: ioi-2018-d2-1
+  stage: internasional
+  source: IOI 2018
+  year: 2018
+  title: Mechanical Doll
+  link: https://tlx.toki.id/problems/ioi-2018/D2-1
+  summary: 'Mechanical Doll: rancang sirkuit saklar agar boneka melewati pemicu dengan urutan yang diminta.'
+  tl_ms: 1000
+  ml_kb: 274432
+- id: ioi-2018-d2-2
+  stage: internasional
+  source: IOI 2018
+  year: 2018
+  title: Highway Tolls
+  link: https://tlx.toki.id/problems/ioi-2018/D2-2
+  summary: 'Highway Tolls (interaktif): temukan kota asal–tujuan lewat kueri biaya tol.'
+  tags:
+  - interaktif
+  tl_ms: 1500
+  ml_kb: 274432
+- id: ioi-2018-d2-3
+  stage: internasional
+  source: IOI 2018
+  year: 2018
+  title: Meetings
+  link: https://tlx.toki.id/problems/ioi-2018/D2-3
+  summary: 'Meetings: kueri rentang gunung, pilih tempat pertemuan dengan total biaya (tinggi maksimum) minimum.'
+  tl_ms: 4500
+  ml_kb: 824320
+- id: ioi-2019-d1-1
+  stage: internasional
+  source: IOI 2019
+  year: 2019
+  title: Arranging Shoes
+  link: https://tlx.toki.id/problems/ioi-2019/D1-1
+  summary: 'Arranging Shoes: banyak pertukaran bersebelahan minimum agar sepatu kiri–kanan berpasangan.'
+  tl_ms: 1000
+  ml_kb: 1048576
+- id: ioi-2019-d1-2
+  stage: internasional
+  source: IOI 2019
+  year: 2019
+  title: Split the Attractions
+  link: https://tlx.toki.id/problems/ioi-2019/D1-2
+  summary: 'Split the Attractions: bagi graf menjadi tiga himpunan berukuran a, b, c dengan dua yang terhubung.'
+  tl_ms: 2000
+  ml_kb: 1048576
+- id: ioi-2019-d1-3
+  stage: internasional
+  source: IOI 2019
+  year: 2019
+  title: Rectangles
+  link: https://tlx.toki.id/problems/ioi-2019/D1-3
+  summary: 'Rectangles: hitung persegi panjang di grid yang isinya lebih kecil dari batas di baris & kolomnya.'
+  tl_ms: 5000
+  ml_kb: 1048576
+- id: ioi-2019-d2-1
+  stage: internasional
+  source: IOI 2019
+  year: 2019
+  title: Broken Line
+  link: https://tlx.toki.id/problems/ioi-2019/D2-1
+  summary: 'Broken Line (output-only): garis patah melalui semua titik dengan segmen sesedikit mungkin.'
+  tags:
+  - output-only
+- id: ioi-2019-d2-2
+  stage: internasional
+  source: IOI 2019
+  year: 2019
+  title: Vision Program
+  link: https://tlx.toki.id/problems/ioi-2019/D2-2
+  summary: 'Vision Program: bangun sirkuit gerbang logika yang mendeteksi dua piksel berjarak K.'
+  tl_ms: 1000
+  ml_kb: 1048576
+- id: ioi-2019-d2-3
+  stage: internasional
+  source: IOI 2019
+  year: 2019
+  title: Sky Walking
+  link: https://tlx.toki.id/problems/ioi-2019/D2-3
+  summary: 'Sky Walking: jarak terpendek antar gedung lewat jembatan udara dan tiang.'
+  tl_ms: 4000
+  ml_kb: 1048576
+- id: ioi-2020-d1-1
+  stage: internasional
+  source: IOI 2020
+  year: 2020
+  title: Comparing Plants
+  link: https://tlx.toki.id/problems/ioi-2020/D1-1
+  summary: 'Comparing Plants: dari informasi tinggi relatif melingkar, jawab kueri perbandingan dua tanaman.'
+  tl_ms: 4000
+  ml_kb: 2097152
+- id: ioi-2020-d1-2
+  stage: internasional
+  source: IOI 2020
+  year: 2020
+  title: Connecting Supertrees
+  link: https://tlx.toki.id/problems/ioi-2020/D1-2
+  summary: 'Connecting Supertrees: bangun graf yang banyak lintasannya antar menara sesuai matriks 0–3.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2020-d1-3
+  stage: internasional
+  source: IOI 2020
+  year: 2020
+  title: Carnival Tickets
+  link: https://tlx.toki.id/problems/ioi-2020/D1-3
+  summary: 'Carnival Tickets: alokasikan tiket ke ronde untuk memaksimalkan total hadiah.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2020-d2-1
+  stage: internasional
+  source: IOI 2020
+  year: 2020
+  title: Packing Biscuits
+  link: https://tlx.toki.id/problems/ioi-2020/D2-1
+  summary: 'Packing Biscuits: hitung nilai total kelezatan y yang mungkin untuk x kantong.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2020-d2-2
+  stage: internasional
+  source: IOI 2020
+  year: 2020
+  title: Counting Mushrooms
+  link: https://tlx.toki.id/problems/ioi-2020/D2-2
+  summary: 'Counting Mushrooms (interaktif): hitung jamur jenis A dengan mesin pembanding.'
+  tags:
+  - interaktif
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2020-d2-3
+  stage: internasional
+  source: IOI 2020
+  year: 2020
+  title: Stations
+  link: https://tlx.toki.id/problems/ioi-2020/D2-3
+  summary: 'Stations: beri label simpul pohon agar paket bisa dirutekan hanya dari label.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2021-d1-1
+  stage: internasional
+  source: IOI 2021
+  year: 2021
+  title: Distributing Candies
+  link: https://tlx.toki.id/problems/ioi-2021/D1-1
+  summary: 'Distributing Candies: operasi tambah/kurang permen pada rentang kotak berkapasitas, hasil akhirnya.'
+  tl_ms: 4000
+  ml_kb: 2097152
+- id: ioi-2021-d1-2
+  stage: internasional
+  source: IOI 2021
+  year: 2021
+  title: Keys
+  link: https://tlx.toki.id/problems/ioi-2021/D1-2
+  summary: 'Keys: robot mengumpulkan kunci untuk melewati koridor; cari ruangan dengan jangkauan minimum.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2021-d1-3
+  stage: internasional
+  source: IOI 2021
+  year: 2021
+  title: Fountain Parks
+  link: https://tlx.toki.id/problems/ioi-2021/D1-3
+  summary: 'Fountain Parks: bangun jalan antar air mancur di grid dan tempatkan bangku unik.'
+  tl_ms: 3000
+  ml_kb: 2097152
+- id: ioi-2021-d2-1
+  stage: internasional
+  source: IOI 2021
+  year: 2021
+  title: Mutating DNA
+  link: https://tlx.toki.id/problems/ioi-2021/D2-1
+  summary: 'Mutating DNA: minimal pertukaran agar substring DNA berubah menjadi substring lain.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2021-d2-2
+  stage: internasional
+  source: IOI 2021
+  year: 2021
+  title: Dungeons Game
+  link: https://tlx.toki.id/problems/ioi-2021/D2-2
+  summary: 'Dungeons Game: simulasi pahlawan melawan monster di dungeon untuk banyak kueri.'
+  tl_ms: 4000
+  ml_kb: 2097152
+- id: ioi-2021-d2-3
+  stage: internasional
+  source: IOI 2021
+  year: 2021
+  title: Bit Shift Registers
+  link: https://tlx.toki.id/problems/ioi-2021/D2-3
+  summary: 'Bit Shift Registers: tulis program mesin register untuk mencari minimum atau mengurutkan.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2022-d1-1
+  stage: internasional
+  source: IOI 2022
+  year: 2022
+  title: Catfish Farm
+  link: https://tlx.toki.id/problems/ioi-2022/D1-1
+  summary: 'Catfish Farm: bangun dermaga di kolom-kolom untuk memaksimalkan bobot ikan yang tertangkap.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2022-d1-2
+  stage: internasional
+  source: IOI 2022
+  year: 2022
+  title: Prisoner Challenge
+  link: https://tlx.toki.id/problems/ioi-2022/D1-2
+  summary: 'Prisoner Challenge: strategi tahanan dengan papan tulis untuk menentukan kantong berisi koin lebih sedikit.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2022-d1-3
+  stage: internasional
+  source: IOI 2022
+  year: 2022
+  title: Radio Towers
+  link: https://tlx.toki.id/problems/ioi-2022/D1-3
+  summary: 'Radio Towers: pilih menara sebanyak mungkin di rentang yang saling bisa berkomunikasi (parameter D).'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2022-d2-1
+  stage: internasional
+  source: IOI 2022
+  year: 2022
+  title: Digital Circuit
+  link: https://tlx.toki.id/problems/ioi-2022/D2-1
+  summary: 'Digital Circuit: hitung penetapan parameter gerbang ambang agar keluaran 1, dengan pembaruan.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2022-d2-2
+  stage: internasional
+  source: IOI 2022
+  year: 2022
+  title: Rarest Insects
+  link: https://tlx.toki.id/problems/ioi-2022/D2-2
+  summary: 'Rarest Insects (interaktif): cari kardinalitas jenis serangga paling jarang dengan mesin.'
+  tags:
+  - interaktif
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2022-d2-3
+  stage: internasional
+  source: IOI 2022
+  year: 2022
+  title: Thousands Islands
+  link: https://tlx.toki.id/problems/ioi-2022/D2-3
+  summary: 'Thousands Islands: cari perjalanan kano yang valid dan kembali ke awal di graf berarah.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2023-d1-1
+  stage: internasional
+  source: IOI 2023
+  year: 2023
+  title: Closing Time
+  link: https://tlx.toki.id/problems/ioi-2023/D1-1
+  summary: 'Closing Time: dua festival di pohon dengan anggaran waktu; maksimalkan skor kenyamanan.'
+  tl_ms: 1000
+  ml_kb: 524288
+- id: ioi-2023-d1-2
+  stage: internasional
+  source: IOI 2023
+  year: 2023
+  title: Longest Trip
+  link: https://tlx.toki.id/problems/ioi-2023/D1-2
+  summary: 'Longest Trip (interaktif): temukan lintasan panjang di graf padat.'
+  tags:
+  - interaktif
+  tl_ms: 1000
+  ml_kb: 524288
+- id: ioi-2023-d1-3
+  stage: internasional
+  source: IOI 2023
+  year: 2023
+  title: Soccer Stadium
+  link: https://tlx.toki.id/problems/ioi-2023/D1-3
+  summary: 'Soccer Stadium: stadion "reguler" terbesar di grid berpohon.'
+  tl_ms: 4500
+  ml_kb: 1048576
+- id: ioi-2023-d2-1
+  stage: internasional
+  source: IOI 2023
+  year: 2023
+  title: Beech Tree
+  link: https://tlx.toki.id/problems/ioi-2023/D2-1
+  summary: 'Beech Tree: tentukan subpohon mana yang "indah" berdasarkan warna sisi.'
+  tl_ms: 1500
+  ml_kb: 262144
+- id: ioi-2023-d2-2
+  stage: internasional
+  source: IOI 2023
+  year: 2023
+  title: Overtaking
+  link: https://tlx.toki.id/problems/ioi-2023/D2-2
+  summary: 'Overtaking: bus di jalan dengan stasiun penyusulan; hitung waktu tiba bus cadangan per kueri.'
+  tl_ms: 2500
+  ml_kb: 524288
+- id: ioi-2023-d2-3
+  stage: internasional
+  source: IOI 2023
+  year: 2023
+  title: Robot Contest
+  link: https://tlx.toki.id/problems/ioi-2023/D2-3
+  summary: 'Robot Contest: program robot untuk menandai lintasan terpendek di labirin.'
+  tl_ms: 1000
+  ml_kb: 524288
+- id: ioi-2024-d1-1
+  stage: internasional
+  source: IOI 2024
+  year: 2024
+  title: Nile
+  link: https://tlx.toki.id/problems/ioi-2024/D1-1
+  summary: 'Nile: kirim artefak dengan perahu (sendiri atau berpasangan selisih ≤ D), biaya minimum per kueri D.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2024-d1-2
+  stage: internasional
+  source: IOI 2024
+  year: 2024
+  title: Message
+  link: https://tlx.toki.id/problems/ioi-2024/D1-2
+  summary: 'Message: kirim pesan lewat paket yang sebagian bitnya dirusak lawan.'
+  tl_ms: 3000
+  ml_kb: 2097152
+- id: ioi-2024-d1-3
+  stage: internasional
+  source: IOI 2024
+  year: 2024
+  title: Tree
+  link: https://tlx.toki.id/problems/ioi-2024/D1-3
+  summary: 'Tree: koefisien simpul sehingga jumlah setiap subpohon di [L, R] dengan biaya minimum.'
+  tl_ms: 2000
+  ml_kb: 2097152
+- id: ioi-2024-d2-1
+  stage: internasional
+  source: IOI 2024
+  year: 2024
+  title: Hieroglyphs
+  link: https://tlx.toki.id/problems/ioi-2024/D2-1
+  summary: 'Hieroglyphs: cari universal common subsequence dari dua barisan.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2024-d2-2
+  stage: internasional
+  source: IOI 2024
+  year: 2024
+  title: Mosaic
+  link: https://tlx.toki.id/problems/ioi-2024/D2-2
+  summary: 'Mosaic: hitung petak hitam di subpersegi dari mozaik yang dibangkitkan aturan.'
+  tl_ms: 1000
+  ml_kb: 2097152
+- id: ioi-2024-d2-3
+  stage: internasional
+  source: IOI 2024
+  year: 2024
+  title: Sphinx's Riddle
+  link: https://tlx.toki.id/problems/ioi-2024/D2-3
+  summary: 'Sphinx''s Riddle (interaktif): tebak warna simpul graf lewat eksperimen pewarnaan ulang.'
+  tags:
+  - interaktif
+  tl_ms: 1500
+  ml_kb: 2097152
+objective:
+- id: osk-2016-a
+  stage: kabupaten
+  source: OSK Informatika 2016
+  year: 2016
+  title: OSK Informatika 2016
+  link: https://tlx.toki.id/problems/osk-2016/A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osk-2015-a
+  stage: kabupaten
+  source: OSK Informatika 2015
+  year: 2015
+  title: OSK Informatika 2015
+  link: https://tlx.toki.id/problems/osk-2015/A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osk-2014-a
+  stage: kabupaten
+  source: OSK Informatika 2014
+  year: 2014
+  title: OSK Informatika 2014
+  link: https://tlx.toki.id/problems/osk-2014/A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osk-2013-a
+  stage: kabupaten
+  source: OSK Informatika 2013
+  year: 2013
+  title: OSK Informatika 2013
+  link: https://tlx.toki.id/problems/osk-2013/A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osk-2012-a
+  stage: kabupaten
+  source: OSK Informatika 2012
+  year: 2012
+  title: OSK Informatika 2012
+  link: https://tlx.toki.id/problems/osk-2012/A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osk-2011-a
+  stage: kabupaten
+  source: OSK Informatika 2011
+  year: 2011
+  title: OSK Informatika 2011
+  link: https://tlx.toki.id/problems/osk-2011/A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osp-2019-2a
+  stage: provinsi
+  source: OSP Informatika 2019
+  year: 2019
+  title: 'Sesi 2: Analitika/Logika'
+  link: https://tlx.toki.id/problems/osp-2019/2A
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osp-2019-2b
+  stage: provinsi
+  source: OSP Informatika 2019
+  year: 2019
+  title: 'Sesi 2: Algoritmika'
+  link: https://tlx.toki.id/problems/osp-2019/2B
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'
+- id: osp-2019-2c
+  stage: provinsi
+  source: OSP Informatika 2019
+  year: 2019
+  title: 'Sesi 2: Program Sederhana'
+  link: https://tlx.toki.id/problems/osp-2019/2C
+  summary: 'Paket soal objektif resmi (pilihan ganda/isian singkat): logika, aritmetika, dan algoritmika. Kerjakan di TLX lalu tandai selesai.'

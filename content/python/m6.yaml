@@ -1,0 +1,162 @@
+lesson:
+  - text: Class adalah cetak biru objek. __init__ dijalankan saat objek dibuat dan menyimpan data di self. Method adalah fungsi milik class yang parameter pertamanya self, yaitu objek itu sendiri.
+    code: |
+      class Slayer:
+          def __init__(self, nama, rank="Mizunoto"):
+              self.nama = nama
+              self.rank = rank
+          def sapa(self):
+              return f"Aku {self.nama}, rank {self.rank}"
+      print(Slayer("Tanjiro").sapa())
+  - text: Pewarisan (class Anak(Induk)) mewarisi method induk dan boleh menimpanya. super() memanggil versi induk. __str__ menentukan tampilan objek saat di-print.
+    code: |
+      class Hewan:
+          def __init__(self, nama):
+              self.nama = nama
+          def __str__(self):
+              return f"{self.nama} berkata {self.suara()}"
+          def suara(self):
+              return "..."
+      class Gagak(Hewan):
+          def suara(self):
+              return "Kaa!"
+      print(Gagak("Matsuemon"))
+exercises:
+  - id: py-m6-rekening
+    type: write
+    title: Kas Kisatsutai
+    difficulty: 2
+    prompt: 'Buat class Rekening dengan method setor(x) dan tarik(x). Baris pertama n, lalu n perintah "setor X" atau "tarik X". Jika saldo kurang untuk tarik, cetak "saldo kurang" dan abaikan. Di akhir cetak saldonya.'
+    tests: ["3\nsetor 100\ntarik 30\ntarik 100", "1\ntarik 5", "4\nsetor 10\nsetor 20\ntarik 30\nsetor 1"]
+    hints: |
+      Simpan self.saldo = 0 di __init__.
+      tarik memeriksa saldo sebelum mengurangi.
+      Pecah tiap perintah menjadi aksi dan jumlah dengan split().
+    solution: |
+      class Rekening:
+          def __init__(self):
+              self.saldo = 0
+          def setor(self, x):
+              self.saldo += x
+          def tarik(self, x):
+              if x > self.saldo:
+                  print("saldo kurang")
+              else:
+                  self.saldo -= x
+      r = Rekening()
+      for _ in range(int(input())):
+          aksi, x = input().split()
+          getattr(r, aksi)(int(x))
+      print(r.saldo)
+  - id: py-m6-str
+    type: write
+    title: Papan Nama
+    difficulty: 1
+    prompt: 'Buat class Slayer(nama, rank) dengan __str__ yang mengembalikan "<nama> (<rank>)". Baris pertama n, lalu n baris "nama rank". Cetak setiap objek.'
+    tests: ["2\nTanjiro Mizunoto\nGiyu Hashira", "1\nKanao Tsuguko"]
+    hints: |
+      __str__ harus mengembalikan string, bukan mencetak.
+      print(obj) otomatis memanggil __str__.
+      return f"{self.nama} ({self.rank})"
+    solution: |
+      class Slayer:
+          def __init__(self, nama, rank):
+              self.nama, self.rank = nama, rank
+          def __str__(self):
+              return f"{self.nama} ({self.rank})"
+      for _ in range(int(input())):
+          print(Slayer(*input().split()))
+  - id: py-m6-predict
+    type: predict
+    title: Satu Objek Dua Nama
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      class A:
+          def __init__(self):
+              self.x = 1
+          def naik(self):
+              self.x += 1
+              return self
+      a = A()
+      b = a
+      b.naik().naik()
+      print(a.x)
+    hints: |
+      b = a membuat dua nama untuk objek yang sama.
+      naik() mengembalikan self, jadi bisa dirantai.
+      Ada dua kali naik.
+    solution: x
+  - id: py-m6-bug-self
+    type: bughunt
+    title: Lupa Diri
+    difficulty: 1
+    prompt: Method luas() error dengan NameError. Temukan bug-nya.
+    starter: |
+      class Persegi:
+          def __init__(self, s):
+              self.s = s
+          def luas(self):
+              return s * s
+      p = Persegi(int(input()))
+      print(p.luas())
+    bug_line: 5
+    tests: ["3", "5", "0"]
+    hints: |
+      Di dalam method, data objek diakses lewat self.
+      s hanya ada di dalam __init__ sebagai parameter.
+      return self.s * self.s
+    solution: |
+      class Persegi:
+          def __init__(self, s):
+              self.s = s
+          def luas(self):
+              return self.s * self.s
+      p = Persegi(int(input()))
+      print(p.luas())
+  - id: py-m6-pewarisan
+    type: write
+    title: Suara Penghuni Markas
+    difficulty: 2
+    prompt: 'Buat class Hewan dengan method suara() yang mengembalikan "...", lalu turunannya Gagak ("Kaa!"), Kucing ("Meong"), dan Babi ("Ngik!"). Input berisi beberapa nama jenis dalam satu baris (gagak/kucing/babi/lainnya). Cetak suara masing-masing per baris. Jenis yang tidak dikenal memakai Hewan.'
+    tests: ["gagak kucing", "babi rubah gagak", "ikan"]
+    hints: |
+      Buat dict yang memetakan nama ke class.
+      jenis.get(nama, Hewan) memilih class default.
+      Panggil Class() lalu .suara().
+    solution: |
+      class Hewan:
+          def suara(self):
+              return "..."
+      class Gagak(Hewan):
+          def suara(self):
+              return "Kaa!"
+      class Kucing(Hewan):
+          def suara(self):
+              return "Meong"
+      class Babi(Hewan):
+          def suara(self):
+              return "Ngik!"
+      jenis = {"gagak": Gagak, "kucing": Kucing, "babi": Babi}
+      for nama in input().split():
+          print(jenis.get(nama, Hewan)().suara())
+  - id: py-m6-parsons
+    type: parsons
+    title: Jarak Dua Titik
+    difficulty: 2
+    prompt: Susun program dengan class Titik yang menghitung jarak Manhattan antara dua titik dari input.
+    tests: ["0 0\n3 4", "1 1\n1 1", "-2 5\n3 -1"]
+    hints: |
+      Definisi class dan method-nya ada di atas.
+      __init__ ditulis sebelum jarak.
+      Objek dibuat dari input sebelum dicetak.
+    solution: |
+      class Titik:
+          def __init__(self, x, y):
+              self.x = x
+              self.y = y
+          def jarak(self, o):
+              return abs(self.x - o.x) + abs(self.y - o.y)
+      a = Titik(*map(int, input().split()))
+      b = Titik(*map(int, input().split()))
+      print(a.jarak(b))

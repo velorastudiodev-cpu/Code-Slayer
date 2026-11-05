@@ -1,0 +1,50 @@
+lesson:
+- text: 'HTTPS = HTTP di atas TLS. TLS memberi tiga jaminan: kerahasiaan (data terenkripsi), integritas (data tidak diubah di jalan), dan autentikasi (sertifikat membuktikan server itu benar-benar pemilik
+    domain).'
+- text: Saat handshake TLS, server mengirim sertifikat berisi public key yang ditandatangani Certificate Authority (CA) tepercaya. Browser memeriksa tanda tangan, nama domain, dan masa berlaku sebelum melanjutkan.
+exercises:
+- id: net-m1-tls
+  type: quiz
+  title: Jaminan Gembok
+  difficulty: 1
+  prompt: Apa yang TIDAK dijamin oleh HTTPS?
+  options:
+  - Bahwa isi situs itu jujur dan aman dari penipuan
+  - Data tidak bisa dibaca penyadap di jaringan
+  - Data tidak diubah di perjalanan
+  - Server memang pemilik domain yang dikunjungi
+  explain: HTTPS mengamankan saluran, bukan niat pemilik situs. Situs phishing pun bisa punya gembok HTTPS.
+  hints: |
+    TLS melindungi koneksi.
+    Penipu juga bisa membeli sertifikat untuk domainnya sendiri.
+    Gembok ≠ situs terpercaya.
+- id: net-m1-sert
+  type: quiz
+  title: Tanda Tangan Kepercayaan
+  difficulty: 2
+  prompt: Browser memperingatkan "sertifikat tidak valid" saat membuka https://korps.id. Penyebab yang PALING mungkin adalah...
+  options:
+  - Nama di sertifikat tidak cocok dengan domain, atau sertifikatnya kedaluwarsa
+  - Port 443 tertutup
+  - DNS korps.id belum ada
+  - Halaman terlalu besar
+  explain: Validasi sertifikat memeriksa tanda tangan CA, kecocokan nama domain, dan masa berlaku. Port tertutup atau DNS gagal menghasilkan error koneksi, bukan peringatan sertifikat.
+  hints: |
+    Peringatan ini muncul SETELAH koneksi berhasil.
+    Apa saja yang diperiksa dari sertifikat?
+    Nama domain dan tanggal berlaku.
+- id: net-m1-kunci
+  type: answer
+  title: Kunci yang Dibagikan
+  difficulty: 2
+  prompt: Dalam kriptografi asimetris, kunci yang boleh disebarkan ke siapa saja (ada di dalam sertifikat) disebut...
+  accept:
+  - public key
+  - kunci publik
+  - publik
+  - public
+  explain: Public key boleh dibagikan; private key harus dirahasiakan oleh pemiliknya.
+  hints: |
+    Lawan dari private key.
+    Ada di dalam sertifikat.
+    public ...

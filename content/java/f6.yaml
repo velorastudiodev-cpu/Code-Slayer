@@ -1,0 +1,188 @@
+lesson:
+  - text: 'Java punya for klasik, while, do-while, dan enhanced for (for (int x - arr)) untuk mengulang setiap elemen. break dan continue bekerja seperti biasa. Label (luar:) memungkinkan break keluar dari loop bersarang sekaligus.'
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int[] angka = {3, 1, 4};
+              int total = 0;
+              for (int x : angka) total += x;
+              System.out.println(total);
+              luar:
+              for (int i = 0; i < 3; i++)
+                  for (int j = 0; j < 3; j++) {
+                      if (i * j == 2) break luar;
+                      System.out.print(i + "" + j + " ");
+                  }
+              System.out.println();
+          }
+      }
+  - text: Menggabung string di dalam loop dengan + itu lambat, karena setiap + membuat String baru. Gunakan StringBuilder dengan append, lalu toString() di akhir.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              StringBuilder sb = new StringBuilder();
+              for (int i = 1; i <= 5; i++) sb.append(i).append(i < 5 ? "," : "");
+              System.out.println(sb);
+          }
+      }
+exercises:
+  - id: java-f6-segitiga
+    type: write
+    title: Formasi Segitiga
+    difficulty: 2
+    prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+    tests: ["3", "1", "5"]
+    hints: |
+      "*".repeat(i) mengulang string (Java 11+).
+      Atau pakai loop bersarang.
+      System.out.println("*".repeat(i));
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int n = new Scanner(System.in).nextInt();
+              for (int i = 1; i <= n; i++) System.out.println("*".repeat(i));
+          }
+      }
+  - id: java-f6-faktor
+    type: write
+    title: Pembagi Sejati
+    difficulty: 2
+    prompt: Baca n (n ≥ 1). Cetak semua pembagi n dari kecil ke besar dalam satu baris, dipisah spasi.
+    tests: ["12", "7", "1", "36"]
+    hints: |
+      Periksa setiap i dari 1 sampai n.
+      Kumpulkan di StringBuilder.
+      Pangkas spasi berlebih di akhir dengan trim().
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int n = new Scanner(System.in).nextInt();
+              StringBuilder sb = new StringBuilder();
+              for (int i = 1; i <= n; i++) if (n % i == 0) sb.append(i).append(' ');
+              System.out.println(sb.toString().trim());
+          }
+      }
+  - id: java-f6-predict
+    type: predict
+    title: Keluar dari Dua Loop
+    difficulty: 3
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              luar:
+              for (int i = 1; i <= 3; i++) {
+                  for (int j = 1; j <= 3; j++) {
+                      if (j == 2) continue luar;
+                      if (i == 3) break luar;
+                      System.out.print(i * 10 + j + " ");
+                  }
+              }
+              System.out.println("selesai");
+          }
+      }
+    hints: |
+      continue luar lanjut ke i berikutnya.
+      Untuk setiap i, hanya j = 1 yang dicetak sebelum j == 2.
+      Saat i == 3, break luar langsung keluar.
+    solution: x
+  - id: java-f6-bug
+    type: bughunt
+    title: Indeks Kebablasan
+    difficulty: 1
+    prompt: Program menjumlah elemen array, tapi crash dengan ArrayIndexOutOfBoundsException. Temukan bug-nya.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int[] a = new int[in.nextInt()];
+              for (int i = 0; i < a.length; i++) a[i] = in.nextInt();
+              int total = 0;
+              for (int i = 0; i <= a.length; i++) total += a[i];
+              System.out.println(total);
+          }
+      }
+    bug_line: 9
+    tests: ["3\n1 2 3", "1\n5"]
+    hints: |
+      Indeks array valid dari 0 sampai length - 1.
+      i <= a.length menyentuh indeks length.
+      i < a.length
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int[] a = new int[in.nextInt()];
+              for (int i = 0; i < a.length; i++) a[i] = in.nextInt();
+              int total = 0;
+              for (int i = 0; i < a.length; i++) total += a[i];
+              System.out.println(total);
+          }
+      }
+  - id: java-f6-readerror
+    type: readerror
+    title: Indeks Kebablasan
+    difficulty: 1
+    prompt: Baca pesan exception-nya lalu tentukan perbaikannya.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int[] skor = {90, 75, 80};
+              for (int i = 0; i <= skor.length; i++) System.out.println(skor[i]);
+          }
+      }
+    options:
+      - i <= skor.length membaca indeks 3 yang tidak ada. Pakai i < skor.length.
+      - Array Java harus dibuat dengan new ArrayList.
+      - println tidak bisa mencetak isi array.
+      - skor harus dideklarasikan static.
+    explain: ArrayIndexOutOfBoundsException, karena indeks valid hanya 0 sampai length - 1.
+    hints: |
+      Berapa panjang skor?
+      Indeks terakhir yang valid adalah length - 1.
+      Periksa kondisi loop.
+  - id: java-f6-refactor
+    type: refactor
+    title: Refactor ke StringBuilder
+    difficulty: 2
+    prompt: Menggabung String dengan += di dalam loop membuat banyak objek baru. Refactor memakai StringBuilder dengan output tetap sama.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int n = new Scanner(System.in).nextInt();
+              String s = "";
+              for (int i = 1; i <= n; i++) s += i + (i < n ? "," : "");
+              System.out.println(s);
+          }
+      }
+    rules:
+      - text: Memakai StringBuilder
+        require: 'StringBuilder'
+      - text: Tanpa s += di dalam loop
+        forbid: 's\s*\+='
+    tests: ["5", "1", "12"]
+    hints: |
+      StringBuilder sb = new StringBuilder();
+      sb.append(...) bisa dirantai.
+      Cetak sb atau sb.toString().
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int n = new Scanner(System.in).nextInt();
+              StringBuilder sb = new StringBuilder();
+              for (int i = 1; i <= n; i++) sb.append(i).append(i < n ? "," : "");
+              System.out.println(sb);
+          }
+      }

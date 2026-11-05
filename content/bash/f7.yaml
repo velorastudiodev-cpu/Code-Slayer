@@ -1,0 +1,74 @@
+lesson:
+- text: 'Fungsi mengelompokkan perintah: nama() { ...; }. Argumen dibaca dengan $1, $2, $@ (semua). Variabel di dalam fungsi sebaiknya local. return hanya untuk status 0–255; untuk "mengembalikan" teks,
+    echo lalu tangkap dengan $(fungsi).'
+  code: |
+    sapa() {
+      local nama=$1
+      echo "Halo, $nama"
+    }
+    sapa Tanjiro
+    hasil=$(sapa Nezuko)
+exercises:
+- id: bash-f7-fungsi
+  type: write
+  title: Fungsi Kuadrat
+  difficulty: 1
+  prompt: Buat fungsi kuadrat yang mencetak kuadrat argumennya. Baca n dari input lalu panggil kuadrat n.
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    5
+  - |
+    12
+  hints: |
+    Argumen pertama: $1.
+    Aritmetika $(( ))
+    kuadrat "$n"
+  solution: |
+    kuadrat() {
+      echo $(( $1 * $1 ))
+    }
+    read n
+    kuadrat "$n"
+- id: bash-f7-max
+  type: write
+  title: Pedang Terpanjang
+  difficulty: 2
+  prompt: Buat fungsi terbesar yang menerima banyak angka sebagai argumen dan mencetak yang terbesar. Baca satu baris angka dari input lalu panggil terbesar dengan angka-angka itu.
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    3 9 2
+  - |
+    -5 -1 -7
+  hints: |
+    $@ berisi semua argumen.
+    Simpan maksimum sementara.
+    read -a membaca ke array.
+  solution: |
+    terbesar() {
+      local m=$1
+      for x in "$@"; do
+        if [ "$x" -gt "$m" ]; then m=$x; fi
+      done
+      echo "$m"
+    }
+    read -a angka
+    terbesar "${angka[@]}"
+- id: bash-f7-local
+  type: quiz
+  title: Variabel Bocor
+  difficulty: 2
+  prompt: Mengapa variabel di dalam fungsi sebaiknya dideklarasikan dengan local?
+  options:
+  - Tanpa local, variabel itu global dan bisa menimpa variabel di luar fungsi
+  - local membuat fungsi lebih cepat
+  - Bash mewajibkannya
+  - local membuat variabel jadi konstanta
+  explain: Di Bash, semua variabel global secara bawaan, termasuk yang dibuat di dalam fungsi.
+  hints: |
+    Default variabel bash: global.
+    Fungsi bisa tidak sengaja menimpa variabel pemanggil.
+    local membatasi ke fungsi.

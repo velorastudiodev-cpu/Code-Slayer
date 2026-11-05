@@ -1,0 +1,109 @@
+lesson:
+  - text: Modul adalah file Python berisi fungsi dan variabel yang bisa dipakai ulang. import math memuat seluruh modul, sedangkan from math import sqrt mengambil satu nama saja. Pustaka standar Python sangat kaya, misalnya math, collections, itertools, datetime, dan json.
+    code: |
+      import math
+      from collections import Counter
+      print(math.sqrt(81), math.pi)
+      print(Counter("kamado").most_common(2))
+  - text: Package adalah folder berisi modul. Di proyek nyata, pustaka luar dipasang dengan pip lalu di-import seperti biasa. Blok if __name__ == "__main__" menjalankan kode hanya saat file dijalankan langsung, bukan saat di-import.
+    code: |
+      from datetime import date
+      import itertools
+      print(date(2026, 10, 30) - date(2026, 1, 1))
+      print(list(itertools.combinations("ABC", 2)))
+      if __name__ == "__main__":
+          print("dijalankan langsung")
+exercises:
+  - id: py-m5-lingkaran
+    type: write
+    title: Lingkaran Pernapasan
+    difficulty: 1
+    prompt: Baca jari-jari r. Cetak luas lingkaran (pakai math.pi) dengan 2 angka desimal.
+    tests: ["1", "7", "0", "2.5"]
+    hints: |
+      import math
+      Luas = pi * r * r.
+      print(f"{luas:.2f}")
+    solution: |
+      import math
+      r = float(input())
+      print(f"{math.pi * r * r:.2f}")
+  - id: py-m5-counter
+    type: write
+    title: Huruf Paling Sering
+    difficulty: 2
+    prompt: 'Baca satu kata. Cetak huruf yang paling sering muncul beserta jumlahnya: "<huruf> <jumlah>". Jika seri, pilih huruf terkecil menurut abjad.'
+    tests: ["kamado", "banana", "abc", "zzaa"]
+    hints: |
+      collections.Counter menghitung huruf.
+      Urutkan berdasarkan (-jumlah, huruf).
+      min(c.items(), key=lambda x: (-x[1], x[0]))
+    solution: |
+      from collections import Counter
+      c = Counter(input())
+      h, n = min(c.items(), key=lambda x: (-x[1], x[0]))
+      print(h, n)
+  - id: py-m5-predict
+    type: predict
+    title: Jurus Modul math
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      import math
+      print(math.sqrt(16), math.floor(2.7), math.ceil(2.1), math.gcd(12, 18))
+    hints: |
+      sqrt selalu mengembalikan float.
+      floor membulatkan ke bawah, ceil ke atas.
+      gcd adalah FPB.
+    solution: x
+  - id: py-m5-bug-tanggal
+    type: bughunt
+    title: Hitung Hari Menuju Misi
+    difficulty: 2
+    prompt: Program membaca dua tanggal (format YYYY-MM-DD) dan harus mencetak selisih harinya sebagai bilangan saja. Temukan bug-nya.
+    starter: |
+      from datetime import date
+      a = date.fromisoformat(input())
+      b = date.fromisoformat(input())
+      print(b - a)
+    bug_line: 4
+    tests: ["2026-01-01\n2026-01-11", "2024-02-28\n2024-03-01", "2026-10-30\n2026-10-30"]
+    hints: |
+      b - a menghasilkan timedelta, bukan bilangan.
+      timedelta punya atribut days.
+      print((b - a).days)
+    solution: |
+      from datetime import date
+      a = date.fromisoformat(input())
+      b = date.fromisoformat(input())
+      print((b - a).days)
+  - id: py-m5-permutasi
+    type: write
+    title: Formasi Pasukan
+    difficulty: 2
+    prompt: Baca sebuah kata. Cetak semua susunan (permutasi) hurufnya yang berbeda, urut menurut abjad, satu per baris.
+    tests: ["abc", "aab", "z"]
+    hints: |
+      itertools.permutations menghasilkan semua susunan.
+      Gabungkan tiap susunan dengan "".join, lalu buang duplikat dengan set.
+      for p in sorted(set(...)): print(p)
+    solution: |
+      from itertools import permutations
+      for p in sorted(set("".join(x) for x in permutations(input()))):
+          print(p)
+  - id: py-m5-parsons
+    type: parsons
+    title: Dua Kata Terpopuler
+    difficulty: 2
+    prompt: Susun program yang mencetak dua kata paling sering beserta jumlahnya.
+    tests: ["a b a c b a", "kaa kaa gagak"]
+    hints: |
+      import paling atas.
+      Hitung dulu sebelum mengambil most_common.
+      Loop terakhir mencetak hasilnya.
+    solution: |
+      from collections import Counter
+      kata = input().split()
+      hitung = Counter(kata)
+      for k, v in hitung.most_common(2):
+          print(k, v)

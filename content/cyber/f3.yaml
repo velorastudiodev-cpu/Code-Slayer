@@ -1,0 +1,64 @@
+lesson:
+- text: 'Jenis serangan umum: phishing (menipu korban menyerahkan data), malware & ransomware (perangkat lunak jahat / penyandera data), man-in-the-middle (menyadap/mengubah lalu lintas), DoS (membanjiri
+    layanan), dan social engineering (memanipulasi manusia). Manusia sering menjadi titik terlemah.'
+exercises:
+- id: cy-f3-phish
+  type: quiz
+  title: Gagak Palsu
+  difficulty: 1
+  prompt: Email mengatasnamakan "Admin Kisatsutai" meminta kamu login lewat tautan kisatsutai-login.contoh untuk "verifikasi akun". Ini kemungkinan...
+  options:
+  - Phishing
+  - Ransomware
+  - DoS
+  - Patch keamanan resmi
+  explain: Domain mirip dan permintaan login mendesak adalah ciri phishing. Buka situs resmi dengan mengetik alamatnya sendiri.
+  hints: |
+    Perhatikan domainnya.
+    Meminta kredensial lewat tautan.
+    Phishing.
+- id: cy-f3-ransom
+  type: quiz
+  title: Berkas Tersandera
+  difficulty: 1
+  prompt: Semua berkas markas terenkripsi dan ada pesan meminta tebusan. Pertahanan terbaik SEBELUM kejadian adalah...
+  options:
+  - Backup rutin yang terpisah/offline dan update sistem
+  - Membayar tebusan secepatnya
+  - Mematikan antivirus agar cepat
+  - Memakai satu kata sandi untuk semua akun
+  explain: Backup terpisah membuat data bisa dipulihkan tanpa membayar; patch menutup celah masuk.
+  hints: |
+    Apa yang membuat tebusan tidak perlu?
+    Salinan data.
+    Backup offline.
+- id: cy-f3-mitm
+  type: quiz
+  title: Penyadap di Tengah
+  difficulty: 2
+  prompt: Di Wi-Fi publik, penyerang menyadap login ke situs HTTP. Serangan ini disebut...
+  options:
+  - Man-in-the-middle
+  - Brute force
+  - SQL injection
+  - Phishing
+  explain: Penyerang berada di antara korban dan server. HTTPS (TLS) mencegah penyadapan isi.
+  hints: |
+    Posisi penyerang.
+    Di tengah jalur.
+    MITM.
+- id: cy-f3-social
+  type: quiz
+  title: Penelepon Ramah
+  difficulty: 2
+  prompt: Seseorang menelepon mengaku teknisi kantor dan meminta kode OTP-mu "untuk perbaikan". Ini contoh...
+  options:
+  - Social engineering
+  - Buffer overflow
+  - Cross-site scripting
+  - Enkripsi end-to-end
+  explain: Kode OTP tidak boleh diberikan kepada siapa pun. Verifikasi lewat jalur resmi.
+  hints: |
+    Yang diserang adalah manusianya.
+    Manipulasi psikologis.
+    Social engineering.

@@ -1,0 +1,115 @@
+lesson:
+  - text: Program C selalu dimulai dari fungsi main. Baris #include <stdio.h> memuat pustaka input/output standar. printf mencetak teks, dan \n berarti baris baru. Setiap pernyataan diakhiri titik koma. Kode C harus dikompilasi dulu menjadi program, baru dijalankan.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("Halo, Slayer!\n");
+          printf("Napas Api: bentuk %d\n", 1);
+          return 0;
+      }
+  - text: printf memakai format specifier untuk menyisipkan nilai, yaitu %d untuk int, %f untuk desimal, %c untuk karakter, dan %s untuk string. %.2f mencetak 2 angka di belakang koma. return 0 di akhir main menandakan program selesai dengan sukses.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("%s berumur %d tahun\n", "Rengoku", 20);
+          printf("%.2f %c\n", 3.14159, 'K');
+          return 0;
+      }
+exercises:
+  - id: c-halo
+    type: write
+    title: Salam Napas Api
+    difficulty: 1
+    prompt: Cetak tepat satu baris "Halo, Slayer!".
+    starter: |
+      #include <stdio.h>
+
+      int main(void) {
+          // tulis kodemu di sini
+          return 0;
+      }
+    hints: |
+      Gunakan printf dari stdio.h.
+      Jangan lupa \n di akhir teks dan ; di akhir pernyataan.
+      printf("Halo, Slayer!\n");
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("Halo, Slayer!\n");
+          return 0;
+      }
+  - id: c-f1-format
+    type: write
+    title: Laporan Berformat
+    difficulty: 1
+    prompt: 'Dengan satu printf, cetak "Rengoku berumur 20 tahun, kekuatan 9.50" memakai %s, %d, dan %.2f untuk nilai "Rengoku", 20, dan 9.5.'
+    hints: |
+      %s untuk string, %d untuk int, dan %.2f untuk desimal 2 angka.
+      Urutan argumen harus sama dengan urutan specifier.
+      printf("%s berumur %d tahun, kekuatan %.2f\n", "Rengoku", 20, 9.5);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("%s berumur %d tahun, kekuatan %.2f\n", "Rengoku", 20, 9.5);
+          return 0;
+      }
+  - id: c-f1-predict
+    type: predict
+    title: Baris yang Tidak Berganti
+    difficulty: 1
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("A");
+          printf("B\n");
+          printf("%d-%d\n", 3, 7);
+          return 0;
+      }
+    hints: |
+      printf tidak menambahkan baris baru otomatis.
+      A dan B menempel di baris yang sama.
+      %d diganti nilai argumennya secara berurutan.
+    solution: x
+  - id: c-f1-bug
+    type: bughunt
+    title: Iblis Pemakan Titik Koma
+    difficulty: 1
+    prompt: Program harus mencetak "Kaa!" lalu "Misi!", tapi gagal dikompilasi. Temukan baris yang salah.
+    starter: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("Kaa!\n")
+          printf("Misi!\n");
+          return 0;
+      }
+    bug_line: 4
+    hints: |
+      Baca pesan compiler, apa yang diharapkan sebelum printf kedua?
+      Setiap pernyataan C diakhiri ;.
+      printf("Kaa!\n");
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          printf("Kaa!\n");
+          printf("Misi!\n");
+          return 0;
+      }
+  - id: c-f1-typing
+    type: typing
+    title: Ketik Program C Pertama
+    difficulty: 1
+    prompt: Ketik ulang program C berikut, termasuk titik komanya. Akurasi minimal 95%.
+    code: |
+      #include <stdio.h>
+      int main(void) {
+          printf("Halo!\n");
+          return 0;
+      }

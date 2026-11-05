@@ -1,0 +1,150 @@
+lesson:
+  - text: Error di JS dilempar dengan throw dan ditangkap dengan try...catch. Objek error punya name dan message. finally selalu dijalankan. Lempar new Error("pesan") untuk menolak data yang tidak valid.
+    code: |
+      function umurValid(n) {
+        if (n < 0) throw new RangeError("umur negatif")
+        return n
+      }
+      try {
+        umurValid(-1)
+      } catch (e) {
+        console.log(e.name, "-", e.message)
+      } finally {
+        console.log("selesai")
+      }
+  - text: Beberapa operasi tidak melempar error, tapi menghasilkan nilai aneh. Contohnya Number("abc") menjadi NaN dan 1 / 0 menjadi Infinity. Periksa dengan Number.isNaN atau Number.isFinite. JSON.parse melempar SyntaxError kalau teksnya tidak valid.
+    code: |
+      console.log(Number("abc"), Number.isNaN(Number("abc")), 1 / 0)
+      try { JSON.parse("{rusak") } catch (e) { console.log(e.name) }
+exercises:
+  - id: js-m3-bagi-aman
+    type: write
+    title: Pembagian Aman
+    difficulty: 2
+    prompt: Baca dua baris a dan b. Cetak Math.floor(a / b). Jika b = 0 cetak "tidak bisa dibagi nol". Jika salah satunya bukan angka cetak "input tidak valid".
+    tests: ["10\n3", "5\n0", "x\n2", "-7\n2"]
+    hints: |
+      Number("x") menghasilkan NaN, bukan error.
+      Periksa Number.isNaN dulu, lalu b === 0.
+      Urutan pemeriksaan menentukan pesan yang keluar.
+    solution: |
+      const a = Number(readline()), b = Number(readline())
+      if (Number.isNaN(a) || Number.isNaN(b)) console.log("input tidak valid")
+      else if (b === 0) console.log("tidak bisa dibagi nol")
+      else console.log(Math.floor(a / b))
+  - id: js-m3-json
+    type: write
+    title: Pesan Gagak Rusak
+    difficulty: 2
+    prompt: 'Setiap baris input berisi teks JSON. Untuk tiap baris, cetak nilai properti "pesan" jika valid, "tanpa pesan" jika properti itu tidak ada, atau "rusak" jika JSON-nya tidak valid.'
+    tests: ["{\"pesan\": \"Kaa!\"}\n{rusak\n{\"dari\": \"Matsuemon\"}", "{\"pesan\": \"misi\"}"]
+    hints: |
+      Bungkus JSON.parse dengan try/catch.
+      Operator ?? memberi nilai pengganti untuk undefined.
+      Baca baris sampai readline() mengembalikan null.
+    solution: |
+      let baris
+      while ((baris = readline()) !== null) {
+        try {
+          console.log(JSON.parse(baris).pesan ?? "tanpa pesan")
+        } catch {
+          console.log("rusak")
+        }
+      }
+  - id: js-m3-predict
+    type: predict
+    title: Jalur Error
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      function f() {
+        try {
+          console.log("A")
+          throw new Error("x")
+          console.log("B")
+        } catch (e) {
+          console.log("C", e.message)
+          return "D"
+        } finally {
+          console.log("E")
+        }
+      }
+      console.log(f())
+    hints: |
+      Setelah throw, sisa blok try dilewati.
+      finally tetap jalan walau catch sudah return.
+      Nilai return baru dicetak setelah finally.
+    solution: x
+  - id: js-m3-bug-catch
+    type: bughunt
+    title: Jaring Bocor
+    difficulty: 2
+    prompt: Untuk umur negatif program harus mencetak "umur tidak valid", tapi justru mencetak umurnya. Temukan bug-nya.
+    starter: |
+      function umurValid(n) {
+        if (n < 0) new Error("negatif")
+        return n
+      }
+      try {
+        console.log(umurValid(Number(readline())))
+      } catch (e) {
+        console.log("umur tidak valid")
+      }
+    bug_line: 2
+    tests: ["17", "-3", "0"]
+    hints: |
+      Membuat objek Error saja tidak menghentikan apa pun.
+      Error harus dilempar.
+      if (n < 0) throw new Error("negatif")
+    solution: |
+      function umurValid(n) {
+        if (n < 0) throw new Error("negatif")
+        return n
+      }
+      try {
+        console.log(umurValid(Number(readline())))
+      } catch (e) {
+        console.log("umur tidak valid")
+      }
+  - id: js-m3-validasi
+    type: write
+    title: Penjaga Gerbang Data
+    difficulty: 3
+    prompt: 'Tulis fungsi akar(n) yang melempar RangeError jika n negatif dan mengembalikan Math.floor(Math.sqrt(n)) jika tidak. Baris pertama k, lalu k bilangan per baris. Untuk tiap bilangan cetak hasilnya, atau "error: <pesan>".'
+    tests: ["3\n16\n-4\n10", "1\n0"]
+    hints: |
+      throw new RangeError("negatif")
+      Panggil akar di dalam try untuk setiap bilangan.
+      catch (e) lalu console.log(`error: ${e.message}`)
+    solution: |
+      function akar(n) {
+        if (n < 0) throw new RangeError("negatif")
+        return Math.floor(Math.sqrt(n))
+      }
+      const k = Number(readline())
+      for (let i = 0; i < k; i++) {
+        try {
+          console.log(akar(Number(readline())))
+        } catch (e) {
+          console.log(`error: ${e.message}`)
+        }
+      }
+  - id: js-m3-parsons
+    type: parsons
+    title: try-catch-finally
+    difficulty: 2
+    prompt: Susun program yang mencoba mem-parse JSON dari input lalu mencetak jumlah kuncinya, mencetak "tidak valid" jika gagal, dan selalu mencetak "selesai".
+    tests: ["{\"a\": 1, \"b\": 2}", "{x"]
+    hints: |
+      try membungkus JSON.parse.
+      catch berada setelah blok try.
+      finally paling akhir.
+    solution: |
+      try {
+        const data = JSON.parse(readline())
+        console.log(Object.keys(data).length)
+      } catch (e) {
+        console.log("tidak valid")
+      } finally {
+        console.log("selesai")
+      }

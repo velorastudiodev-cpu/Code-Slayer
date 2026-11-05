@@ -1,0 +1,108 @@
+lesson:
+  - text: 'Array/list menyimpan elemen berurutan, dan akses lewat indeks bernilai O(1). Teknik penting di sini adalah prefix sum. Simpan pref[i] = jumlah i elemen pertama, maka jumlah a[l..r] = pref[r+1] - pref[l] bisa dihitung dalam O(1) per pertanyaan setelah persiapan O(n).'
+    code: |
+      a = [3, 1, 4, 1, 5]
+      pref = [0]
+      for x in a:
+          pref.append(pref[-1] + x)
+      print(pref, "jumlah a[1..3] =", pref[4] - pref[1])
+  - text: Slicing a[i:j] menyalin elemen, jadi biayanya O(j - i), bukan O(1). Rotasi, pembalikan, dan pergeseran sering bisa ditulis dengan slicing, tapi perhatikan biayanya di dalam loop.
+    code: |
+      a = [1, 2, 3, 4, 5]
+      k = 2
+      print(a[-k:] + a[:-k], a[::-1])
+exercises:
+  - id: dsa-f3-prefix
+    type: write
+    title: Laporan Rentang Cepat
+    difficulty: 3
+    prompt: 'Baris 1 berisi n dan q. Baris 2 berisi n bilangan. Lalu q baris "l r" (1-based, inklusif). Cetak jumlah a[l..r] untuk setiap pertanyaan. Untuk n, q sampai 5000, solusi O(n·q) terlalu lambat, jadi pakai prefix sum.'
+    tests:
+      - "5 3\n3 1 4 1 5\n1 3\n2 5\n4 4"
+      - "1 1\n7\n1 1"
+      - {gen: "import random\nrandom.seed(3)\nn=q=5000\nprint(n,q)\nprint(*[random.randint(-1000,1000) for _ in range(n)])\nfor _ in range(q):\n    l=random.randint(1,n); r=random.randint(l,n); print(l,r)"}
+    hints: |
+      Bangun pref dengan pref[0] = 0 dan pref[i+1] = pref[i] + a[i].
+      Jumlah a[l..r] (1-based) = pref[r] - pref[l-1].
+      Baca semua input sekaligus dengan sys.stdin supaya cepat.
+    solution: |
+      import sys
+      data = sys.stdin.read().split()
+      n, q = int(data[0]), int(data[1])
+      pref = [0]
+      for x in data[2:2 + n]:
+          pref.append(pref[-1] + int(x))
+      out = []
+      for i in range(q):
+          l, r = int(data[2 + n + 2 * i]), int(data[3 + n + 2 * i])
+          out.append(pref[r] - pref[l - 1])
+      print("\n".join(map(str, out)))
+  - id: dsa-f3-rotasi
+    type: write
+    title: Formasi Berputar
+    difficulty: 2
+    prompt: Baris 1 berisi n dan k (k bisa jauh lebih besar dari n). Baris 2 berisi n bilangan. Putar array ke kanan sebanyak k langkah, lalu cetak hasilnya.
+    tests: ["5 2\n1 2 3 4 5", "3 7\n1 2 3", "1 100\n9"]
+    hints: |
+      Putar sebanyak n sama dengan tidak berputar.
+      Pakai k % n.
+      a[-k:] + a[:-k], hati-hati saat k == 0.
+    solution: |
+      n, k = map(int, input().split())
+      a = input().split()
+      k %= n
+      print(*(a[-k:] + a[:-k] if k else a))
+  - id: dsa-f3-fill-maks
+    type: fill
+    title: Maksimum Berjalan
+    difficulty: 1
+    prompt: Lengkapi isian supaya program mencetak maksimum dari awal sampai setiap posisi (running maximum).
+    code: |
+      a = list(map(int, input().split()))
+      best = ⟦a[0]⟧
+      hasil = []
+      for x in a:
+          best = ⟦max(best, x)⟧
+          hasil.append(best)
+      print(*hasil)
+    tests: ["3 1 4 1 5 9 2", "5 4 3", "-2 -1 -3"]
+    hints: |
+      best dimulai dari elemen pertama.
+      Setiap langkah, best adalah yang terbesar antara best dan x.
+      max(best, x)
+  - id: dsa-f3-trace-prefix
+    type: trace
+    title: Jejak Prefix Sum
+    difficulty: 2
+    prompt: Isi nilai x dan pref setiap kali baris 4 selesai dijalankan.
+    code: |
+      a = [3, 1, 4, 1]
+      pref = [0]
+      for x in a:
+          pref.append(pref[-1] + x)
+    line: 4
+    vars: [x, pref]
+    hints: |
+      pref[-1] adalah elemen terakhir pref.
+      Setelah x = 3, pref menjadi [0, 3].
+      Tulis list lengkap, contohnya [0, 3, 4].
+  - id: dsa-f3-review
+    type: review
+    title: Review Fungsi Rata-rata
+    difficulty: 2
+    prompt: Rekan setimmu mengirim fungsi ini. Tandai semua baris yang bermasalah.
+    code: |
+      def rata(a):
+          total = 0
+          for i in range(1, len(a)):
+              total += a[i]
+          return total / len(a)
+    issues:
+      - line: 3
+        text: range(1, ...) melewatkan elemen pertama (indeks 0).
+      - line: 5
+        text: Pembagian dengan nol kalau list kosong. Tangani len(a) == 0.
+    hints: |
+      Periksa batas loop.
+      Apa yang terjadi kalau a kosong?
+      Ada dua baris bermasalah.

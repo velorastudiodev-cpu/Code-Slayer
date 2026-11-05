@@ -1,0 +1,143 @@
+lesson:
+- text: 'Variabel dibuat dengan let dan secara bawaan TIDAK bisa diubah. Tambahkan mut kalau nilainya akan berubah. Tipe bilangan menyebut ukurannya: i32, i64, u8, f64.'
+  code: |
+    fn main() {
+        let nama = "Tanjiro";
+        let mut umur: i32 = 15;
+        umur += 1;
+        let tinggi: f64 = 165.5;
+        println!("{} {} {}", nama, umur, tinggi);
+    }
+- text: 'Konversi angka memakai as: x as f64. Pembagian dua bilangan bulat membuang desimal. Teks diubah menjadi angka dengan parse(), yang mengembalikan Result: berhasil atau error.'
+  code: |
+    fn main() {
+        let a = 7;
+        let b = 2;
+        println!("{} {}", a / b, a % b);
+        println!("{}", a as f64 / b as f64);
+        let n: i64 = "3000000000".parse().unwrap();
+        println!("{}", n * 2);
+    }
+exercises:
+- id: rs-f2-baca
+  type: write
+  title: Kartu Identitas
+  difficulty: 1
+  prompt: Input berisi nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - Tanjiro 15
+  - Kanao 16
+  - Gyomei 27
+  hints: |
+    Baca dua nilai: teks lalu bilangan bulat.
+    Ubah umur menjadi angka sebelum ditambah 1.
+    Contoh: "Tanjiro akan berumur 16 tahun".
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let nama = it.next().unwrap();
+        let umur: i32 = it.next().unwrap().parse().unwrap();
+        println!("{} akan berumur {} tahun", nama, umur + 1);
+    }
+- id: rs-f2-besar
+  type: write
+  title: Jarak Antar Bintang
+  difficulty: 2
+  prompt: Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - 3 4
+  - 2000000000 2000000000
+  - -5 100000
+  hints: |
+    2 miliar × 2 miliar = 4 × 10^18.
+    Batas int 32-bit sekitar 2,1 miliar.
+    Pakai tipe bilangan bulat 64-bit.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a: i64 = it.next().unwrap().parse().unwrap();
+        let b: i64 = it.next().unwrap().parse().unwrap();
+        println!("{}", a * b);
+    }
+- id: rs-f2-predict
+  type: predict
+  title: Pembagian Bulat
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn main() {
+        println!("{} {}", 17 / 5, 17 % 5);
+        println!("{}", 17.0 / 5.0);
+        let x = 9;
+        let y = x / 2 * 2;
+        println!("{} {}", y, x - y);
+    }
+  hints: |
+    Pembagian dua bilangan bulat membuang bagian desimal.
+    Sisa bagi memakai operator %.
+    Kalau salah satu operand desimal, hasilnya desimal.
+  solution: x
+- id: rs-f2-bug
+  type: bughunt
+  title: Rata-rata Terpotong
+  difficulty: 2
+  prompt: Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a: i32 = it.next().unwrap().parse().unwrap();
+        let b: i32 = it.next().unwrap().parse().unwrap();
+        let c: i32 = it.next().unwrap().parse().unwrap();
+        let rata = ((a + b + c) / 3) as f64;
+        println!("{:.2}", rata);
+    }
+  bug_line: 10
+  tests:
+  - 1 2 4
+  - 5 5 6
+  - 3 3 3
+  hints: |
+    1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.
+    Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.
+    Ubah jumlahnya ke tipe desimal dulu, baru dibagi.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a: i32 = it.next().unwrap().parse().unwrap();
+        let b: i32 = it.next().unwrap().parse().unwrap();
+        let c: i32 = it.next().unwrap().parse().unwrap();
+        let rata = (a + b + c) as f64 / 3.0;
+        println!("{:.2}", rata);
+    }

@@ -1,0 +1,136 @@
+lesson:
+  - text: Selain for, while, dan do-while ala C, C++ punya range-based for, yaitu for (auto x - wadah) untuk mengulang setiap elemen. Gunakan auto& kalau ingin mengubah elemen aslinya, bukan salinannya.
+    code: |
+      #include <iostream>
+      #include <vector>
+
+      int main() {
+          std::vector<int> v = {3, 1, 4};
+          for (auto& x : v) x *= 10;
+          for (int x : v) std::cout << x << " ";
+          std::cout << "\n";
+      }
+exercises:
+  - id: cpp-f6-segitiga
+    type: write
+    title: Formasi Segitiga
+    difficulty: 2
+    prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+    tests: ["3", "1", "5"]
+    hints: |
+      std::string(i, '*') membuat i bintang.
+      Atau gunakan loop bersarang.
+      std::cout << std::string(i, '*') << "\n";
+    solution: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          int n;
+          std::cin >> n;
+          for (int i = 1; i <= n; i++) std::cout << std::string(i, '*') << "\n";
+      }
+  - id: cpp-f6-digit
+    type: write
+    title: Jumlah Digit
+    difficulty: 2
+    prompt: Baca bilangan bulat non-negatif n (sampai 10^18). Cetak jumlah digitnya.
+    tests: ["12345", "0", "999999999999999999", "1000000000000000000"]
+    hints: |
+      n % 10 adalah digit terakhir.
+      n /= 10 membuang digit terakhir.
+      Pakai long long dan ulangi selama n > 0.
+    solution: |
+      #include <iostream>
+
+      int main() {
+          long long n;
+          std::cin >> n;
+          int s = 0;
+          while (n > 0) { s += n % 10; n /= 10; }
+          std::cout << s << "\n";
+      }
+  - id: cpp-f6-predict
+    type: predict
+    title: Salinan dalam Loop
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <iostream>
+      #include <vector>
+
+      int main() {
+          std::vector<int> v = {1, 2, 3};
+          for (auto x : v) x *= 2;
+          for (auto& x : v) x += 1;
+          for (int x : v) std::cout << x;
+          std::cout << "\n";
+      }
+    hints: |
+      auto x adalah SALINAN, jadi mengubahnya tidak mengubah v.
+      auto& x adalah referensi ke elemen asli.
+      Hanya loop kedua yang mengubah v.
+    solution: x
+  - id: cpp-f6-bug
+    type: bughunt
+    title: Hitung Mundur Tak Berujung
+    difficulty: 2
+    prompt: 'Program harus mencetak n sampai 0 lalu "Serang!", tapi setelah 0 muncul angka raksasa (4294967295) sebelum pengaman break menghentikannya. Temukan bug-nya.'
+    starter: |
+      #include <iostream>
+
+      int main() {
+          unsigned int n;
+          std::cin >> n;
+          for (unsigned int i = n; i >= 0; i--) {
+              std::cout << i << "\n";
+              if (i > n) break; // pengaman
+          }
+          std::cout << "Serang!\n";
+      }
+    bug_line: 6
+    tests: ["3", "0"]
+    hints: |
+      unsigned tidak pernah negatif, jadi i >= 0 selalu benar.
+      Setelah 0, i-- membungkus ke angka sangat besar.
+      Pakai int: for (int i = n; i >= 0; i--)
+    solution: |
+      #include <iostream>
+
+      int main() {
+          unsigned int n;
+          std::cin >> n;
+          for (int i = n; i >= 0; i--) {
+              std::cout << i << "\n";
+              if (i > (int)n) break; // pengaman
+          }
+          std::cout << "Serang!\n";
+      }
+  - id: cpp-f6-translate
+    type: translate
+    title: Terjemahkan Pembalik Kata
+    difficulty: 2
+    prompt: Tulis ulang program Python ini dalam C++.
+    from_lang: python
+    from_code: |
+      kata = input().split()
+      print(" ".join(reversed(kata)))
+    tests: ["air api petir", "satu", "a b c d"]
+    hints: |
+      Baca kata satu per satu dengan while (std::cin >> s) ke vector<string>.
+      std::reverse membalik vector.
+      Cetak dengan spasi di antara kata, tanpa spasi di akhir.
+    solution: |
+      #include <algorithm>
+      #include <iostream>
+      #include <string>
+      #include <vector>
+
+      int main() {
+          std::vector<std::string> v;
+          std::string s;
+          while (std::cin >> s) v.push_back(s);
+          std::reverse(v.begin(), v.end());
+          for (size_t i = 0; i < v.size(); i++) std::cout << (i ? " " : "") << v[i];
+          std::cout << "\n";
+      }

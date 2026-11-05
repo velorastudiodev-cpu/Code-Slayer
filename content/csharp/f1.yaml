@@ -1,0 +1,146 @@
+lesson:
+- text: Program C# berada di dalam class, dan dimulai dari static void Main(). Console.WriteLine mencetak lalu newline; Console.Write tanpa newline.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Pernapasan Suara, Bentuk Pertama");
+            Console.Write("tanpa ");
+            Console.Write("newline\n");
+        }
+    }
+- text: 'String interpolation: awali dengan $ lalu sisipkan {nilai}. Format angka ditulis setelah titik dua: {x:F2} = 2 desimal, {x,5} = rata kanan lebar 5.'
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            string nama = "Tengen";
+            int istri = 3;
+            Console.WriteLine($"{nama} punya {istri} istri, rata-rata {istri / 2.0:F1} per hari libur");
+        }
+    }
+exercises:
+- id: cs-f1-halo
+  type: write
+  title: Salam Pertama
+  difficulty: 1
+  prompt: Cetak tepat satu baris "Halo, Slayer!".
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  hints: |
+    Gunakan fungsi cetak baris bawaan bahasa ini.
+    Teks harus persis sama, termasuk koma dan tanda seru.
+    Satu baris saja, diakhiri newline.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Halo, Slayer!");
+        }
+    }
+- id: cs-f1-format
+  type: write
+  title: Laporan Berformat
+  difficulty: 1
+  prompt: Dengan string berformat, cetak "Rengoku berumur 20 tahun, kekuatan 9.50" dari variabel nama = "Rengoku", umur = 20, dan kekuatan = 9.5.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  hints: |
+    Simpan ketiga nilai dalam variabel dulu.
+    Pakai format/interpolasi string, bukan menyambung manual.
+    Kekuatan dicetak dengan tepat 2 angka di belakang koma.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            string nama = "Rengoku";
+            int umur = 20;
+            double kekuatan = 9.5;
+            Console.WriteLine($"{nama} berumur {umur} tahun, kekuatan {kekuatan:F2}");
+        }
+    }
+- id: cs-f1-predict
+  type: predict
+  title: Baris yang Tidak Berganti
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write("Kaa");
+            Console.Write("!" + "!");
+            Console.WriteLine();
+            Console.WriteLine("misi " + 3 + " selesai");
+            Console.WriteLine($"{2}+{3}={2 + 3}");
+            Console.WriteLine("1" + 2 + 3);
+        }
+    }
+  hints: |
+    Perhatikan perintah cetak mana yang menambah newline.
+    Perintah tanpa newline menyambung ke baris yang sama.
+    Hitung spasinya dengan teliti.
+  solution: x
+- id: cs-f1-bug
+  type: bughunt
+  title: Iblis Pemakan Tanda Kutip
+  difficulty: 1
+  prompt: Program harus mencetak "Kaa!" lalu "Misi!", tapi gagal dikompilasi. Temukan baris yang salah.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Kaa!");
+            Console.WriteLine("Misi!);
+        }
+    }
+  bug_line: 8
+  hints: |
+    Baca pesan error compiler: ia menunjuk nomor baris.
+    Setiap string harus dibuka DAN ditutup dengan tanda kutip.
+    Tambahkan tanda kutip penutup yang hilang.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Kaa!");
+            Console.WriteLine("Misi!");
+        }
+    }

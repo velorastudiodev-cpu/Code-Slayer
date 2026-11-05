@@ -1,0 +1,39 @@
+# Produksi lokal: aplikasi + server eksekusi + Piston (sandbox compiler).
+#   docker compose up -d --build
+#   docker compose run --rm piston-setup     # sekali: pasang gcc (C/C++) & Java di Piston
+# Buka http://localhost:8787
+services:
+  piston:
+    image: ghcr.io/engineer-man/piston:latest
+    # Wajib untuk isolate (sandbox Piston). Kode user tetap jalan tanpa jaringan dengan batas waktu & memori.
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - piston_packages:/piston/packages
+    tmpfs:
+      - /piston/jobs:exec,uid=1000,gid=1000,mode=711
+
+  piston-setup:
+    image: curlimages/curl:8.10.1
+    profiles: [setup]
+    depends_on: [piston]
+    environment:
+      PISTON_URL: http://piston:2000
+    volumes:
+      - ./server/install-piston-packages.sh:/install.sh:ro
+    entrypoint: ["sh", "/install.sh"]
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on: [piston]
+    environment:
+      EXEC_BACKEND: piston
+      PISTON_URL: http://piston:2000
+      HOST: 0.0.0.0
+    # Hanya bisa diakses dari komputer ini.
+    ports:
+      - "127.0.0.1:8787:8787"
+
+volumes:
+  piston_packages:

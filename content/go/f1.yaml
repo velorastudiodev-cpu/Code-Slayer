@@ -1,0 +1,52 @@
+lesson:
+- text: Program Go selalu dimulai dari package main dan fungsi main. fmt.Println mencetak argumennya dipisah spasi lalu newline; fmt.Print tanpa newline.
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Pernapasan Angin,\", \"Bentuk Pertama\")\n\tfmt.Print(\"tanpa \")\n\tfmt.Print(\"newline\\n\")\n}\n"
+- text: 'fmt.Printf mencetak dengan format: %s teks, %d bilangan bulat, %.2f desimal 2 angka, %v nilai apa pun. Printf tidak menambah newline, jadi tulis \n sendiri.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnama := \"Sanemi\"\n\tluka := 7\n\tfmt.Printf(\"%s punya %d luka, rata-rata %.1f per misi\\n\", nama, luka, float64(luka)/2)\n}\n"
+exercises:
+- id: go-f1-halo
+  type: write
+  title: Salam Pertama
+  difficulty: 1
+  prompt: Cetak tepat satu baris "Halo, Slayer!".
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  hints: |
+    Gunakan fungsi cetak baris bawaan bahasa ini.
+    Teks harus persis sama, termasuk koma dan tanda seru.
+    Satu baris saja, diakhiri newline.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Halo, Slayer!\")\n}\n"
+- id: go-f1-format
+  type: write
+  title: Laporan Berformat
+  difficulty: 1
+  prompt: Dengan string berformat, cetak "Rengoku berumur 20 tahun, kekuatan 9.50" dari variabel nama = "Rengoku", umur = 20, dan kekuatan = 9.5.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  hints: |
+    Simpan ketiga nilai dalam variabel dulu.
+    Pakai format/interpolasi string, bukan menyambung manual.
+    Kekuatan dicetak dengan tepat 2 angka di belakang koma.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tnama := \"Rengoku\"\n\tumur := 20\n\tkekuatan := 9.5\n\tfmt.Printf(\"%s berumur %d tahun, kekuatan %.2f\\n\", nama, umur, kekuatan)\n}\n"
+- id: go-f1-predict
+  type: predict
+  title: Baris yang Tidak Berganti
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Print(\"Kaa\")\n\tfmt.Print(\"!\", \"!\")\n\tfmt.Println()\n\tfmt.Println(\"misi\", 3, \"selesai\")\n\tfmt.Printf(\"%d+%d=%d\\n\", 2, 3, 2+3)\n\
+    }\n"
+  hints: |
+    Perhatikan perintah cetak mana yang menambah newline.
+    Perintah tanpa newline menyambung ke baris yang sama.
+    Hitung spasinya dengan teliti.
+  solution: x
+- id: go-f1-bug
+  type: bughunt
+  title: Iblis Pemakan Tanda Kutip
+  difficulty: 1
+  prompt: Program harus mencetak "Kaa!" lalu "Misi!", tapi gagal dikompilasi. Temukan baris yang salah.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Kaa!\")\n\tfmt.Println(\"Misi!)\n}\n"
+  bug_line: 7
+  hints: |
+    Baca pesan error compiler: ia menunjuk nomor baris.
+    Setiap string harus dibuka DAN ditutup dengan tanda kutip.
+    Tambahkan tanda kutip penutup yang hilang.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Kaa!\")\n\tfmt.Println(\"Misi!\")\n}\n"

@@ -1,0 +1,114 @@
+lesson:
+- text: 'val membuat nilai yang tidak bisa diubah, var yang bisa diubah. Kotlin menebak tipe (Int, Long, Double, String, Boolean), tapi kita boleh menulisnya: val umur: Int = 15.'
+  code: |
+    fun main() {
+        val nama = "Tanjiro"
+        var umur: Int = 15
+        umur += 1
+        val besar: Long = 3_000_000_000L
+        println("$nama $umur ${besar * 2}")
+    }
+- text: 'Konversi angka eksplisit: toDouble(), toInt(), toLong(). Teks menjadi angka: "41".toInt(). Pembagian Int / Int membuang desimal.'
+  code: |
+    fun main() {
+        val a = 7
+        val b = 2
+        println("${a / b} ${a % b}")
+        println(a.toDouble() / b)
+        println("41".toInt() + 1)
+    }
+exercises:
+- id: kt-f2-baca
+  type: write
+  title: Kartu Identitas
+  difficulty: 1
+  prompt: Input berisi nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - Tanjiro 15
+  - Kanao 16
+  - Gyomei 27
+  hints: |
+    Baca dua nilai: teks lalu bilangan bulat.
+    Ubah umur menjadi angka sebelum ditambah 1.
+    Contoh: "Tanjiro akan berumur 16 tahun".
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val nama = t[0]
+        val umur = t[1].toInt()
+        println("$nama akan berumur ${umur + 1} tahun")
+    }
+- id: kt-f2-besar
+  type: write
+  title: Jarak Antar Bintang
+  difficulty: 2
+  prompt: Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - 3 4
+  - 2000000000 2000000000
+  - -5 100000
+  hints: |
+    2 miliar × 2 miliar = 4 × 10^18.
+    Batas int 32-bit sekitar 2,1 miliar.
+    Pakai tipe bilangan bulat 64-bit.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val a = t[0].toLong()
+        val b = t[1].toLong()
+        println(a * b)
+    }
+- id: kt-f2-predict
+  type: predict
+  title: Pembagian Bulat
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fun main() {
+        println("${17 / 5} ${17 % 5}")
+        println(17.0 / 5)
+        val x = 9
+        val y = x / 2 * 2
+        println("$y ${x - y}")
+    }
+  hints: |
+    Pembagian dua bilangan bulat membuang bagian desimal.
+    Sisa bagi memakai operator %.
+    Kalau salah satu operand desimal, hasilnya desimal.
+  solution: x
+- id: kt-f2-bug
+  type: bughunt
+  title: Rata-rata Terpotong
+  difficulty: 2
+  prompt: Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.
+  starter: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val (a, b, c) = t.take(3).map { it.toInt() }
+        val rata = ((a + b + c) / 3).toDouble()
+        println("%.2f".format(rata))
+    }
+  bug_line: 4
+  tests:
+  - 1 2 4
+  - 5 5 6
+  - 3 3 3
+  hints: |
+    1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.
+    Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.
+    Ubah jumlahnya ke tipe desimal dulu, baru dibagi.
+  solution: |
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        val (a, b, c) = t.take(3).map { it.toInt() }
+        val rata = (a + b + c) / 3.0
+        println("%.2f".format(rata))
+    }

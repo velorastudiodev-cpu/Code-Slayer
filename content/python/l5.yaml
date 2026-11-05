@@ -1,0 +1,132 @@
+lesson:
+  - text: 'Kecepatan program ditentukan oleh algoritmanya. Mengulang n kali adalah O(n), sedangkan loop bersarang adalah O(n²). Untuk n = 1.000.000, selisihnya sejuta kali lipat. Rumus matematika bahkan bisa O(1).'
+    code: |
+      n = 10 ** 12
+      print(n * (n + 1) // 2)
+  - text: Pilih struktur data yang tepat. Memeriksa x in list itu O(n), sedangkan x in set atau dict rata-rata O(1). Fungsi bawaan seperti sum, sorted, dan max ditulis dalam C sehingga jauh lebih cepat daripada loop manual.
+    code: |
+      import time
+      data = list(range(100_000))
+      s = set(data)
+      t = time.time(); [x in s for x in range(0, 100_000, 7)]; print("set :", round(time.time() - t, 4), "dtk")
+      t = time.time(); [x in data for x in range(0, 100_000, 700)]; print("list:", round(time.time() - t, 4), "dtk (100x lebih sedikit cek)")
+exercises:
+  - id: py-l5-deret
+    type: write
+    title: Sejuta Juta Tebasan
+    difficulty: 2
+    prompt: Baca n (1 ≤ n ≤ 10^12). Cetak 1 + 2 + ... + n. Loop pasti kehabisan waktu, jadi cari rumusnya.
+    tests: ["10", "1", "1000000000000"]
+    hints: |
+      Gauss, 1 + ... + n = n(n+1)/2.
+      Pakai // supaya hasilnya int.
+      print(n * (n + 1) // 2)
+    solution: |
+      n = int(input())
+      print(n * (n + 1) // 2)
+  - id: py-l5-saringan
+    type: write
+    title: Saringan Eratosthenes
+    difficulty: 3
+    prompt: Baca n (n ≤ 3.000.000). Cetak banyaknya bilangan prima ≤ n. Cek satu per satu terlalu lambat, jadi gunakan saringan (sieve).
+    tests: ["10", "100", "1", "3000000"]
+    hints: |
+      Buat penanda prima untuk 0 sampai n, awalnya semua True.
+      Untuk setiap prima p, coret p*p, p*p+p, ... sebagai bukan prima.
+      bytearray dan slicing s[p*p::p] = bytes(...) sangat cepat.
+    solution: |
+      n = int(input())
+      if n < 2:
+          print(0)
+      else:
+          s = bytearray([1]) * (n + 1)
+          s[0] = s[1] = 0
+          for p in range(2, int(n ** 0.5) + 1):
+              if s[p]:
+                  s[p * p::p] = bytes(len(range(p * p, n + 1, p)))
+          print(sum(s))
+  - id: py-l5-fib-mod
+    type: write
+    title: Fibonacci Raksasa
+    difficulty: 2
+    prompt: Baca n (n ≤ 1.000.000). Cetak Fibonacci ke-n modulo 1.000.000.007 (fib(0) = 0, fib(1) = 1).
+    tests: ["10", "0", "1000000"]
+    hints: |
+      Rekursi biasa mustahil untuk n sebesar ini.
+      Iterasi dengan dua variabel, O(n).
+      Ambil modulo di setiap langkah supaya angkanya tetap kecil.
+    solution: |
+      n = int(input())
+      a, b = 0, 1
+      M = 1_000_000_007
+      for _ in range(n):
+          a, b = b, (a + b) % M
+      print(a)
+  - id: py-l5-predict
+    type: predict
+    title: Langkah Pembagian Dua
+    difficulty: 1
+    prompt: Berapa langkah yang dibutuhkan? (Inilah intuisi O(log n).) Tulis output persis.
+    code: |
+      langkah = 0
+      n = 1024
+      while n > 1:
+          n //= 2
+          langkah += 1
+      print(langkah)
+    hints: |
+      Setiap langkah membagi n dengan 2.
+      1024 = 2 pangkat berapa?
+      Jumlah langkahnya sama dengan pangkat itu.
+    solution: x
+  - id: py-l5-bug-memo
+    type: bughunt
+    title: Ingatan yang Dimatikan
+    difficulty: 2
+    prompt: Fungsi jalan(n) menghitung banyak cara naik tangga n anak tangga (1 atau 2 langkah), tapi untuk n besar tidak pernah selesai. Temukan baris yang membuatnya lambat.
+    starter: |
+      from functools import lru_cache
+      # @lru_cache(None)
+      def jalan(n):
+          if n <= 1:
+              return 1
+          return jalan(n - 1) + jalan(n - 2)
+      print(jalan(int(input())))
+    bug_line: 2
+    tests: ["5", "10", "90"]
+    hints: |
+      Fungsi ini menghitung ulang nilai yang sama berkali-kali.
+      lru_cache menyimpan hasil yang sudah dihitung.
+      Aktifkan decoratornya, yaitu hapus tanda #.
+    solution: |
+      from functools import lru_cache
+      @lru_cache(None)
+      def jalan(n):
+          if n <= 1:
+              return 1
+          return jalan(n - 1) + jalan(n - 2)
+      print(jalan(int(input())))
+  - id: py-l5-refactor-join
+    type: refactor
+    title: Gabung String dengan join
+    difficulty: 2
+    prompt: Menggabung string dengan + di dalam loop berpotensi O(n²). Refactor memakai ",".join(...) dengan output tetap sama.
+    starter: |
+      n = int(input())
+      hasil = ""
+      for i in range(1, n + 1):
+          hasil = hasil + str(i) + ","
+      print(hasil[:-1])
+    rules:
+      - text: Memakai join
+        require: 'join\('
+      - text: Tanpa hasil = hasil + ... di dalam loop
+        forbid: 'hasil\s*=\s*hasil\s*\+'
+    tests: ["5", "1", "12"]
+    hints: |
+      Buat urutan string dulu.
+      ",".join(...) menggabungkan dengan koma.
+      str(i) for i in range(1, n + 1)
+    solution: |
+      n = int(input())
+      print(",".join(str(i) for i in range(1, n + 1)))

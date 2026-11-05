@@ -1,0 +1,247 @@
+lesson:
+- text: 'string di C# immutable: ToUpper, Replace, Substring selalu menghasilkan string BARU. Untuk menyusun teks panjang di dalam loop, pakai StringBuilder.'
+  code: |
+    using System;
+    using System.Text;
+
+    class Program
+    {
+        static void Main()
+        {
+            string s = "Kimetsu no Yaiba";
+            Console.WriteLine($"{s.ToUpper()} {s.Length} {s.Substring(0, 7)}");
+            var sb = new StringBuilder();
+            foreach (var k in s.Split(' ')) sb.Append(k[0]);
+            Console.WriteLine(sb.ToString());
+        }
+    }
+- text: 'char bisa dihitung seperti angka: (char)(c + 1). char.IsLower, char.ToUpper membantu mengolah huruf. Membalik string: ubah ke array, Array.Reverse, lalu new string(arr).'
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            char[] cs = "abc".ToCharArray();
+            Array.Reverse(cs);
+            Console.WriteLine(new string(cs) + " " + (char)('a' + 2) + " " + ('z' - 'a'));
+        }
+    }
+exercises:
+- id: cs-m2-palindrom
+  type: write
+  title: Kata Cermin
+  difficulty: 1
+  prompt: Baca satu kata. Cetak "palindrom" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu "bukan".
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - Katak
+  - slayer
+  - a
+  - Malam
+  hints: |
+    Ubah ke huruf kecil dulu.
+    Bandingkan dengan versi terbaliknya.
+    Atau bandingkan karakter i dengan n-1-i.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            string s = t[0].ToLower();
+            char[] cs = s.ToCharArray();
+            Array.Reverse(cs);
+            Console.WriteLine(s == new string(cs) ? "palindrom" : "bukan");
+        }
+    }
+- id: cs-m2-vokal
+  type: write
+  title: Hitung Napas Vokal
+  difficulty: 1
+  prompt: Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - Kimetsu no Yaiba
+  - xyz
+  - AIUEO aiueo
+  hints: |
+    Telusuri setiap karakter.
+    Ubah ke huruf kecil supaya cukup satu pengecekan.
+    Cek apakah karakter ada di "aiueo".
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            string s = Console.In.ReadToEnd().ToLower();
+            int c = 0;
+            foreach (char ch in s) if ("aiueo".IndexOf(ch) >= 0) c++;
+            Console.WriteLine(c);
+        }
+    }
+- id: cs-m2-kapital
+  type: write
+  title: Nama Bergelar
+  difficulty: 2
+  prompt: Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - kamado tanjiro
+  - rengoku kyojuro sang hashira api
+  - x
+  hints: |
+    Pecah baris menjadi kata.
+    Kapitalkan karakter pertama tiap kata.
+    Gabungkan kembali dengan spasi.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var kata = Console.ReadLine().Trim().Split(' ');
+            for (int i = 0; i < kata.Length; i++) kata[i] = char.ToUpper(kata[i][0]) + kata[i].Substring(1);
+            Console.WriteLine(string.Join(" ", kata));
+        }
+    }
+- id: cs-m2-caesar
+  type: write
+  title: Sandi Gagak
+  difficulty: 2
+  prompt: Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            // tulis kodemu di sini
+        }
+    }
+  tests:
+  - |-
+    3
+    slayer
+  - |-
+    1
+    zaz
+  - |-
+    13
+    kaa kaa
+  hints: |
+    Huruf ke-i dari a = c - 'a'.
+    Geser: (i + k) % 26.
+    Spasi dicetak apa adanya.
+  solution: |
+    using System;
+    using System.Text;
+
+    class Program
+    {
+        static void Main()
+        {
+            int k = int.Parse(Console.ReadLine().Trim());
+            string pesan = Console.ReadLine() ?? "";
+            var sb = new StringBuilder();
+            foreach (char c in pesan) sb.Append(c >= 'a' && c <= 'z' ? (char)('a' + (c - 'a' + k) % 26) : c);
+            Console.WriteLine(sb.ToString());
+        }
+    }
+- id: cs-m2-predict
+  type: predict
+  title: Potongan Teks
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            string s = "Hashira";
+            Console.WriteLine($"{s.Length} {s.Substring(0, 4)} {s.Substring(4)}");
+            Console.WriteLine($"{s.IndexOf('i')} {s.Split('a').Length - 1}");
+            Console.WriteLine(s.Replace("a", "A"));
+        }
+    }
+  hints: |
+    Indeks string mulai dari 0.
+    Potongan [a, b) mengambil a sampai b-1.
+    Panjang dihitung per karakter ASCII di sini.
+  solution: x
+- id: cs-m2-bug
+  type: bughunt
+  title: Perbandingan yang Menipu
+  difficulty: 2
+  prompt: Program harus mencetak "sama" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu "beda". Tapi "Tanjiro" dan "tanjiro" dianggap beda. Temukan baris yang salah.
+  starter: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            string a = t[0], b = t[1];
+            if (a == b) Console.WriteLine("sama");
+            else Console.WriteLine("beda");
+        }
+    }
+  bug_line: 9
+  tests:
+  - Tanjiro tanjiro
+  - Nezuko nezuko
+  - Giyu Sabito
+  hints: |
+    Huruf besar dan kecil adalah karakter berbeda.
+    Samakan dulu bentuknya sebelum dibandingkan.
+    Ubah keduanya ke huruf kecil.
+  solution: |
+    using System;
+
+    class Program
+    {
+        static void Main()
+        {
+            var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            string a = t[0], b = t[1];
+            if (string.Equals(a, b, StringComparison.OrdinalIgnoreCase)) Console.WriteLine("sama");
+            else Console.WriteLine("beda");
+        }
+    }

@@ -1,0 +1,102 @@
+lesson:
+  - text: if, else if, else, switch, dan ternary bekerja sama seperti di C. Perbedaan C++ adalah tipe bool (true/false) dan perbandingan std::string bisa langsung memakai == atau < (urutan kamus).
+    code: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string napas = "kabut";
+          if (napas == "kabut") std::cout << "Muichiro\n";
+          std::cout << (std::string("api") < "kabut" ? "api duluan" : "kabut duluan") << "\n";
+      }
+exercises:
+  - id: cpp-f5-nilai
+    type: write
+    title: Rapor Kisatsutai
+    difficulty: 1
+    prompt: Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.
+    tests: ["90", "85", "70", "69", "55", "10"]
+    hints: |
+      Periksa dari syarat tertinggi.
+      Rantai if / else if / else.
+      std::cout << "A\n";
+    solution: |
+      #include <iostream>
+
+      int main() {
+          int n;
+          std::cin >> n;
+          if (n >= 85) std::cout << "A\n";
+          else if (n >= 70) std::cout << "B\n";
+          else if (n >= 55) std::cout << "C\n";
+          else std::cout << "D\n";
+      }
+  - id: cpp-f5-urut3
+    type: write
+    title: Barisan Tiga Pedang
+    difficulty: 2
+    prompt: Baca tiga bilangan. Cetak ketiganya dari kecil ke besar, dipisah spasi, hanya dengan if dan pertukaran (tanpa sort).
+    tests: ["3 1 2", "5 5 1", "-1 -7 -3", "1 2 3"]
+    hints: |
+      Kalau a > b, tukar. Lakukan hal yang sama untuk b > c, lalu a > b lagi.
+      std::swap(a, b) menukar dua variabel.
+      Tiga perbandingan sudah cukup.
+    solution: |
+      #include <iostream>
+      #include <utility>
+
+      int main() {
+          int a, b, c;
+          std::cin >> a >> b >> c;
+          if (a > b) std::swap(a, b);
+          if (b > c) std::swap(b, c);
+          if (a > b) std::swap(a, b);
+          std::cout << a << " " << b << " " << c << "\n";
+      }
+  - id: cpp-f5-predict
+    type: predict
+    title: Urutan Kamus
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string a = "Zenitsu", b = "inosuke", c = "10", d = "9";
+          std::cout << (a < b) << (c < d) << (std::stoi(c) < std::stoi(d)) << "\n";
+      }
+    hints: |
+      Perbandingan string memakai kode karakter, dan huruf besar lebih kecil dari huruf kecil.
+      "10" < "9" karena '1' < '9'.
+      Setelah stoi, perbandingannya menjadi numerik.
+    solution: x
+  - id: cpp-f5-bug
+    type: bughunt
+    title: Kabisat yang Keliru
+    difficulty: 2
+    prompt: Program menentukan tahun kabisat (habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100), tapi 1900 dianggap kabisat. Temukan bug-nya.
+    starter: |
+      #include <iostream>
+
+      int main() {
+          int t;
+          std::cin >> t;
+          bool kabisat = t % 4 == 0 || t % 100 != 0 && t % 400 == 0;
+          std::cout << (kabisat ? "kabisat" : "bukan") << "\n";
+      }
+    bug_line: 6
+    tests: ["2024", "1900", "2000", "2023"]
+    hints: |
+      && dikerjakan sebelum ||.
+      Syaratnya adalah (habis 4 DAN tidak habis 100) ATAU habis 400.
+      t % 400 == 0 || (t % 4 == 0 && t % 100 != 0)
+    solution: |
+      #include <iostream>
+
+      int main() {
+          int t;
+          std::cin >> t;
+          bool kabisat = t % 400 == 0 || (t % 4 == 0 && t % 100 != 0);
+          std::cout << (kabisat ? "kabisat" : "bukan") << "\n";
+      }

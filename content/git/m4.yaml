@@ -1,0 +1,69 @@
+lesson:
+- text: 'Tag memberi nama permanen pada commit, biasanya untuk rilis: git tag v1.0. Tanpa argumen commit, tag menunjuk HEAD; tag juga bisa ditaruh di commit lama: git tag v0.9 HEAD~2.'
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo 2 >> misi.txt
+    git commit -q -am "Fitur dua"
+    git tag v1.0
+    git tag v0.1 HEAD~1
+    git tag
+    git log --format=%s v0.1
+exercises:
+- id: git-m4-tag
+  type: write
+  title: Menandai Rilis
+  difficulty: 1
+  prompt: Beri tag v1.0 pada commit terakhir dan tag v0.9 pada commit SEBELUMNYA.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo 2 >> misi.txt
+    git commit -q -am "Fitur dua"
+  quiet: true
+  after: |
+    git tag
+    echo "v0.9: $(git log -1 --format=%s v0.9)"
+    echo "v1.0: $(git log -1 --format=%s v1.0)"
+  hints: |
+    git tag nama = di HEAD.
+    Tag bisa diberi target commit.
+    git tag v0.9 HEAD~1
+  solution: |
+    git tag v1.0
+    git tag v0.9 HEAD~1
+- id: git-m4-beda
+  type: quiz
+  title: Tag atau Branch?
+  difficulty: 2
+  prompt: Perbedaan tag dan branch adalah...
+  options:
+  - Tag tetap menunjuk commit yang sama; branch bergerak setiap ada commit baru
+  - Tag hanya bisa dibuat di main
+  - Branch tidak bisa dihapus
+  - Tag menyalin seluruh file
+  explain: Branch adalah penanda yang ikut maju saat kamu commit; tag adalah penanda diam untuk menandai titik penting seperti rilis.
+  hints: |
+    Apa yang terjadi saat commit baru dibuat?
+    Rilis v1.0 tidak boleh berubah.
+    Tag diam, branch bergerak.
+- id: git-m4-list
+  type: answer
+  title: Daftar Rilis
+  difficulty: 1
+  prompt: Perintah untuk menampilkan semua tag di repo adalah...
+  accept:
+  - git tag
+  - git tag -l
+  - git tag --list
+  explain: git tag tanpa argumen menampilkan daftar tag.
+  hints: |
+    Paling sederhana.
+    Tanpa argumen.
+    git tag

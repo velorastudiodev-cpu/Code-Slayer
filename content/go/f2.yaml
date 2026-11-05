@@ -1,0 +1,63 @@
+lesson:
+- text: 'Variabel dibuat dengan var nama tipe atau singkatan := yang menebak tipe. Go bertipe statis: int, int64, float64, string, bool. Variabel yang tidak dipakai = error kompilasi.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar umur int = 15\n\tnama := \"Tanjiro\"\n\ttinggi := 165.5\n\taktif := true\n\tfmt.Println(nama, umur, tinggi, aktif)\n}\n"
+- text: 'Konversi tipe harus eksplisit: float64(x), int(y). Pembagian dua int menghasilkan int (desimal dibuang). int di Go 64-bit di mesin modern, tapi pakai int64 kalau ingin pasti.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ta, b := 7, 2\n\tfmt.Println(a/b, a%b)\n\tfmt.Println(float64(a) / float64(b))\n\tvar besar int64 = 3000000000\n\tfmt.Println(besar * 2)\n}\n"
+exercises:
+- id: go-f2-baca
+  type: write
+  title: Kartu Identitas
+  difficulty: 1
+  prompt: Input berisi nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - Tanjiro 15
+  - Kanao 16
+  - Gyomei 27
+  hints: |
+    Baca dua nilai: teks lalu bilangan bulat.
+    Ubah umur menjadi angka sebelum ditambah 1.
+    Contoh: "Tanjiro akan berumur 16 tahun".
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar nama string\n\tvar umur int\n\tfmt.Scan(&nama, &umur)\n\tfmt.Printf(\"%s akan berumur %d tahun\\n\", nama, umur+1)\n}\n"
+- id: go-f2-besar
+  type: write
+  title: Jarak Antar Bintang
+  difficulty: 2
+  prompt: Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - 3 4
+  - 2000000000 2000000000
+  - -5 100000
+  hints: |
+    2 miliar × 2 miliar = 4 × 10^18.
+    Batas int 32-bit sekitar 2,1 miliar.
+    Pakai tipe bilangan bulat 64-bit.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b int64\n\tfmt.Scan(&a, &b)\n\tfmt.Println(a * b)\n}\n"
+- id: go-f2-predict
+  type: predict
+  title: Pembagian Bulat
+  difficulty: 1
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(17 / 5, 17 % 5)\n\tfmt.Println(17.0 / 5)\n\tx := 9\n\ty := x / 2 * 2\n\tfmt.Println(y, x-y)\n}\n"
+  hints: |
+    Pembagian dua bilangan bulat membuang bagian desimal.
+    Sisa bagi memakai operator %.
+    Kalau salah satu operand desimal, hasilnya desimal.
+  solution: x
+- id: go-f2-bug
+  type: bughunt
+  title: Rata-rata Terpotong
+  difficulty: 2
+  prompt: Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b, c int\n\tfmt.Scan(&a, &b, &c)\n\trata := float64((a + b + c) / 3)\n\tfmt.Printf(\"%.2f\\n\", rata)\n}\n"
+  bug_line: 8
+  tests:
+  - 1 2 4
+  - 5 5 6
+  - 3 3 3
+  hints: |
+    1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.
+    Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.
+    Ubah jumlahnya ke tipe desimal dulu, baru dibagi.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar a, b, c int\n\tfmt.Scan(&a, &b, &c)\n\trata := float64(a+b+c) / 3\n\tfmt.Printf(\"%.2f\\n\", rata)\n}\n"

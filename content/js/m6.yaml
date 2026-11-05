@@ -1,0 +1,147 @@
+lesson:
+  - text: class adalah cetak biru objek. constructor dijalankan saat new dipanggil, dan data disimpan di this. Method ditulis langsung di dalam class. Getter (get) membuat properti yang nilainya dihitung saat dibaca.
+    code: |
+      class Slayer {
+        constructor(nama, rank = "Mizunoto") {
+          this.nama = nama
+          this.rank = rank
+        }
+        sapa() { return `Aku ${this.nama}, rank ${this.rank}` }
+        get inisial() { return this.nama[0] }
+      }
+      const t = new Slayer("Tanjiro")
+      console.log(t.sapa(), t.inisial)
+  - text: 'extends membuat class turunan, dan super(...) memanggil constructor atau method induk. Method di turunan menimpa (override) method induk. static adalah milik class, bukan milik objeknya. Field privat ditulis dengan awalan #.'
+    code: |
+      class Hewan {
+        #suara = "..."
+        constructor(nama) { this.nama = nama }
+        bicara() { return `${this.nama}: ${this.suara()}` }
+        suara() { return this.#suara }
+        static buat(n) { return new this(n) }
+      }
+      class Gagak extends Hewan { suara() { return "Kaa!" } }
+      console.log(Gagak.buat("Matsuemon").bicara(), new Hewan("Batu").bicara())
+exercises:
+  - id: js-m6-rekening
+    type: write
+    title: Kas Kisatsutai
+    difficulty: 2
+    prompt: 'Buat class Rekening dengan method setor(x) dan tarik(x). Baris pertama n, lalu n perintah "setor X" atau "tarik X". Jika saldo kurang, cetak "saldo kurang" dan abaikan. Di akhir cetak saldonya.'
+    tests: ["3\nsetor 100\ntarik 30\ntarik 100", "1\ntarik 5"]
+    hints: |
+      constructor() { this.saldo = 0 }
+      tarik memeriksa saldo dulu.
+      r[aksi](Number(x)) memanggil method sesuai nama.
+    solution: |
+      class Rekening {
+        constructor() { this.saldo = 0 }
+        setor(x) { this.saldo += x }
+        tarik(x) {
+          if (x > this.saldo) console.log("saldo kurang")
+          else this.saldo -= x
+        }
+      }
+      const r = new Rekening()
+      const n = Number(readline())
+      for (let i = 0; i < n; i++) {
+        const [aksi, x] = readline().split(" ")
+        r[aksi](Number(x))
+      }
+      console.log(r.saldo)
+  - id: js-m6-tostring
+    type: write
+    title: Papan Nama
+    difficulty: 1
+    prompt: 'Buat class Slayer(nama, rank) dengan method toString() yang mengembalikan "<nama> (<rank>)". Baris pertama n, lalu n baris "nama rank". Cetak setiap objek lewat template literal.'
+    tests: ["2\nTanjiro Mizunoto\nGiyu Hashira", "1\nKanao Tsuguko"]
+    hints: |
+      Template literal `${obj}` memanggil toString().
+      return `${this.nama} (${this.rank})`
+      new Slayer(...readline().split(" "))
+    solution: |
+      class Slayer {
+        constructor(nama, rank) { this.nama = nama; this.rank = rank }
+        toString() { return `${this.nama} (${this.rank})` }
+      }
+      const n = Number(readline())
+      for (let i = 0; i < n; i++) console.log(`${new Slayer(...readline().split(" "))}`)
+  - id: js-m6-predict
+    type: predict
+    title: Pewarisan dan super
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      class A {
+        constructor() { this.x = 1 }
+        nama() { return "A" }
+        info() { return `${this.nama()}${this.x}` }
+      }
+      class B extends A {
+        constructor() { super(); this.x = 2 }
+        nama() { return "B" + super.nama() }
+      }
+      console.log(new A().info(), new B().info())
+    hints: |
+      info() memanggil this.nama() milik objek yang sebenarnya.
+      Untuk B, nama() menghasilkan "B" + "A".
+      x di B ditimpa menjadi 2 setelah super().
+    solution: x
+  - id: js-m6-bug-this
+    type: bughunt
+    title: Lupa Diri
+    difficulty: 1
+    prompt: Method luas() error dengan ReferenceError. Temukan bug-nya.
+    starter: |
+      class Persegi {
+        constructor(s) { this.s = s }
+        luas() { return s * s }
+      }
+      console.log(new Persegi(Number(readline())).luas())
+    bug_line: 3
+    tests: ["3", "5"]
+    hints: |
+      Di dalam method, data objek diakses lewat this.
+      s hanya ada sebagai parameter constructor.
+      return this.s * this.s
+    solution: |
+      class Persegi {
+        constructor(s) { this.s = s }
+        luas() { return this.s * this.s }
+      }
+      console.log(new Persegi(Number(readline())).luas())
+  - id: js-m6-pewarisan
+    type: write
+    title: Suara Penghuni Markas
+    difficulty: 2
+    prompt: 'Buat class Hewan dengan suara() yang mengembalikan "...", lalu turunannya Gagak ("Kaa!"), Kucing ("Meong"), dan Babi ("Ngik!"). Input berisi nama-nama jenis dalam satu baris. Cetak suara masing-masing. Jenis yang tidak dikenal memakai Hewan.'
+    tests: ["gagak kucing", "babi rubah gagak"]
+    hints: |
+      Buat object yang memetakan nama ke class.
+      (JENIS[nama] ?? Hewan) memilih class.
+      new Kelas().suara()
+    solution: |
+      class Hewan { suara() { return "..." } }
+      class Gagak extends Hewan { suara() { return "Kaa!" } }
+      class Kucing extends Hewan { suara() { return "Meong" } }
+      class Babi extends Hewan { suara() { return "Ngik!" } }
+      const JENIS = { gagak: Gagak, kucing: Kucing, babi: Babi }
+      for (const nama of readline().split(" ")) console.log(new (JENIS[nama] ?? Hewan)().suara())
+  - id: js-m6-parsons
+    type: parsons
+    title: Jarak Dua Titik
+    difficulty: 2
+    prompt: Susun class Titik dengan method jarak (Manhattan), lalu hitung jarak antara dua titik dari input.
+    tests: ["0 0\n3 4", "-2 5\n3 -1"]
+    hints: |
+      Definisi class lengkap ada di atas.
+      constructor ditulis sebelum jarak.
+      Objek dibuat dari input sebelum dicetak.
+    solution: |
+      class Titik {
+        constructor(x, y) { this.x = x; this.y = y }
+        jarak(o) { return Math.abs(this.x - o.x) + Math.abs(this.y - o.y) }
+      }
+      const a = new Titik(...readline().split(" ").map(Number))
+      const b = new Titik(...readline().split(" ").map(Number))
+      console.log(a.jarak(b))

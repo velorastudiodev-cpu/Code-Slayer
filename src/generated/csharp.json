@@ -1,0 +1,1533 @@
+{
+ "hash": "7891412c6ee6",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Program C# berada di dalam class, dan dimulai dari static void Main(). Console.WriteLine mencetak lalu newline; Console.Write tanpa newline.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(\"Pernapasan Suara, Bentuk Pertama\");\n        Console.Write(\"tanpa \");\n        Console.Write(\"newline\\n\");\n    }\n}\n"
+    },
+    {
+     "text": "String interpolation: awali dengan $ lalu sisipkan {nilai}. Format angka ditulis setelah titik dua: {x:F2} = 2 desimal, {x,5} = rata kanan lebar 5.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string nama = \"Tengen\";\n        int istri = 3;\n        Console.WriteLine($\"{nama} punya {istri} istri, rata-rata {istri / 2.0:F1} per hari libur\");\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f1-halo",
+     "type": "write",
+     "title": "Salam Pertama",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "Gunakan fungsi cetak baris bawaan bahasa ini.",
+      "Teks harus persis sama, termasuk koma dan tanda seru.",
+      "Satu baris saja, diakhiri newline."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(\"Halo, Slayer!\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cs-f1-format",
+     "type": "write",
+     "title": "Laporan Berformat",
+     "difficulty": 1,
+     "prompt": "Dengan string berformat, cetak \"Rengoku berumur 20 tahun, kekuatan 9.50\" dari variabel nama = \"Rengoku\", umur = 20, dan kekuatan = 9.5.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "Rengoku berumur 20 tahun, kekuatan 9.50\n"
+      }
+     ],
+     "hints": [
+      "Simpan ketiga nilai dalam variabel dulu.",
+      "Pakai format/interpolasi string, bukan menyambung manual.",
+      "Kekuatan dicetak dengan tepat 2 angka di belakang koma."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string nama = \"Rengoku\";\n        int umur = 20;\n        double kekuatan = 9.5;\n        Console.WriteLine($\"{nama} berumur {umur} tahun, kekuatan {kekuatan:F2}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cs-f1-predict",
+     "type": "predict",
+     "title": "Baris yang Tidak Berganti",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.Write(\"Kaa\");\n        Console.Write(\"!\" + \"!\");\n        Console.WriteLine();\n        Console.WriteLine(\"misi \" + 3 + \" selesai\");\n        Console.WriteLine($\"{2}+{3}={2 + 3}\");\n        Console.WriteLine(\"1\" + 2 + 3);\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "Kaa!!\nmisi 3 selesai\n2+3=5\n123\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan perintah cetak mana yang menambah newline.",
+      "Perintah tanpa newline menyambung ke baris yang sama.",
+      "Hitung spasinya dengan teliti."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cs-f1-bug",
+     "type": "bughunt",
+     "title": "Iblis Pemakan Tanda Kutip",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"Kaa!\" lalu \"Misi!\", tapi gagal dikompilasi. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(\"Kaa!\");\n        Console.WriteLine(\"Misi!);\n    }\n}\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "expected": "Kaa!\nMisi!\n"
+      }
+     ],
+     "hints": [
+      "Baca pesan error compiler: ia menunjuk nomor baris.",
+      "Setiap string harus dibuka DAN ditutup dengan tanda kutip.",
+      "Tambahkan tanda kutip penutup yang hilang."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(\"Kaa!\");\n        Console.WriteLine(\"Misi!\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "C# bertipe statis: int (32-bit), long (64-bit), double, bool, string. var membiarkan compiler menebak tipe dari nilainya, tapi tipenya tetap pasti dan tidak bisa berubah.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        int umur = 15;\n        var nama = \"Tanjiro\";\n        double tinggi = 165.5;\n        long besar = 3000000000L;\n        Console.WriteLine($\"{nama} {umur} {tinggi} {besar * 2}\");\n    }\n}\n"
+    },
+    {
+     "text": "int.Parse / long.Parse / double.Parse mengubah teks menjadi angka. Pembagian int / int membuang desimal; ubah dulu ke double: (double)a / b.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        int a = 7, b = 2;\n        Console.WriteLine($\"{a / b} {a % b}\");\n        Console.WriteLine((double)a / b);\n        Console.WriteLine(int.Parse(\"41\") + 1);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Input berisi nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "Tanjiro 15",
+       "expected": "Tanjiro akan berumur 16 tahun\n"
+      },
+      {
+       "input": "Kanao 16",
+       "expected": "Kanao akan berumur 17 tahun\n"
+      },
+      {
+       "input": "Gyomei 27",
+       "expected": "Gyomei akan berumur 28 tahun\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua nilai: teks lalu bilangan bulat.",
+      "Ubah umur menjadi angka sebelum ditambah 1.",
+      "Contoh: \"Tanjiro akan berumur 16 tahun\"."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        string nama = t[0];\n        int umur = int.Parse(t[1]);\n        Console.WriteLine($\"{nama} akan berumur {umur + 1} tahun\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cs-f2-besar",
+     "type": "write",
+     "title": "Jarak Antar Bintang",
+     "difficulty": 2,
+     "prompt": "Baca dua bilangan a dan b (masing-masing sampai 2 miliar, bisa negatif). Cetak a * b. Hasilnya bisa melebihi batas int 32-bit.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "2000000000 2000000000",
+       "expected": "4000000000000000000\n"
+      },
+      {
+       "input": "-5 100000",
+       "expected": "-500000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "2 miliar × 2 miliar = 4 × 10^18.",
+      "Batas int 32-bit sekitar 2,1 miliar.",
+      "Pakai tipe bilangan bulat 64-bit."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long a = long.Parse(t[0]);\n        long b = long.Parse(t[1]);\n        Console.WriteLine(a * b);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cs-f2-predict",
+     "type": "predict",
+     "title": "Pembagian Bulat",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine($\"{17 / 5} {17 % 5}\");\n        Console.WriteLine(17.0 / 5);\n        int x = 9;\n        int y = x / 2 * 2;\n        Console.WriteLine($\"{y} {x - y}\");\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "3 2\n3.4\n8 1\n"
+      }
+     ],
+     "hints": [
+      "Pembagian dua bilangan bulat membuang bagian desimal.",
+      "Sisa bagi memakai operator %.",
+      "Kalau salah satu operand desimal, hasilnya desimal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cs-f2-bug",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 2,
+     "prompt": "Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int a = int.Parse(t[0]), b = int.Parse(t[1]), c = int.Parse(t[2]);\n        double rata = (a + b + c) / 3;\n        Console.WriteLine($\"{rata:F2}\");\n    }\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "1 2 4",
+       "expected": "2.33\n"
+      },
+      {
+       "input": "5 5 6",
+       "expected": "5.33\n"
+      },
+      {
+       "input": "3 3 3",
+       "expected": "3.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 + 2 + 4 = 7, dan 7 / 3 seharusnya 2.33.",
+      "Pembagian bilangan bulat terjadi SEBELUM diubah ke desimal.",
+      "Ubah jumlahnya ke tipe desimal dulu, baru dibagi."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int a = int.Parse(t[0]), b = int.Parse(t[1]), c = int.Parse(t[2]);\n        double rata = (a + b + c) / 3.0;\n        Console.WriteLine($\"{rata:F2}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator aritmetika: + - * / %, juga += -= ++ --. Hati-hati: x++ menghasilkan nilai LAMA lalu menambah, ++x menambah dulu.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        int t = 3725;\n        Console.WriteLine($\"{t / 3600} {t % 3600 / 60} {t % 60}\");\n        int n = 5;\n        Console.WriteLine(n++);\n        Console.WriteLine(++n);\n    }\n}\n"
+    },
+    {
+     "text": "Perbandingan menghasilkan bool. Logika: && || !. Operator ternary memilih nilai: kondisi ? a : b.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        int umur = 16;\n        bool pedang = true;\n        Console.WriteLine(umur >= 15 && pedang);\n        Console.WriteLine(umur >= 18 ? \"dewasa\" : \"muda\");\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 jam = 3600 detik, 1 menit = 60 detik.",
+      "Jam = t / 3600, menit = (t % 3600) / 60.",
+      "Detik = t % 60."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long d = long.Parse(t[0]);\n        Console.WriteLine($\"{d / 3600}:{d % 3600 / 60}:{d % 60}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f3"
+    },
+    {
+     "id": "cs-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.",
+      "Contoh: 37 menjadi 98.6.",
+      "Format 1 angka di belakang koma."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        double c = double.Parse(t[0]);\n        Console.WriteLine($\"{c * 9 / 5 + 32:F1}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f3"
+    },
+    {
+     "id": "cs-f3-predict",
+     "type": "predict",
+     "title": "Urutan Operasi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine($\"{2 + 3 * 4} {(2 + 3) * 4}\");\n        Console.WriteLine(20 - 6 / 2 % 2);\n        int n = 5;\n        int m = n++ + ++n;\n        Console.WriteLine($\"{n} {m}\");\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "14 20\n19\n7 12\n"
+      }
+     ],
+     "hints": [
+      "* / % dikerjakan sebelum + -.",
+      "Operator dengan derajat sama dikerjakan dari kiri.",
+      "Kurung mengubah urutan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f3"
+    },
+    {
+     "id": "cs-f3-bug",
+     "type": "bughunt",
+     "title": "Gerbang yang Salah Jaga",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"masuk\" hanya jika 1 ≤ n ≤ 10, selain itu \"tolak\". Tapi semua angka masuk. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        if (n >= 1 || n <= 10)\n            Console.WriteLine(\"masuk\");\n        else\n            Console.WriteLine(\"tolak\");\n    }\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "1",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "10",
+       "expected": "masuk\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "tolak\n",
+       "hidden": true
+      },
+      {
+       "input": "11",
+       "expected": "tolak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Coba n = 11: apakah kedua syarat harus benar?",
+      "|| (atau) cukup salah satu benar.",
+      "Gunakan && (dan)."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        if (n >= 1 && n <= 10)\n            Console.WriteLine(\"masuk\");\n        else\n            Console.WriteLine(\"tolak\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Console.ReadLine() membaca satu baris (tanpa newline). Untuk input yang dipisah spasi, pecah dengan Split. Membaca seluruh input sekaligus: Console.In.ReadToEnd().",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var bagian = \"3 4\".Split(' ');\n        int a = int.Parse(bagian[0]), b = int.Parse(bagian[1]);\n        Console.WriteLine(a + b);\n    }\n}\n"
+    },
+    {
+     "text": "ReadLine mengembalikan null kalau input sudah habis, jadi bisa dipakai untuk membaca sampai akhir: while ((baris = Console.ReadLine()) != null). Trim() membuang spasi di ujung.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string baris = \"  21  \";\n        Console.WriteLine($\"[{baris.Trim()}]\");\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat (dalam satu baris), cetak jumlahnya.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dua bilangan dari input.",
+      "Ubah teks menjadi angka.",
+      "Cetak a + b."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long a = long.Parse(t[0]), b = long.Parse(t[1]);\n        Console.WriteLine(a + b);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f4"
+    },
+    {
+     "id": "cs-f4-n",
+     "type": "write",
+     "title": "Laporan Berjumlah n",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "3\n1 9 2",
+       "expected": "12 9\n"
+      },
+      {
+       "input": "1\n-5",
+       "expected": "-5 -5\n"
+      },
+      {
+       "input": "5\n-1 -2 -3 -4 -5",
+       "expected": "-15 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Nilai terbesar awal = bilangan pertama, bukan 0.",
+      "Ingat bilangan bisa negatif semua.",
+      "Cetak \"<jumlah> <maks>\"."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        long total = 0, maks = long.Parse(t[1]);\n        for (int i = 1; i <= n; i++)\n        {\n            long x = long.Parse(t[i]);\n            total += x;\n            if (x > maks) maks = x;\n        }\n        Console.WriteLine($\"{total} {maks}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f4"
+    },
+    {
+     "id": "cs-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi sejumlah bilangan bulat dipisah spasi atau baris baru (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal), dipisah spasi.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "4 2.50\n"
+      },
+      {
+       "input": "10",
+       "expected": "1 10.00\n"
+      },
+      {
+       "input": "5\n6\n7",
+       "expected": "3 6.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca seluruh input lalu pecah berdasarkan spasi/baris.",
+      "Hitung banyak dan jumlahnya.",
+      "Rata-rata = jumlah / banyak, dalam desimal."
+     ],
+     "solutions": [
+      "using System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        var xs = t.Select(long.Parse).ToList();\n        Console.WriteLine($\"{xs.Count} {(double)xs.Sum() / xs.Count:F2}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f4"
+    },
+    {
+     "id": "cs-f4-bug",
+     "type": "bughunt",
+     "title": "Spasi yang Menyusup",
+     "difficulty": 2,
+     "prompt": "Program membaca seluruh input lalu mencetak angkanya dikali 2. Pembuatnya mengira input SELALU diakhiri satu newline, jadi ia memotong karakter terakhir. Akibatnya input tanpa newline di akhir salah dibaca. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string baris = Console.In.ReadToEnd();\n        int n = int.Parse(baris.Substring(0, baris.Length - 1));\n        Console.WriteLine(n * 2);\n    }\n}\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "input": "21",
+       "expected": "42\n"
+      },
+      {
+       "input": "0\n",
+       "expected": "0\n"
+      },
+      {
+       "input": "-7",
+       "expected": "-14\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baris yang dibaca masih berisi \"\\n\" di ujungnya.",
+      "Teks \"21\\n\" tidak bisa diubah langsung menjadi angka.",
+      "Buang spasi/newline di ujung sebelum mengubah ke angka."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string baris = Console.In.ReadToEnd();\n        int n = int.Parse(baris.Trim());\n        Console.WriteLine(n * 2);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if / else if / else memakai kurung di sekitar kondisi. Kurung kurawal boleh dihilangkan untuk satu pernyataan, tapi lebih aman selalu ditulis.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        int nilai = 78;\n        if (nilai >= 85) Console.WriteLine(\"A\");\n        else if (nilai >= 70) Console.WriteLine(\"B\");\n        else Console.WriteLine(\"C\");\n    }\n}\n"
+    },
+    {
+     "text": "switch mencocokkan satu nilai dengan banyak case. Di C#, setiap case harus diakhiri break (atau return); tidak boleh \"jatuh\" ke case berikutnya kecuali case-nya kosong.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string napas = \"suara\";\n        switch (napas)\n        {\n            case \"air\":\n            case \"bunga\":\n                Console.WriteLine(\"lembut\");\n                break;\n            case \"suara\":\n                Console.WriteLine(\"meledak\");\n                break;\n            default:\n                Console.WriteLine(\"?\");\n                break;\n        }\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "Cetak satu huruf saja."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        if (n >= 85) Console.WriteLine(\"A\");\n        else if (n >= 70) Console.WriteLine(\"B\");\n        else if (n >= 55) Console.WriteLine(\"C\");\n        else Console.WriteLine(\"D\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f5"
+    },
+    {
+     "id": "cs-f5-kabisat",
+     "type": "write",
+     "title": "Tahun Kabisat",
+     "difficulty": 2,
+     "prompt": "Baca tahun. Cetak \"kabisat\" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu \"bukan\".",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Habis dibagi berarti % ... == 0.",
+      "Gabungkan dengan || dan &&.",
+      "(t % 400 == 0) || (t % 4 == 0 && t % 100 != 0)"
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int y = int.Parse(t[0]);\n        Console.WriteLine(y % 400 == 0 || (y % 4 == 0 && y % 100 != 0) ? \"kabisat\" : \"bukan\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f5"
+    },
+    {
+     "id": "cs-f5-predict",
+     "type": "predict",
+     "title": "Cabang Mana yang Dipilih?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        foreach (int x in new[] { 0, 3, 8, 15 })\n        {\n            switch (x % 4)\n            {\n                case 0:\n                    Console.Write(x == 0 ? \"nol \" : \"kelipatan4 \");\n                    break;\n                case 1:\n                case 3:\n                    Console.Write(\"ganjil \");\n                    break;\n                default:\n                    Console.Write(\"dua \");\n                    break;\n            }\n        }\n        Console.WriteLine();\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "nol ganjil kelipatan4 ganjil\n"
+      }
+     ],
+     "hints": [
+      "Telusuri nilai variabel baris demi baris.",
+      "Hanya satu cabang yang dijalankan per pemeriksaan.",
+      "Perhatikan kasus default/else."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f5"
+    },
+    {
+     "id": "cs-f5-parsons",
+     "type": "parsons",
+     "title": "Tanda Bilangan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak \"positif\", \"negatif\", atau \"nol\".",
+     "lang": "csharp",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Deklarasi fungsi utama paling atas.",
+      "Baca n sebelum memeriksanya.",
+      "Kurung tutup paling akhir."
+     ],
+     "solutions": [
+      "using System;\nclass Program\n{\n    static void Main()\n    {\n        int n = int.Parse(Console.ReadLine());\n        if (n > 0) Console.WriteLine(\"positif\");\n        else if (n < 0) Console.WriteLine(\"negatif\");\n        else Console.WriteLine(\"nol\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "C# punya for, while, do-while, dan foreach. foreach menelusuri setiap elemen koleksi tanpa indeks. break keluar dari loop, continue lanjut ke putaran berikutnya.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        for (int i = 1; i <= 3; i++) Console.Write(i + \" \");\n        int n = 10;\n        while (n > 1) n /= 2;\n        Console.WriteLine(\"| \" + n);\n        foreach (var nama in new[] { \"Tengen\", \"Zenitsu\" }) Console.WriteLine(nama);\n    }\n}\n"
+    },
+    {
+     "text": "new string(c, n) membuat teks berisi karakter c sebanyak n kali, praktis untuk pola bintang.",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        Console.WriteLine(new string('*', 4));\n        Console.WriteLine(new string('-', 2) + \">\");\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 1,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Loop i dari 1 sampai n.",
+      "Baris ke-i = \"*\" diulang i kali.",
+      "Setiap baris diakhiri newline."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        for (int i = 1; i <= n; i++) Console.WriteLine(new string('*', i));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cs-f6-prima",
+     "type": "write",
+     "title": "Uji Bilangan Prima",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≤ 10^9). Cetak \"prima\" atau \"bukan\". Cukup periksa pembagi sampai akar n.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "prima\n"
+      },
+      {
+       "input": "1",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "91",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "999999937",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "1000000000",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "1 bukan prima.",
+      "Loop d mulai 2 selama d * d <= n.",
+      "Pakai tipe 64-bit supaya d * d tidak overflow."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long n = long.Parse(t[0]);\n        bool prima = n > 1;\n        for (long d = 2; d * d <= n; d++)\n            if (n % d == 0) { prima = false; break; }\n        Console.WriteLine(prima ? \"prima\" : \"bukan\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cs-f6-predict",
+     "type": "predict",
+     "title": "Loop Berlapis",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        for (int i = 0; i < 5; i++)\n        {\n            if (i == 1) continue;\n            if (i == 4) break;\n            Console.Write(i + \" \");\n        }\n        int n = 0;\n        do { n++; } while (n < 0);\n        Console.WriteLine(\"| \" + n);\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "0 2 3 | 1\n"
+      }
+     ],
+     "hints": [
+      "continue melompati sisa satu putaran.",
+      "break menghentikan loop sepenuhnya.",
+      "Telusuri nilai i satu per satu."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cs-f6-bug",
+     "type": "bughunt",
+     "title": "Satu Tebasan Hilang",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        long total = 0;\n        for (int i = 1; i < n; i++) total += i;\n        Console.WriteLine(total);\n    }\n}\n",
+     "bug_line": 10,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "6\n"
+      },
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apakah n sendiri ikut dijumlah?",
+      "Batas loop berhenti sebelum n.",
+      "Ganti batasnya supaya n ikut."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        long total = 0;\n        for (int i = 1; i <= n; i++) total += i;\n        Console.WriteLine(total);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Method (fungsi) ditulis static TipeKembali Nama(Tipe param) di dalam class. Method yang tidak mengembalikan nilai bertipe void. Method boleh memanggil dirinya sendiri (rekursi).",
+     "code": "using System;\n\nclass Program\n{\n    static int Kuadrat(int x)\n    {\n        return x * x;\n    }\n\n    static void Main()\n    {\n        Console.WriteLine(Kuadrat(9));\n    }\n}\n"
+    },
+    {
+     "text": "Bilangan dikirim sebagai salinan. Kata kunci ref mengirim variabelnya sendiri, sehingga method bisa mengubah variabel pemanggil.",
+     "code": "using System;\n\nclass Program\n{\n    static void Gandakan(ref int x)\n    {\n        x *= 2;\n    }\n\n    static void Main()\n    {\n        int a = 21;\n        Gandakan(ref a);\n        Console.WriteLine(a);\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "fpb(a, 0) = a.",
+      "fpb(a, b) = fpb(b, a % b).",
+      "Bisa rekursif atau dengan loop."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static long Fpb(long a, long b)\n    {\n        return b == 0 ? a : Fpb(b, a % b);\n    }\n\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long a = long.Parse(t[0]), b = long.Parse(t[1]);\n        Console.WriteLine(Fpb(a, b));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f7"
+    },
+    {
+     "id": "cs-f7-faktorial",
+     "type": "write",
+     "title": "Faktorial Pernapasan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "20",
+       "expected": "2432902008176640000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "0! = 1 adalah base case.",
+      "n! = n × (n-1)!.",
+      "20! melebihi 32-bit: pakai 64-bit."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static long Faktorial(long n)\n    {\n        return n == 0 ? 1 : n * Faktorial(n - 1);\n    }\n\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long n = long.Parse(t[0]);\n        Console.WriteLine(Faktorial(n));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f7"
+    },
+    {
+     "id": "cs-f7-predict",
+     "type": "predict",
+     "title": "Salinan atau Asli?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static int Latih(int x)\n    {\n        x = x * 10;\n        return x + 1;\n    }\n\n    static void Main()\n    {\n        int a = 3;\n        int b = Latih(a);\n        Console.WriteLine($\"{a} {b}\");\n        Latih(b);\n        Console.WriteLine(b);\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "3 31\n31\n"
+      }
+     ],
+     "hints": [
+      "Argumen bilangan dikirim sebagai salinan.",
+      "Mengubah salinan tidak mengubah variabel pemanggil.",
+      "Nilai yang dikembalikan lain cerita."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f7"
+    },
+    {
+     "id": "cs-f7-bug",
+     "type": "bughunt",
+     "title": "Rekursi Tanpa Ujung",
+     "difficulty": 2,
+     "prompt": "pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static long Pangkat(long a, long n)\n    {\n        if (n == -1) return 1;\n        return a * Pangkat(a, n - 1);\n    }\n\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long a = long.Parse(t[0]), n = long.Parse(t[1]);\n        Console.WriteLine(Pangkat(a, n));\n    }\n}\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "input": "2 10",
+       "expected": "1024\n"
+      },
+      {
+       "input": "3 0",
+       "expected": "1\n"
+      },
+      {
+       "input": "5 3",
+       "expected": "125\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Setiap rekursi butuh base case.",
+      "Kapan rekursi harus berhenti?",
+      "Saat n == 0, kembalikan 1."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static long Pangkat(long a, long n)\n    {\n        if (n == 0) return 1;\n        return a * Pangkat(a, n - 1);\n    }\n\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        long a = long.Parse(t[0]), n = long.Parse(t[1]);\n        Console.WriteLine(Pangkat(a, n));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "List<T> adalah daftar yang bisa bertambah (Add, Count, indeks [i]). Array berukuran tetap: new int[5]. List dan array adalah tipe referensi: dua variabel bisa menunjuk objek yang sama.",
+     "code": "using System;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main()\n    {\n        var a = new List<int> { 3, 1, 2 };\n        var b = a;\n        b.Add(9);\n        a.Sort();\n        Console.WriteLine(string.Join(\",\", a) + \" \" + a.Count);\n    }\n}\n"
+    },
+    {
+     "text": "Dictionary<K,V> memetakan kunci ke nilai. SortedDictionary menjaga kunci tetap terurut. TryGetValue atau ContainsKey dipakai sebelum membaca kunci yang mungkin belum ada.",
+     "code": "using System;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main()\n    {\n        var m = new SortedDictionary<string, int>();\n        foreach (var k in new[] { \"b\", \"a\", \"b\" })\n            m[k] = m.ContainsKey(k) ? m[k] + 1 : 1;\n        foreach (var kv in m) Console.WriteLine($\"{kv.Key} {kv.Value}\");\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-m1-balik",
+     "type": "write",
+     "title": "Barisan Terbalik",
+     "difficulty": 1,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "5\n1 2 3 4 5",
+       "expected": "5 4 3 2 1\n"
+      },
+      {
+       "input": "1\n42",
+       "expected": "42\n"
+      },
+      {
+       "input": "3\n-1 0 -1",
+       "expected": "-1 0 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Simpan semua bilangan ke array/list.",
+      "Telusuri dari indeks terakhir ke 0.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "using System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        var xs = t.Skip(1).Take(n).Reverse();\n        Console.WriteLine(string.Join(\" \", xs));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "m1"
+    },
+    {
+     "id": "cs-m1-frekuensi",
+     "type": "write",
+     "title": "Sensus Kata",
+     "difficulty": 2,
+     "prompt": "Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, \"kata jumlah\" per baris, urut abjad.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "iblis slayer iblis bulan",
+       "expected": "bulan 1\niblis 2\nslayer 1\n"
+      },
+      {
+       "input": "a",
+       "expected": "a 1\n"
+      },
+      {
+       "input": "b a b\na c b",
+       "expected": "a 2\nb 3\nc 1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai map/dictionary: kata → jumlah.",
+      "Ambil semua kunci lalu urutkan.",
+      "Cetak \"kata jumlah\"."
+     ],
+     "solutions": [
+      "using System;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        var m = new SortedDictionary<string, int>(StringComparer.Ordinal);\n        foreach (var k in t) m[k] = m.ContainsKey(k) ? m[k] + 1 : 1;\n        foreach (var kv in m) Console.WriteLine($\"{kv.Key} {kv.Value}\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m1"
+    },
+    {
+     "id": "cs-m1-unik",
+     "type": "write",
+     "title": "Pasukan Tanpa Kembar",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "6\n3 1 3 2 1 3",
+       "expected": "1 2 3\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7\n"
+      },
+      {
+       "input": "4\n-2 5 -2 0",
+       "expected": "-2 0 5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Set/himpunan otomatis membuang duplikat.",
+      "Urutkan hasilnya.",
+      "Gabungkan dengan spasi."
+     ],
+     "solutions": [
+      "using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        var set = new SortedSet<long>(t.Skip(1).Take(n).Select(long.Parse));\n        Console.WriteLine(string.Join(\" \", set));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m1"
+    },
+    {
+     "id": "cs-m1-diatas",
+     "type": "write",
+     "title": "Di Atas Rata-rata",
+     "difficulty": 2,
+     "prompt": "Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "5\n10 20 30 40 50",
+       "expected": "2\n"
+      },
+      {
+       "input": "3\n5 5 5",
+       "expected": "0\n"
+      },
+      {
+       "input": "4\n1 1 1 9",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung rata-rata dulu (desimal).",
+      "Lalu hitung nilai > rata-rata.",
+      "Butuh dua kali menelusuri data."
+     ],
+     "solutions": [
+      "using System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        var xs = t.Skip(1).Take(n).Select(double.Parse).ToList();\n        double rata = xs.Average();\n        Console.WriteLine(xs.Count(x => x > rata));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m1"
+    },
+    {
+     "id": "cs-m1-predict",
+     "type": "predict",
+     "title": "Koleksi Berbagi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\nusing System.Collections.Generic;\n\nclass Program\n{\n    static void Main()\n    {\n        var a = new List<int> { 1, 2, 3 };\n        var b = a;\n        b[0] = 9;\n        var c = new List<int>(a);\n        c[1] = 7;\n        Console.WriteLine($\"{string.Join(\",\", a)} {string.Join(\",\", c)}\");\n        int[] d = { 5, 6 };\n        int[] e = d;\n        e[1] = 0;\n        Console.WriteLine($\"{d[1]} {d.Length}\");\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "9,2,3 9,7,3\n0 2\n"
+      }
+     ],
+     "hints": [
+      "Perhatikan apakah koleksi disalin atau dibagi (referensi).",
+      "Mengubah lewat referensi terlihat dari nama lain.",
+      "Telusuri isi koleksi setelah tiap perubahan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m1"
+    },
+    {
+     "id": "cs-m1-bug",
+     "type": "bughunt",
+     "title": "Indeks Melewati Batas",
+     "difficulty": 2,
+     "prompt": "Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        long[] xs = t.Skip(1).Take(n).Select(long.Parse).ToArray();\n        long total = 0;\n        for (int i = 0; i <= xs.Length; i++) total += xs[i];\n        Console.WriteLine(total);\n    }\n}\n",
+     "bug_line": 12,
+     "tests": [
+      {
+       "input": "3\n1 2 3",
+       "expected": "6\n"
+      },
+      {
+       "input": "1\n5",
+       "expected": "5\n"
+      },
+      {
+       "input": "4\n2 2 2 2",
+       "expected": "8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Indeks terakhir = panjang - 1.",
+      "Kondisi loop memakai <=.",
+      "Gunakan < panjang."
+     ],
+     "solutions": [
+      "using System;\nusing System.Linq;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        int n = int.Parse(t[0]);\n        long[] xs = t.Skip(1).Take(n).Select(long.Parse).ToArray();\n        long total = 0;\n        for (int i = 0; i < xs.Length; i++) total += xs[i];\n        Console.WriteLine(total);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "string di C# immutable: ToUpper, Replace, Substring selalu menghasilkan string BARU. Untuk menyusun teks panjang di dalam loop, pakai StringBuilder.",
+     "code": "using System;\nusing System.Text;\n\nclass Program\n{\n    static void Main()\n    {\n        string s = \"Kimetsu no Yaiba\";\n        Console.WriteLine($\"{s.ToUpper()} {s.Length} {s.Substring(0, 7)}\");\n        var sb = new StringBuilder();\n        foreach (var k in s.Split(' ')) sb.Append(k[0]);\n        Console.WriteLine(sb.ToString());\n    }\n}\n"
+    },
+    {
+     "text": "char bisa dihitung seperti angka: (char)(c + 1). char.IsLower, char.ToUpper membantu mengolah huruf. Membalik string: ubah ke array, Array.Reverse, lalu new string(arr).",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        char[] cs = \"abc\".ToCharArray();\n        Array.Reverse(cs);\n        Console.WriteLine(new string(cs) + \" \" + (char)('a' + 2) + \" \" + ('z' - 'a'));\n    }\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cs-m2-palindrom",
+     "type": "write",
+     "title": "Kata Cermin",
+     "difficulty": 1,
+     "prompt": "Baca satu kata. Cetak \"palindrom\" jika sama dibaca dari depan dan belakang (abaikan huruf besar/kecil), selain itu \"bukan\".",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "Katak",
+       "expected": "palindrom\n"
+      },
+      {
+       "input": "slayer",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "a",
+       "expected": "palindrom\n",
+       "hidden": true
+      },
+      {
+       "input": "Malam",
+       "expected": "palindrom\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ubah ke huruf kecil dulu.",
+      "Bandingkan dengan versi terbaliknya.",
+      "Atau bandingkan karakter i dengan n-1-i."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        string s = t[0].ToLower();\n        char[] cs = s.ToCharArray();\n        Array.Reverse(cs);\n        Console.WriteLine(s == new string(cs) ? \"palindrom\" : \"bukan\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "m2"
+    },
+    {
+     "id": "cs-m2-vokal",
+     "type": "write",
+     "title": "Hitung Napas Vokal",
+     "difficulty": 1,
+     "prompt": "Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o, besar maupun kecil).",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "Kimetsu no Yaiba",
+       "expected": "7\n"
+      },
+      {
+       "input": "xyz",
+       "expected": "0\n"
+      },
+      {
+       "input": "AIUEO aiueo",
+       "expected": "10\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Telusuri setiap karakter.",
+      "Ubah ke huruf kecil supaya cukup satu pengecekan.",
+      "Cek apakah karakter ada di \"aiueo\"."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string s = Console.In.ReadToEnd().ToLower();\n        int c = 0;\n        foreach (char ch in s) if (\"aiueo\".IndexOf(ch) >= 0) c++;\n        Console.WriteLine(c);\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "csharp",
+     "chapter": "m2"
+    },
+    {
+     "id": "cs-m2-kapital",
+     "type": "write",
+     "title": "Nama Bergelar",
+     "difficulty": 2,
+     "prompt": "Baca satu baris berisi kata-kata huruf kecil dipisah satu spasi. Cetak dengan huruf pertama setiap kata dijadikan kapital.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "kamado tanjiro",
+       "expected": "Kamado Tanjiro\n"
+      },
+      {
+       "input": "rengoku kyojuro sang hashira api",
+       "expected": "Rengoku Kyojuro Sang Hashira Api\n"
+      },
+      {
+       "input": "x",
+       "expected": "X\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pecah baris menjadi kata.",
+      "Kapitalkan karakter pertama tiap kata.",
+      "Gabungkan kembali dengan spasi."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var kata = Console.ReadLine().Trim().Split(' ');\n        for (int i = 0; i < kata.Length; i++) kata[i] = char.ToUpper(kata[i][0]) + kata[i].Substring(1);\n        Console.WriteLine(string.Join(\" \", kata));\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m2"
+    },
+    {
+     "id": "cs-m2-caesar",
+     "type": "write",
+     "title": "Sandi Gagak",
+     "difficulty": 2,
+     "prompt": "Baris pertama k (0-25), baris kedua pesan huruf kecil dan spasi. Geser setiap huruf k posisi ke depan (z kembali ke a), spasi tetap. Cetak hasilnya.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        // tulis kodemu di sini\n    }\n}\n",
+     "tests": [
+      {
+       "input": "3\nslayer",
+       "expected": "vodbhu\n"
+      },
+      {
+       "input": "1\nzaz",
+       "expected": "aba\n"
+      },
+      {
+       "input": "13\nkaa kaa",
+       "expected": "xnn xnn\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf ke-i dari a = c - 'a'.",
+      "Geser: (i + k) % 26.",
+      "Spasi dicetak apa adanya."
+     ],
+     "solutions": [
+      "using System;\nusing System.Text;\n\nclass Program\n{\n    static void Main()\n    {\n        int k = int.Parse(Console.ReadLine().Trim());\n        string pesan = Console.ReadLine() ?? \"\";\n        var sb = new StringBuilder();\n        foreach (char c in pesan) sb.Append(c >= 'a' && c <= 'z' ? (char)('a' + (c - 'a' + k) % 26) : c);\n        Console.WriteLine(sb.ToString());\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m2"
+    },
+    {
+     "id": "cs-m2-predict",
+     "type": "predict",
+     "title": "Potongan Teks",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "csharp",
+     "code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string s = \"Hashira\";\n        Console.WriteLine($\"{s.Length} {s.Substring(0, 4)} {s.Substring(4)}\");\n        Console.WriteLine($\"{s.IndexOf('i')} {s.Split('a').Length - 1}\");\n        Console.WriteLine(s.Replace(\"a\", \"A\"));\n    }\n}\n",
+     "tests": [
+      {
+       "expected": "7 Hash ira\n4 2\nHAshirA\n"
+      }
+     ],
+     "hints": [
+      "Indeks string mulai dari 0.",
+      "Potongan [a, b) mengambil a sampai b-1.",
+      "Panjang dihitung per karakter ASCII di sini."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m2"
+    },
+    {
+     "id": "cs-m2-bug",
+     "type": "bughunt",
+     "title": "Perbandingan yang Menipu",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"sama\" jika dua kata yang dibaca sama persis tanpa memedulikan huruf besar/kecil, selain itu \"beda\". Tapi \"Tanjiro\" dan \"tanjiro\" dianggap beda. Temukan baris yang salah.",
+     "lang": "csharp",
+     "starter": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        string a = t[0], b = t[1];\n        if (a == b) Console.WriteLine(\"sama\");\n        else Console.WriteLine(\"beda\");\n    }\n}\n",
+     "bug_line": 9,
+     "tests": [
+      {
+       "input": "Tanjiro tanjiro",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Nezuko nezuko",
+       "expected": "sama\n"
+      },
+      {
+       "input": "Giyu Sabito",
+       "expected": "beda\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Huruf besar dan kecil adalah karakter berbeda.",
+      "Samakan dulu bentuknya sebelum dibandingkan.",
+      "Ubah keduanya ke huruf kecil."
+     ],
+     "solutions": [
+      "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        var t = Console.In.ReadToEnd().Split((char[])null, StringSplitOptions.RemoveEmptyEntries);\n        string a = t[0], b = t[1];\n        if (string.Equals(a, b, StringComparison.OrdinalIgnoreCase)) Console.WriteLine(\"sama\");\n        else Console.WriteLine(\"beda\");\n    }\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "csharp",
+     "chapter": "m2"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,115 @@
+lesson:
+  - text: Tree adalah struktur bercabang dengan satu akar. Binary Search Tree (BST) menjaga aturan bahwa semua nilai di kiri lebih kecil dan di kanan lebih besar, sehingga pencarian rata-rata O(log n). Penelusuran in-order (kiri, akar, kanan) pada BST menghasilkan nilai terurut.
+    code: |
+      class T:
+          def __init__(self, v): self.v, self.l, self.r = v, None, None
+      def sisip(t, v):
+          if t is None: return T(v)
+          if v < t.v: t.l = sisip(t.l, v)
+          else: t.r = sisip(t.r, v)
+          return t
+      def inorder(t):
+          return inorder(t.l) + [t.v] + inorder(t.r) if t else []
+      akar = None
+      for v in [5, 3, 8, 1, 4]: akar = sisip(akar, v)
+      print(inorder(akar))
+exercises:
+  - id: dsa-m5-bst
+    type: write
+    title: Pohon Pencarian
+    difficulty: 3
+    prompt: Sisipkan bilangan-bilangan input (urutan sesuai input) ke BST, lalu cetak penelusuran pre-order (akar, kiri, kanan).
+    tests: ["5 3 8 1 4", "1 2 3", "2 1"]
+    hints: |
+      Sisip rekursif, nilai < akar ke kiri, selain itu ke kanan.
+      Pre-order mengunjungi akar dulu.
+      [t.v] + preorder(t.l) + preorder(t.r)
+    solution: |
+      class T:
+          def __init__(self, v):
+              self.v, self.l, self.r = v, None, None
+      def sisip(t, v):
+          if t is None:
+              return T(v)
+          if v < t.v:
+              t.l = sisip(t.l, v)
+          else:
+              t.r = sisip(t.r, v)
+          return t
+      def pre(t):
+          return [t.v] + pre(t.l) + pre(t.r) if t else []
+      akar = None
+      for v in map(int, input().split()):
+          akar = sisip(akar, v)
+      print(*pre(akar))
+  - id: dsa-m5-tinggi
+    type: write
+    title: Tinggi Pohon Keluarga
+    difficulty: 2
+    prompt: Baris 1 berisi n. Baris 2 berisi n bilangan, yaitu induk dari simpul 0..n-1 (-1 untuk akar). Cetak tinggi pohon (banyaknya simpul pada jalur terpanjang dari akar ke daun).
+    tests: ["5\n-1 0 0 1 3", "1\n-1", "4\n-1 0 1 2"]
+    hints: |
+      Bangun list anak untuk setiap simpul.
+      Tinggi(u) = 1 + maksimum tinggi anak-anaknya.
+      Mulai dari simpul yang induknya -1.
+    solution: |
+      n = int(input())
+      induk = list(map(int, input().split()))
+      anak = [[] for _ in range(n)]
+      for u, p in enumerate(induk):
+          if p >= 0:
+              anak[p].append(u)
+      def tinggi(u):
+          return 1 + max((tinggi(c) for c in anak[u]), default=0)
+      print(tinggi(induk.index(-1)))
+  - id: dsa-m5-fill
+    type: fill
+    title: In-order Rekursif
+    difficulty: 2
+    prompt: Lengkapi penelusuran in-order pada BST supaya bilangan input tercetak terurut.
+    code: |
+      class T:
+          def __init__(self, v):
+              self.v, self.l, self.r = v, None, None
+      def sisip(t, v):
+          if t is None:
+              return T(v)
+          if v < t.v:
+              t.l = sisip(t.l, v)
+          else:
+              t.r = sisip(t.r, v)
+          return t
+      def inorder(t, out):
+          if t is None:
+              return
+          inorder(⟦t.l⟧, out)
+          out.append(⟦t.v⟧)
+          inorder(⟦t.r⟧, out)
+      akar = None
+      for v in map(int, input().split()):
+          akar = sisip(akar, v)
+      hasil = []
+      inorder(akar, hasil)
+      print(*hasil)
+    tests: ["5 3 8 1 4", "3 2 1", "9"]
+    hints: |
+      In-order berarti kiri, akar, lalu kanan.
+      Anak kiri adalah t.l.
+      Nilai simpul adalah t.v.
+  - id: dsa-m5-complexity
+    type: complexity
+    title: BST yang Miring
+    difficulty: 3
+    prompt: Bilangan 1, 2, 3, ..., n disisipkan BERURUTAN ke BST biasa. Berapa kompleksitas sisip satu nilai berikutnya terhadap n?
+    code: |
+      def sisip(t, v):
+          if t is None: return T(v)
+          if v < t.v: t.l = sisip(t.l, v)
+          else: t.r = sisip(t.r, v)
+          return t
+    answer: O(n)
+    explain: Data terurut membuat BST miring seperti linked list (semua ke kanan), sehingga tingginya n. Pohon seimbang (AVL atau red-black) mengatasi ini.
+    hints: |
+      Gambar BST setelah menyisip 1, 2, 3, 4.
+      Semua simpul berada di kanan.
+      Tinggi pohon = n.

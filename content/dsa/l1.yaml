@@ -1,0 +1,130 @@
+lesson:
+  - text: Graph adalah simpul yang dihubungkan sisi, dan biasa disimpan sebagai adjacency list. BFS (dengan queue) menjelajah lapis demi lapis, sehingga menemukan jarak TERPENDEK di graph tanpa bobot. DFS (rekursi atau stack) masuk sedalam mungkin, cocok untuk menghitung komponen atau mendeteksi siklus. Keduanya O(V + E).
+    code: |
+      from collections import deque
+      adj = {0: [1, 2], 1: [0, 3], 2: [0, 3], 3: [1, 2]}
+      jarak = {0: 0}
+      q = deque([0])
+      while q:
+          u = q.popleft()
+          for v in adj[u]:
+              if v not in jarak:
+                  jarak[v] = jarak[u] + 1
+                  q.append(v)
+      print(jarak)
+exercises:
+  - id: dsa-l1-labirin
+    type: write
+    title: Keluar dari Kastil Tanpa Batas
+    difficulty: 3
+    prompt: 'Baris 1 berisi R C, lalu R baris peta (. jalan, # dinding, S awal, E tujuan). Bergerak atas/bawah/kiri/kanan. Cetak langkah minimum dari S ke E, atau -1.'
+    tests: ["3 4\nS..#\n.#..\n...E", "2 2\nS#\n#E", "1 2\nSE"]
+    hints: |
+      BFS dari S, simpan jarak setiap sel.
+      Lewati sel di luar peta dan sel '#'.
+      Jarak E adalah jawabannya.
+    solution: |
+      from collections import deque
+      R, C = map(int, input().split())
+      g = [input() for _ in range(R)]
+      s = next((r, c) for r in range(R) for c in range(C) if g[r][c] == "S")
+      jarak = {s: 0}
+      q = deque([s])
+      jawab = -1
+      while q:
+          r, c = q.popleft()
+          if g[r][c] == "E":
+              jawab = jarak[(r, c)]
+              break
+          for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+              nr, nc = r + dr, c + dc
+              if 0 <= nr < R and 0 <= nc < C and g[nr][nc] != "#" and (nr, nc) not in jarak:
+                  jarak[(nr, nc)] = jarak[(r, c)] + 1
+                  q.append((nr, nc))
+      print(jawab)
+  - id: dsa-l1-komponen
+    type: write
+    title: Pulau-pulau Desa
+    difficulty: 2
+    prompt: Baris 1 berisi n (simpul 1..n) dan m. Lalu m baris "u v" (sisi tak berarah). Cetak banyaknya komponen terhubung.
+    tests: ["5 3\n1 2\n2 3\n4 5", "3 0", "4 3\n1 2\n2 3\n3 4"]
+    hints: |
+      Bangun adjacency list.
+      Untuk setiap simpul yang belum dikunjungi, jalankan DFS/BFS dan tambah hitungan.
+      Pakai stack supaya tidak terkena batas rekursi.
+    solution: |
+      n, m = map(int, input().split())
+      adj = [[] for _ in range(n + 1)]
+      for _ in range(m):
+          u, v = map(int, input().split())
+          adj[u].append(v)
+          adj[v].append(u)
+      dikunjungi = [False] * (n + 1)
+      komponen = 0
+      for s in range(1, n + 1):
+          if dikunjungi[s]:
+              continue
+          komponen += 1
+          st = [s]
+          dikunjungi[s] = True
+          while st:
+              u = st.pop()
+              for v in adj[u]:
+                  if not dikunjungi[v]:
+                      dikunjungi[v] = True
+                      st.append(v)
+      print(komponen)
+  - id: dsa-l1-fill-bfs
+    type: fill
+    title: Templat BFS
+    difficulty: 2
+    prompt: Lengkapi BFS yang mencetak jarak dari simpul 1 ke setiap simpul (−1 jika tak terjangkau).
+    code: |
+      from collections import deque
+      n, m = map(int, input().split())
+      adj = [[] for _ in range(n + 1)]
+      for _ in range(m):
+          u, v = map(int, input().split())
+          adj[u].append(v)
+          adj[v].append(u)
+      jarak = [-1] * (n + 1)
+      jarak[1] = 0
+      q = deque([1])
+      while q:
+          u = q.⟦popleft()⟧
+          for v in adj[u]:
+              if jarak[v] == ⟦-1⟧:
+                  jarak[v] = ⟦jarak[u] + 1⟧
+                  q.append(v)
+      print(*jarak[1:])
+    tests: ["4 3\n1 2\n2 3\n1 4", "3 1\n2 3", "1 0"]
+    hints: |
+      BFS mengambil dari DEPAN antrean.
+      Simpul belum dikunjungi bertanda -1.
+      Jarak tetangga = jarak u + 1.
+  - id: dsa-l1-dfs-urutan
+    type: write
+    title: Jejak Pengintai
+    difficulty: 2
+    prompt: Baris 1 berisi n dan m, lalu m sisi tak berarah. Cetak urutan kunjungan DFS rekursif dari simpul 1, dengan tetangga dikunjungi dari nomor terkecil.
+    tests: ["5 4\n1 2\n1 3\n2 4\n3 5", "3 2\n1 3\n3 2", "1 0"]
+    hints: |
+      Urutkan setiap adjacency list.
+      Tandai simpul saat dikunjungi, lalu rekursi ke tetangga yang belum dikunjungi.
+      Catat urutan kunjungannya.
+    solution: |
+      n, m = map(int, input().split())
+      adj = [[] for _ in range(n + 1)]
+      for _ in range(m):
+          u, v = map(int, input().split())
+          adj[u].append(v)
+          adj[v].append(u)
+      urut, lihat = [], set()
+      def dfs(u):
+          lihat.add(u)
+          urut.append(u)
+          for v in sorted(adj[u]):
+              if v not in lihat:
+                  dfs(v)
+      dfs(1)
+      print(*urut)

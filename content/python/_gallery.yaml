@@ -1,0 +1,206 @@
+# Solution Gallery: solusi alternatif untuk dibandingkan setelah soal lulus.
+# style: idiomatic (paling "Pythonic"), fastest (paling efisien), readable (paling mudah dibaca).
+# Setiap kode divalidasi saat build: harus lolos semua tes soalnya.
+py-f5-kabisat:
+  - style: readable
+    note: Aturan dipecah jadi tiga pertanyaan berurutan, persis seperti cara manusia mengecek kalender. Lebih panjang, tapi setiap cabang mudah diuji sendiri.
+    code: |
+      t = int(input())
+      if t % 400 == 0:
+          print("kabisat")
+      elif t % 100 == 0:
+          print("bukan")
+      elif t % 4 == 0:
+          print("kabisat")
+      else:
+          print("bukan")
+  - style: idiomatic
+    note: Jangan menulis ulang yang sudah ada di pustaka standar. calendar.isleap sudah teruji dan langsung terbaca maksudnya.
+    code: |
+      import calendar
+      print("kabisat" if calendar.isleap(int(input())) else "bukan")
+py-f5-max3:
+  - style: idiomatic
+    note: Ekspresi kondisional (x if syarat else y) meringkas dua if menjadi dua baris tanpa variabel sementara yang berubah-ubah.
+    code: |
+      a, b, c = map(int, input().split())
+      m = a if a > b else b
+      print(m if m > c else c)
+  - style: readable
+    note: Mengurutkan lalu ambil elemen terakhir sangat jelas maksudnya, tapi kerjanya O(n log n) dan lebih boros daripada membandingkan. Untuk tiga angka tidak terasa; untuk sejuta angka terasa.
+    code: |
+      angka = sorted(map(int, input().split()))
+      print(angka[-1])
+py-f6-jumlah-genap:
+  - style: fastest
+    note: "Bilangan genap sampai n adalah 2·(1 + 2 + … + k) dengan k = n // 2, jadi jumlahnya k·(k+1). O(1): n = 10^18 pun selesai seketika."
+    code: |
+      k = int(input()) // 2
+      print(k * (k + 1))
+  - style: readable
+    note: Loop eksplisit dengan if. Paling dekat dengan kalimat soalnya, cocok saat baru belajar, tapi O(n) dan lebih panjang.
+    code: |
+      n = int(input())
+      total = 0
+      for i in range(1, n + 1):
+          if i % 2 == 0:
+              total += i
+      print(total)
+py-f6-faktor:
+  - style: fastest
+    note: Pembagi selalu berpasangan (i dan n // i), jadi cukup cek sampai √n. Dari O(n) menjadi O(√n); untuk n = 10^12 bedanya sejuta kali lipat.
+    code: |
+      n = int(input())
+      kecil, besar = [], []
+      i = 1
+      while i * i <= n:
+          if n % i == 0:
+              kecil.append(i)
+              if i != n // i:
+                  besar.append(n // i)
+          i += 1
+      print(*(kecil + besar[::-1]))
+  - style: readable
+    note: Loop biasa dengan list. Sama cepatnya dengan versi list comprehension; pilih yang paling nyaman dibaca timmu.
+    code: |
+      n = int(input())
+      pembagi = []
+      for i in range(1, n + 1):
+          if n % i == 0:
+              pembagi.append(str(i))
+      print(" ".join(pembagi))
+py-f7-fpb:
+  - style: idiomatic
+    note: math.gcd sudah ada sejak Python 3.5 (ditulis dalam C, jadi lebih cepat). Di soal ini kamu diminta menulis Euclid sendiri; di proyek nyata, pakai pustaka.
+    code: |
+      from math import gcd
+      a, b = map(int, input().split())
+      print(gcd(a, b))
+  - style: readable
+    note: "Versi rekursif paling mirip definisi matematisnya: fpb(a, 0) = a, fpb(a, b) = fpb(b, a mod b)."
+    code: |
+      def fpb(a, b):
+          if b == 0:
+              return a
+          return fpb(b, a % b)
+      a, b = map(int, input().split())
+      print(fpb(a, b))
+py-f7-palindrom:
+  - style: fastest
+    note: Dua penunjuk dari ujung ke tengah. Tidak membuat salinan string dan berhenti di perbedaan pertama. Untuk kata pendek, s[::-1] tetap lebih cepat karena berjalan di C.
+    code: |
+      def palindrom(s):
+          i, j = 0, len(s) - 1
+          while i < j:
+              if s[i] != s[j]:
+                  return False
+              i += 1
+              j -= 1
+          return True
+      print("ya" if palindrom(input()) else "tidak")
+py-f7-fibonacci:
+  - style: readable
+    note: Rekursi persis seperti definisinya. Tanpa @cache kompleksitasnya O(2^n); dengan @cache setiap fib(k) dihitung sekali sehingga menjadi O(n).
+    code: |
+      from functools import cache
+
+      @cache
+      def fib(n):
+          if n < 2:
+              return n
+          return fib(n - 1) + fib(n - 2)
+
+      print(fib(int(input())))
+py-l3-prima:
+  - style: readable
+    note: Loop eksplisit dengan return lebih awal. Lebih panjang daripada all(...), tapi setiap kasus tepi (n ≤ 1) terlihat jelas.
+    code: |
+      def adalah_prima(n):
+          if n < 2:
+              return False
+          d = 2
+          while d * d <= n:
+              if n % d == 0:
+                  return False
+              d += 1
+          return True
+      assert adalah_prima(2)
+      assert adalah_prima(97)
+      assert not adalah_prima(1)
+      assert not adalah_prima(0)
+      assert not adalah_prima(91)
+      assert not adalah_prima(-7)
+      print("OK")
+py-m1-frekuensi:
+  - style: idiomatic
+    note: Counter adalah dict khusus untuk menghitung. Urutan kemunculan pertama tetap terjaga karena dict di Python mengingat urutan sisip.
+    code: |
+      from collections import Counter
+      for kata, n in Counter(input().split()).items():
+          print(kata, n)
+py-m2-vokal:
+  - style: idiomatic
+    note: Di Python, True bernilai 1, jadi sum() atas ekspresi boolean langsung menghitung yang benar.
+    code: |
+      print(sum(c in "aiueo" for c in input().lower()))
+  - style: readable
+    note: Penghitung manual. Paling mudah di-debug langkah demi langkah di Step Debugger.
+    code: |
+      teks = input().lower()
+      jumlah = 0
+      for huruf in teks:
+          if huruf in "aiueo":
+              jumlah += 1
+      print(jumlah)
+py-m2-rle:
+  - style: idiomatic
+    note: itertools.groupby mengelompokkan elemen berurutan yang sama, pas untuk run-length encoding. Tidak ada indeks yang bisa meleset satu.
+    code: |
+      from itertools import groupby
+      print("".join(h + str(len(list(g))) for h, g in groupby(input())))
+  - style: fastest
+    note: Kumpulkan potongan di list lalu join sekali. Menyambung string dengan += berulang bisa O(n²) di interpreter selain CPython.
+    code: |
+      s = input()
+      bagian = []
+      n = 1
+      for i in range(1, len(s) + 1):
+          if i < len(s) and s[i] == s[i - 1]:
+              n += 1
+          else:
+              bagian.append(s[i - 1] + str(n))
+              n = 1
+      print("".join(bagian))
+py-m5-counter:
+  - style: readable
+    note: Urutkan berdasarkan (−jumlah, huruf) lalu ambil yang pertama. Aturan seri terlihat langsung dari kunci pengurutan.
+    code: |
+      from collections import Counter
+      urut = sorted(Counter(input()).items(), key=lambda x: (-x[1], x[0]))
+      print(*urut[0])
+  - style: fastest
+    note: Tanpa import, satu kali lewat untuk menghitung, satu kali lewat untuk memilih. Seri ditangani dengan membandingkan huruf.
+    code: |
+      hitung = {}
+      for h in input():
+          hitung[h] = hitung.get(h, 0) + 1
+      terbaik = None
+      for h, n in hitung.items():
+          if terbaik is None or n > hitung[terbaik] or (n == hitung[terbaik] and h < terbaik):
+              terbaik = h
+      print(terbaik, hitung[terbaik])
+py-segitiga:
+  - style: fastest
+    note: Bangun seluruh teks dulu, lalu print sekali. Untuk n besar, satu print jauh lebih cepat daripada n kali print.
+    code: |
+      n = int(input())
+      print("\n".join("*" * i for i in range(1, n + 1)))
+py-m1-unik:
+  - style: readable
+    note: Versi tanpa set. Mudah dipahami tapi O(n²), karena `in` pada list mengecek satu per satu. set membuatnya O(n).
+    code: |
+      dilihat = []
+      for x in input().split():
+          if x not in dilihat:
+              dilihat.append(x)
+      print(len(dilihat))

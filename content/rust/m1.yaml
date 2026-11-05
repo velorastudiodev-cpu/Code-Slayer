@@ -1,0 +1,256 @@
+lesson:
+- text: 'Vec<T> adalah daftar yang bisa bertambah: vec![3, 1, 2], push, len(). Saat sebuah Vec diberikan ke variabel lain, kepemilikannya PINDAH (move); pakai .clone() kalau butuh salinan, atau &v untuk
+    meminjam.'
+  code: |
+    fn main() {
+        let mut v = vec![3, 1, 2];
+        v.push(9);
+        let salinan = v.clone();
+        v.sort();
+        println!("{:?} {:?} {}", v, salinan, v.len());
+    }
+- text: HashMap menyimpan pasangan kunci-nilai; BTreeMap sama tapi kuncinya selalu terurut. entry(k).or_insert(0) membuat nilai awal kalau kunci belum ada, cocok untuk menghitung.
+  code: |
+    use std::collections::BTreeMap;
+
+    fn main() {
+        let mut m = BTreeMap::new();
+        for k in ["b", "a", "b"] {
+            *m.entry(k).or_insert(0) += 1;
+        }
+        for (k, v) in &m {
+            println!("{} {}", k, v);
+        }
+    }
+exercises:
+- id: rs-m1-balik
+  type: write
+  title: Barisan Terbalik
+  difficulty: 1
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan-bilangan itu dalam urutan terbalik, dipisah spasi.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    5
+    1 2 3 4 5
+  - |-
+    1
+    42
+  - |-
+    3
+    -1 0 -1
+  hints: |
+    Simpan semua bilangan ke array/list.
+    Telusuri dari indeks terakhir ke 0.
+    Gabungkan dengan spasi.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: usize = it.next().unwrap().parse().unwrap();
+        let xs: Vec<&str> = (0..n).map(|_| it.next().unwrap()).collect();
+        let balik: Vec<&str> = xs.into_iter().rev().collect();
+        println!("{}", balik.join(" "));
+    }
+- id: rs-m1-frekuensi
+  type: write
+  title: Sensus Kata
+  difficulty: 2
+  prompt: Input berisi beberapa kata (dipisah spasi/baris). Cetak setiap kata unik beserta jumlahnya, "kata jumlah" per baris, urut abjad.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - iblis slayer iblis bulan
+  - a
+  - |-
+    b a b
+    a c b
+  hints: |
+    Pakai map/dictionary: kata → jumlah.
+    Ambil semua kunci lalu urutkan.
+    Cetak "kata jumlah".
+  solution: |
+    use std::collections::BTreeMap;
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut jumlah: BTreeMap<&str, usize> = BTreeMap::new();
+        for k in input.split_whitespace() {
+            *jumlah.entry(k).or_insert(0) += 1;
+        }
+        for (k, v) in &jumlah {
+            println!("{} {}", k, v);
+        }
+    }
+- id: rs-m1-unik
+  type: write
+  title: Pasukan Tanpa Kembar
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n bilangan. Cetak bilangan unik dalam urutan menaik, dipisah spasi.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    6
+    3 1 3 2 1 3
+  - |-
+    1
+    7
+  - |-
+    4
+    -2 5 -2 0
+  hints: |
+    Set/himpunan otomatis membuang duplikat.
+    Urutkan hasilnya.
+    Gabungkan dengan spasi.
+  solution: |
+    use std::collections::BTreeSet;
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: usize = it.next().unwrap().parse().unwrap();
+        let set: BTreeSet<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();
+        let out: Vec<String> = set.iter().map(|x| x.to_string()).collect();
+        println!("{}", out.join(" "));
+    }
+- id: rs-m1-diatas
+  type: write
+  title: Di Atas Rata-rata
+  difficulty: 2
+  prompt: Baris pertama n, baris kedua n nilai. Cetak banyaknya nilai yang lebih besar dari rata-rata.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - |-
+    5
+    10 20 30 40 50
+  - |-
+    3
+    5 5 5
+  - |-
+    4
+    1 1 1 9
+  hints: |
+    Hitung rata-rata dulu (desimal).
+    Lalu hitung nilai > rata-rata.
+    Butuh dua kali menelusuri data.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: usize = it.next().unwrap().parse().unwrap();
+        let xs: Vec<f64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();
+        let rata = xs.iter().sum::<f64>() / n as f64;
+        println!("{}", xs.iter().filter(|&&x| x > rata).count());
+    }
+- id: rs-m1-predict
+  type: predict
+  title: Koleksi Berbagi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn tambah(v: &mut Vec<i32>, x: i32) {
+        v.push(x);
+    }
+
+    fn main() {
+        let mut a = vec![1, 2, 3];
+        let mut b = a.clone();
+        b[0] = 9;
+        tambah(&mut a, 4);
+        println!("{:?} {:?}", a, b);
+        let pertama = a[0];
+        a[0] = 7;
+        println!("{} {} {}", pertama, a[0], a.len());
+    }
+  hints: |
+    Perhatikan apakah koleksi disalin atau dibagi (referensi).
+    Mengubah lewat referensi terlihat dari nama lain.
+    Telusuri isi koleksi setelah tiap perubahan.
+  solution: x
+- id: rs-m1-bug
+  type: bughunt
+  title: Indeks Melewati Batas
+  difficulty: 2
+  prompt: Program menjumlah semua elemen array, tapi crash karena indeks di luar batas. Temukan baris yang salah.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: usize = it.next().unwrap().parse().unwrap();
+        let xs: Vec<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();
+        let mut total = 0;
+        for i in 0..=xs.len() {
+            total += xs[i];
+        }
+        println!("{}", total);
+    }
+  bug_line: 10
+  tests:
+  - |-
+    3
+    1 2 3
+  - |-
+    1
+    5
+  - |-
+    4
+    2 2 2 2
+  hints: |
+    Indeks terakhir = panjang - 1.
+    Kondisi loop memakai <=.
+    Gunakan < panjang.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: usize = it.next().unwrap().parse().unwrap();
+        let xs: Vec<i64> = (0..n).map(|_| it.next().unwrap().parse().unwrap()).collect();
+        let mut total = 0;
+        for i in 0..xs.len() {
+            total += xs[i];
+        }
+        println!("{}", total);
+    }

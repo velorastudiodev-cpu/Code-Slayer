@@ -1,0 +1,69 @@
+lesson:
+- text: 'Go hanya punya satu kata kunci loop: for. Bentuk klasik for i := 0; i < n; i++, bentuk "while" for kondisi { }, dan loop tanpa akhir for { } yang dihentikan dengan break.'
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfor i := 1; i <= 3; i++ {\n\t\tfmt.Print(i, \" \")\n\t}\n\tn := 10\n\tfor n > 1 {\n\t\tn /= 2\n\t}\n\tfmt.Println(\"|\", n)\n}\n"
+- text: 'for range menelusuri slice, string, atau map: indeks dan nilainya. strings.Repeat membuat teks berulang, praktis untuk pola.'
+  code: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tfor i, nama := range []string{\"Giyu\", \"Sanemi\"} {\n\t\tfmt.Println(i, nama)\n\t}\n\tfmt.Println(strings.Repeat(\"*\"\
+    , 4))\n}\n"
+exercises:
+- id: go-f6-segitiga
+  type: write
+  title: Formasi Segitiga
+  difficulty: 1
+  prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - '3'
+  - '1'
+  - '5'
+  hints: |
+    Loop i dari 1 sampai n.
+    Baris ke-i = "*" diulang i kali.
+    Setiap baris diakhiri newline.
+  solution: "package main\n\nimport (\n\t\"fmt\"\n\t\"strings\"\n)\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\tfor i := 1; i <= n; i++ {\n\t\tfmt.Println(strings.Repeat(\"*\", i))\n\t}\n}\n"
+- id: go-f6-prima
+  type: write
+  title: Uji Bilangan Prima
+  difficulty: 2
+  prompt: Baca n (n ≤ 10^9). Cetak "prima" atau "bukan". Cukup periksa pembagi sampai akar n.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\t// tulis kodemu di sini\n\tfmt.Println()\n}\n"
+  tests:
+  - '7'
+  - '1'
+  - '91'
+  - '2'
+  - '999999937'
+  - '1000000000'
+  hints: |
+    1 bukan prima.
+    Loop d mulai 2 selama d * d <= n.
+    Pakai tipe 64-bit supaya d * d tidak overflow.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int64\n\tfmt.Scan(&n)\n\tprima := n > 1\n\tfor d := int64(2); d*d <= n; d++ {\n\t\tif n%d == 0 {\n\t\t\tprima = false\n\t\t\tbreak\n\
+    \t\t}\n\t}\n\tif prima {\n\t\tfmt.Println(\"prima\")\n\t} else {\n\t\tfmt.Println(\"bukan\")\n\t}\n}\n"
+- id: go-f6-predict
+  type: predict
+  title: Loop Berlapis
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfor i := 0; i < 5; i++ {\n\t\tif i == 1 {\n\t\t\tcontinue\n\t\t}\n\t\tif i == 4 {\n\t\t\tbreak\n\t\t}\n\t\tfmt.Print(i, \" \")\n\t}\n\ttotal :=\
+    \ 0\n\tfor a := 1; a <= 2; a++ {\n\t\tfor b := 1; b <= 3; b++ {\n\t\t\ttotal += a * b\n\t\t}\n\t}\n\tfmt.Println(\"|\", total)\n}\n"
+  hints: |
+    continue melompati sisa satu putaran.
+    break menghentikan loop sepenuhnya.
+    Telusuri nilai i satu per satu.
+  solution: x
+- id: go-f6-bug
+  type: bughunt
+  title: Satu Tebasan Hilang
+  difficulty: 1
+  prompt: Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan baris yang salah.
+  starter: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\ttotal := 0\n\tfor i := 1; i < n; i++ {\n\t\ttotal += i\n\t}\n\tfmt.Println(total)\n}\n"
+  bug_line: 9
+  tests:
+  - '3'
+  - '10'
+  - '1'
+  hints: |
+    Apakah n sendiri ikut dijumlah?
+    Batas loop berhenti sebelum n.
+    Ganti batasnya supaya n ikut.
+  solution: "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tvar n int\n\tfmt.Scan(&n)\n\ttotal := 0\n\tfor i := 1; i <= n; i++ {\n\t\ttotal += i\n\t}\n\tfmt.Println(total)\n}\n"

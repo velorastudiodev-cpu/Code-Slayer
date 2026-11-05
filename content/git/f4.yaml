@@ -1,0 +1,114 @@
+lesson:
+- text: Branch adalah penanda bergerak yang menunjuk sebuah commit. Membuat branch untuk setiap fitur menjaga main tetap stabil. git switch -c nama membuat branch baru sekaligus pindah ke sana (sama dengan
+    git checkout -b nama).
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    git switch -c fitur-peta
+    echo "peta" > peta.txt
+    git add peta.txt
+    git commit -q -m "Tambah peta"
+    git branch
+    git switch main
+    ls
+- text: git branch tanpa argumen menampilkan daftar branch (* = branch aktif). git branch -d nama menghapus branch yang sudah digabung.
+exercises:
+- id: git-f4-buat
+  type: write
+  title: Jalan Fitur Baru
+  difficulty: 1
+  prompt: Buat branch fitur-login dari main, pindah ke sana, buat file login.txt berisi "form login", lalu commit dengan pesan "Tambah login".
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Buat dan pindah branch sekaligus.
+    git switch -c nama
+    Lalu buat file, add, commit.
+  solution: |
+    git switch -c fitur-login
+    echo "form login" > login.txt
+    git add login.txt
+    git commit -m "Tambah login"
+- id: git-f4-predict
+  type: predict
+  title: Commit di Branch Mana?
+  difficulty: 2
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    git branch fitur
+    echo 2 >> misi.txt
+    git commit -q -am "Kerja di main"
+    git switch -q fitur
+    echo x > x.txt
+    git add x.txt
+    git commit -q -m "Kerja di fitur"
+    git log --format=%s main | head -1
+    git log --format=%s fitur | head -1
+    git rev-list --count fitur
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+  hints: |
+    git branch hanya membuat branch, TIDAK pindah.
+    Commit "Kerja di main" terjadi sebelum pindah.
+    fitur bercabang dari "Misi pertama".
+  solution: x
+- id: git-f4-bug
+  type: bughunt
+  title: Commit Nyasar
+  difficulty: 2
+  prompt: Perintah ini dimaksudkan untuk membuat commit "Tambah peta" di branch fitur-peta, tapi commit-nya malah masuk ke main. Temukan baris yang salah.
+  starter: |
+    git branch fitur-peta
+    echo "peta" > peta.txt
+    git add peta.txt
+    git commit -m "Tambah peta"
+  bug_line: 1
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    git branch hanya membuat branch.
+    Setelah membuat, kita masih di main.
+    Pakai git switch -c untuk membuat sekaligus pindah.
+  solution: |
+    git switch -c fitur-peta
+    echo "peta" > peta.txt
+    git add peta.txt
+    git commit -m "Tambah peta"
+- id: git-f4-switch
+  type: quiz
+  title: Membuat dan Pindah
+  difficulty: 1
+  prompt: Perintah yang membuat branch baru bernama latihan DAN langsung pindah ke sana adalah...
+  options:
+  - git switch -c latihan
+  - git branch latihan
+  - git switch latihan
+  - git merge latihan
+  explain: git switch -c (atau git checkout -b) membuat lalu pindah. git branch latihan hanya membuat; git switch latihan hanya pindah ke branch yang sudah ada.
+  hints: |
+    Satu perintah, dua efek.
+    -c = create.
+    git switch -c

@@ -1,0 +1,63 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: 'Index mempercepat pencarian seperti indeks di buku: CREATE INDEX nama ON tabel(kolom). EXPLAIN QUERY PLAN menunjukkan apakah database memakai index (SEARCH ... USING INDEX) atau membaca seluruh
+    tabel (SCAN).'
+  code: |
+    EXPLAIN QUERY PLAN SELECT * FROM misi WHERE tanggal = '2026-03-15';
+exercises:
+- id: sql-m4-index
+  type: write
+  title: Indeks Tanggal Misi
+  difficulty: 2
+  prompt: Buat index bernama idx_misi_tanggal pada kolom tanggal di tabel misi. (Pemeriksa menjalankan EXPLAIN QUERY PLAN untuk pencarian berdasarkan tanggal.)
+  after: |
+    EXPLAIN QUERY PLAN SELECT * FROM misi WHERE tanggal = '2026-03-15';
+  hints: |
+    CREATE INDEX nama ON tabel(kolom).
+    Nama index harus persis idx_misi_tanggal.
+    Kolomnya tanggal.
+  solution: |
+    CREATE INDEX idx_misi_tanggal ON misi(tanggal);
+- id: sql-m4-scan
+  type: predict
+  title: Membaca Seluruh Tabel
+  difficulty: 1
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    EXPLAIN QUERY PLAN SELECT * FROM slayer WHERE umur = 15;
+  hints: |
+    Belum ada index untuk kolom umur.
+    Tanpa index, SQLite membaca semua baris.
+    Kolom terakhir berisi teks rencana: SCAN ...
+  solution: x
+- id: sql-m4-unique
+  type: write
+  title: Index Unik
+  difficulty: 2
+  prompt: Buat UNIQUE INDEX bernama idx_iblis_nama pada iblis(nama). (Pemeriksa mencoba memasukkan nama iblis kembar.)
+  after: |
+    INSERT OR IGNORE INTO iblis (nama, peringkat) VALUES ('Akaza', 'Tiruan'), ('Kaigaku', 'Upper Moon 6');
+    SELECT nama FROM iblis ORDER BY nama;
+  hints: |
+    UNIQUE INDEX sekaligus menolak nilai kembar.
+    CREATE UNIQUE INDEX nama ON tabel(kolom).
+    Namanya idx_iblis_nama.
+  solution: |
+    CREATE UNIQUE INDEX idx_iblis_nama ON iblis(nama);

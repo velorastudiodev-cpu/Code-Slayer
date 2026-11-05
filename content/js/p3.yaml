@@ -1,0 +1,142 @@
+lesson:
+  - text: Di JS, banyak design pattern cukup ditulis sebagai objek dan fungsi. Strategy adalah objek yang memetakan nama ke fungsi. Factory adalah fungsi yang memilih class untuk dibuat. Builder adalah method berantai yang mengembalikan this.
+    code: |
+      const OPS = { "+": (a, b) => a + b, "*": (a, b) => a * b }
+      console.log(OPS["*"](6, 7))
+      class Pesan {
+        #teks = []
+        tambah(t) { this.#teks.push(t); return this }
+        buat() { return this.#teks.join(" ") }
+      }
+      console.log(new Pesan().tambah("Kaa!").tambah("Misi").buat())
+  - text: Observer (event emitter) memungkinkan banyak pendengar bereaksi pada satu kejadian. Ini dasar dari DOM event dan EventEmitter di Node. Middleware (pipeline) mengalirkan data melewati serangkaian fungsi, seperti di Express.
+    code: |
+      class Emitter {
+        #h = {}
+        on(e, f) { (this.#h[e] ??= []).push(f); return this }
+        emit(e, ...a) { (this.#h[e] ?? []).forEach(f => f(...a)) }
+      }
+      const gagak = new Emitter()
+      gagak.on("misi", m => console.log("Tanjiro:", m)).on("misi", m => console.log("Zenitsu:", m))
+      gagak.emit("misi", "iblis di utara")
+exercises:
+  - id: js-p3-strategy
+    type: write
+    title: Kalkulator Strategi
+    difficulty: 2
+    prompt: 'Setiap baris berisi "a op b". Hitung dengan objek strategi untuk op +, -, *, dan // (pembagian bulat ke bawah). Jika op tidak dikenal, cetak "operator tidak dikenal".'
+    tests: ["3 + 4\n10 // 3\n2 ^ 5", "-7 // 2"]
+    hints: |
+      const OPS = { "+": (a, b) => a + b, ... }
+      Math.floor untuk //.
+      op in OPS memeriksa keberadaan kunci.
+    solution: |
+      const OPS = { "+": (a, b) => a + b, "-": (a, b) => a - b, "*": (a, b) => a * b, "//": (a, b) => Math.floor(a / b) }
+      let baris
+      while ((baris = readline()) !== null) {
+        const [a, op, b] = baris.split(" ")
+        console.log(op in OPS ? OPS[op](Number(a), Number(b)) : "operator tidak dikenal")
+      }
+  - id: js-p3-emitter
+    type: write
+    title: Jaringan Gagak
+    difficulty: 3
+    prompt: 'Buat class Emitter dengan on(event, fn), off(event, fn), dan emit(event, data). Perintah per baris berupa "sub <nama>", "unsub <nama>", atau "pub <pesan...>". Untuk setiap pub, setiap pelanggan aktif mencetak "<nama> menerima: <pesan>". Jika tidak ada pelanggan, cetak "tidak ada yang mendengar".'
+    tests: ["pub halo\nsub Tanjiro\nsub Zenitsu\npub iblis di utara\nunsub Tanjiro\npub pulang", "sub A\nunsub A\npub x"]
+    hints: |
+      Simpan fungsi pendengar per nama supaya bisa di-off.
+      off memfilter fungsi yang sama (===).
+      emit mengembalikan jumlah pendengar untuk memeriksa "tidak ada".
+    solution: |
+      class Emitter {
+        #h = {}
+        on(e, f) { (this.#h[e] ??= []).push(f) }
+        off(e, f) { this.#h[e] = (this.#h[e] ?? []).filter(g => g !== f) }
+        emit(e, d) { const hs = this.#h[e] ?? []; hs.forEach(f => f(d)); return hs.length }
+      }
+      const em = new Emitter()
+      const fungsi = {}
+      let baris
+      while ((baris = readline()) !== null) {
+        const i = baris.indexOf(" ")
+        const [cmd, arg] = [baris.slice(0, i), baris.slice(i + 1)]
+        if (cmd === "sub") em.on("pesan", (fungsi[arg] = p => console.log(`${arg} menerima: ${p}`)))
+        else if (cmd === "unsub") em.off("pesan", fungsi[arg])
+        else if (!em.emit("pesan", arg)) console.log("tidak ada yang mendengar")
+      }
+  - id: js-p3-pipeline
+    type: write
+    title: Pipeline Middleware
+    difficulty: 2
+    prompt: 'Buat fungsi pipe(...fns) yang mengembalikan fungsi x => fns diterapkan berurutan. Baris 1 berisi teks. Baris 2 berisi daftar langkah (trim, upper, lower, balik, seru) dipisah spasi. Cetak hasil teks setelah melewati pipeline.'
+    tests: ["  halo slayer  \ntrim upper seru", "Kaa\nbalik lower"]
+    hints: |
+      pipe = (...fns) => x => fns.reduce((v, f) => f(v), x)
+      Buat objek LANGKAH yang memetakan nama ke fungsi.
+      seru menambah "!" di akhir.
+    solution: |
+      const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x)
+      const LANGKAH = { trim: s => s.trim(), upper: s => s.toUpperCase(), lower: s => s.toLowerCase(), balik: s => [...s].reverse().join(""), seru: s => s + "!" }
+      const teks = readline()
+      console.log(pipe(...readline().split(" ").map(n => LANGKAH[n]))(teks))
+  - id: js-p3-predict
+    type: predict
+    title: Builder Berantai
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      class Query {
+        #bagian = []
+        pilih(...k) { this.#bagian.push(`SELECT ${k.join(", ")}`); return this }
+        dari(t) { this.#bagian.push(`FROM ${t}`); return this }
+        di(s) { this.#bagian.push(`WHERE ${s}`); return this }
+        toString() { return this.#bagian.join(" ") }
+      }
+      console.log(`${new Query().pilih("nama", "rank").dari("slayer").di("umur < 18")}`)
+    hints: |
+      Setiap method mengembalikan this, sehingga bisa dirantai.
+      Bagian digabung dengan spasi.
+      Template literal memanggil toString().
+    solution: x
+  - id: js-p3-bug-factory
+    type: bughunt
+    title: Pabrik Kehilangan Cetakan
+    difficulty: 2
+    prompt: Factory buat(jenis) harus membuat objek sesuai jenis. Untuk jenis yang tidak dikenal harus memakai Hewan, tapi program crash. Temukan bug-nya.
+    starter: |
+      class Hewan { suara() { return "..." } }
+      class Gagak extends Hewan { suara() { return "Kaa!" } }
+      const JENIS = { gagak: Gagak }
+      const buat = jenis => new JENIS[jenis]()
+      for (const j of readline().split(" ")) console.log(buat(j).suara())
+    bug_line: 4
+    tests: ["gagak", "gagak rubah"]
+    hints: |
+      JENIS["rubah"] adalah undefined.
+      new undefined() melempar TypeError.
+      new (JENIS[jenis] ?? Hewan)()
+    solution: |
+      class Hewan { suara() { return "..." } }
+      class Gagak extends Hewan { suara() { return "Kaa!" } }
+      const JENIS = { gagak: Gagak }
+      const buat = jenis => new (JENIS[jenis] ?? Hewan)()
+      for (const j of readline().split(" ")) console.log(buat(j).suara())
+  - id: js-p3-review
+    type: review
+    title: Review Event Emitter
+    difficulty: 2
+    prompt: Class ini crash saat dipakai. Tandai baris yang bermasalah.
+    code: |
+      class Emitter {
+        on(e, f) { this.h[e].push(f) }
+        emit(e, d) { this.h[e].forEach(f => f(d)) }
+      }
+    issues:
+      - line: 2
+        text: this.h tidak pernah diinisialisasi, dan this.h[e] belum ada. Buat h = {} lalu pakai (this.h[e] ??= []).push(f).
+      - line: 3
+        text: emit crash kalau event belum punya listener. Pakai (this.h[e] ?? []).forEach.
+    hints: |
+      Di mana this.h dibuat?
+      Apa nilai this.h[e] untuk event baru?
+      Kedua method punya masalah yang mirip.

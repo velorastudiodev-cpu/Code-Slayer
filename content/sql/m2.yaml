@@ -1,0 +1,72 @@
+setup: |
+  CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);
+  INSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);
+  CREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);
+  INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES
+    ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),
+    ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);
+  CREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);
+  INSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');
+  CREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);
+  INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES
+    (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),
+    (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),
+    (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);
+  CREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);
+  INSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);
+  CREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);
+  INSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');
+lesson:
+- text: 'CREATE TABLE mendefinisikan kolom dan tipenya. INTEGER PRIMARY KEY di SQLite otomatis bernomor. Pilih tipe yang sesuai: INTEGER, REAL, TEXT.'
+  code: |
+    CREATE TABLE gagak (id INTEGER PRIMARY KEY, nama TEXT, tuan TEXT);
+    INSERT INTO gagak (nama, tuan) VALUES ('Matsuemon', 'Tanjiro');
+    SELECT * FROM gagak;
+- text: ALTER TABLE menambah kolom ke tabel yang sudah ada. Baris lama mendapat nilai DEFAULT (atau NULL kalau tidak ada default).
+  code: |
+    ALTER TABLE slayer ADD COLUMN aktif INTEGER DEFAULT 1;
+    SELECT nama, aktif FROM slayer LIMIT 2;
+exercises:
+- id: sql-m2-create
+  type: write
+  title: Buku Gagak Kasugai
+  difficulty: 2
+  prompt: Buat tabel gagak dengan kolom id (INTEGER PRIMARY KEY), nama (TEXT), dan tuan (TEXT). (Data contoh dimasukkan dan dibaca setelah kodemu.)
+  after: |
+    INSERT INTO gagak (nama, tuan) VALUES ('Matsuemon', 'Tanjiro'), ('Chuntaro', 'Zenitsu');
+    SELECT id, nama, tuan FROM gagak ORDER BY id;
+  hints: |
+    CREATE TABLE nama (kolom tipe, ...).
+    INTEGER PRIMARY KEY bernomor otomatis.
+    Tiga kolom: id, nama, tuan.
+  solution: |
+    CREATE TABLE gagak (id INTEGER PRIMARY KEY, nama TEXT, tuan TEXT);
+- id: sql-m2-alter
+  type: write
+  title: Kolom Status Aktif
+  difficulty: 2
+  prompt: Tambahkan kolom aktif (INTEGER) ke tabel slayer dengan nilai bawaan 1. (Diperiksa setelah kodemu.)
+  tests:
+  - ''
+  - INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);
+  samples: 1
+  after: |
+    SELECT nama, aktif FROM slayer ORDER BY id;
+  hints: |
+    ALTER TABLE tabel ADD COLUMN kolom tipe.
+    Nilai bawaan ditulis dengan DEFAULT.
+    DEFAULT 1
+  solution: |
+    ALTER TABLE slayer ADD COLUMN aktif INTEGER DEFAULT 1;
+- id: sql-m2-typeof
+  type: predict
+  title: Tipe yang Tersimpan
+  difficulty: 2
+  prompt: Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).
+  code: |
+    SELECT typeof(umur), typeof(nama), typeof(pangkat_id), typeof(umur / 2.0) FROM slayer WHERE id = 1;
+  hints: |
+    typeof() menyebut tipe nilai yang tersimpan.
+    Angka bulat = integer, teks = text.
+    Pembagian dengan 2.0 menghasilkan real.
+  solution: x

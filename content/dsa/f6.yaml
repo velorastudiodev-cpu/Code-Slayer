@@ -1,0 +1,116 @@
+lesson:
+  - text: Sorting adalah fondasi banyak algoritma. Bubble, selection, dan insertion sort bernilai O(n²), mudah dipahami tapi lambat. Merge sort dan quick sort bernilai O(n log n). Di Python, sorted() dan list.sort() memakai Timsort O(n log n) dan stabil (urutan elemen yang sama dipertahankan).
+    code: |
+      data = [("Zenitsu", 75), ("Tanjiro", 90), ("Inosuke", 90)]
+      print(sorted(data, key=lambda x: (-x[1], x[0])))
+  - text: key= menentukan apa yang dibandingkan. Mengurutkan berdasarkan beberapa kriteria cukup dengan tuple, dan tanda minus membalik urutan angka. Tonton bubble, insertion, merge, dan quick sort di Visualizer untuk melihat perbedaannya.
+    code: |
+      kata = ["api", "air", "petir", "batu"]
+      print(sorted(kata, key=len), sorted(kata, key=lambda k: (len(k), k)))
+exercises:
+  - id: dsa-f6-urut
+    type: write
+    title: Papan Peringkat Korps
+    difficulty: 2
+    prompt: Baris 1 berisi n, lalu n baris "nama nilai". Cetak urut dari nilai tertinggi. Jika nilai sama, urut menurut nama (abjad).
+    tests: ["4\nZenitsu 75\nTanjiro 90\nInosuke 90\nKanao 80", "1\nGiyu 100"]
+    hints: |
+      Simpan sebagai pasangan (nama, nilai int).
+      key=lambda x: (-x[1], x[0])
+      Cetak "nama nilai" per baris.
+    solution: |
+      n = int(input())
+      data = [(nama, int(v)) for nama, v in (input().split() for _ in range(n))]
+      for nama, v in sorted(data, key=lambda x: (-x[1], x[0])):
+          print(nama, v)
+  - id: dsa-f6-gabung
+    type: write
+    title: Gabung Dua Pasukan
+    difficulty: 2
+    prompt: Dua baris masing-masing berisi bilangan terurut naik. Gabungkan menjadi satu urutan terurut dalam O(n + m) dengan dua pointer (inti merge sort).
+    tests: ["1 4 9\n2 3 10 11", "5\n1 2 3", "1 1\n1"]
+    hints: |
+      Pointer i untuk list pertama dan j untuk list kedua.
+      Ambil yang lebih kecil, lalu majukan pointer-nya.
+      Setelah salah satu habis, tambahkan sisa list lainnya.
+    solution: |
+      a = list(map(int, input().split()))
+      b = list(map(int, input().split()))
+      i = j = 0
+      hasil = []
+      while i < len(a) and j < len(b):
+          if a[i] <= b[j]:
+              hasil.append(a[i]); i += 1
+          else:
+              hasil.append(b[j]); j += 1
+      print(*(hasil + a[i:] + b[j:]))
+  - id: dsa-f6-trace-bubble
+    type: trace
+    title: Jejak Satu Putaran Bubble
+    difficulty: 2
+    prompt: Satu putaran bubble sort. Isi nilai i dan a setiap kali baris 4 (pertukaran) selesai dijalankan.
+    code: |
+      a = [5, 1, 4, 2]
+      for i in range(len(a) - 1):
+          if a[i] > a[i + 1]:
+              a[i], a[i + 1] = a[i + 1], a[i]
+    line: 4
+    vars: [i, a]
+    hints: |
+      Baris 4 hanya jalan kalau a[i] > a[i+1].
+      5 > 1, jadi tukar, a menjadi [1, 5, 4, 2].
+      Setelah satu putaran, elemen terbesar sampai di ujung.
+  - id: dsa-f6-trace-insertion
+    type: trace
+    title: Jejak Insertion Sort
+    difficulty: 3
+    prompt: Isi nilai i, j, dan a setiap kali baris 5 (pertukaran) selesai dijalankan.
+    code: |
+      a = [4, 3, 1]
+      for i in range(1, len(a)):
+          j = i
+          while j > 0 and a[j - 1] > a[j]:
+              a[j - 1], a[j] = a[j], a[j - 1]
+              j -= 1
+    line: 5
+    vars: [i, j, a]
+    hints: |
+      Saat baris 5 selesai, j belum dikurangi.
+      i = 1, j = 1, sehingga a menjadi [3, 4, 1].
+      Angka 1 bergeser ke kiri dua kali.
+  - id: dsa-f6-fill-selection
+    type: fill
+    title: Lengkapi Selection Sort
+    difficulty: 2
+    prompt: Lengkapi selection sort, yaitu cari minimum di bagian kanan lalu tukar ke posisi i.
+    code: |
+      a = list(map(int, input().split()))
+      for i in range(len(a)):
+          m = i
+          for j in range(⟦i + 1⟧, len(a)):
+              if a[j] < a[m]:
+                  m = ⟦j⟧
+          a[i], a[m] = ⟦a[m], a[i]⟧
+      print(*a)
+    tests: ["3 1 2", "5 4 3 2 1", "7"]
+    hints: |
+      Bagian kanan dimulai setelah i.
+      m menyimpan INDEKS minimum.
+      Pertukaran Python a, b = b, a.
+  - id: dsa-f6-complexity
+    type: complexity
+    title: Kompleksitas Insertion Sort
+    difficulty: 2
+    prompt: Berapa kompleksitas waktu TERBURUK insertion sort pada n elemen?
+    code: |
+      for i in range(1, len(a)):
+          j = i
+          while j > 0 and a[j - 1] > a[j]:
+              a[j - 1], a[j] = a[j], a[j - 1]
+              j -= 1
+    answer: O(n²)
+    explain: Pada data terurut terbalik, elemen ke-i digeser i kali, sehingga totalnya 1 + 2 + ... + (n-1) ≈ n²/2.
+    hints: |
+      Kasus terburuk adalah data terurut terbalik.
+      Elemen ke-i bergeser sejauh i.
+      Jumlahkan 1 + 2 + ... + n.

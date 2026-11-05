@@ -1,0 +1,153 @@
+id: snake
+title: Ular Gunung Natagumo
+track: js
+lang: javascript
+requires: f7
+emoji: 🐍
+story: 'Mesin permainan ular untuk melatih refleks. Input: baris 1 "W H" (ukuran papan), baris 2 posisi makanan "x,y x,y" atau "-", baris 3 langkah (huruf R L U D). Ular mulai di (0,0) dengan panjang 1.
+  Cetak "x y panjang" posisi kepala akhir.'
+starter: |
+  const baris = require("fs").readFileSync(0, "utf8").split("\n")
+  const [W, H] = baris[0].trim().split(" ")
+  const langkah = (baris[2] ?? "").trim()
+  // tulis kodemu di sini
+stages:
+- title: Bergerak
+  prompt: Gerakkan kepala sesuai langkah (R kanan, L kiri, U atas, D bawah; y bertambah ke bawah). Abaikan makanan dulu; panjang tetap 1. Cetak "x y 1".
+  tests:
+  - |-
+    5 5
+    -
+    RRDDR
+  - |-
+    3 3
+    -
+    RDLDR
+  hints: |
+    Simpan arah dalam objek: R → [1, 0].
+    Tambah dx, dy ke posisi kepala.
+    Cetak `${x} ${y} ${panjang}`.
+  solution: |
+    const baris = require("fs").readFileSync(0, "utf8").split("\n")
+    const [W, H, mode] = baris[0].trim().split(" ")
+    const makanan = (baris[1] ?? "").trim() === "-" ? [] : (baris[1] ?? "").trim().split(" ").map(p => p.split(",").map(Number))
+    const langkah = (baris[2] ?? "").trim()
+    const arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }
+    let ular = [[0, 0]]
+    let mati = 0
+    for (let i = 0; i < langkah.length; i++) {
+      const [dx, dy] = arah[langkah[i]]
+      let x = ular[0][0] + dx, y = ular[0][1] + dy
+      ular.unshift([x, y])
+      ular.pop()
+    }
+    console.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)
+- title: Makan & tumbuh
+  prompt: Kalau kepala tiba di posisi makanan, makanan habis dan ular bertambah panjang 1 (ekor tidak dipotong pada langkah itu).
+  tests:
+  - |-
+    6 6
+    1,0 2,0 2,2
+    RRDD
+  - |-
+    5 5
+    3,3
+    RRDD
+  hints: |
+    Ular = daftar posisi, kepala di indeks 0.
+    Tiap langkah: tambah kepala baru, buang ekor.
+    Kalau makan, jangan buang ekor.
+  solution: |
+    const baris = require("fs").readFileSync(0, "utf8").split("\n")
+    const [W, H, mode] = baris[0].trim().split(" ")
+    const makanan = (baris[1] ?? "").trim() === "-" ? [] : (baris[1] ?? "").trim().split(" ").map(p => p.split(",").map(Number))
+    const langkah = (baris[2] ?? "").trim()
+    const arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }
+    let ular = [[0, 0]]
+    let mati = 0
+    for (let i = 0; i < langkah.length; i++) {
+      const [dx, dy] = arah[langkah[i]]
+      let x = ular[0][0] + dx, y = ular[0][1] + dy
+      ular.unshift([x, y])
+      const k = makanan.findIndex(([a, b]) => a === x && b === y)
+      if (k >= 0) makanan.splice(k, 1)
+      else ular.pop()
+    }
+    console.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)
+- title: Dinding & tabrakan
+  prompt: Keluar papan atau menabrak badan sendiri = mati. Cetak "game over <n>" dengan n nomor langkah (mulai 1) saat mati, dan berhenti.
+  tests:
+  - |-
+    4 4
+    -
+    RRRR
+  - |-
+    6 6
+    1,0 2,0 2,1 1,1
+    RRDLU
+  - |-
+    5 5
+    -
+    DDRR
+  hints: |
+    Periksa posisi kepala baru sebelum bergerak.
+    Ekor yang akan dipotong tidak dihitung sebagai badan.
+    break setelah mati.
+  solution: |
+    const baris = require("fs").readFileSync(0, "utf8").split("\n")
+    const [W, H, mode] = baris[0].trim().split(" ")
+    const makanan = (baris[1] ?? "").trim() === "-" ? [] : (baris[1] ?? "").trim().split(" ").map(p => p.split(",").map(Number))
+    const langkah = (baris[2] ?? "").trim()
+    const arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }
+    let ular = [[0, 0]]
+    let mati = 0
+    for (let i = 0; i < langkah.length; i++) {
+      const [dx, dy] = arah[langkah[i]]
+      let x = ular[0][0] + dx, y = ular[0][1] + dy
+      const kena = x < 0 || y < 0 || x >= +W || y >= +H || ular.slice(0, -1).some(([a, b]) => a === x && b === y)
+      if (kena) { mati = i + 1; break }
+      ular.unshift([x, y])
+      const k = makanan.findIndex(([a, b]) => a === x && b === y)
+      if (k >= 0) makanan.splice(k, 1)
+      else ular.pop()
+    }
+    console.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)
+- title: Mode tembus
+  prompt: Kalau baris 1 berisi kata ketiga "tembus", ular yang keluar papan muncul di sisi seberang (tidak mati). Tabrakan badan tetap mati.
+  tests:
+  - |-
+    3 3 tembus
+    -
+    LLUU
+  - |-
+    4 4 tembus
+    1,0 2,0 3,0
+    RRRRR
+  - |-
+    4 4
+    -
+    L
+  hints: |
+    Baca kata ketiga di baris pertama.
+    Gunakan modulo: (x + W) % W.
+    Lakukan sebelum pemeriksaan tabrakan.
+  solution: |
+    const baris = require("fs").readFileSync(0, "utf8").split("\n")
+    const [W, H, mode] = baris[0].trim().split(" ")
+    const makanan = (baris[1] ?? "").trim() === "-" ? [] : (baris[1] ?? "").trim().split(" ").map(p => p.split(",").map(Number))
+    const langkah = (baris[2] ?? "").trim()
+    const arah = { R: [1, 0], L: [-1, 0], U: [0, -1], D: [0, 1] }
+    let ular = [[0, 0]]
+    let mati = 0
+    for (let i = 0; i < langkah.length; i++) {
+      const [dx, dy] = arah[langkah[i]]
+      let x = ular[0][0] + dx, y = ular[0][1] + dy
+      if (mode === "tembus") { x = (x + +W) % +W; y = (y + +H) % +H }
+      const kena = x < 0 || y < 0 || x >= +W || y >= +H || ular.slice(0, -1).some(([a, b]) => a === x && b === y)
+      if (kena) { mati = i + 1; break }
+      ular.unshift([x, y])
+      const k = makanan.findIndex(([a, b]) => a === x && b === y)
+      if (k >= 0) makanan.splice(k, 1)
+      else ular.pop()
+    }
+    console.log(mati ? `game over ${mati}` : `${ular[0][0]} ${ular[0][1]} ${ular.length}`)

@@ -1,0 +1,148 @@
+lesson:
+  - text: Fungsi C++ bisa menerima parameter BY REFERENCE dengan &, sehingga fungsi bisa mengubah variabel pemanggil tanpa pointer. const & dipakai untuk objek besar seperti string atau vector supaya tidak disalin. Fungsi juga bisa di-overload, yaitu nama sama dengan parameter berbeda.
+    code: |
+      #include <iostream>
+      #include <string>
+
+      void naik(int& x) { x++; }
+      int luas(int s) { return s * s; }
+      int luas(int p, int l) { return p * l; }
+      int panjang(const std::string& s) { return s.size(); }
+
+      int main() {
+          int a = 1;
+          naik(a);
+          std::cout << a << " " << luas(3) << " " << luas(2, 5) << " " << panjang("Kabut") << "\n";
+      }
+  - text: Lambda adalah fungsi tanpa nama, ditulis [tangkap](parameter) { isi }. Lambda sering dipakai bersama algoritma STL seperti sort.
+    code: |
+      #include <algorithm>
+      #include <iostream>
+      #include <vector>
+
+      int main() {
+          std::vector<int> v = {5, 2, 9, 1};
+          std::sort(v.begin(), v.end(), [](int a, int b) { return a > b; });
+          for (int x : v) std::cout << x << " ";
+          std::cout << "\n";
+      }
+exercises:
+  - id: cpp-f7-fpb
+    type: write
+    title: FPB dan KPK
+    difficulty: 2
+    prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan positif, cetak FPB dan KPK-nya (KPK bisa sampai 10^18).
+    tests: ["12 18", "7 13", "1000000000 999999999"]
+    hints: |
+      KPK = a / fpb * b, jadi bagi dulu sebelum dikali supaya tidak overflow.
+      Pakai long long.
+      long long fpb(long long a, long long b) { return b ? fpb(b, a % b) : a; }
+    solution: |
+      #include <iostream>
+
+      long long fpb(long long a, long long b) { return b ? fpb(b, a % b) : a; }
+
+      int main() {
+          long long a, b;
+          std::cin >> a >> b;
+          std::cout << fpb(a, b) << " " << a / fpb(a, b) * b << "\n";
+      }
+  - id: cpp-f7-ref
+    type: write
+    title: Tukar dengan Referensi
+    difficulty: 1
+    prompt: Lengkapi fungsi tukar(int& a, int& b) sehingga nilai dua variabel benar-benar tertukar.
+    starter: |
+      #include <iostream>
+
+      void tukar(int& a, int& b) {
+          // lengkapi
+      }
+
+      int main() {
+          int x, y;
+          std::cin >> x >> y;
+          tukar(x, y);
+          std::cout << x << " " << y << "\n";
+      }
+    tests: ["1 2", "5 -5"]
+    hints: |
+      a dan b adalah alias untuk x dan y.
+      Pakai variabel sementara.
+      int t = a; a = b; b = t;
+    solution: |
+      #include <iostream>
+
+      void tukar(int& a, int& b) {
+          int t = a;
+          a = b;
+          b = t;
+      }
+
+      int main() {
+          int x, y;
+          std::cin >> x >> y;
+          tukar(x, y);
+          std::cout << x << " " << y << "\n";
+      }
+  - id: cpp-f7-predict
+    type: predict
+    title: Overload dan Referensi
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <iostream>
+
+      int f(int x) { return x + 1; }
+      double f(double x) { return x * 2; }
+      void g(int x) { x = 100; }
+      void h(int& x) { x = 100; }
+
+      int main() {
+          int a = 1, b = 1;
+          g(a);
+          h(b);
+          std::cout << f(3) << " " << f(3.0) << " " << a << " " << b << "\n";
+      }
+    hints: |
+      f(3) memanggil versi int, f(3.0) memanggil versi double.
+      g menerima salinan, sedangkan h menerima referensi.
+      Hanya b yang berubah.
+    solution: x
+  - id: cpp-f7-bug
+    type: bughunt
+    title: Penghitung yang Lupa
+    difficulty: 2
+    prompt: Fungsi tambahSkor seharusnya menambah skor pemanggil, tapi skor tetap 0. Temukan bug-nya.
+    starter: |
+      #include <iostream>
+
+      void tambahSkor(int skor, int poin) {
+          skor += poin;
+      }
+
+      int main() {
+          int skor = 0, n, p;
+          std::cin >> n;
+          while (n--) { std::cin >> p; tambahSkor(skor, p); }
+          std::cout << skor << "\n";
+      }
+    bug_line: 3
+    tests: ["3\n10 20 5", "1\n7"]
+    hints: |
+      Parameter skor adalah SALINAN.
+      Pakai referensi supaya perubahan sampai ke pemanggil.
+      void tambahSkor(int& skor, int poin)
+    solution: |
+      #include <iostream>
+
+      void tambahSkor(int& skor, int poin) {
+          skor += poin;
+      }
+
+      int main() {
+          int skor = 0, n, p;
+          std::cin >> n;
+          while (n--) { std::cin >> p; tambahSkor(skor, p); }
+          std::cout << skor << "\n";
+      }

@@ -1,0 +1,59 @@
+lesson:
+- text: 'Autentikasi & otorisasi yang lemah: data peran disimpan di klien tanpa tanda tangan, JWT dengan alg none, kata sandi bawaan, berkas sensitif yang "tersembunyi". SSRF terjadi saat server mau mengambil
+    URL pilihan user, sehingga penyerang bisa menjangkau jaringan internal.'
+exercises:
+- id: cy-lab-web-robots
+  type: lab
+  title: Peta yang Tercecer
+  difficulty: 1
+  prompt: 'Lab sandbox: Temukan berkas cadangan lama di situs simulasi ini. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-robots
+  hints: |
+    Mesin pencari membaca satu berkas standar di akar situs.
+    Buka /robots.txt.
+    Ikuti direktori yang ditandai "Disallow".
+- id: cy-lab-web-cookie
+  type: lab
+  title: Haori Pinjaman
+  difficulty: 2
+  prompt: 'Lab sandbox: Masuk ke /ruang-pilar. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-cookie
+  hints: |
+    Decode nilai cookie profil dengan base64.
+    Ubah peran menjadi hashira lalu encode ulang.
+    Kirim cookie baru ke GET /ruang-pilar.
+- id: cy-lab-web-jwt
+  type: lab
+  title: Tanda Tangan Kosong
+  difficulty: 3
+  prompt: 'Lab sandbox: Buka /admin. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-jwt
+  hints: |
+    JWT = header.payload.signature dalam base64url.
+    Ubah header menjadi {"alg":"none"} dan payload admin true.
+    Tanda tangan boleh kosong, tapi titik terakhir tetap ada: header.payload.
+- id: cy-lab-web-ssrf
+  type: lab
+  title: Gagak Pengintip
+  difficulty: 3
+  prompt: 'Lab sandbox: Baca /rahasia di server intranet. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-ssrf
+  hints: |
+    Cari tahu alamat lain server intranet.
+    Pratinjau http://berita.desa/ dulu.
+    Pakai alamat IP-nya.
+- id: cy-m4-jwt
+  type: quiz
+  title: Tanda Tangan JWT
+  difficulty: 2
+  prompt: Apa fungsi bagian signature pada JWT?
+  options:
+  - Membuktikan header & payload tidak diubah sejak ditandatangani server
+  - Mengenkripsi payload agar tidak bisa dibaca
+  - Menyimpan kata sandi user
+  - Mempercepat login
+  explain: Payload JWT hanya base64url, bisa dibaca siapa saja. Signature menjaga integritas; server wajib memverifikasinya dengan algoritma yang diharapkan.
+  hints: |
+    Payload bisa di-decode.
+    Integritas, bukan kerahasiaan.
+    Membuktikan tidak diubah.

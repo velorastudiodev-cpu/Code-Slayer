@@ -1,0 +1,134 @@
+lesson:
+- text: 'Fungsi ditulis fun nama(param: Tipe): TipeKembali { }. Fungsi satu ekspresi bisa disingkat: fun kuadrat(x: Int) = x * x.'
+  code: |
+    fun kuadrat(x: Int) = x * x
+
+    fun bagi(a: Int, b: Int): Pair<Int, Int> {
+        return Pair(a / b, a % b)
+    }
+
+    fun main() {
+        val (h, s) = bagi(17, 5)
+        println("${kuadrat(9)} $h $s")
+    }
+- text: Parameter fungsi di Kotlin selalu val (tidak bisa diubah di dalam fungsi). Untuk "mengubah" nilai, kembalikan nilai baru. Rekursi tetap butuh base case.
+  code: |
+    fun hitungMundur(n: Int) {
+        if (n == 0) {
+            println("Mulai!")
+            return
+        }
+        print("$n ")
+        hitungMundur(n - 1)
+    }
+
+    fun main() {
+        hitungMundur(3)
+    }
+exercises:
+- id: kt-f7-fpb
+  type: write
+  title: FPB Dua Klan
+  difficulty: 2
+  prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - 12 18
+  - 7 13
+  - 100 75
+  - 0 5
+  hints: |
+    fpb(a, 0) = a.
+    fpb(a, b) = fpb(b, a % b).
+    Bisa rekursif atau dengan loop.
+  solution: |
+    fun fpb(a: Long, b: Long): Long = if (b == 0L) a else fpb(b, a % b)
+
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        println(fpb(t[0].toLong(), t[1].toLong()))
+    }
+- id: kt-f7-faktorial
+  type: write
+  title: Faktorial Pernapasan
+  difficulty: 2
+  prompt: Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.
+  starter: |
+    fun main() {
+        // tulis kodemu di sini
+    }
+  tests:
+  - '5'
+  - '0'
+  - '20'
+  hints: |
+    0! = 1 adalah base case.
+    n! = n × (n-1)!.
+    20! melebihi 32-bit: pakai 64-bit.
+  solution: |
+    fun faktorial(n: Long): Long = if (n == 0L) 1 else n * faktorial(n - 1)
+
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        println(faktorial(t[0].toLong()))
+    }
+- id: kt-f7-predict
+  type: predict
+  title: Salinan atau Asli?
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fun latih(x: Int): Int {
+        val y = x * 10
+        return y + 1
+    }
+
+    fun main() {
+        val a = 3
+        val b = latih(a)
+        println("$a $b")
+        latih(b)
+        println(b)
+    }
+  hints: |
+    Argumen bilangan dikirim sebagai salinan.
+    Mengubah salinan tidak mengubah variabel pemanggil.
+    Nilai yang dikembalikan lain cerita.
+  solution: x
+- id: kt-f7-bug
+  type: bughunt
+  title: Rekursi Tanpa Ujung
+  difficulty: 2
+  prompt: pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.
+  starter: |
+    fun pangkat(a: Long, n: Long): Long {
+        if (n == -1L) return 1
+        return a * pangkat(a, n - 1)
+    }
+
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        println(pangkat(t[0].toLong(), t[1].toLong()))
+    }
+  bug_line: 2
+  tests:
+  - 2 10
+  - 3 0
+  - 5 3
+  hints: |
+    Setiap rekursi butuh base case.
+    Kapan rekursi harus berhenti?
+    Saat n == 0, kembalikan 1.
+  solution: |
+    fun pangkat(a: Long, n: Long): Long {
+        if (n == 0L) return 1
+        return a * pangkat(a, n - 1)
+    }
+
+    fun main() {
+        val t = System.`in`.bufferedReader().readText().split(Regex("\\s+")).filter { it.isNotEmpty() }
+        println(pangkat(t[0].toLong(), t[1].toLong()))
+    }

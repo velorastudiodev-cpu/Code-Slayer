@@ -1,0 +1,2225 @@
+# Soal objektif orisinal (dibangkitkan scratchpad/gen/objgen.py). Kunci jawaban dihitung dengan eksekusi/brute force; options[0] = jawaban benar (diacak di UI).
+- id: obj-arit-001
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 6^839?
+  options:
+  - '6'
+  - '8'
+  - '1'
+  - '7'
+  explain: Angka satuan pangkat 6 berulang dengan siklus 6 (panjang 1). 839 mod 1 = 0, jadi angka satuannya 6.
+- id: obj-arit-002
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 6^883?
+  options:
+  - '6'
+  - '8'
+  - '1'
+  - '7'
+  explain: Angka satuan pangkat 6 berulang dengan siklus 6 (panjang 1). 883 mod 1 = 0, jadi angka satuannya 6.
+- id: obj-arit-003
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 5^440?
+  options:
+  - '5'
+  - '7'
+  - '0'
+  - '6'
+  explain: Angka satuan pangkat 5 berulang dengan siklus 5 (panjang 1). 440 mod 1 = 0, jadi angka satuannya 5.
+- id: obj-arit-004
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 7^453?
+  options:
+  - '7'
+  - '9'
+  - '2'
+  - '8'
+  explain: Angka satuan pangkat 7 berulang dengan siklus 7, 9, 3, 1 (panjang 4). 453 mod 4 = 1, jadi angka satuannya 7.
+- id: obj-arit-005
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 11^194?
+  options:
+  - '1'
+  - '3'
+  - '6'
+  - '2'
+  explain: Angka satuan pangkat 11 berulang dengan siklus 1 (panjang 1). 194 mod 1 = 0, jadi angka satuannya 1.
+- id: obj-arit-006
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 16^639?
+  options:
+  - '6'
+  - '8'
+  - '1'
+  - '7'
+  explain: Angka satuan pangkat 16 berulang dengan siklus 6 (panjang 1). 639 mod 1 = 0, jadi angka satuannya 6.
+- id: obj-arit-007
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 12^208?
+  options:
+  - '6'
+  - '8'
+  - '4'
+  - '1'
+  explain: Angka satuan pangkat 12 berulang dengan siklus 2, 4, 8, 6 (panjang 4). 208 mod 4 = 0, jadi angka satuannya 6.
+- id: obj-arit-008
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 7^47?
+  options:
+  - '3'
+  - '5'
+  - '9'
+  - '8'
+  explain: Angka satuan pangkat 7 berulang dengan siklus 7, 9, 3, 1 (panjang 4). 47 mod 4 = 3, jadi angka satuannya 3.
+- id: obj-arit-009
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 11^294?
+  options:
+  - '1'
+  - '3'
+  - '6'
+  - '2'
+  explain: Angka satuan pangkat 11 berulang dengan siklus 1 (panjang 1). 294 mod 1 = 0, jadi angka satuannya 1.
+- id: obj-arit-010
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa angka satuan dari 12^911?
+  options:
+  - '8'
+  - '0'
+  - '4'
+  - '3'
+  explain: Angka satuan pangkat 12 berulang dengan siklus 2, 4, 8, 6 (panjang 4). 911 mod 4 = 3, jadi angka satuannya 8.
+- id: obj-arit-011
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 1094 yang habis dibagi 2 atau 3?
+  options:
+  - '729'
+  - '911'
+  - '182'
+  - '801'
+  explain: 'Prinsip inklusi-eksklusi: ⌊1094/2⌋ + ⌊1094/3⌋ − ⌊1094/KPK(2,3)⌋ = 547 + 364 − ⌊1094/6⌋ = 547 + 364 − 182 = 729.'
+- id: obj-arit-012
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 238 yang habis dibagi 6 atau 9?
+  options:
+  - '52'
+  - '65'
+  - '61'
+  - '13'
+  explain: 'Prinsip inklusi-eksklusi: ⌊238/6⌋ + ⌊238/9⌋ − ⌊238/KPK(6,9)⌋ = 39 + 26 − ⌊238/18⌋ = 39 + 26 − 13 = 52.'
+- id: obj-arit-013
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 1255 yang habis dibagi 6 atau 10?
+  options:
+  - '293'
+  - '334'
+  - '314'
+  - '41'
+  explain: 'Prinsip inklusi-eksklusi: ⌊1255/6⌋ + ⌊1255/10⌋ − ⌊1255/KPK(6,10)⌋ = 209 + 125 − ⌊1255/30⌋ = 209 + 125 − 41 = 293.'
+- id: obj-arit-014
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 1082 yang habis dibagi 3 atau 5?
+  options:
+  - '504'
+  - '576'
+  - '72'
+  - '554'
+  explain: 'Prinsip inklusi-eksklusi: ⌊1082/3⌋ + ⌊1082/5⌋ − ⌊1082/KPK(3,5)⌋ = 360 + 216 − ⌊1082/15⌋ = 360 + 216 − 72 = 504.'
+- id: obj-arit-015
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 1808 yang habis dibagi 3 atau 5?
+  options:
+  - '843'
+  - '963'
+  - '120'
+  - '927'
+  explain: 'Prinsip inklusi-eksklusi: ⌊1808/3⌋ + ⌊1808/5⌋ − ⌊1808/KPK(3,5)⌋ = 602 + 361 − ⌊1808/15⌋ = 602 + 361 − 120 = 843.'
+- id: obj-arit-016
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 873 yang habis dibagi 5 atau 7?
+  options:
+  - '274'
+  - '298'
+  - '24'
+  - '301'
+  explain: 'Prinsip inklusi-eksklusi: ⌊873/5⌋ + ⌊873/7⌋ − ⌊873/KPK(5,7)⌋ = 174 + 124 − ⌊873/35⌋ = 174 + 124 − 24 = 274.'
+- id: obj-arit-017
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 1119 yang habis dibagi 2 atau 3?
+  options:
+  - '746'
+  - '932'
+  - '186'
+  - '820'
+  explain: 'Prinsip inklusi-eksklusi: ⌊1119/2⌋ + ⌊1119/3⌋ − ⌊1119/KPK(2,3)⌋ = 559 + 373 − ⌊1119/6⌋ = 559 + 373 − 186 = 746.'
+- id: obj-arit-018
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa banyak bilangan bulat dari 1 sampai 1219 yang habis dibagi 4 atau 6?
+  options:
+  - '406'
+  - '507'
+  - '457'
+  - '101'
+  explain: 'Prinsip inklusi-eksklusi: ⌊1219/4⌋ + ⌊1219/6⌋ − ⌊1219/KPK(4,6)⌋ = 304 + 203 − ⌊1219/12⌋ = 304 + 203 − 101 = 406.'
+- id: obj-arit-019
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 232 detik dan lampu B setiap 35 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '8120'
+  - '1'
+  - '16240'
+  - '267'
+  explain: Dicari KPK(232, 35). FPB(232, 35) = 1, sehingga KPK = 232×35/1 = 8120.
+- id: obj-arit-020
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 276 detik dan lampu B setiap 252 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '5796'
+  - '69552'
+  - '12'
+  - '11592'
+  explain: Dicari KPK(276, 252). FPB(276, 252) = 12, sehingga KPK = 276×252/12 = 5796.
+- id: obj-arit-021
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 39 detik dan lampu B setiap 254 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '9906'
+  - '1'
+  - '19812'
+  - '293'
+  explain: Dicari KPK(39, 254). FPB(39, 254) = 1, sehingga KPK = 39×254/1 = 9906.
+- id: obj-arit-022
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 241 detik dan lampu B setiap 235 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '56635'
+  - '1'
+  - '113270'
+  - '476'
+  explain: Dicari KPK(241, 235). FPB(241, 235) = 1, sehingga KPK = 241×235/1 = 56635.
+- id: obj-arit-023
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 189 detik dan lampu B setiap 77 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '2079'
+  - '14553'
+  - '7'
+  - '4158'
+  explain: Dicari KPK(189, 77). FPB(189, 77) = 7, sehingga KPK = 189×77/7 = 2079.
+- id: obj-arit-024
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 129 detik dan lampu B setiap 67 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '8643'
+  - '1'
+  - '17286'
+  - '196'
+  explain: Dicari KPK(129, 67). FPB(129, 67) = 1, sehingga KPK = 129×67/1 = 8643.
+- id: obj-arit-025
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 137 detik dan lampu B setiap 27 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '3699'
+  - '1'
+  - '7398'
+  - '164'
+  explain: Dicari KPK(137, 27). FPB(137, 27) = 1, sehingga KPK = 137×27/1 = 3699.
+- id: obj-arit-026
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Lampu A berkedip setiap 272 detik dan lampu B setiap 40 detik. Keduanya berkedip bersamaan pada detik 0. Setelah berapa detik keduanya berkedip bersamaan lagi untuk pertama kali?
+  options:
+  - '1360'
+  - '10880'
+  - '8'
+  - '2720'
+  explain: Dicari KPK(272, 40). FPB(272, 40) = 8, sehingga KPK = 272×40/8 = 1360.
+- id: obj-arit-027
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 56 oleh 12?
+  options:
+  - '0'
+  - '1'
+  - '8'
+  - '4'
+  explain: 1 + … + 56 = 56×57/2 = 1596. 1596 = 133×12 + 0, jadi sisanya 0.
+- id: obj-arit-028
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 59 oleh 8?
+  options:
+  - '2'
+  - '3'
+  - '1'
+  - '0'
+  explain: 1 + … + 59 = 59×60/2 = 1770. 1770 = 221×8 + 2, jadi sisanya 2.
+- id: obj-arit-029
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 42 oleh 7?
+  options:
+  - '0'
+  - '1'
+  - '3'
+  - '5'
+  explain: 1 + … + 42 = 42×43/2 = 903. 903 = 129×7 + 0, jadi sisanya 0.
+- id: obj-arit-030
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 35 oleh 9?
+  options:
+  - '0'
+  - '1'
+  - '8'
+  - '3'
+  explain: 1 + … + 35 = 35×36/2 = 630. 630 = 70×9 + 0, jadi sisanya 0.
+- id: obj-arit-031
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 58 oleh 10?
+  options:
+  - '1'
+  - '2'
+  - '8'
+  - '4'
+  explain: 1 + … + 58 = 58×59/2 = 1711. 1711 = 171×10 + 1, jadi sisanya 1.
+- id: obj-arit-032
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 12 oleh 8?
+  options:
+  - '6'
+  - '7'
+  - '4'
+  - '0'
+  explain: 1 + … + 12 = 12×13/2 = 78. 78 = 9×8 + 6, jadi sisanya 6.
+- id: obj-arit-033
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Berapa sisa pembagian 1 + 2 + 3 + … + 38 oleh 11?
+  options:
+  - '4'
+  - '5'
+  - '3'
+  - '2'
+  explain: 1 + … + 38 = 38×39/2 = 741. 741 = 67×11 + 4, jadi sisanya 4.
+- id: obj-arit-034
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 3 kali pada 91675?
+  options:
+  - '1'
+  - '28'
+  - '10'
+  - '2'
+  explain: 'Terapkan satu per satu: 91675 → 28; 28 → 10; 10 → 1. Hasilnya 1.'
+- id: obj-arit-035
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 4 kali pada 68874?
+  options:
+  - '6'
+  - '33'
+  - '15'
+  - '7'
+  explain: 'Terapkan satu per satu: 68874 → 33; 33 → 6; 6 → 6; 6 → 6. Hasilnya 6.'
+- id: obj-arit-036
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 3 kali pada 36732?
+  options:
+  - '3'
+  - '21'
+  - '12'
+  - '4'
+  explain: 'Terapkan satu per satu: 36732 → 21; 21 → 3; 3 → 3. Hasilnya 3.'
+- id: obj-arit-037
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 4 kali pada 82002?
+  options:
+  - '3'
+  - '12'
+  - '4'
+  - '1'
+  explain: 'Terapkan satu per satu: 82002 → 12; 12 → 3; 3 → 3; 3 → 3. Hasilnya 3.'
+- id: obj-arit-038
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 3 kali pada 34524?
+  options:
+  - '9'
+  - '18'
+  - '10'
+  - '7'
+  explain: 'Terapkan satu per satu: 34524 → 18; 18 → 9; 9 → 9. Hasilnya 9.'
+- id: obj-arit-039
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 4 kali pada 36175?
+  options:
+  - '4'
+  - '22'
+  - '13'
+  - '5'
+  explain: 'Terapkan satu per satu: 36175 → 22; 22 → 4; 4 → 4; 4 → 4. Hasilnya 4.'
+- id: obj-arit-040
+  stage: kabupaten
+  topic: aritmetika
+  prompt: Operasi J(x) = jumlah digit x. Berapa hasil menerapkan J sebanyak 2 kali pada 96053?
+  options:
+  - '5'
+  - '23'
+  - '14'
+  - '6'
+  explain: 'Terapkan satu per satu: 96053 → 23; 23 → 5. Hasilnya 5.'
+- id: obj-logi-001
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan ¬(p ∧ q)?
+  options:
+  - ¬p ∨ ¬q
+  - ¬q → ¬p
+  - p ↔ q
+  - q → p
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): ¬(p ∧ q) bernilai BBBS, sama persis dengan ¬p ∨ ¬q. Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-002
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan ¬(p ∨ q)?
+  options:
+  - ¬p ∧ ¬q
+  - ¬q → ¬p
+  - p ∧ ¬q
+  - ¬(p ∧ q)
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): ¬(p ∨ q) bernilai BSSS, sama persis dengan ¬p ∧ ¬q. Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-003
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan p → q?
+  options:
+  - ¬q → ¬p
+  - q → p
+  - (p → q) ∧ (q → p)
+  - ¬(p ∨ q)
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): p → q bernilai BBSB, sama persis dengan ¬q → ¬p. Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-004
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan p ↔ q?
+  options:
+  - (p → q) ∧ (q → p)
+  - p → q
+  - ¬(p ∧ q)
+  - q → p
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): p ↔ q bernilai BSSB, sama persis dengan (p → q) ∧ (q → p). Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-005
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan ¬p → ¬q?
+  options:
+  - q → p
+  - (p → q) ∧ (q → p)
+  - ¬p ∨ q
+  - ¬p ∨ ¬q
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): ¬p → ¬q bernilai BSBB, sama persis dengan q → p. Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-006
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan q → p?
+  options:
+  - ¬p → ¬q
+  - ¬(p ∨ q)
+  - ¬(p ∧ q)
+  - p → q
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): q → p bernilai BSBB, sama persis dengan ¬p → ¬q. Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-007
+  stage: kabupaten
+  topic: logika
+  prompt: Pernyataan manakah yang EKUIVALEN dengan ¬q → ¬p?
+  options:
+  - p → q
+  - q → p
+  - p ↔ q
+  - ¬p → ¬q
+  explain: 'Bandingkan tabel kebenaran (p, q) = (S,S), (S,B), (B,S), (B,B): ¬q → ¬p bernilai BBSB, sama persis dengan p → q. Pilihan lain berbeda minimal di satu baris.'
+- id: obj-logi-008
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q salah, dan r benar, apa nilai kebenaran dari (p ∧ q) → r?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Salah, r = Benar lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-009
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q benar, dan r salah, apa nilai kebenaran dari p → (q → r)?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Benar, r = Salah lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-010
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p benar, q benar, dan r benar, apa nilai kebenaran dari p → (q → r)?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Benar, q = Benar, r = Benar lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-011
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q benar, dan r benar, apa nilai kebenaran dari ¬(p → q) ∨ r?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Benar, r = Benar lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-012
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p benar, q salah, dan r benar, apa nilai kebenaran dari p → (q → r)?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Benar, q = Salah, r = Benar lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-013
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q benar, dan r benar, apa nilai kebenaran dari ¬(p → q) ∨ r?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Benar, r = Benar lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-014
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q salah, dan r salah, apa nilai kebenaran dari ¬(p → q) ∨ r?
+  options:
+  - Salah
+  - Benar
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Salah, r = Salah lalu evaluasi dari kurung terdalam. Hasilnya Salah. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-015
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q salah, dan r salah, apa nilai kebenaran dari (p ↔ r) ∧ ¬q?
+  options:
+  - Benar
+  - Salah
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Salah, r = Salah lalu evaluasi dari kurung terdalam. Hasilnya Benar. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-016
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q benar, dan r salah, apa nilai kebenaran dari (p ∨ ¬q) ∧ r?
+  options:
+  - Salah
+  - Benar
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Benar, r = Salah lalu evaluasi dari kurung terdalam. Hasilnya Salah. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-017
+  stage: kabupaten
+  topic: logika
+  prompt: Jika p salah, q salah, dan r salah, apa nilai kebenaran dari (p ∨ ¬q) ∧ r?
+  options:
+  - Salah
+  - Benar
+  - Tidak dapat ditentukan
+  - Bergantung pada urutan operasi
+  explain: 'Substitusikan p = Salah, q = Salah, r = Salah lalu evaluasi dari kurung terdalam. Hasilnya Salah. Ingat: A → B hanya salah jika A benar dan B salah.'
+- id: obj-logi-018
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Zenitsu dan Inosuke sejenis." Zenitsu berkata "Tanjiro dan Inosuke sejenis." Inosuke berkata "Tepat satu di
+    antara kami bertiga ksatria." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke ksatria
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-019
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Kami bertiga pembohong." Zenitsu berkata "Kami bertiga pembohong." Inosuke berkata "Tanjiro adalah pembohong."
+    Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-020
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Zenitsu adalah ksatria." Zenitsu berkata "Kami bertiga pembohong." Inosuke berkata "Tanjiro adalah pembohong."
+    Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke ksatria
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-021
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Tepat satu di antara kami bertiga ksatria." Zenitsu berkata "Kami bertiga pembohong." Inosuke berkata "Tanjiro
+    dan Zenitsu sejenis." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke ksatria
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-022
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Kami bertiga pembohong." Zenitsu berkata "Kami bertiga pembohong." Inosuke berkata "Tanjiro dan Zenitsu sejenis."
+    Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-023
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Tepat satu di antara kami bertiga ksatria." Zenitsu berkata "Kami bertiga pembohong." Inosuke berkata "Kami
+    bertiga pembohong." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-024
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Tepat satu di antara kami bertiga ksatria." Zenitsu berkata "Tanjiro dan Inosuke sejenis." Inosuke berkata
+    "Tanjiro adalah pembohong." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke ksatria
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-025
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Kami bertiga pembohong." Zenitsu berkata "Tanjiro adalah ksatria." Inosuke berkata "Tanjiro dan Zenitsu sejenis."
+    Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-026
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Zenitsu adalah pembohong." Zenitsu berkata "Tanjiro dan Inosuke sejenis." Inosuke berkata "Tanjiro adalah
+    pembohong." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke ksatria
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-027
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Zenitsu dan Inosuke sejenis." Zenitsu berkata "Inosuke adalah pembohong." Inosuke berkata "Tepat satu di antara
+    kami bertiga ksatria." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke ksatria
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-028
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Zenitsu dan Inosuke sejenis." Zenitsu berkata "Tepat satu di antara kami bertiga ksatria." Inosuke berkata
+    "Kami bertiga pembohong." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu ksatria, Inosuke pembohong" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-logi-029
+  stage: kabupaten
+  topic: logika
+  prompt: Di sebuah desa, ksatria selalu jujur dan pembohong selalu berbohong. Tanjiro berkata "Inosuke adalah pembohong." Zenitsu berkata "Tanjiro dan Inosuke sejenis." Inosuke berkata "Tepat satu di antara
+    kami bertiga ksatria." Siapa ksatria dan siapa pembohong?
+  options:
+  - Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu pembohong, Inosuke pembohong
+  - Tanjiro pembohong, Zenitsu ksatria, Inosuke ksatria
+  - Tanjiro ksatria, Zenitsu ksatria, Inosuke pembohong
+  explain: 'Coba semua 8 kemungkinan. Hanya "Tanjiro pembohong, Zenitsu pembohong, Inosuke ksatria" yang konsisten: setiap ksatria mengucapkan hal benar dan setiap pembohong mengucapkan hal salah.'
+- id: obj-algo-001
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 5 sampai 15 lakukan\n    jika i mod 3 = 1 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '30'
+  - '33'
+  - '36'
+  - '17'
+  explain: 'Jumlahkan semua i di [5, 15] dengan i mod 3 = 1: 7 + 10 + 13 = 30.'
+- id: obj-algo-002
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 1 sampai 30 lakukan\n    jika i mod 4 = 2 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '128'
+  - '131'
+  - '116'
+  - '98'
+  explain: 'Jumlahkan semua i di [1, 30] dengan i mod 4 = 2: 2 + 6 + 10 + 14 + 18 + 22 + 26 + 30 = 128.'
+- id: obj-algo-003
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 4 sampai 19 lakukan\n    jika i mod 3 = 1 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '69'
+  - '72'
+  - '61'
+  - '50'
+  explain: 'Jumlahkan semua i di [4, 19] dengan i mod 3 = 1: 4 + 7 + 10 + 13 + 16 + 19 = 69.'
+- id: obj-algo-004
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 4 sampai 37 lakukan\n    jika i mod 5 = 4 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '133'
+  - '138'
+  - '139'
+  - '99'
+  explain: 'Jumlahkan semua i di [4, 37] dengan i mod 5 = 4: 4 + 9 + 14 + 19 + 24 + 29 + 34 = 133.'
+- id: obj-algo-005
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 2 sampai 33 lakukan\n    jika i mod 2 = 0 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '272'
+  - '274'
+  - '280'
+  - '240'
+  explain: 'Jumlahkan semua i di [2, 33] dengan i mod 2 = 0: 2 + 4 + 6 + 8 + 10 + 12 + 14 + 16 + 18 + 20 + 22 + 24 + 26 + 28 + 30 + 32 = 272.'
+- id: obj-algo-006
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 2 sampai 28 lakukan\n    jika i mod 4 = 1 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '90'
+  - '118'
+  - '101'
+  - '65'
+  explain: 'Jumlahkan semua i di [2, 28] dengan i mod 4 = 1: 5 + 9 + 13 + 17 + 21 + 25 = 90.'
+- id: obj-algo-007
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 1 sampai 24 lakukan\n    jika i mod 3 = 2 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '100'
+  - '124'
+  - '77'
+  - '110'
+  explain: 'Jumlahkan semua i di [1, 24] dengan i mod 3 = 2: 2 + 5 + 8 + 11 + 14 + 17 + 20 + 23 = 100.'
+- id: obj-algo-008
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "x ← 0\nuntuk i ← 5 sampai 25 lakukan\n    jika i mod 3 = 0 maka\n        x ← x + i\ntulis(x)"
+  options:
+  - '105'
+  - '106'
+  - '81'
+  - '115'
+  explain: 'Jumlahkan semua i di [5, 25] dengan i mod 3 = 0: 6 + 9 + 12 + 15 + 18 + 21 + 24 = 105.'
+- id: obj-algo-009
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 6 lakukan\n    untuk j ← i sampai 8 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '33'
+  - '48'
+  - '39'
+  - '21'
+  explain: Untuk setiap i, j berjalan dari i sampai 8, yaitu max(0, 8 − i + 1) kali. Jumlahnya 8 + 7 + 6 + 5 + 4 + 3 = 33.
+- id: obj-algo-010
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 11 lakukan\n    untuk j ← i sampai 8 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '36'
+  - '88'
+  - '47'
+  - '66'
+  explain: Untuk setiap i, j berjalan dari i sampai 8, yaitu max(0, 8 − i + 1) kali. Jumlahnya 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0 + 0 + 0 = 36.
+- id: obj-algo-011
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 9 lakukan\n    untuk j ← i sampai 9 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '45'
+  - '81'
+  - '54'
+  - '49'
+  explain: Untuk setiap i, j berjalan dari i sampai 9, yaitu max(0, 9 − i + 1) kali. Jumlahnya 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 = 45.
+- id: obj-algo-012
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 7 lakukan\n    untuk j ← i sampai 7 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '28'
+  - '49'
+  - '35'
+  - '30'
+  explain: Untuk setiap i, j berjalan dari i sampai 7, yaitu max(0, 7 − i + 1) kali. Jumlahnya 7 + 6 + 5 + 4 + 3 + 2 + 1 = 28.
+- id: obj-algo-013
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 4 lakukan\n    untuk j ← i sampai 3 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '6'
+  - '12'
+  - '10'
+  - '7'
+  explain: Untuk setiap i, j berjalan dari i sampai 3, yaitu max(0, 3 − i + 1) kali. Jumlahnya 3 + 2 + 1 + 0 = 6.
+- id: obj-algo-014
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 6 lakukan\n    untuk j ← i sampai 4 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '10'
+  - '24'
+  - '16'
+  - '21'
+  explain: Untuk setiap i, j berjalan dari i sampai 4, yaitu max(0, 4 − i + 1) kali. Jumlahnya 4 + 3 + 2 + 1 + 0 + 0 = 10.
+- id: obj-algo-015
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 12 lakukan\n    untuk j ← i sampai 11 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '66'
+  - '132'
+  - '78'
+  - '72'
+  explain: Untuk setiap i, j berjalan dari i sampai 11, yaitu max(0, 11 − i + 1) kali. Jumlahnya 11 + 10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0 = 66.
+- id: obj-algo-016
+  stage: kabupaten
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nuntuk i ← 1 sampai 8 lakukan\n    untuk j ← i sampai 9 lakukan\n        c ← c + 1\ntulis(c)"
+  options:
+  - '44'
+  - '72'
+  - '52'
+  - '36'
+  explain: Untuk setiap i, j berjalan dari i sampai 9, yaitu max(0, 9 − i + 1) kali. Jumlahnya 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 = 44.
+- id: obj-algo-017
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 22\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '15'
+  - '16'
+  - '14'
+  - '17'
+  explain: 'Barisan nilai n: 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 15 langkah.'
+- id: obj-algo-018
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 29\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '18'
+  - '19'
+  - '17'
+  - '20'
+  explain: 'Barisan nilai n: 29 → 88 → 44 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 18 langkah.'
+- id: obj-algo-019
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 38\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '21'
+  - '22'
+  - '20'
+  - '23'
+  explain: 'Barisan nilai n: 38 → 19 → 58 → 29 → 88 → 44 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 21 langkah.'
+- id: obj-algo-020
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 40\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '8'
+  - '9'
+  - '7'
+  - '10'
+  explain: 'Barisan nilai n: 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 8 langkah.'
+- id: obj-algo-021
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 14\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '17'
+  - '18'
+  - '16'
+  - '19'
+  explain: 'Barisan nilai n: 14 → 7 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 17 langkah.'
+- id: obj-algo-022
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 33\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '26'
+  - '27'
+  - '25'
+  - '28'
+  explain: 'Barisan nilai n: 33 → 100 → 50 → 25 → 76 → 38 → 19 → 58 → 29 → 88 → 44 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 26 langkah.'
+- id: obj-algo-023
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "n ← 18\nc ← 0\nselama n ≠ 1 lakukan\n    jika n mod 2 = 0 maka n ← n div 2\n    selain itu n ← 3 × n + 1\n    c ← c + 1\ntulis(c)"
+  options:
+  - '20'
+  - '21'
+  - '19'
+  - '22'
+  explain: 'Barisan nilai n: 18 → 9 → 28 → 14 → 7 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Ada 20 langkah.'
+- id: obj-algo-024
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 2\n    jika n = 1 maka kembalikan 4\n    kembalikan 1 × f(n − 1) + 1 × f(n − 2)\n\ntulis(f(9))"
+  options:
+  - '178'
+  - '110'
+  - '246'
+  - '195'
+  explain: 'Hitung dari bawah: f(0..9) = 2, 4, 6, 10, 16, 26, 42, 68, 110, 178. Jadi f(9) = 178.'
+- id: obj-algo-025
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 2\n    jika n = 1 maka kembalikan 4\n    kembalikan 2 × f(n − 1) + 2 × f(n − 2)\n\ntulis(f(10))"
+  options:
+  - '36544'
+  - '13376'
+  - '41440'
+  - '18272'
+  explain: 'Hitung dari bawah: f(0..10) = 2, 4, 12, 32, 88, 240, 656, 1792, 4896, 13376, 36544. Jadi f(10) = 36544.'
+- id: obj-algo-026
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 1\n    jika n = 1 maka kembalikan 1\n    kembalikan 2 × f(n − 1) + 2 × f(n − 2)\n\ntulis(f(6))"
+  options:
+  - '208'
+  - '76'
+  - '236'
+  - '104'
+  explain: 'Hitung dari bawah: f(0..6) = 1, 1, 4, 10, 28, 76, 208. Jadi f(6) = 208.'
+- id: obj-algo-027
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 3\n    jika n = 1 maka kembalikan 4\n    kembalikan 1 × f(n − 1) + 2 × f(n − 2)\n\ntulis(f(7))"
+  options:
+  - '298'
+  - '150'
+  - '372'
+  - '224'
+  explain: 'Hitung dari bawah: f(0..7) = 3, 4, 10, 18, 38, 74, 150, 298. Jadi f(7) = 298.'
+- id: obj-algo-028
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 1\n    jika n = 1 maka kembalikan 2\n    kembalikan 1 × f(n − 1) + 1 × f(n − 2)\n\ntulis(f(7))"
+  options:
+  - '34'
+  - '21'
+  - '47'
+  - '37'
+  explain: 'Hitung dari bawah: f(0..7) = 1, 2, 3, 5, 8, 13, 21, 34. Jadi f(7) = 34.'
+- id: obj-algo-029
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 1\n    jika n = 1 maka kembalikan 1\n    kembalikan 2 × f(n − 1) + 2 × f(n − 2)\n\ntulis(f(9))"
+  options:
+  - '4240'
+  - '1552'
+  - '4808'
+  - '2120'
+  explain: 'Hitung dari bawah: f(0..9) = 1, 1, 4, 10, 28, 76, 208, 568, 1552, 4240. Jadi f(9) = 4240.'
+- id: obj-algo-030
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "fungsi f(n):\n    jika n = 0 maka kembalikan 2\n    jika n = 1 maka kembalikan 4\n    kembalikan 1 × f(n − 1) + 1 × f(n − 2)\n\ntulis(f(11))"
+  options:
+  - '466'
+  - '288'
+  - '644'
+  - '512'
+  explain: 'Hitung dari bawah: f(0..11) = 2, 4, 6, 10, 16, 26, 42, 68, 110, 178, 288, 466. Jadi f(11) = 466.'
+- id: obj-algo-031
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [9, 8, 6, 5, 5]   (indeks mulai 1)\nuntuk i ← 2 sampai 5 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[5] − A[2])"
+  options:
+  - '16'
+  - '-3'
+  - '33'
+  - '25'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [9, 17, 23, 28, 33]. A[5] − A[2] = 33 − 17 = 16.'
+- id: obj-algo-032
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [4, 9, 2, 1, 1]   (indeks mulai 1)\nuntuk i ← 2 sampai 5 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[5] − A[2])"
+  options:
+  - '4'
+  - '-8'
+  - '17'
+  - '8'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [4, 13, 15, 16, 17]. A[5] − A[2] = 17 − 13 = 4.'
+- id: obj-algo-033
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [4, 3, 1, 9, 8, 8]   (indeks mulai 1)\nuntuk i ← 2 sampai 6 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[6] − A[3])"
+  options:
+  - '25'
+  - '7'
+  - '33'
+  - '29'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [4, 7, 8, 17, 25, 33]. A[6] − A[3] = 33 − 8 = 25.'
+- id: obj-algo-034
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [7, 4, 5, 6, 9, 7, 4]   (indeks mulai 1)\nuntuk i ← 2 sampai 7 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[7] − A[3])"
+  options:
+  - '26'
+  - '-1'
+  - '42'
+  - '33'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [7, 11, 16, 22, 31, 38, 42]. A[7] − A[3] = 42 − 16 = 26.'
+- id: obj-algo-035
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [4, 2, 1, 3, 9]   (indeks mulai 1)\nuntuk i ← 2 sampai 5 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[5] − A[2])"
+  options:
+  - '13'
+  - '7'
+  - '19'
+  - '17'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [4, 6, 7, 10, 19]. A[5] − A[2] = 19 − 6 = 13.'
+- id: obj-algo-036
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [3, 1, 6, 9, 7, 3, 8]   (indeks mulai 1)\nuntuk i ← 2 sampai 7 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[7] − A[3])"
+  options:
+  - '27'
+  - '2'
+  - '37'
+  - '30'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [3, 4, 10, 19, 26, 29, 37]. A[7] − A[3] = 37 − 10 = 27.'
+- id: obj-algo-037
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [8, 8, 8, 5, 4, 3]   (indeks mulai 1)\nuntuk i ← 2 sampai 6 lakukan\n    A[i] ← A[i] + A[i − 1]\ntulis(A[6] − A[3])"
+  options:
+  - '12'
+  - '-5'
+  - '36'
+  - '20'
+  explain: 'Loop mengubah A menjadi jumlah prefiks: [8, 16, 24, 29, 33, 36]. A[6] − A[3] = 36 − 24 = 12.'
+- id: obj-algo-038
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 504\nb ← 20\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 4 2
+  - 4 3
+  - 4 1
+  - 2520 2
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (504, 20) → (20, 4) → b = 0. Hasilnya FPB dan banyak iterasi: 4 2.'
+- id: obj-algo-039
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 367\nb ← 31\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 1 4
+  - 1 5
+  - 1 3
+  - 11377 4
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (367, 31) → (31, 26) → (26, 5) → (5, 1) → b = 0. Hasilnya FPB dan banyak iterasi: 1 4.'
+- id: obj-algo-040
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 373\nb ← 16\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 1 3
+  - 1 4
+  - 1 2
+  - 5968 3
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (373, 16) → (16, 5) → (5, 1) → b = 0. Hasilnya FPB dan banyak iterasi: 1 3.'
+- id: obj-algo-041
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 578\nb ← 42\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 2 4
+  - 2 5
+  - 2 3
+  - 12138 4
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (578, 42) → (42, 32) → (32, 10) → (10, 2) → b = 0. Hasilnya FPB dan banyak iterasi: 2 4.'
+- id: obj-algo-042
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 317\nb ← 96\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 1 5
+  - 1 6
+  - 1 4
+  - 30432 5
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (317, 96) → (96, 29) → (29, 9) → (9, 2) → (2, 1) → b = 0. Hasilnya FPB dan banyak iterasi: 1 5.'
+- id: obj-algo-043
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 565\nb ← 24\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 1 5
+  - 1 6
+  - 1 4
+  - 13560 5
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (565, 24) → (24, 13) → (13, 11) → (11, 2) → (2, 1) → b = 0. Hasilnya FPB dan banyak iterasi: 1 5.'
+- id: obj-algo-044
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "a ← 310\nb ← 48\nc ← 0\nselama b ≠ 0 lakukan\n    t ← a mod b\n    a ← b\n    b ← t\n    c ← c + 1\ntulis(a, c)"
+  options:
+  - 2 4
+  - 2 5
+  - 2 3
+  - 7440 4
+  explain: 'Ini algoritma Euclid. Pasangan (a, b): (310, 48) → (48, 22) → (22, 4) → (4, 2) → b = 0. Hasilnya FPB dan banyak iterasi: 2 4.'
+- id: obj-algo-045
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [16, 1, 11, 9, 8]\ns ← 0\nuntuk i ← 1 sampai panjang(A) − 1 lakukan\n    untuk j ← 1 sampai panjang(A) − i lakukan\n        jika A[j] > A[j + 1] maka\n            tukar(A[j], A[j + 1])\n  \
+    \          s ← s + 1\ntulis(s)"
+  options:
+  - '7'
+  - '8'
+  - '10'
+  - '6'
+  explain: Bubble sort melakukan satu pertukaran untuk setiap pasangan terbalik (inversi). Banyak inversi = 7.
+- id: obj-algo-046
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [16, 8, 9, 13, 15]\ns ← 0\nuntuk i ← 1 sampai panjang(A) − 1 lakukan\n    untuk j ← 1 sampai panjang(A) − i lakukan\n        jika A[j] > A[j + 1] maka\n            tukar(A[j], A[j + 1])\n \
+    \           s ← s + 1\ntulis(s)"
+  options:
+  - '4'
+  - '5'
+  - '10'
+  - '3'
+  explain: Bubble sort melakukan satu pertukaran untuk setiap pasangan terbalik (inversi). Banyak inversi = 4.
+- id: obj-algo-047
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [12, 9, 8, 19, 11, 5, 6]\ns ← 0\nuntuk i ← 1 sampai panjang(A) − 1 lakukan\n    untuk j ← 1 sampai panjang(A) − i lakukan\n        jika A[j] > A[j + 1] maka\n            tukar(A[j], A[j + 1])\n\
+    \            s ← s + 1\ntulis(s)"
+  options:
+  - '15'
+  - '16'
+  - '21'
+  - '14'
+  explain: Bubble sort melakukan satu pertukaran untuk setiap pasangan terbalik (inversi). Banyak inversi = 15.
+- id: obj-algo-048
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [4, 10, 15, 17, 7]\ns ← 0\nuntuk i ← 1 sampai panjang(A) − 1 lakukan\n    untuk j ← 1 sampai panjang(A) − i lakukan\n        jika A[j] > A[j + 1] maka\n            tukar(A[j], A[j + 1])\n \
+    \           s ← s + 1\ntulis(s)"
+  options:
+  - '3'
+  - '4'
+  - '10'
+  - '2'
+  explain: Bubble sort melakukan satu pertukaran untuk setiap pasangan terbalik (inversi). Banyak inversi = 3.
+- id: obj-algo-049
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [2, 13, 17, 3, 15]\ns ← 0\nuntuk i ← 1 sampai panjang(A) − 1 lakukan\n    untuk j ← 1 sampai panjang(A) − i lakukan\n        jika A[j] > A[j + 1] maka\n            tukar(A[j], A[j + 1])\n \
+    \           s ← s + 1\ntulis(s)"
+  options:
+  - '3'
+  - '4'
+  - '10'
+  - '2'
+  explain: Bubble sort melakukan satu pertukaran untuk setiap pasangan terbalik (inversi). Banyak inversi = 3.
+- id: obj-algo-050
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "A ← [5, 4, 14, 12, 11]\ns ← 0\nuntuk i ← 1 sampai panjang(A) − 1 lakukan\n    untuk j ← 1 sampai panjang(A) − i lakukan\n        jika A[j] > A[j + 1] maka\n            tukar(A[j], A[j + 1])\n \
+    \           s ← s + 1\ntulis(s)"
+  options:
+  - '4'
+  - '5'
+  - '10'
+  - '3'
+  explain: Bubble sort melakukan satu pertukaran untuk setiap pasangan terbalik (inversi). Banyak inversi = 4.
+- id: obj-algo-051
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nfungsi g(n):\n    c ← c + 1\n    jika n ≤ 1 maka kembalikan\n    g(n − 1)\n    g(n − 2)\n\ng(7)\ntulis(c)"
+  options:
+  - '41'
+  - '25'
+  - '128'
+  - '42'
+  explain: Misalkan C(n) = banyak panggilan. C(0) = C(1) = 1 dan C(n) = 1 + C(n−1) + C(n−2). Untuk n = 7 hasilnya 41.
+- id: obj-algo-052
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nfungsi g(n):\n    c ← c + 1\n    jika n ≤ 1 maka kembalikan\n    g(n − 1)\n    g(n − 2)\n\ng(4)\ntulis(c)"
+  options:
+  - '9'
+  - '5'
+  - '16'
+  - '10'
+  explain: Misalkan C(n) = banyak panggilan. C(0) = C(1) = 1 dan C(n) = 1 + C(n−1) + C(n−2). Untuk n = 4 hasilnya 9.
+- id: obj-algo-053
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nfungsi g(n):\n    c ← c + 1\n    jika n ≤ 1 maka kembalikan\n    g(n − 1)\n    g(n − 2)\n\ng(8)\ntulis(c)"
+  options:
+  - '67'
+  - '41'
+  - '256'
+  - '68'
+  explain: Misalkan C(n) = banyak panggilan. C(0) = C(1) = 1 dan C(n) = 1 + C(n−1) + C(n−2). Untuk n = 8 hasilnya 67.
+- id: obj-algo-054
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nfungsi g(n):\n    c ← c + 1\n    jika n ≤ 1 maka kembalikan\n    g(n − 1)\n    g(n − 2)\n\ng(4)\ntulis(c)"
+  options:
+  - '9'
+  - '5'
+  - '16'
+  - '10'
+  explain: Misalkan C(n) = banyak panggilan. C(0) = C(1) = 1 dan C(n) = 1 + C(n−1) + C(n−2). Untuk n = 4 hasilnya 9.
+- id: obj-algo-055
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nfungsi g(n):\n    c ← c + 1\n    jika n ≤ 1 maka kembalikan\n    g(n − 1)\n    g(n − 2)\n\ng(7)\ntulis(c)"
+  options:
+  - '41'
+  - '25'
+  - '128'
+  - '42'
+  explain: Misalkan C(n) = banyak panggilan. C(0) = C(1) = 1 dan C(n) = 1 + C(n−1) + C(n−2). Untuk n = 7 hasilnya 41.
+- id: obj-algo-056
+  stage: provinsi
+  topic: algoritmika
+  prompt: Apa yang dicetak oleh pseudocode berikut?
+  code: "c ← 0\nfungsi g(n):\n    c ← c + 1\n    jika n ≤ 1 maka kembalikan\n    g(n − 1)\n    g(n − 2)\n\ng(8)\ntulis(c)"
+  options:
+  - '67'
+  - '41'
+  - '256'
+  - '68'
+  explain: Misalkan C(n) = banyak panggilan. C(0) = C(1) = 1 dan C(n) = 1 + C(n−1) + C(n−2). Untuk n = 8 hasilnya 67.
+- id: obj-komb-001
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata NEZUKO?
+  options:
+  - '720'
+  - '1440'
+  - '360'
+  - '792'
+  explain: 'Permutasi dengan unsur berulang: 6! dibagi faktorial banyak setiap huruf berulang (tidak ada huruf berulang). Hasilnya 720.'
+- id: obj-komb-002
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata TANJIRO?
+  options:
+  - '5040'
+  - '10080'
+  - '2520'
+  - '5544'
+  explain: 'Permutasi dengan unsur berulang: 7! dibagi faktorial banyak setiap huruf berulang (tidak ada huruf berulang). Hasilnya 5040.'
+- id: obj-komb-003
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata KAMADO?
+  options:
+  - '360'
+  - '720'
+  - '180'
+  - '396'
+  explain: 'Permutasi dengan unsur berulang: 6! dibagi faktorial banyak setiap huruf berulang (A×2). Hasilnya 360.'
+- id: obj-komb-004
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata HASHIRA?
+  options:
+  - '1260'
+  - '5040'
+  - '2520'
+  - '630'
+  explain: 'Permutasi dengan unsur berulang: 7! dibagi faktorial banyak setiap huruf berulang (H×2, A×2). Hasilnya 1260.'
+- id: obj-komb-005
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata SHINOBU?
+  options:
+  - '5040'
+  - '10080'
+  - '2520'
+  - '5544'
+  explain: 'Permutasi dengan unsur berulang: 7! dibagi faktorial banyak setiap huruf berulang (tidak ada huruf berulang). Hasilnya 5040.'
+- id: obj-komb-006
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata RENGOKU?
+  options:
+  - '5040'
+  - '10080'
+  - '2520'
+  - '5544'
+  explain: 'Permutasi dengan unsur berulang: 7! dibagi faktorial banyak setiap huruf berulang (tidak ada huruf berulang). Hasilnya 5040.'
+- id: obj-komb-007
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata INOSUKE?
+  options:
+  - '5040'
+  - '10080'
+  - '2520'
+  - '5544'
+  explain: 'Permutasi dengan unsur berulang: 7! dibagi faktorial banyak setiap huruf berulang (tidak ada huruf berulang). Hasilnya 5040.'
+- id: obj-komb-008
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak susunan huruf berbeda yang dapat dibuat dari semua huruf kata MITSURI?
+  options:
+  - '2520'
+  - '5040'
+  - '1260'
+  - '2772'
+  explain: 'Permutasi dengan unsur berulang: 7! dibagi faktorial banyak setiap huruf berulang (I×2). Hasilnya 2520.'
+- id: obj-komb-009
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (4, 6) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (3, 1) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '186'
+  - '210'
+  - '24'
+  - '234'
+  explain: Total jalur tanpa larangan C(10, 4) = 210. Jalur yang melewati (3, 1) = C(4, 3) × C(6, 1) = 24. Jawaban = 210 − 24 = 186.
+- id: obj-komb-010
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (6, 4) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (1, 1) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '98'
+  - '210'
+  - '112'
+  - '322'
+  explain: Total jalur tanpa larangan C(10, 6) = 210. Jalur yang melewati (1, 1) = C(2, 1) × C(8, 5) = 112. Jawaban = 210 − 112 = 98.
+- id: obj-komb-011
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (5, 6) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (3, 1) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '378'
+  - '462'
+  - '84'
+  - '546'
+  explain: Total jalur tanpa larangan C(11, 5) = 462. Jalur yang melewati (3, 1) = C(4, 3) × C(7, 2) = 84. Jawaban = 462 − 84 = 378.
+- id: obj-komb-012
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (6, 5) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (5, 1) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '432'
+  - '462'
+  - '30'
+  - '492'
+  explain: Total jalur tanpa larangan C(11, 6) = 462. Jalur yang melewati (5, 1) = C(6, 5) × C(5, 1) = 30. Jawaban = 462 − 30 = 432.
+- id: obj-komb-013
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (5, 5) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (1, 4) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '227'
+  - '252'
+  - '25'
+  - '277'
+  explain: Total jalur tanpa larangan C(10, 5) = 252. Jalur yang melewati (1, 4) = C(5, 1) × C(5, 4) = 25. Jawaban = 252 − 25 = 227.
+- id: obj-komb-014
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (4, 4) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (1, 2) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '40'
+  - '70'
+  - '30'
+  - '100'
+  explain: Total jalur tanpa larangan C(8, 4) = 70. Jalur yang melewati (1, 2) = C(3, 1) × C(5, 3) = 30. Jawaban = 70 − 30 = 40.
+- id: obj-komb-015
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (4, 4) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (1, 1) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '30'
+  - '70'
+  - '40'
+  - '110'
+  explain: Total jalur tanpa larangan C(8, 4) = 70. Jalur yang melewati (1, 1) = C(2, 1) × C(6, 3) = 40. Jawaban = 70 − 40 = 30.
+- id: obj-komb-016
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Dari titik (0, 0) ke titik (4, 5) kamu hanya boleh bergerak satu satuan ke kanan (x+1) atau ke atas (y+1). Titik (2, 2) dijaga iblis dan tidak boleh dilewati. Ada berapa jalur?
+  options:
+  - '66'
+  - '126'
+  - '60'
+  - '186'
+  explain: Total jalur tanpa larangan C(9, 4) = 126. Jalur yang melewati (2, 2) = C(4, 2) × C(5, 2) = 60. Jawaban = 126 − 60 = 66.
+- id: obj-komb-017
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 11 kursi berjajar. Dengan berapa cara memilih 4 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '70'
+  - '330'
+  - '35'
+  - '120'
+  explain: Bayangkan 4 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(8, 4) = 70. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-018
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 10 kursi berjajar. Dengan berapa cara memilih 4 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '35'
+  - '210'
+  - '15'
+  - '84'
+  explain: Bayangkan 4 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(7, 4) = 35. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-019
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 8 kursi berjajar. Dengan berapa cara memilih 2 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '21'
+  - '28'
+  - '15'
+  - '7'
+  explain: Bayangkan 2 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(7, 2) = 21. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-020
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 11 kursi berjajar. Dengan berapa cara memilih 3 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '84'
+  - '165'
+  - '56'
+  - '45'
+  explain: Bayangkan 3 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(9, 3) = 84. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-021
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 9 kursi berjajar. Dengan berapa cara memilih 3 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '35'
+  - '84'
+  - '20'
+  - '28'
+  explain: Bayangkan 3 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(7, 3) = 35. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-022
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 7 kursi berjajar. Dengan berapa cara memilih 4 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '1'
+  - '35'
+  - '0'
+  - '20'
+  explain: Bayangkan 4 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(4, 4) = 1. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-023
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Ada 11 kursi berjajar. Dengan berapa cara memilih 2 kursi sehingga tidak ada dua kursi terpilih yang bersebelahan?
+  options:
+  - '45'
+  - '55'
+  - '36'
+  - '10'
+  explain: Bayangkan 2 kursi terpilih butuh minimal satu kursi kosong di antaranya. Banyak caranya C(n − k + 1, k) = C(10, 2) = 45. (Bisa dicek dengan brute force kecil.)
+- id: obj-komb-024
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak cara membagi 8 kue identik kepada 4 slayer (seorang slayer boleh tidak mendapat kue)?
+  options:
+  - '165'
+  - '35'
+  - '65536'
+  - '495'
+  explain: 'Bintang dan batang (stars and bars): 8 bintang dan 3 pembatas, total 11 posisi. Pilih posisi pembatas: C(11, 3) = 165.'
+- id: obj-komb-025
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak cara membagi 8 kue identik kepada 3 slayer (seorang slayer boleh tidak mendapat kue)?
+  options:
+  - '45'
+  - '21'
+  - '6561'
+  - '165'
+  explain: 'Bintang dan batang (stars and bars): 8 bintang dan 2 pembatas, total 10 posisi. Pilih posisi pembatas: C(10, 2) = 45.'
+- id: obj-komb-026
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak cara membagi 6 kue identik kepada 2 slayer (seorang slayer boleh tidak mendapat kue)?
+  options:
+  - '7'
+  - '5'
+  - '64'
+  - '28'
+  explain: 'Bintang dan batang (stars and bars): 6 bintang dan 1 pembatas, total 7 posisi. Pilih posisi pembatas: C(7, 1) = 7.'
+- id: obj-komb-027
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak cara membagi 14 kue identik kepada 4 slayer (seorang slayer boleh tidak mendapat kue)?
+  options:
+  - '680'
+  - '286'
+  - '268435456'
+  - '3060'
+  explain: 'Bintang dan batang (stars and bars): 14 bintang dan 3 pembatas, total 17 posisi. Pilih posisi pembatas: C(17, 3) = 680.'
+- id: obj-komb-028
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak cara membagi 9 kue identik kepada 2 slayer (seorang slayer boleh tidak mendapat kue)?
+  options:
+  - '10'
+  - '8'
+  - '512'
+  - '55'
+  explain: 'Bintang dan batang (stars and bars): 9 bintang dan 1 pembatas, total 10 posisi. Pilih posisi pembatas: C(10, 1) = 10.'
+- id: obj-komb-029
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak cara membagi 6 kue identik kepada 3 slayer (seorang slayer boleh tidak mendapat kue)?
+  options:
+  - '28'
+  - '10'
+  - '729'
+  - '84'
+  explain: 'Bintang dan batang (stars and bars): 6 bintang dan 2 pembatas, total 8 posisi. Pilih posisi pembatas: C(8, 2) = 28.'
+- id: obj-komb-030
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak bilangan 4 digit yang semua digit berbeda?
+  options:
+  - '4536'
+  - '4545'
+  - '3000'
+  - '5040'
+  explain: 'Digit pertama 9 pilihan (bukan 0), berikutnya 9, 8, …: hasil 4536.'
+- id: obj-komb-031
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak bilangan 3 digit yang semua digit berbeda?
+  options:
+  - '648'
+  - '657'
+  - '300'
+  - '720'
+  explain: 'Digit pertama 9 pilihan (bukan 0), berikutnya 9, 8, …: hasil 648.'
+- id: obj-komb-032
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak bilangan 4 digit yang digitnya naik ketat dari kiri ke kanan?
+  options:
+  - '126'
+  - '135'
+  - '3000'
+  - '5040'
+  explain: 'Digit naik ketat tidak mungkin memuat 0 di depan, jadi cukup memilih 4 digit berbeda dari 1–9: C(9, 4) = 126.'
+- id: obj-komb-033
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak bilangan 4 digit yang digitnya naik ketat dari kiri ke kanan?
+  options:
+  - '126'
+  - '135'
+  - '3000'
+  - '5040'
+  explain: 'Digit naik ketat tidak mungkin memuat 0 di depan, jadi cukup memilih 4 digit berbeda dari 1–9: C(9, 4) = 126.'
+- id: obj-komb-034
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak bilangan 4 digit yang jumlah digitnya genap?
+  options:
+  - '4500'
+  - '4509'
+  - '3000'
+  - '5040'
+  explain: 'Digit terakhir selalu bisa dipilih agar paritas jumlahnya tepat, jadi tepat setengah bilangan 4 digit memenuhi: 9000/2 = 4500.'
+- id: obj-komb-035
+  stage: provinsi
+  topic: kombinatorika
+  prompt: Berapa banyak bilangan 4 digit yang digitnya naik ketat dari kiri ke kanan?
+  options:
+  - '126'
+  - '135'
+  - '3000'
+  - '5040'
+  explain: 'Digit naik ketat tidak mungkin memuat 0 di depan, jadi cukup memilih 4 digit berbeda dari 1–9: C(9, 4) = 126.'
+- id: obj-disk-001
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 21 orang menguasai Napas Air, 45 orang menguasai Napas Api, dan 12 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '54'
+  - '66'
+  - '78'
+  - '42'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 21 + 45 − 12 = 54.'
+- id: obj-disk-002
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 40 orang menguasai Napas Air, 53 orang menguasai Napas Api, dan 14 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '79'
+  - '93'
+  - '107'
+  - '65'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 40 + 53 − 14 = 79.'
+- id: obj-disk-003
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 25 orang menguasai Napas Air, 46 orang menguasai Napas Api, dan 23 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '48'
+  - '71'
+  - '94'
+  - '25'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 25 + 46 − 23 = 48.'
+- id: obj-disk-004
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 24 orang menguasai Napas Air, 34 orang menguasai Napas Api, dan 12 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '46'
+  - '58'
+  - '70'
+  - '34'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 24 + 34 − 12 = 46.'
+- id: obj-disk-005
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 31 orang menguasai Napas Air, 56 orang menguasai Napas Api, dan 26 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '61'
+  - '87'
+  - '113'
+  - '35'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 31 + 56 − 26 = 61.'
+- id: obj-disk-006
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 24 orang menguasai Napas Air, 30 orang menguasai Napas Api, dan 6 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '48'
+  - '54'
+  - '60'
+  - '42'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 24 + 30 − 6 = 48.'
+- id: obj-disk-007
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 27 orang menguasai Napas Air, 41 orang menguasai Napas Api, dan 20 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '48'
+  - '68'
+  - '88'
+  - '28'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 27 + 41 − 20 = 48.'
+- id: obj-disk-008
+  stage: stei
+  topic: diskrit
+  prompt: Dari sekelompok slayer, 60 orang menguasai Napas Air, 44 orang menguasai Napas Api, dan 20 orang menguasai keduanya. Setiap slayer menguasai minimal satu dari keduanya. Berapa jumlah slayer?
+  options:
+  - '84'
+  - '104'
+  - '124'
+  - '64'
+  explain: '|A ∪ B| = |A| + |B| − |A ∩ B| = 60 + 44 − 20 = 84.'
+- id: obj-disk-009
+  stage: stei
+  topic: diskrit
+  prompt: Berapa banyak relasi REFLEKSIF yang dapat dibuat pada himpunan dengan 2 anggota?
+  options:
+  - '4'
+  - '16'
+  - '8'
+  - '5'
+  explain: 'Relasi pada n anggota adalah subset dari 2×2 = 4 pasangan. Refleksif berarti 2 pasangan (a, a) wajib ada; sisanya 2 pasangan bebas: 2^2 = 4.'
+- id: obj-disk-010
+  stage: stei
+  topic: diskrit
+  prompt: Berapa banyak relasi REFLEKSIF yang dapat dibuat pada himpunan dengan 3 anggota?
+  options:
+  - '64'
+  - '512'
+  - '8'
+  - '70'
+  explain: 'Relasi pada n anggota adalah subset dari 3×3 = 9 pasangan. Refleksif berarti 3 pasangan (a, a) wajib ada; sisanya 6 pasangan bebas: 2^6 = 64.'
+- id: obj-disk-011
+  stage: stei
+  topic: diskrit
+  prompt: Berapa banyak relasi REFLEKSIF yang dapat dibuat pada himpunan dengan 4 anggota?
+  options:
+  - '4096'
+  - '65536'
+  - '16'
+  - '1024'
+  explain: 'Relasi pada n anggota adalah subset dari 4×4 = 16 pasangan. Refleksif berarti 4 pasangan (a, a) wajib ada; sisanya 12 pasangan bebas: 2^12 = 4096.'
+- id: obj-disk-012
+  stage: stei
+  topic: diskrit
+  prompt: Berapa banyak relasi REFLEKSIF yang dapat dibuat pada himpunan dengan 5 anggota?
+  options:
+  - '1048576'
+  - '33554432'
+  - '32'
+  - '32768'
+  explain: 'Relasi pada n anggota adalah subset dari 5×5 = 25 pasangan. Refleksif berarti 5 pasangan (a, a) wajib ada; sisanya 20 pasangan bebas: 2^20 = 1048576.'
+- id: obj-disk-013
+  stage: stei
+  topic: diskrit
+  prompt: Berapa banyak relasi REFLEKSIF yang dapat dibuat pada himpunan dengan 6 anggota?
+  options:
+  - '1073741824'
+  - '68719476736'
+  - '64'
+  - '2097152'
+  explain: 'Relasi pada n anggota adalah subset dari 6×6 = 36 pasangan. Refleksif berarti 6 pasangan (a, a) wajib ada; sisanya 30 pasangan bebas: 2^30 = 1073741824.'
+- id: obj-disk-014
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah graf sederhana memiliki simpul dengan derajat 2, 3, 3, 2, 6. Berapa banyak sisinya?
+  options:
+  - '8'
+  - '16'
+  - '9'
+  - '5'
+  explain: 'Lemma jabat tangan: jumlah derajat = 2 × banyak sisi. (2 + 3 + 3 + 2 + 6) / 2 = 16 / 2 = 8.'
+- id: obj-disk-015
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah graf sederhana memiliki simpul dengan derajat 2, 4, 5, 1, 4. Berapa banyak sisinya?
+  options:
+  - '8'
+  - '16'
+  - '9'
+  - '5'
+  explain: 'Lemma jabat tangan: jumlah derajat = 2 × banyak sisi. (2 + 4 + 5 + 1 + 4) / 2 = 16 / 2 = 8.'
+- id: obj-disk-016
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah graf sederhana memiliki simpul dengan derajat 2, 3, 3, 1, 2, 3, 2, 4. Berapa banyak sisinya?
+  options:
+  - '10'
+  - '20'
+  - '11'
+  - '8'
+  explain: 'Lemma jabat tangan: jumlah derajat = 2 × banyak sisi. (2 + 3 + 3 + 1 + 2 + 3 + 2 + 4) / 2 = 20 / 2 = 10.'
+- id: obj-disk-017
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah graf sederhana memiliki simpul dengan derajat 2, 6, 4, 3, 1. Berapa banyak sisinya?
+  options:
+  - '8'
+  - '16'
+  - '9'
+  - '5'
+  explain: 'Lemma jabat tangan: jumlah derajat = 2 × banyak sisi. (2 + 6 + 4 + 3 + 1) / 2 = 16 / 2 = 8.'
+- id: obj-disk-018
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah graf sederhana memiliki simpul dengan derajat 7, 6, 3, 3, 4, 2, 4, 3. Berapa banyak sisinya?
+  options:
+  - '16'
+  - '32'
+  - '17'
+  - '8'
+  explain: 'Lemma jabat tangan: jumlah derajat = 2 × banyak sisi. (7 + 6 + 3 + 3 + 4 + 2 + 4 + 3) / 2 = 32 / 2 = 16.'
+- id: obj-disk-019
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah graf sederhana memiliki simpul dengan derajat 5, 2, 4, 2, 5. Berapa banyak sisinya?
+  options:
+  - '9'
+  - '18'
+  - '10'
+  - '5'
+  explain: 'Lemma jabat tangan: jumlah derajat = 2 × banyak sisi. (5 + 2 + 4 + 2 + 5) / 2 = 18 / 2 = 9.'
+- id: obj-disk-020
+  stage: stei
+  topic: diskrit
+  prompt: Tentukan x di antara 0 sampai 22 sehingga 31·x ≡ 1 (mod 23).
+  options:
+  - '3'
+  - '4'
+  - '20'
+  - '8'
+  explain: 'x adalah invers 31 modulo 23. Cek: 31 × 3 = 93 = 4×23 + 1. (Bisa dicari dengan algoritma Euclid diperluas atau teorema Fermat: 31^21 mod 23.)'
+- id: obj-disk-021
+  stage: stei
+  topic: diskrit
+  prompt: Tentukan x di antara 0 sampai 12 sehingga 14·x ≡ 1 (mod 13).
+  options:
+  - '1'
+  - '2'
+  - '12'
+  - '4'
+  explain: 'x adalah invers 14 modulo 13. Cek: 14 × 1 = 14 = 1×13 + 1. (Bisa dicari dengan algoritma Euclid diperluas atau teorema Fermat: 14^11 mod 13.)'
+- id: obj-disk-022
+  stage: stei
+  topic: diskrit
+  prompt: Tentukan x di antara 0 sampai 22 sehingga 19·x ≡ 1 (mod 23).
+  options:
+  - '17'
+  - '18'
+  - '6'
+  - '19'
+  explain: 'x adalah invers 19 modulo 23. Cek: 19 × 17 = 323 = 14×23 + 1. (Bisa dicari dengan algoritma Euclid diperluas atau teorema Fermat: 19^21 mod 23.)'
+- id: obj-disk-023
+  stage: stei
+  topic: diskrit
+  prompt: Tentukan x di antara 0 sampai 22 sehingga 11·x ≡ 1 (mod 23).
+  options:
+  - '21'
+  - '22'
+  - '2'
+  - '11'
+  explain: 'x adalah invers 11 modulo 23. Cek: 11 × 21 = 231 = 10×23 + 1. (Bisa dicari dengan algoritma Euclid diperluas atau teorema Fermat: 11^21 mod 23.)'
+- id: obj-disk-024
+  stage: stei
+  topic: diskrit
+  prompt: Tentukan x di antara 0 sampai 18 sehingga 17·x ≡ 1 (mod 19).
+  options:
+  - '9'
+  - '10'
+  - '17'
+  - '7'
+  explain: 'x adalah invers 17 modulo 19. Cek: 17 × 9 = 153 = 8×19 + 1. (Bisa dicari dengan algoritma Euclid diperluas atau teorema Fermat: 17^17 mod 19.)'
+- id: obj-disk-025
+  stage: stei
+  topic: diskrit
+  prompt: Tentukan x di antara 0 sampai 16 sehingga 9·x ≡ 1 (mod 17).
+  options:
+  - '2'
+  - '3'
+  - '15'
+  - '9'
+  explain: 'x adalah invers 9 modulo 17. Cek: 9 × 2 = 18 = 1×17 + 1. (Bisa dicari dengan algoritma Euclid diperluas atau teorema Fermat: 9^15 mod 17.)'
+- id: obj-disk-026
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah kotak berisi kaus kaki dengan 8 warna berbeda (stok setiap warna banyak). Berapa kaus kaki minimum yang harus diambil tanpa melihat agar PASTI ada 2 kaus kaki berwarna sama?
+  options:
+  - '9'
+  - '16'
+  - '8'
+  - '10'
+  explain: 'Prinsip sarang merpati: kasus terburuk adalah 1 kaus kaki di setiap warna (8×1 = 8). Satu kaus kaki lagi pasti membuat satu warna berjumlah 2: 9.'
+- id: obj-disk-027
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah kotak berisi kaus kaki dengan 6 warna berbeda (stok setiap warna banyak). Berapa kaus kaki minimum yang harus diambil tanpa melihat agar PASTI ada 4 kaus kaki berwarna sama?
+  options:
+  - '19'
+  - '24'
+  - '18'
+  - '10'
+  explain: 'Prinsip sarang merpati: kasus terburuk adalah 3 kaus kaki di setiap warna (6×3 = 18). Satu kaus kaki lagi pasti membuat satu warna berjumlah 4: 19.'
+- id: obj-disk-028
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah kotak berisi kaus kaki dengan 11 warna berbeda (stok setiap warna banyak). Berapa kaus kaki minimum yang harus diambil tanpa melihat agar PASTI ada 5 kaus kaki berwarna sama?
+  options:
+  - '45'
+  - '55'
+  - '44'
+  - '16'
+  explain: 'Prinsip sarang merpati: kasus terburuk adalah 4 kaus kaki di setiap warna (11×4 = 44). Satu kaus kaki lagi pasti membuat satu warna berjumlah 5: 45.'
+- id: obj-disk-029
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah kotak berisi kaus kaki dengan 5 warna berbeda (stok setiap warna banyak). Berapa kaus kaki minimum yang harus diambil tanpa melihat agar PASTI ada 2 kaus kaki berwarna sama?
+  options:
+  - '6'
+  - '10'
+  - '5'
+  - '7'
+  explain: 'Prinsip sarang merpati: kasus terburuk adalah 1 kaus kaki di setiap warna (5×1 = 5). Satu kaus kaki lagi pasti membuat satu warna berjumlah 2: 6.'
+- id: obj-disk-030
+  stage: stei
+  topic: diskrit
+  prompt: Sebuah kotak berisi kaus kaki dengan 3 warna berbeda (stok setiap warna banyak). Berapa kaus kaki minimum yang harus diambil tanpa melihat agar PASTI ada 5 kaus kaki berwarna sama?
+  options:
+  - '13'
+  - '15'
+  - '12'
+  - '8'
+  explain: 'Prinsip sarang merpati: kasus terburuk adalah 4 kaus kaki di setiap warna (3×4 = 12). Satu kaus kaki lagi pasti membuat satu warna berjumlah 5: 13.'
+- id: obj-pena-001
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 16, 26, 36, 46, 56, …'
+  options:
+  - '66'
+  - '67'
+  - '112'
+  - '61'
+  explain: Selisih tetap 10. Jadi suku berikutnya 66.
+- id: obj-pena-002
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 13, 17, 21, 25, 29, …'
+  options:
+  - '33'
+  - '34'
+  - '58'
+  - '31'
+  explain: Selisih tetap 4. Jadi suku berikutnya 33.
+- id: obj-pena-003
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 8, 12, 18, 26, 36, …'
+  options:
+  - '48'
+  - '49'
+  - '72'
+  - '42'
+  explain: Selisih antarsuku naik 2 setiap langkah. Jadi suku berikutnya 48.
+- id: obj-pena-004
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 4, 8, 16, 32, 64, …'
+  options:
+  - '128'
+  - '129'
+  - '96'
+  - '140'
+  explain: Setiap suku dikali 2. Jadi suku berikutnya 128.
+- id: obj-pena-005
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 18, 22, 26, 30, 34, …'
+  options:
+  - '38'
+  - '39'
+  - '68'
+  - '36'
+  explain: Selisih tetap 4. Jadi suku berikutnya 38.
+- id: obj-pena-006
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 3, 9, 27, 81, 243, …'
+  options:
+  - '729'
+  - '730'
+  - '486'
+  - '801'
+  explain: Setiap suku dikali 3. Jadi suku berikutnya 729.
+- id: obj-pena-007
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 6, 10, 18, 30, 46, …'
+  options:
+  - '66'
+  - '67'
+  - '92'
+  - '56'
+  explain: Selisih antarsuku naik 4 setiap langkah. Jadi suku berikutnya 66.
+- id: obj-pena-008
+  stage: stei
+  topic: penalaran
+  prompt: 'Tentukan suku berikutnya: 9, 11, 15, 21, 29, …'
+  options:
+  - '39'
+  - '40'
+  - '58'
+  - '34'
+  explain: Selisih antarsuku naik 2 setiap langkah. Jadi suku berikutnya 39.
+- id: obj-pena-009
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 4 jam, sedangkan Genya dalam 9 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 36/13 jam
+  - 13/2 jam
+  - 13 jam
+  - 4 jam
+  explain: Kecepatan gabungan = 1/4 + 1/9 = 13/36 pohon per jam. Waktu = 1 / (13/36) = 36/13 jam.
+- id: obj-pena-010
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 6 jam, sedangkan Genya dalam 11 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 66/17 jam
+  - 17/2 jam
+  - 17 jam
+  - 6 jam
+  explain: Kecepatan gabungan = 1/6 + 1/11 = 17/66 pohon per jam. Waktu = 1 / (17/66) = 66/17 jam.
+- id: obj-pena-011
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 4 jam, sedangkan Genya dalam 12 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 3 jam
+  - 8 jam
+  - 16 jam
+  - 4 jam
+  explain: Kecepatan gabungan = 1/4 + 1/12 = 1/3 pohon per jam. Waktu = 1 / (1/3) = 3 jam.
+- id: obj-pena-012
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 12 jam, sedangkan Genya dalam 7 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 84/19 jam
+  - 19/2 jam
+  - 19 jam
+  - 7 jam
+  explain: Kecepatan gabungan = 1/12 + 1/7 = 19/84 pohon per jam. Waktu = 1 / (19/84) = 84/19 jam.
+- id: obj-pena-013
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 7 jam, sedangkan Genya dalam 8 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 56/15 jam
+  - 15/2 jam
+  - 15 jam
+  - 7 jam
+  explain: Kecepatan gabungan = 1/7 + 1/8 = 15/56 pohon per jam. Waktu = 1 / (15/56) = 56/15 jam.
+- id: obj-pena-014
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 6 jam, sedangkan Genya dalam 8 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 24/7 jam
+  - 7 jam
+  - 14 jam
+  - 6 jam
+  explain: Kecepatan gabungan = 1/6 + 1/8 = 7/24 pohon per jam. Waktu = 1 / (7/24) = 24/7 jam.
+- id: obj-pena-015
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 7 jam, sedangkan Genya dalam 12 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 84/19 jam
+  - 19/2 jam
+  - 19 jam
+  - 7 jam
+  explain: Kecepatan gabungan = 1/7 + 1/12 = 19/84 pohon per jam. Waktu = 1 / (19/84) = 84/19 jam.
+- id: obj-pena-016
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 4 jam, sedangkan Genya dalam 9 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 36/13 jam
+  - 13/2 jam
+  - 13 jam
+  - 4 jam
+  explain: Kecepatan gabungan = 1/4 + 1/9 = 13/36 pohon per jam. Waktu = 1 / (13/36) = 36/13 jam.
+- id: obj-pena-017
+  stage: stei
+  topic: penalaran
+  prompt: Tanjiro dapat menebang sebatang pohon raksasa sendirian dalam 5 jam, sedangkan Genya dalam 12 jam. Jika bekerja bersama dengan kecepatan masing-masing tetap, berapa lama pohon itu tertebang?
+  options:
+  - 60/17 jam
+  - 17/2 jam
+  - 17 jam
+  - 5 jam
+  explain: Kecepatan gabungan = 1/5 + 1/12 = 17/60 pohon per jam. Waktu = 1 / (17/60) = 60/17 jam.
+- id: obj-pena-018
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 50%, lalu harga barunya diturunkan 20%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - naik 20%
+  - naik 30%
+  - naik 70%
+  - turun 20%
+  explain: Harga akhir = (1 + 50/100) × (1 − 20/100) = 1.2 kali harga awal, jadi naik 20%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-019
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 50%, lalu harga barunya diturunkan 25%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - naik 12.5%
+  - naik 25%
+  - naik 75%
+  - turun 25%
+  explain: Harga akhir = (1 + 50/100) × (1 − 25/100) = 1.125 kali harga awal, jadi naik 12.5%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-020
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 20%, lalu harga barunya diturunkan 50%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - turun 40%
+  - turun 30%
+  - naik 70%
+  - turun 50%
+  explain: Harga akhir = (1 + 20/100) × (1 − 50/100) = 0.6 kali harga awal, jadi turun 40%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-021
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 20%, lalu harga barunya diturunkan 50%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - turun 40%
+  - turun 30%
+  - naik 70%
+  - turun 50%
+  explain: Harga akhir = (1 + 20/100) × (1 − 50/100) = 0.6 kali harga awal, jadi turun 40%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-022
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 30%, lalu harga barunya diturunkan 50%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - turun 35%
+  - turun 20%
+  - naik 80%
+  - turun 50%
+  explain: Harga akhir = (1 + 30/100) × (1 − 50/100) = 0.65 kali harga awal, jadi turun 35%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-023
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 40%, lalu harga barunya diturunkan 25%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - naik 5%
+  - naik 15%
+  - naik 65%
+  - turun 25%
+  explain: Harga akhir = (1 + 40/100) × (1 − 25/100) = 1.05 kali harga awal, jadi naik 5%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-024
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 30%, lalu harga barunya diturunkan 20%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - naik 4%
+  - naik 10%
+  - naik 50%
+  - turun 20%
+  explain: Harga akhir = (1 + 30/100) × (1 − 20/100) = 1.04 kali harga awal, jadi naik 4%. Persentase tidak boleh langsung dikurangkan.
+- id: obj-pena-025
+  stage: stei
+  topic: penalaran
+  prompt: Harga sebilah pedang dinaikkan 10%, lalu harga barunya diturunkan 50%. Dibandingkan harga awal, harga akhirnya …
+  options:
+  - turun 45%
+  - turun 40%
+  - naik 60%
+  - turun 50%
+  explain: Harga akhir = (1 + 10/100) × (1 − 50/100) = 0.55 kali harga awal, jadi turun 45%. Persentase tidak boleh langsung dikurangkan.

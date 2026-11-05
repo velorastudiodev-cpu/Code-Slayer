@@ -1,0 +1,145 @@
+lesson:
+- text: Operator aritmetika + - * / % bekerja seperti bahasa lain. Rust tidak punya ++; gunakan += 1. Overflow pada mode debug membuat program panik, jadi pilih tipe yang cukup besar.
+  code: |
+    fn main() {
+        let t = 3725;
+        println!("{} {} {}", t / 3600, t % 3600 / 60, t % 60);
+        let mut n = 5;
+        n += 3;
+        n *= 2;
+        println!("{}", n);
+    }
+- text: 'Perbandingan menghasilkan bool. Logika: && || !. if adalah ekspresi, jadi bisa langsung menghasilkan nilai: let s = if x > 0 { "positif" } else { "bukan" };'
+  code: |
+    fn main() {
+        let umur = 16;
+        let pedang = true;
+        println!("{}", umur >= 15 && pedang);
+        let status = if umur >= 18 { "dewasa" } else { "muda" };
+        println!("{}", status);
+    }
+exercises:
+- id: rs-f3-detik
+  type: write
+  title: Jam Pertarungan
+  difficulty: 2
+  prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '3725'
+  - '59'
+  - '86399'
+  - '0'
+  hints: |
+    1 jam = 3600 detik, 1 menit = 60 detik.
+    Jam = t / 3600, menit = (t % 3600) / 60.
+    Detik = t % 60.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let t: i64 = it.next().unwrap().parse().unwrap();
+        println!("{}:{}:{}", t / 3600, t % 3600 / 60, t % 60);
+    }
+- id: rs-f3-suhu
+  type: write
+  title: Suhu Napas Api
+  difficulty: 1
+  prompt: Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '100'
+  - '0'
+  - '-40'
+  - '37'
+  hints: |
+    Hitung dalam tipe desimal agar 37 * 9 / 5 tidak terpotong.
+    Contoh: 37 menjadi 98.6.
+    Format 1 angka di belakang koma.
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let c: f64 = it.next().unwrap().parse().unwrap();
+        println!("{:.1}", c * 9.0 / 5.0 + 32.0);
+    }
+- id: rs-f3-predict
+  type: predict
+  title: Urutan Operasi
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn main() {
+        println!("{} {}", 2 + 3 * 4, (2 + 3) * 4);
+        println!("{}", 20 - 6 / 2 % 2);
+        println!("{}", 7 > 3 && 2 > 5 || true);
+    }
+  hints: |
+    * / % dikerjakan sebelum + -.
+    Operator dengan derajat sama dikerjakan dari kiri.
+    Kurung mengubah urutan.
+  solution: x
+- id: rs-f3-bug
+  type: bughunt
+  title: Gerbang yang Salah Jaga
+  difficulty: 1
+  prompt: Program harus mencetak "masuk" hanya jika 1 ≤ n ≤ 10, selain itu "tolak". Tapi semua angka masuk. Temukan baris yang salah.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: i32 = it.next().unwrap().parse().unwrap();
+        if n >= 1 || n <= 10 {
+            println!("masuk");
+        } else {
+            println!("tolak");
+        }
+    }
+  bug_line: 8
+  tests:
+  - '5'
+  - '1'
+  - '10'
+  - '0'
+  - '11'
+  hints: |
+    Coba n = 11: apakah kedua syarat harus benar?
+    || (atau) cukup salah satu benar.
+    Gunakan && (dan).
+  solution: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: i32 = it.next().unwrap().parse().unwrap();
+        if n >= 1 && n <= 10 {
+            println!("masuk");
+        } else {
+            println!("tolak");
+        }
+    }

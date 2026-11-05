@@ -1,0 +1,82 @@
+lesson:
+- text: 'Shell adalah juru bicara antara kamu dan sistem operasi. Kamu selalu "berdiri" di satu direktori: pwd menampilkannya, ls melihat isinya, cd berpindah. Path absolut dimulai dari / (akar), path relatif
+    dari direktori sekarang. ~ adalah home, .. adalah direktori induk.'
+  code: |
+    pwd
+    ls
+    cd /tmp
+    cd ..
+    cd ~
+exercises:
+- id: bash-f1-pwd
+  type: write
+  title: Di Mana Aku?
+  difficulty: 1
+  prompt: Tampilkan path lengkap direktori kerja sekarang.
+  starter: |
+    # tulis perintahmu di sini
+  sim_only: true
+  hints: |
+    Singkatan "print working directory".
+    Tiga huruf.
+    pwd
+  solution: |
+    pwd
+- id: bash-f1-ls
+  type: write
+  title: Isi Markas
+  difficulty: 1
+  prompt: Tampilkan isi direktori markas (tanpa file tersembunyi), satu nama per baris.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    ls menampilkan isi direktori.
+    Opsi -1 membuat satu per baris.
+    ls -1 markas
+  solution: |
+    ls -1 markas
+- id: bash-f1-hidden
+  type: write
+  title: Yang Tersembunyi
+  difficulty: 2
+  prompt: Tampilkan SEMUA isi markas termasuk file tersembunyi (yang diawali titik), satu per baris, tanpa . dan ..
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    File berawalan titik disembunyikan ls.
+    -a menampilkan semua, -A tanpa . dan ..
+    ls -1A markas
+  solution: |
+    ls -1A markas
+- id: bash-f1-cd
+  type: write
+  title: Masuk ke Misi
+  difficulty: 1
+  prompt: Pindah ke direktori markas/misi lalu tampilkan isinya.
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    cd untuk berpindah.
+    Path relatif dari posisimu.
+    cd markas/misi lalu ls
+  solution: |
+    cd markas/misi
+    ls

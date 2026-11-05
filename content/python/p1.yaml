@@ -1,0 +1,105 @@
+lesson:
+  - text: Programmer profesional memakai alat bantu. pip dan venv untuk dependensi, argparse untuk membaca argumen command line, logging untuk catatan yang bisa diatur levelnya, black dan ruff untuk format dan lint, serta mypy untuk memeriksa type hint.
+    code: |
+      import argparse
+      p = argparse.ArgumentParser()
+      p.add_argument("--nama", default="Slayer")
+      p.add_argument("--ulang", type=int, default=1)
+      a = p.parse_args(["--nama", "Tanjiro", "--ulang", "2"])
+      for _ in range(a.ulang):
+          print("Halo", a.nama)
+  - text: logging lebih baik daripada print untuk aplikasi nyata, karena levelnya bisa diatur (DEBUG, INFO, WARNING, ERROR) dan formatnya konsisten. json dipakai untuk menyimpan dan bertukar data terstruktur.
+    code: |
+      import json, logging, sys
+      logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(levelname)s %(message)s")
+      logging.debug("tidak tampil")
+      logging.info("misi dimulai")
+      print(json.dumps({"nama": "Giyu", "rank": "Hashira"}))
+exercises:
+  - id: py-p1-argparse
+    type: write
+    title: Perintah Markas
+    difficulty: 2
+    prompt: 'Input berisi argumen CLI dalam satu baris. Pakai argparse dengan --nama (wajib), --umur (int, default 0), dan --verbose (flag). Cetak "<nama> <umur>", lalu "verbose aktif" jika flag ada.'
+    tests: ["--nama Tanjiro --umur 15 --verbose", "--nama Giyu", "--umur 20 --nama Rengoku"]
+    hints: |
+      p.parse_args(input().split()) membaca argumen dari input.
+      required=True untuk --nama dan type=int untuk --umur.
+      action="store_true" untuk flag.
+    solution: |
+      import argparse
+      p = argparse.ArgumentParser()
+      p.add_argument("--nama", required=True)
+      p.add_argument("--umur", type=int, default=0)
+      p.add_argument("--verbose", action="store_true")
+      a = p.parse_args(input().split())
+      print(a.nama, a.umur)
+      if a.verbose:
+          print("verbose aktif")
+  - id: py-p1-logging
+    type: write
+    title: Catatan Berlevel
+    difficulty: 2
+    prompt: 'Atur logging ke stdout dengan format "%(levelname)s:%(message)s" dan level WARNING. Input berisi baris "LEVEL pesan". Log setiap baris dengan levelnya, sehingga hanya WARNING ke atas yang tampil.'
+    tests: ["INFO mulai\nWARNING stamina rendah\nERROR pedang patah", "DEBUG x\nINFO y\nCRITICAL z"]
+    hints: |
+      logging.basicConfig(stream=sys.stdout, level=logging.WARNING, format=...)
+      getattr(logging, "WARNING") memberi angka levelnya.
+      logging.log(level, pesan)
+    solution: |
+      import logging, sys
+      logging.basicConfig(stream=sys.stdout, level=logging.WARNING, format="%(levelname)s:%(message)s")
+      for baris in sys.stdin.read().splitlines():
+          lvl, pesan = baris.split(" ", 1)
+          logging.log(getattr(logging, lvl), pesan)
+  - id: py-p1-predict
+    type: predict
+    title: Type Hint Bukan Penjaga
+    difficulty: 2
+    prompt: Type hint hanya catatan untuk alat seperti mypy. Python sendiri tidak memaksanya. Tulis output persis dari kode berikut.
+    code: |
+      def tambah(a: int, b: int) -> int:
+          return a + b
+      print(tambah("Kaa", "!"))
+      print(tambah.__annotations__["return"].__name__)
+    hints: |
+      Saat program berjalan, anotasi tidak diperiksa.
+      "Kaa" + "!" adalah penggabungan string.
+      __annotations__ menyimpan hint-nya.
+    solution: x
+  - id: py-p1-json
+    type: write
+    title: Rapikan Laporan JSON
+    difficulty: 1
+    prompt: Input berupa satu baris JSON berisi objek. Cetak ulang dengan indentasi 2 spasi dan kunci terurut.
+    tests: ['{"rank": "Hashira", "nama": "Giyu", "umur": 21}', '{"b": [1, 2], "a": {"y": 1, "x": 2}}']
+    hints: |
+      json.loads mengubah teks menjadi dict.
+      json.dumps punya parameter indent dan sort_keys.
+      print(json.dumps(d, indent=2, sort_keys=True))
+    solution: |
+      import json
+      print(json.dumps(json.loads(input()), indent=2, sort_keys=True))
+  - id: py-p1-bug-type
+    type: bughunt
+    title: Argumen Bertipe Salah
+    difficulty: 1
+    prompt: --n 21 seharusnya mencetak 42, tapi hasilnya 2121. Temukan bug-nya.
+    starter: |
+      import argparse
+      p = argparse.ArgumentParser()
+      p.add_argument("--n", type=str)
+      a = p.parse_args(input().split())
+      print(a.n * 2)
+    bug_line: 3
+    tests: ["--n 21", "--n 0", "--n -5"]
+    hints: |
+      Argumen CLI selalu berupa string.
+      argparse bisa mengubah tipenya otomatis.
+      type=int
+    solution: |
+      import argparse
+      p = argparse.ArgumentParser()
+      p.add_argument("--n", type=int)
+      a = p.parse_args(input().split())
+      print(a.n * 2)

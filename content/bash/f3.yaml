@@ -1,0 +1,59 @@
+lesson:
+- text: 'Setiap file punya pemilik, grup, dan izin untuk tiga pihak: user (u), group (g), others (o). r=4, w=2, x=1. 755 = rwxr-xr-x. chmod mengubah izin (angka atau simbol u+x), chown mengubah pemilik
+    (hanya root).'
+  code: |
+    chmod 755 skrip.sh
+    chmod u+x skrip.sh
+    chmod 600 rahasia.txt
+    stat -c %a rahasia.txt
+exercises:
+- id: bash-f3-chmod
+  type: write
+  title: Kunci Rapat
+  difficulty: 1
+  prompt: Ubah izin markas/.kunci menjadi hanya bisa dibaca dan ditulis pemiliknya, lalu tampilkan izinnya dalam angka (stat -c %a).
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    mkdir -p markas/misi markas/arsip
+    printf "Gunung Natagumo\nDesa Asakusa\nKereta Mugen\n" > markas/misi/daftar.txt
+    printf "Tanjiro\nZenitsu\nInosuke\n" > markas/regu.txt
+    echo "rahasia" > markas/.kunci
+    touch markas/arsip/2023.log markas/arsip/2024.log
+  hints: |
+    rw- untuk user, --- untuk group & others.
+    r=4, w=2 → 6.
+    chmod 600 lalu stat -c %a
+  solution: |
+    chmod 600 markas/.kunci
+    stat -c %a markas/.kunci
+- id: bash-f3-exec
+  type: write
+  title: Skrip Siap Tempur
+  difficulty: 2
+  prompt: Buat skrip halo.sh yang mencetak "Kaa!", beri izin eksekusi, lalu jalankan dengan ./halo.sh
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    Tulis isi skrip dengan echo > file.
+    chmod +x memberi izin eksekusi.
+    Jalankan dengan ./halo.sh
+  solution: |
+    echo 'echo Kaa!' > halo.sh
+    chmod +x halo.sh
+    ./halo.sh
+- id: bash-f3-755
+  type: quiz
+  title: Membaca Angka Izin
+  difficulty: 1
+  prompt: Izin 754 berarti...
+  options:
+  - user rwx, group r-x, others r--
+  - user rwx, group rwx, others r--
+  - user r-x, group r--, others rwx
+  - semua bisa menulis
+  explain: 7 = 4+2+1 (rwx), 5 = 4+1 (r-x), 4 = r--.
+  hints: |
+    Pecah per digit.
+    r=4, w=2, x=1.
+    7=rwx, 5=r-x, 4=r--

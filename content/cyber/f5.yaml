@@ -1,0 +1,81 @@
+lesson:
+- text: 'Keamanan jaringan: port menandai layanan (22 SSH, 80 HTTP, 443 HTTPS, 3306 MySQL). Firewall memfilter lalu lintas: tutup semua, buka yang perlu saja. Protokol tanpa enkripsi (HTTP, FTP, Telnet)
+    bisa disadap; gunakan versi terenkripsi (HTTPS, SFTP, SSH).'
+exercises:
+- id: cy-lab-pk-basic
+  type: lab
+  title: Kredensial Telanjang
+  difficulty: 2
+  prompt: 'Lab sandbox: Temukan kredensialnya. Flag ada di kata sandi. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: pk-basic
+  hints: |
+    Filter http.
+    Cari header Authorization Basic.
+    Decode base64 setelah kata Basic.
+- id: cy-f5-port
+  type: quiz
+  title: Port Database Terbuka
+  difficulty: 2
+  prompt: Hasil pemindaian server web milikmu menunjukkan port 3306 terbuka ke internet. Risiko & langkahnya adalah...
+  options:
+  - Database terekspos; batasi ke localhost/jaringan internal lewat firewall
+  - Tidak masalah, port tinggi aman
+  - Ganti port ke 3307 sudah cukup
+  - Matikan HTTPS supaya seimbang
+  explain: Database seharusnya tidak bisa dijangkau dari internet. Security through obscurity (ganti port) bukan solusi.
+  hints: |
+    3306 adalah port MySQL.
+    Siapa yang perlu mengaksesnya?
+    Batasi dengan firewall.
+- id: cy-f5-telnet
+  type: quiz
+  title: Protokol Telanjang
+  difficulty: 1
+  prompt: Protokol mana yang mengirim kata sandi tanpa enkripsi?
+  options:
+  - Telnet
+  - SSH
+  - HTTPS
+  - SFTP
+  explain: Telnet, FTP, dan HTTP mengirim data apa adanya. Pakai SSH/SFTP/HTTPS.
+  hints: |
+    Protokol lama.
+    Pendahulu SSH.
+    Telnet.
+- id: cy-f5-firewall
+  type: write
+  title: Penjaga Gerbang
+  difficulty: 2
+  prompt: 'Firewall sederhana: baris pertama berisi aturan "allow PORT" dipisah koma (mis. allow 22,443). Baris berikutnya berisi port masuk, satu per baris. Cetak "IZIN" atau "TOLAK" untuk setiap port
+    (default menolak).'
+  lang: python
+  starter: |
+    import sys
+
+    baris = sys.stdin.read().split("\n")
+    # tulis kodemu di sini
+  tests:
+  - |
+    allow 22,443
+    22
+    80
+    443
+  - |
+    allow 80
+    8080
+    80
+  - |
+    allow 22
+    2222
+  hints: |
+    Ambil daftar port dari baris pertama.
+    Simpan di set.
+    Default: TOLAK.
+  solution: |
+    import sys
+
+    baris = sys.stdin.read().split("\n")
+    izin = set(baris[0].split()[1].split(","))
+    for p in baris[1:]:
+        if p.strip():
+            print("IZIN" if p.strip() in izin else "TOLAK")

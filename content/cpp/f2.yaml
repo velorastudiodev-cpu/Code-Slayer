@@ -1,0 +1,131 @@
+lesson:
+  - text: Tipe dasar C++ sama dengan C (int, long long, double, char, bool), ditambah std::string untuk teks. auto membiarkan compiler menyimpulkan tipe. Tipe bool mencetak 1 atau 0, kecuali kamu memakai std::boolalpha.
+    code: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string nama = "Muichiro";
+          auto umur = 14;
+          bool hashira = true;
+          std::cout << nama << " " << umur << " " << hashira << " " << std::boolalpha << hashira << "\n";
+          std::cout << nama.size() << " huruf\n";
+      }
+  - text: std::cin >> x membaca satu token (dipisah spasi) ke x. Untuk membaca satu baris penuh, pakai std::getline(std::cin, s). Seperti di C, pembagian dua int menghasilkan int, dan int bisa overflow, jadi pakai long long untuk angka besar.
+    code: |
+      #include <iostream>
+
+      int main() {
+          long long besar = 3000000000LL * 3;
+          std::cout << besar << " " << 7 / 2 << " " << 7.0 / 2 << "\n";
+      }
+exercises:
+  - id: cpp-f2-baca
+    type: write
+    title: Kartu Identitas
+    difficulty: 1
+    prompt: 'Baca nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".'
+    tests: ["Muichiro 14", "Gyomei 27"]
+    hints: |
+      std::string nama; int umur;
+      std::cin >> nama >> umur;
+      Cetak dengan <<.
+    solution: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string nama;
+          int umur;
+          std::cin >> nama >> umur;
+          std::cout << nama << " akan berumur " << umur + 1 << " tahun\n";
+      }
+  - id: cpp-f2-getline
+    type: write
+    title: Kalimat Utuh
+    difficulty: 2
+    prompt: 'Baris pertama berisi nama lengkap (boleh berspasi). Cetak "Nama: <nama>" lalu banyak karakternya.'
+    tests: ["Tokito Muichiro", "Kanroji Mitsuri", "Ai"]
+    hints: |
+      cin >> hanya membaca sampai spasi.
+      std::getline(std::cin, s) membaca satu baris penuh.
+      s.size() memberi panjangnya.
+    solution: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string s;
+          std::getline(std::cin, s);
+          std::cout << "Nama: " << s << "\n" << s.size() << "\n";
+      }
+  - id: cpp-f2-predict
+    type: predict
+    title: Tipe yang Menyamar
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <iostream>
+      #include <string>
+
+      int main() {
+          std::string a = "12";
+          std::string b = a + "3";
+          int c = std::stoi(b) + 1;
+          bool d = c > 100;
+          std::cout << b << " " << c << " " << d << " " << std::boolalpha << d << "\n";
+      }
+    hints: |
+      + pada string berarti digabung.
+      std::stoi mengubah string menjadi int.
+      bool tercetak 1 sebelum boolalpha, dan true sesudahnya.
+    solution: x
+  - id: cpp-f2-bug
+    type: bughunt
+    title: Kekuatan Meluap
+    difficulty: 2
+    prompt: Program menghitung a * b untuk a dan b sampai 2 miliar, tapi hasilnya negatif untuk angka besar. Temukan bug-nya.
+    starter: |
+      #include <iostream>
+
+      int main() {
+          int a, b;
+          std::cin >> a >> b;
+          std::cout << 1LL * a * b << "\n" << a * b << "\n";
+      }
+    bug_line: 6
+    tests: ["3 4", "2000000000 2"]
+    hints: |
+      Program mencetak dua kali, dan baris kedua meluap.
+      a * b dengan dua int meluap sebelum dicetak.
+      std::cout << 1LL * a * b << "\n" << 1LL * a * b << "\n";
+    solution: |
+      #include <iostream>
+
+      int main() {
+          int a, b;
+          std::cin >> a >> b;
+          std::cout << 1LL * a * b << "\n" << 1LL * a * b << "\n";
+      }
+  - id: cpp-f2-readerror
+    type: readerror
+    title: Teks Masuk ke int
+    difficulty: 1
+    prompt: Program ini gagal dikompilasi. Baca pesan compiler-nya.
+    code: |
+      #include <iostream>
+
+      int main() {
+          int umur = "15";
+          std::cout << umur + 1 << "\n";
+      }
+    options:
+      - '"15" adalah teks (const char*), bukan int. Tulis int umur = 15; atau konversi dengan std::stoi.'
+      - std::cout tidak bisa mencetak hasil penjumlahan.
+      - int harus ditulis Int.
+      - Program C++ wajib diakhiri return 0.
+    explain: C++ bertipe ketat, sehingga literal string tidak bisa diubah otomatis menjadi int.
+    hints: |
+      Baca kata "invalid conversion" di pesan.
+      Apa tipe "15" dengan tanda kutip?
+      Tanpa tanda kutip, 15 adalah int.

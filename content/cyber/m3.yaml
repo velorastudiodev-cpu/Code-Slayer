@@ -1,0 +1,82 @@
+lesson:
+- text: CSRF memanfaatkan browser korban yang sedang login untuk mengirim aksi tanpa sepengetahuannya; cegah dengan token CSRF + cookie SameSite. IDOR terjadi saat aplikasi memakai ID dari user tanpa memeriksa
+    kepemilikan; setiap akses objek harus dicek otorisasinya.
+exercises:
+- id: cy-lab-web-idor
+  type: lab
+  title: Surat yang Salah Alamat
+  difficulty: 1
+  prompt: 'Lab sandbox: Baca surat yang ditujukan untuk para Hashira. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: web-idor
+  hints: |
+    Suratmu bernomor 1043 dan 1044.
+    Nomor surat berurutan.
+    Coba GET /api/surat/1041.
+- id: cy-lab-csrf-bank
+  type: lab
+  title: Transfer Diam-diam
+  difficulty: 3
+  prompt: 'Lab sandbox: Buat halaman jebakan yang otomatis mengirim POST transfer ke akun akatsuki saat dibuka bot korban. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: csrf-bank
+  hints: |
+    Gunakan form dengan method post ke https://bank.desa/transfer.
+    Field: ke=akatsuki, jumlah=1000.
+    Kirim otomatis dengan document.forms[0].submit().
+- id: cy-m3-patch
+  type: write
+  title: 'Patch: Cek Pemilik'
+  difficulty: 2
+  prompt: 'Patch the Bug. Fungsi ambilSurat hanya mengecek login. Baris input: "<user_login> <id_surat>". Perbaiki agar menolak ("403") jika surat bukan milik user; jika milik user cetak isinya; jika tidak
+    ada "404".'
+  lang: javascript
+  starter: |
+    const SURAT = { 1041: { pemilik: "oyakata", isi: "Rapat Pilar" }, 1043: { pemilik: "tanjiro", isi: "Jaga Nezuko" } }
+
+    function ambilSurat(user, id) {
+      if (!user) return "401"
+      const s = SURAT[id]
+      if (!s) return "404"
+      return s.isi
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") { const [u, id] = baris.split(" "); console.log(ambilSurat(u, id)) }
+  tests:
+  - |
+    tanjiro 1043
+    tanjiro 1041
+  - |
+    oyakata 1041
+    tanjiro 9999
+  hints: |
+    Login ≠ berhak.
+    Bandingkan pemilik surat dengan user.
+    Kembalikan "403" bila berbeda.
+  solution: |
+    const SURAT = { 1041: { pemilik: "oyakata", isi: "Rapat Pilar" }, 1043: { pemilik: "tanjiro", isi: "Jaga Nezuko" } }
+
+    function ambilSurat(user, id) {
+      if (!user) return "401"
+      const s = SURAT[id]
+      if (!s) return "404"
+      if (s.pemilik !== user) return "403"
+      return s.isi
+    }
+
+    let baris
+    while ((baris = readline()) !== null && baris !== "") { const [u, id] = baris.split(" "); console.log(ambilSurat(u, id)) }
+- id: cy-m3-samesite
+  type: quiz
+  title: Cookie Waspada
+  difficulty: 2
+  prompt: Atribut cookie yang membantu mencegah CSRF adalah...
+  options:
+  - SameSite=Lax atau Strict
+  - HttpOnly
+  - Max-Age
+  - Path=/
+  explain: SameSite membuat browser tidak mengirim cookie pada request lintas situs (seperti form jebakan). HttpOnly melindungi dari pembacaan oleh JavaScript (XSS), bukan CSRF.
+  hints: |
+    Terkait request dari situs lain.
+    Bukan HttpOnly.
+    SameSite.

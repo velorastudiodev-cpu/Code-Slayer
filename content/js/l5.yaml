@@ -1,0 +1,146 @@
+lesson:
+  - text: 'Kecepatan program ditentukan algoritmanya. Loop bersarang O(n²) dengan n = 100.000 berarti 10 miliar langkah, tidak akan selesai. Gunakan rumus, struktur data yang tepat (Set atau Map untuk pencarian O(1)), atau precompute. Untuk bilangan raksasa di atas 2^53, pakai BigInt (123n).'
+    code: |
+      const n = 10n ** 12n
+      console.log((n * (n + 1n) / 2n).toString())
+      console.log(Number.MAX_SAFE_INTEGER)
+  - text: array.includes itu O(n), sedangkan set.has rata-rata O(1). Typed array seperti Uint8Array sangat cepat dan hemat memori untuk data besar, misalnya saringan bilangan prima. Ukur dulu sebelum mengoptimasi, karena yang paling penting adalah kompleksitasnya.
+    code: |
+      const data = Array.from({ length: 100000 }, (_, i) => i)
+      const s = new Set(data)
+      let t = performance.now(); for (let i = 0; i < 1000; i++) s.has(i * 7); console.log("set  ", (performance.now() - t).toFixed(2), "ms")
+      t = performance.now(); for (let i = 0; i < 1000; i++) data.includes(i * 7 + 90000); console.log("array", (performance.now() - t).toFixed(2), "ms")
+exercises:
+  - id: js-l5-deret
+    type: write
+    title: Sejuta Juta Tebasan
+    difficulty: 2
+    prompt: Baca n (1 ≤ n ≤ 10^12). Cetak 1 + 2 + ... + n dengan tepat. Hasilnya melebihi batas presisi number, jadi gunakan BigInt.
+    tests: ["10", "1", "1000000000000"]
+    hints: |
+      Rumus Gauss, yaitu n(n+1)/2.
+      BigInt(readline()) dan literal 1n, 2n.
+      console.log((n * (n + 1n) / 2n).toString())
+    solution: |
+      const n = BigInt(readline())
+      console.log((n * (n + 1n) / 2n).toString())
+  - id: js-l5-saringan
+    type: write
+    title: Saringan Eratosthenes
+    difficulty: 3
+    prompt: Baca n (n ≤ 10.000.000). Cetak banyaknya bilangan prima ≤ n. Gunakan saringan dengan Uint8Array.
+    tests: ["10", "100", "1", "10000000"]
+    hints: |
+      new Uint8Array(n + 1) berisi 0 semua, yang berarti "belum dicoret".
+      Untuk setiap p yang belum dicoret, coret p*p, p*p+p, dan seterusnya.
+      Hitung yang belum dicoret mulai dari 2.
+    solution: |
+      const n = Number(readline())
+      const coret = new Uint8Array(n + 1)
+      let jumlah = 0
+      for (let p = 2; p <= n; p++) {
+        if (coret[p]) continue
+        jumlah++
+        for (let k = p * p; k <= n; k += p) coret[k] = 1
+      }
+      console.log(jumlah)
+  - id: js-l5-pasangan
+    type: write
+    title: Pasangan Bilah
+    difficulty: 3
+    prompt: Baris 1 berisi n dan target, baris 2 berisi n bilangan (n ≤ 200.000). Cetak "ya" jika ada dua posisi berbeda yang jumlahnya sama dengan target, selain itu "tidak". Solusi O(n²) akan kehabisan waktu.
+    tests: ["5 9\n2 7 11 15 1", "3 10\n5 1 2", "2 10\n5 5", {gen: "import random\nrandom.seed(7)\nn=200000\nprint(n, -1)\nprint(*[random.randint(1, 10**9) for _ in range(n)])"}]
+    hints: |
+      Untuk setiap x, yang dicari adalah target - x.
+      Simpan bilangan yang sudah dilihat di Set.
+      Periksa set.has(target - x) SEBELUM menambahkan x.
+    solution: |
+      const [n, target] = readline().split(" ").map(Number)
+      const lihat = new Set()
+      let ada = false
+      for (const x of readline().split(" ").map(Number)) {
+        if (lihat.has(target - x)) { ada = true; break }
+        lihat.add(x)
+      }
+      console.log(ada ? "ya" : "tidak")
+  - id: js-l5-predict
+    type: predict
+    title: Batas Presisi
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const besar = 2 ** 53
+      console.log(besar + 1 === besar, Number.isSafeInteger(besar))
+      console.log((2n ** 53n + 1n).toString())
+      let langkah = 0
+      for (let n = 1024; n > 1; n = Math.floor(n / 2)) langkah++
+      console.log(langkah)
+    hints: |
+      Di atas 2^53, number tidak bisa membedakan bilangan bulat yang berurutan.
+      BigInt tetap tepat.
+      Membagi dua berulang-ulang membutuhkan log2(n) langkah.
+    solution: x
+  - id: js-l5-bug-memo
+    type: bughunt
+    title: Ingatan yang Bocor
+    difficulty: 2
+    prompt: jalan(n) menghitung cara naik n anak tangga dengan memo, tapi untuk n besar tetap lambat. Temukan baris yang membuat memo tidak pernah dipakai.
+    starter: |
+      const memo = new Map()
+      function jalan(n) {
+        if (n <= 1) return 1
+        if (memo.has(n)) return memo.get(n)
+        const hasil = jalan(n - 1) + jalan(n - 2)
+        memo.set(String(n), hasil)
+        return hasil
+      }
+      console.log(jalan(Number(readline())))
+    bug_line: 6
+    tests: ["5", "10", "70"]
+    hints: |
+      Map membedakan kunci 5 (number) dan "5" (string).
+      memo.has(n) mencari kunci number.
+      memo.set(n, hasil)
+    solution: |
+      const memo = new Map()
+      function jalan(n) {
+        if (n <= 1) return 1
+        if (memo.has(n)) return memo.get(n)
+        const hasil = jalan(n - 1) + jalan(n - 2)
+        memo.set(n, hasil)
+        return hasil
+      }
+      console.log(jalan(Number(readline())))
+  - id: js-l5-refactor-set
+    type: refactor
+    title: Percepat dengan Set
+    difficulty: 2
+    prompt: array.includes di dalam loop membuatnya O(n²). Refactor memakai Set dengan output tetap sama.
+    starter: |
+      const a = readline().split(" ")
+      const lihat = []
+      let dobel = 0
+      for (const x of a) {
+        if (lihat.includes(x)) dobel++
+        lihat.push(x)
+      }
+      console.log(dobel)
+    rules:
+      - text: lihat adalah Set
+        require: 'new Set\('
+      - text: Tanpa .includes
+        forbid: '\.includes\('
+    tests: ["a b a c b a", "x y z"]
+    hints: |
+      const lihat = new Set()
+      Set memakai .has() dan .add().
+      Logika lainnya tetap sama.
+    solution: |
+      const a = readline().split(" ")
+      const lihat = new Set()
+      let dobel = 0
+      for (const x of a) {
+        if (lihat.has(x)) dobel++
+        lihat.add(x)
+      }
+      console.log(dobel)

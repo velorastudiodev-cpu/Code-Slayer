@@ -1,0 +1,1179 @@
+{
+ "hash": "23dce10d871f",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Program C selalu dimulai dari fungsi main. Baris",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Halo, Slayer!\\n\");\n    printf(\"Napas Api: bentuk %d\\n\", 1);\n    return 0;\n}\n"
+    },
+    {
+     "text": "printf memakai format specifier untuk menyisipkan nilai, yaitu %d untuk int, %f untuk desimal, %c untuk karakter, dan %s untuk string. %.2f mencetak 2 angka di belakang koma. return 0 di akhir main menandakan program selesai dengan sukses.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    printf(\"%s berumur %d tahun\\n\", \"Rengoku\", 20);\n    printf(\"%.2f %c\\n\", 3.14159, 'K');\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-halo",
+     "type": "write",
+     "title": "Salam Napas Api",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nint main(void) {\n    // tulis kodemu di sini\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "Gunakan printf dari stdio.h.",
+      "Jangan lupa \\n di akhir teks dan ; di akhir pernyataan.",
+      "printf(\"Halo, Slayer!\\n\");"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    printf(\"Halo, Slayer!\\n\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f1"
+    },
+    {
+     "id": "c-f1-format",
+     "type": "write",
+     "title": "Laporan Berformat",
+     "difficulty": 1,
+     "prompt": "Dengan satu printf, cetak \"Rengoku berumur 20 tahun, kekuatan 9.50\" memakai %s, %d, dan %.2f untuk nilai \"Rengoku\", 20, dan 9.5.",
+     "lang": "c",
+     "tests": [
+      {
+       "expected": "Rengoku berumur 20 tahun, kekuatan 9.50\n"
+      }
+     ],
+     "hints": [
+      "%s untuk string, %d untuk int, dan %.2f untuk desimal 2 angka.",
+      "Urutan argumen harus sama dengan urutan specifier.",
+      "printf(\"%s berumur %d tahun, kekuatan %.2f\\n\", \"Rengoku\", 20, 9.5);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    printf(\"%s berumur %d tahun, kekuatan %.2f\\n\", \"Rengoku\", 20, 9.5);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f1"
+    },
+    {
+     "id": "c-f1-predict",
+     "type": "predict",
+     "title": "Baris yang Tidak Berganti",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    printf(\"A\");\n    printf(\"B\\n\");\n    printf(\"%d-%d\\n\", 3, 7);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "AB\n3-7\n"
+      }
+     ],
+     "hints": [
+      "printf tidak menambahkan baris baru otomatis.",
+      "A dan B menempel di baris yang sama.",
+      "%d diganti nilai argumennya secara berurutan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f1"
+    },
+    {
+     "id": "c-f1-bug",
+     "type": "bughunt",
+     "title": "Iblis Pemakan Titik Koma",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak \"Kaa!\" lalu \"Misi!\", tapi gagal dikompilasi. Temukan baris yang salah.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nint main(void) {\n    printf(\"Kaa!\\n\")\n    printf(\"Misi!\\n\");\n    return 0;\n}\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "expected": "Kaa!\nMisi!\n"
+      }
+     ],
+     "hints": [
+      "Baca pesan compiler, apa yang diharapkan sebelum printf kedua?",
+      "Setiap pernyataan C diakhiri ;.",
+      "printf(\"Kaa!\\n\");"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    printf(\"Kaa!\\n\");\n    printf(\"Misi!\\n\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f1"
+    },
+    {
+     "id": "c-f1-typing",
+     "type": "typing",
+     "title": "Ketik Program C Pertama",
+     "difficulty": 1,
+     "prompt": "Ketik ulang program C berikut, termasuk titik komanya. Akurasi minimal 95%.",
+     "lang": "c",
+     "code": "#include <stdio.h>\nint main(void) {\n    printf(\"Halo!\\n\");\n    return 0;\n}\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Di C, setiap variabel harus dideklarasikan dengan tipenya sebelum dipakai. Tipe dasarnya adalah int (bilangan bulat), double (desimal), char (satu karakter), dan long long (bulat besar). Ukuran tipe menentukan rentang nilai yang bisa disimpan, dan sizeof memberi ukurannya dalam byte.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int umur = 15;\n    double tinggi = 165.5;\n    char inisial = 'T';\n    long long besar = 9000000000LL;\n    printf(\"%d %.1f %c %lld\\n\", umur, tinggi, inisial, besar);\n    printf(\"int: %zu byte, double: %zu byte\\n\", sizeof(int), sizeof(double));\n    return 0;\n}\n"
+    },
+    {
+     "text": "Hati-hati dengan pembagian. Kalau kedua operand int, hasilnya int (desimal dibuang). Ubah salah satunya ke double dengan casting, (double)a / b. int juga bisa meluap (overflow) kalau melebihi sekitar 2,1 miliar, jadi pakai long long untuk angka besar.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int a = 7, b = 2;\n    printf(\"%d %.1f\\n\", a / b, (double)a / b);\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Input berisi nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "Tanjiro 15",
+       "expected": "Tanjiro akan berumur 16 tahun\n"
+      },
+      {
+       "input": "Kanao 16",
+       "expected": "Kanao akan berumur 17 tahun\n"
+      },
+      {
+       "input": "Gyomei 27",
+       "expected": "Gyomei akan berumur 28 tahun\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca dengan scanf(\"%s %d\", nama, &umur), dan nama berupa array char.",
+      "Variabel int butuh & di scanf, array char tidak.",
+      "printf(\"%s akan berumur %d tahun\\n\", nama, umur + 1);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    char nama[64];\n    int umur;\n    scanf(\"%63s %d\", nama, &umur);\n    printf(\"%s akan berumur %d tahun\\n\", nama, umur + 1);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f2"
+    },
+    {
+     "id": "c-f2-besar",
+     "type": "write",
+     "title": "Jarak Antar Bintang",
+     "difficulty": 2,
+     "prompt": "Baca dua bilangan a dan b (masing-masing sampai 2 miliar). Cetak a * b. Hasilnya bisa melebihi batas int.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n"
+      },
+      {
+       "input": "2000000000 2000000000",
+       "expected": "4000000000000000000\n"
+      },
+      {
+       "input": "-5 100000",
+       "expected": "-500000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "int maksimal sekitar 2,1 miliar.",
+      "Pakai long long dengan format %lld.",
+      "long long a, b; scanf(\"%lld %lld\", &a, &b);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    long long a, b;\n    scanf(\"%lld %lld\", &a, &b);\n    printf(\"%lld\\n\", a * b);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f2"
+    },
+    {
+     "id": "c-f2-predict",
+     "type": "predict",
+     "title": "Pembagian Bulat",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int a = 7, b = 2;\n    double c = a / b;\n    printf(\"%d %.1f %.1f\\n\", a / b, c, (double)a / b);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "3 3.0 3.5\n"
+      }
+     ],
+     "hints": [
+      "a / b dengan dua int menghasilkan int.",
+      "c diisi hasil a / b, jadi desimalnya sudah hilang sebelum disimpan.",
+      "Casting ke double sebelum membagi mempertahankan desimal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f2"
+    },
+    {
+     "id": "c-f2-bug",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 2,
+     "prompt": "Program mencetak rata-rata tiga nilai dengan 2 desimal, tapi hasilnya selalu .00. Temukan bug-nya.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    double rata = (a + b + c) / 3;\n    printf(\"%.2f\\n\", rata);\n    return 0;\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "1 2 4",
+       "expected": "2.33\n"
+      },
+      {
+       "input": "5 5 6",
+       "expected": "5.33\n"
+      },
+      {
+       "input": "3 3 3",
+       "expected": "3.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "(a + b + c) / 3 adalah pembagian int.",
+      "Desimal dibuang SEBELUM disimpan ke double.",
+      "(a + b + c) / 3.0"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int a, b, c;\n    scanf(\"%d %d %d\", &a, &b, &c);\n    double rata = (a + b + c) / 3.0;\n    printf(\"%.2f\\n\", rata);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator aritmetika C adalah + - * / dan % (sisa bagi, hanya untuk bilangan bulat). Operator ++ dan -- menambah atau mengurangi 1. Operator gabungan seperti += dan *= adalah singkatan, misalnya x += 2 sama dengan x = x + 2.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int x = 10;\n    x += 5;\n    x++;\n    printf(\"%d %d %d\\n\", x, x / 3, x % 3);\n    return 0;\n}\n"
+    },
+    {
+     "text": "Perbandingan (== != < > <= >=) menghasilkan 1 (benar) atau 0 (salah). Operator logika adalah && (dan), || (atau), dan ! (tidak). Di C, nilai 0 berarti salah dan selain 0 berarti benar.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int n = 15;\n    printf(\"%d %d %d\\n\", n > 10, n % 2 == 0, n > 10 && n < 20);\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pembagian int / sudah membulatkan ke bawah untuk bilangan positif.",
+      "Gunakan % untuk sisa.",
+      "printf(\"%d:%d:%d\\n\", t / 3600, t % 3600 / 60, t % 60);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int t;\n    scanf(\"%d\", &t);\n    printf(\"%d:%d:%d\\n\", t / 3600, t % 3600 / 60, t % 60);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f3"
+    },
+    {
+     "id": "c-f3-suhu",
+     "type": "write",
+     "title": "Suhu Napas Api",
+     "difficulty": 1,
+     "prompt": "Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal (F = C * 9 / 5 + 32).",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "100",
+       "expected": "212.0\n"
+      },
+      {
+       "input": "0",
+       "expected": "32.0\n"
+      },
+      {
+       "input": "-40",
+       "expected": "-40.0\n",
+       "hidden": true
+      },
+      {
+       "input": "37",
+       "expected": "98.6\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "c * 9 / 5 dengan int membuang desimal.",
+      "Pakai 9.0 / 5 atau ubah c ke double.",
+      "printf(\"%.1f\\n\", c * 9.0 / 5 + 32);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int c;\n    scanf(\"%d\", &c);\n    printf(\"%.1f\\n\", c * 9.0 / 5 + 32);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f3"
+    },
+    {
+     "id": "c-f3-predict",
+     "type": "predict",
+     "title": "Benar Itu Satu",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int x = 5;\n    int y = x++ + 10;\n    printf(\"%d %d %d %d\\n\", x, y, x > 3 && x < 6, !x);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "6 15 0 0\n"
+      }
+     ],
+     "hints": [
+      "x++ memakai nilai lama dulu, baru menambah.",
+      "Jadi y = 5 + 10, lalu x menjadi 6.",
+      "Benar bernilai 1, salah bernilai 0, dan !6 bernilai 0."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f3"
+    },
+    {
+     "id": "c-f3-bug",
+     "type": "bughunt",
+     "title": "Gerbang yang Selalu Terbuka",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak \"masuk\" hanya jika kode = 7, tapi selalu mencetak \"masuk\". Temukan bug-nya.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nint main(void) {\n    int kode;\n    scanf(\"%d\", &kode);\n    if (kode = 7) printf(\"masuk\\n\");\n    else printf(\"ditolak\\n\");\n    return 0;\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "7",
+       "expected": "masuk\n"
+      },
+      {
+       "input": "3",
+       "expected": "ditolak\n"
+      },
+      {
+       "input": "0",
+       "expected": "ditolak\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "= adalah assignment, == adalah perbandingan.",
+      "kode = 7 mengisi kode lalu bernilai 7 (benar).",
+      "if (kode == 7)"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int kode;\n    scanf(\"%d\", &kode);\n    if (kode == 7) printf(\"masuk\\n\");\n    else printf(\"ditolak\\n\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "scanf membaca input sesuai format, misalnya %d untuk int, %lf untuk double, dan %s untuk satu kata. Variabel biasa harus diberi & (alamatnya) supaya scanf bisa mengisinya, tapi array char tidak perlu &. scanf mengembalikan banyaknya nilai yang berhasil dibaca.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int n = 0;\n    int terbaca = sscanf(\"42 tebasan\", \"%d\", &n);\n    printf(\"%d %d\\n\", n, terbaca);\n    return 0;\n}\n"
+    },
+    {
+     "text": "Untuk membaca sampai input habis, ulangi selama scanf berhasil membaca, yaitu while (scanf(\"%d\", &x) == 1). Ini pola umum di soal kompetisi (TOKI, Codeforces) untuk membaca n bilangan atau data sampai EOF.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    const char *data = \"3 1 4\";\n    int x, total = 0, offset = 0, pakai;\n    while (sscanf(data + offset, \"%d%n\", &x, &pakai) == 1) { total += x; offset += pakai; }\n    printf(\"%d\\n\", total);\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat, cetak jumlahnya.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "scanf(\"%d %d\", &a, &b)",
+      "Jangan lupa & sebelum nama variabel.",
+      "printf(\"%d\\n\", a + b);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\\n\", a + b);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f4"
+    },
+    {
+     "id": "c-f4-n-bilangan",
+     "type": "write",
+     "title": "Laporan Berjumlah n",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi n, baris kedua berisi n bilangan. Cetak jumlah dan nilai terbesarnya, dipisah spasi.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "3\n1 9 2",
+       "expected": "12 9\n"
+      },
+      {
+       "input": "1\n-5",
+       "expected": "-5 -5\n"
+      },
+      {
+       "input": "5\n-1 -2 -3 -4 -5",
+       "expected": "-15 -1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca n, lalu baca n kali di dalam loop.",
+      "Simpan nilai terbesar mulai dari bilangan pertama.",
+      "if (i == 0 || x > maks) maks = x;"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int n, x, total = 0, maks = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        total += x;\n        if (i == 0 || x > maks) maks = x;\n    }\n    printf(\"%d %d\\n\", total, maks);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f4"
+    },
+    {
+     "id": "c-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi sejumlah bilangan bulat (banyaknya tidak diketahui). Cetak banyaknya bilangan dan rata-ratanya (2 desimal).",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "1 2 3 4",
+       "expected": "4 2.50\n"
+      },
+      {
+       "input": "10",
+       "expected": "1 10.00\n"
+      },
+      {
+       "input": "5\n6\n7",
+       "expected": "3 6.00\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ulangi selama scanf berhasil membaca satu bilangan.",
+      "while (scanf(\"%d\", &x) == 1)",
+      "Bagi dengan (double) supaya desimal tidak hilang."
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int x, n = 0;\n    long long total = 0;\n    while (scanf(\"%d\", &x) == 1) { total += x; n++; }\n    printf(\"%d %.2f\\n\", n, (double)total / n);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f4"
+    },
+    {
+     "id": "c-f4-bug",
+     "type": "bughunt",
+     "title": "Alamat yang Terlupa",
+     "difficulty": 1,
+     "prompt": "Program membaca umur lalu mencetak umur tahun depan, tapi crash atau mencetak angka aneh. Temukan bug-nya.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nint main(void) {\n    int umur = 0;\n    scanf(\"%d\", umur);\n    printf(\"%d\\n\", umur + 1);\n    return 0;\n}\n",
+     "bug_line": 5,
+     "tests": [
+      {
+       "input": "15",
+       "expected": "16\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "99",
+       "expected": "100\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "scanf butuh ALAMAT variabel supaya bisa mengisinya.",
+      "Alamat didapat dengan operator &.",
+      "scanf(\"%d\", &umur);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int umur = 0;\n    scanf(\"%d\", &umur);\n    printf(\"%d\\n\", umur + 1);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f4"
+    },
+    {
+     "id": "c-f4-readerror",
+     "type": "readerror",
+     "title": "Segfault dari scanf",
+     "difficulty": 2,
+     "prompt": "Dengan input 15, program crash. Baca pesan error-nya.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int umur = 0;\n    scanf(\"%d\", umur);\n    printf(\"%d\\n\", umur + 1);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "input": "15",
+       "expected": ""
+      }
+     ],
+     "hints": [
+      "Segmentation fault berarti akses memori yang tidak valid.",
+      "Ke mana scanf menulis nilai yang dibaca?",
+      "Operator & memberi alamat variabel."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "error": "Segmentation fault (akses memori tidak valid)",
+     "options": [
+      "scanf butuh alamat variabel. Tulis &umur, bukan umur.",
+      "printf tidak bisa mencetak umur + 1.",
+      "int harus diganti long.",
+      "return 0 menyebabkan crash."
+     ],
+     "explain": "Tanpa &, scanf menulis ke alamat 0 (nilai umur) sehingga terjadi Segmentation fault.",
+     "track": "c",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if (kondisi) { ... } else if (...) { ... } else { ... } memilih cabang yang dijalankan. Kurung kurawal boleh dihilangkan kalau isinya hanya satu pernyataan, tapi lebih aman selalu ditulis. Operator ternary kondisi ? a - b memilih nilai.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int nilai = 78;\n    if (nilai >= 85) printf(\"A\\n\");\n    else if (nilai >= 70) printf(\"B\\n\");\n    else printf(\"C\\n\");\n    printf(\"%s\\n\", nilai >= 75 ? \"lulus\" : \"ulang\");\n    return 0;\n}\n"
+    },
+    {
+     "text": "switch cocok untuk mencocokkan satu nilai bulat atau karakter dengan banyak kasus. Setiap case biasanya diakhiri break. Tanpa break, eksekusi akan \"jatuh\" ke case berikutnya.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    char napas = 'A';\n    switch (napas) {\n        case 'A': printf(\"Air\\n\"); break;\n        case 'P': printf(\"Petir\\n\"); break;\n        default: printf(\"?\\n\");\n    }\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "Setiap printf diakhiri \\n."
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n >= 85) printf(\"A\\n\");\n    else if (n >= 70) printf(\"B\\n\");\n    else if (n >= 55) printf(\"C\\n\");\n    else printf(\"D\\n\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f5"
+    },
+    {
+     "id": "c-f5-kabisat",
+     "type": "write",
+     "title": "Tahun Kabisat",
+     "difficulty": 2,
+     "prompt": "Baca tahun. Cetak \"kabisat\" jika habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100. Selain itu \"bukan\".",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Habis dibagi berarti % ... == 0.",
+      "Gabungkan dengan || dan &&.",
+      "(t % 400 == 0 || (t % 4 == 0 && t % 100 != 0))"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int t;\n    scanf(\"%d\", &t);\n    printf(\"%s\\n\", (t % 400 == 0 || (t % 4 == 0 && t % 100 != 0)) ? \"kabisat\" : \"bukan\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f5"
+    },
+    {
+     "id": "c-f5-predict",
+     "type": "predict",
+     "title": "Jatuh Tanpa Break",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int x = 2;\n    switch (x) {\n        case 1: printf(\"satu\\n\");\n        case 2: printf(\"dua\\n\");\n        case 3: printf(\"tiga\\n\"); break;\n        case 4: printf(\"empat\\n\");\n    }\n    if (x - 2) printf(\"A\\n\"); else printf(\"B\\n\");\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "dua\ntiga\nB\n"
+      }
+     ],
+     "hints": [
+      "Tanpa break, eksekusi berlanjut ke case berikutnya.",
+      "break di case 3 menghentikannya.",
+      "x - 2 bernilai 0, yang berarti salah."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f5"
+    },
+    {
+     "id": "c-f5-parsons",
+     "type": "parsons",
+     "title": "Tanda Bilangan",
+     "difficulty": 1,
+     "prompt": "Susun program yang mencetak \"positif\", \"negatif\", atau \"nol\".",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "5",
+       "expected": "positif\n"
+      },
+      {
+       "input": "-3",
+       "expected": "negatif\n"
+      },
+      {
+       "input": "0",
+       "expected": "nol\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "#include dan main paling atas.",
+      "Baca n sebelum memeriksanya.",
+      "return 0 dan } paling akhir."
+     ],
+     "solutions": [
+      "#include <stdio.h>\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    if (n > 0) printf(\"positif\\n\");\n    else if (n < 0) printf(\"negatif\\n\");\n    else printf(\"nol\\n\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "for (inisialisasi; kondisi; langkah) adalah loop paling umum di C. while (kondisi) mengulang selama kondisinya benar, dan do...while menjalankan isinya minimal sekali. break keluar dari loop, continue lompat ke putaran berikutnya.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    int total = 0;\n    for (int i = 1; i <= 5; i++) total += i;\n    printf(\"%d\\n\", total);\n    int n = 3;\n    while (n > 0) printf(\"tebasan %d\\n\", n--);\n    return 0;\n}\n"
+    },
+    {
+     "text": "Loop bersarang dipakai untuk pola dua dimensi seperti tabel atau segitiga. Perhatikan batas loop, karena kesalahan satu angka (off-by-one) adalah bug paling umum.",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    for (int i = 1; i <= 3; i++) {\n        for (int j = 1; j <= i; j++) printf(\"*\");\n        printf(\"\\n\");\n    }\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 2,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Loop luar untuk baris, loop dalam untuk bintang.",
+      "Loop dalam berjalan i kali.",
+      "printf(\"\\n\") setelah loop dalam."
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) {\n        for (int j = 0; j < i; j++) printf(\"*\");\n        printf(\"\\n\");\n    }\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f6"
+    },
+    {
+     "id": "c-f6-prima",
+     "type": "write",
+     "title": "Uji Bilangan Prima",
+     "difficulty": 2,
+     "prompt": "Baca n (n ≤ 10^9). Cetak \"prima\" atau \"bukan\". Cukup periksa pembagi sampai akar n.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "7",
+       "expected": "prima\n"
+      },
+      {
+       "input": "1",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "91",
+       "expected": "bukan\n",
+       "hidden": true
+      },
+      {
+       "input": "2",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "999999937",
+       "expected": "prima\n",
+       "hidden": true
+      },
+      {
+       "input": "1000000000",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Bilangan ≤ 1 bukan prima.",
+      "Periksa d selama d * d <= n.",
+      "Pakai long long untuk d * d supaya tidak overflow."
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    long long n;\n    scanf(\"%lld\", &n);\n    int prima = n > 1;\n    for (long long d = 2; d * d <= n; d++)\n        if (n % d == 0) { prima = 0; break; }\n    printf(\"%s\\n\", prima ? \"prima\" : \"bukan\");\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f6"
+    },
+    {
+     "id": "c-f6-predict",
+     "type": "predict",
+     "title": "Loop Berlapis",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint main(void) {\n    for (int i = 0; i < 4; i++) {\n        if (i == 1) continue;\n        if (i == 3) break;\n        printf(\"%d \", i);\n    }\n    int n = 0;\n    do { n++; } while (n < 0);\n    printf(\"| %d\\n\", n);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "0 2 | 1\n"
+      }
+     ],
+     "hints": [
+      "continue melewati i == 1.",
+      "break berhenti saat i == 3, sebelum mencetak.",
+      "do...while menjalankan isinya minimal sekali."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f6"
+    },
+    {
+     "id": "c-f6-bug",
+     "type": "bughunt",
+     "title": "Satu Tebasan Hilang",
+     "difficulty": 1,
+     "prompt": "Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan bug-nya.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nint main(void) {\n    int n, total = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i < n; i++) total += i;\n    printf(\"%d\\n\", total);\n    return 0;\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "6\n"
+      },
+      {
+       "input": "10",
+       "expected": "55\n"
+      },
+      {
+       "input": "1",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Apakah n sendiri ikut dijumlah?",
+      "i < n berhenti sebelum n.",
+      "i <= n"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    int n, total = 0;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= n; i++) total += i;\n    printf(\"%d\\n\", total);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "c",
+     "chapter": "f6"
+    },
+    {
+     "id": "c-f6-translate",
+     "type": "translate",
+     "title": "Terjemahkan Jumlah Digit",
+     "difficulty": 2,
+     "prompt": "Tulis ulang program Python ini dalam C.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "12345",
+       "expected": "15\n"
+      },
+      {
+       "input": "0",
+       "expected": "0\n"
+      },
+      {
+       "input": "999999999",
+       "expected": "81\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Pakai long long untuk n.",
+      "// di Python sama dengan / untuk bilangan bulat positif di C.",
+      "printf(\"%d\\n\", s);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint main(void) {\n    long long n;\n    int s = 0;\n    scanf(\"%lld\", &n);\n    while (n > 0) { s += n % 10; n /= 10; }\n    printf(\"%d\\n\", s);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "from_lang": "python",
+     "from_code": "n = int(input())\ns = 0\nwhile n > 0:\n    s += n % 10\n    n //= 10\nprint(s)\n",
+     "track": "c",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi C dideklarasikan dengan tipe hasil, nama, dan parameter bertipe, misalnya int tambah(int a, int b). Fungsi harus dideklarasikan sebelum dipakai, atau ditulis prototipenya di atas. void berarti tidak mengembalikan nilai.",
+     "code": "#include <stdio.h>\n\nint kuadrat(int x) { return x * x; }\nvoid sapa(const char *nama) { printf(\"Halo, %s!\\n\", nama); }\n\nint main(void) {\n    printf(\"%d\\n\", kuadrat(7));\n    sapa(\"Rengoku\");\n    return 0;\n}\n"
+    },
+    {
+     "text": "Argumen di C dikirim BY VALUE, yaitu fungsi menerima salinan. Untuk mengubah variabel pemanggil, kirim alamatnya (pointer). Fungsi juga boleh rekursif asalkan ada base case.",
+     "code": "#include <stdio.h>\n\nvoid tukar(int *a, int *b) { int t = *a; *a = *b; *b = t; }\nint faktorial(int n) { return n <= 1 ? 1 : n * faktorial(n - 1); }\n\nint main(void) {\n    int x = 1, y = 2;\n    tukar(&x, &y);\n    printf(\"%d %d %d\\n\", x, y, faktorial(5));\n    return 0;\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "c-f7-fpb",
+     "type": "write",
+     "title": "FPB Dua Klan",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi int fpb(int a, int b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.",
+     "lang": "c",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1\n"
+      },
+      {
+       "input": "100 75",
+       "expected": "25\n",
+       "hidden": true
+      },
+      {
+       "input": "0 5",
+       "expected": "5\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "fpb(a, b) = fpb(b, a % b), dan berhenti saat b == 0.",
+      "Bisa ditulis rekursif dalam satu baris.",
+      "return b == 0 ? a : fpb(b, a % b);"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nint fpb(int a, int b) { return b == 0 ? a : fpb(b, a % b); }\n\nint main(void) {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d\\n\", fpb(a, b));\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f7"
+    },
+    {
+     "id": "c-f7-tukar",
+     "type": "write",
+     "title": "Tukar Posisi Lewat Pointer",
+     "difficulty": 2,
+     "prompt": "Lengkapi fungsi tukar(int *a, int *b) sehingga nilai dua variabel benar-benar tertukar. Program membaca dua bilangan lalu mencetaknya setelah ditukar.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nvoid tukar(int *a, int *b) {\n    // lengkapi\n}\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    tukar(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "input": "1 2",
+       "expected": "2 1\n"
+      },
+      {
+       "input": "5 -5",
+       "expected": "-5 5\n"
+      },
+      {
+       "input": "7 7",
+       "expected": "7 7\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "*a adalah nilai yang ditunjuk a.",
+      "Simpan *a di variabel sementara dulu.",
+      "int t = *a; *a = *b; *b = t;"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nvoid tukar(int *a, int *b) {\n    int t = *a;\n    *a = *b;\n    *b = t;\n}\n\nint main(void) {\n    int x, y;\n    scanf(\"%d %d\", &x, &y);\n    tukar(&x, &y);\n    printf(\"%d %d\\n\", x, y);\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f7"
+    },
+    {
+     "id": "c-f7-predict",
+     "type": "predict",
+     "title": "Salinan atau Asli?",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nvoid naik(int x) { x++; }\nvoid naikPtr(int *x) { (*x)++; }\n\nint main(void) {\n    int a = 1;\n    naik(a);\n    printf(\"%d \", a);\n    naikPtr(&a);\n    naikPtr(&a);\n    printf(\"%d\\n\", a);\n    return 0;\n}\n",
+     "tests": [
+      {
+       "expected": "1 3\n"
+      }
+     ],
+     "hints": [
+      "naik menerima SALINAN a.",
+      "naikPtr menerima alamat a, jadi bisa mengubah aslinya.",
+      "a naik dua kali lewat pointer."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f7"
+    },
+    {
+     "id": "c-f7-bug",
+     "type": "bughunt",
+     "title": "Faktorial Tanpa Ujung",
+     "difficulty": 2,
+     "prompt": "faktorial(n) seharusnya mengembalikan n!, tapi program crash untuk semua input. Temukan bug-nya.",
+     "lang": "c",
+     "starter": "#include <stdio.h>\n\nlong long faktorial(int n) {\n    if (n < 0) return 1;\n    return n * faktorial(n - 1);\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%lld\\n\", faktorial(n));\n    return 0;\n}\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "5",
+       "expected": "120\n"
+      },
+      {
+       "input": "0",
+       "expected": "1\n"
+      },
+      {
+       "input": "20",
+       "expected": "2432902008176640000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Telusuri faktorial(1), lalu faktorial(0). Kapan rekursi berhenti?",
+      "Saat n = 0, hasilnya 0 * ..., sehingga semuanya menjadi 0 (atau tidak berhenti).",
+      "if (n <= 1) return 1;"
+     ],
+     "solutions": [
+      "#include <stdio.h>\n\nlong long faktorial(int n) {\n    if (n <= 1) return 1;\n    return n * faktorial(n - 1);\n}\n\nint main(void) {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%lld\\n\", faktorial(n));\n    return 0;\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "c",
+     "chapter": "f7"
+    },
+    {
+     "id": "c-f7-review",
+     "type": "review",
+     "title": "Review Fungsi C",
+     "difficulty": 3,
+     "prompt": "Tandai baris yang berbahaya atau salah di kode ini.",
+     "lang": "c",
+     "code": "#include <stdio.h>\n\nint *buatSkor(void) {\n    int skor[3] = {90, 75, 80};\n    return skor;\n}\n\nint maks(int a, int b) {\n    if (a > b) return a;\n}\n",
+     "tests": [],
+     "hints": [
+      "Apa yang terjadi pada variabel lokal setelah fungsi selesai?",
+      "Apakah semua jalur fungsi int mengembalikan nilai?",
+      "Ada dua baris berbahaya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 30,
+     "issues": [
+      {
+       "line": 5,
+       "text": "Mengembalikan alamat array lokal. Memorinya hilang setelah fungsi selesai (dangling pointer). Pakai malloc atau kirim array dari pemanggil."
+      },
+      {
+       "line": 9,
+       "text": "Kalau a <= b tidak ada return, sehingga hasilnya tidak terdefinisi. Tambahkan return b;."
+      }
+     ],
+     "track": "c",
+     "chapter": "f7"
+    }
+   ]
+  }
+ }
+}

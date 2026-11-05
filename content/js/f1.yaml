@@ -1,0 +1,106 @@
+lesson:
+  - text: JavaScript dijalankan baris demi baris. console.log() mencetak nilai ke layar lalu pindah baris. Teks (string) diapit "kutip ganda", 'kutip tunggal', atau `backtick`. Komentar ditulis dengan // untuk satu baris.
+    code: |
+      // komentar tidak dijalankan
+      console.log("Halo, Slayer!")
+      console.log('Kisatsutai', "siap", 2026)
+  - text: Template literal (diapit backtick) bisa menyisipkan ekspresi dengan ${...} dan boleh terdiri dari beberapa baris. Ini cara paling rapi menggabung teks dengan nilai.
+    code: |
+      const nama = "Zenitsu"
+      console.log(`Halo, ${nama}! 1 + 2 = ${1 + 2}`)
+      console.log(`baris satu
+      baris dua`)
+exercises:
+  - id: js-halo
+    type: write
+    title: Kilat Pertama
+    difficulty: 1
+    story: Zenitsu gemetar, tapi pesan pertamanya harus terkirim.
+    prompt: Cetak tepat satu baris "Halo, Slayer!" (tanpa tanda kutip).
+    starter: |
+      // Tulis kodemu di sini
+    hints: |
+      Di JavaScript, output dicetak dengan console.log.
+      Teks diapit tanda kutip.
+      console.log("Halo, Slayer!")
+    solution: console.log("Halo, Slayer!")
+  - id: js-f1-dua-baris
+    type: write
+    title: Dua Pesan Gagak
+    difficulty: 1
+    prompt: Cetak "Kaa!" di baris pertama dan "Misi baru!" di baris kedua.
+    hints: |
+      Setiap console.log menghasilkan satu baris.
+      Panggil console.log dua kali.
+      console.log("Kaa!") lalu console.log("Misi baru!")
+    solution: |
+      console.log("Kaa!")
+      console.log("Misi baru!")
+  - id: js-f1-template
+    type: write
+    title: Template Laporan
+    difficulty: 1
+    prompt: 'Variabel nama dan misi sudah ada. Cetak "Laporan: <nama> menuju <misi>" dengan template literal.'
+    starter: |
+      const nama = "Tanjiro"
+      const misi = "Gunung Natagumo"
+    hints: |
+      Template literal memakai backtick.
+      Sisipkan variabel dengan ${...}.
+      console.log(`Laporan: ${nama} menuju ${misi}`)
+    solution: |
+      const nama = "Tanjiro"
+      const misi = "Gunung Natagumo"
+      console.log(`Laporan: ${nama} menuju ${misi}`)
+  - id: js-f1-predict
+    type: predict
+    title: Banyak Argumen
+    difficulty: 1
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      console.log("A", "B", 3)
+      console.log("A" + "B" + 3)
+      console.log(`${1 + 1}${"x"}`)
+    hints: |
+      Beberapa argumen console.log dipisah spasi.
+      + pada string berarti digabung.
+      Template literal mengevaluasi ${} lalu menempelkannya.
+    solution: x
+  - id: js-f1-bug-kutip
+    type: bughunt
+    title: Backtick yang Tertukar
+    difficulty: 1
+    prompt: 'Program harus mencetak "Halo, Nezuko!" tapi yang tercetak malah ${nama}. Temukan bug-nya.'
+    starter: |
+      const nama = "Nezuko"
+      console.log("Halo, ${nama}!")
+    bug_line: 2
+    hints: |
+      ${...} hanya bekerja di jenis kutip tertentu.
+      Kutip ganda tidak menyisipkan variabel.
+      console.log(`Halo, ${nama}!`)
+    solution: |
+      const nama = "Nezuko"
+      console.log(`Halo, ${nama}!`)
+  - id: js-f1-parsons
+    type: parsons
+    title: Hitung Mundur Kilat
+    difficulty: 1
+    prompt: Susun program yang mencetak 3, 2, 1, lalu "Petir!".
+    hints: |
+      Program berjalan dari atas ke bawah.
+      Angka terbesar dicetak duluan.
+      "Petir!" paling akhir.
+    solution: |
+      console.log(3)
+      console.log(2)
+      console.log(1)
+      console.log("Petir!")
+  - id: js-f1-typing
+    type: typing
+    title: Ketik Kilat Petir
+    difficulty: 1
+    prompt: Ketik ulang kode berikut, termasuk backtick-nya. Akurasi minimal 95%.
+    code: |
+      console.log("Halo, Slayer!")
+      console.log(`Bentuk ${1 + 1}`)

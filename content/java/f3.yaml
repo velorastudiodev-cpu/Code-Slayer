@@ -1,0 +1,129 @@
+lesson:
+  - text: Operator Java adalah + - * / % ++ -- dan operator gabungan seperti +=. Perbandingan menghasilkan boolean (true/false), bukan 0 atau 1. Operator logika && dan || bersifat short-circuit, jadi sisi kanan tidak dievaluasi kalau hasilnya sudah pasti.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int x = 15;
+              System.out.println((x > 10) + " " + (x % 2 == 0) + " " + (x > 10 && x < 20));
+              System.out.println(Math.max(3, 9) + " " + Math.abs(-7) + " " + Math.pow(2, 10));
+          }
+      }
+  - text: Untuk String, == membandingkan apakah dua objek SAMA (referensi), bukan isinya. Untuk membandingkan isi teks, selalu pakai .equals(). Ini salah satu bug Java paling klasik.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              String a = "ular";
+              String b = new String("ular");
+              System.out.println((a == b) + " " + a.equals(b));
+          }
+      }
+exercises:
+  - id: java-f3-detik
+    type: write
+    title: Jam Pertarungan
+    difficulty: 2
+    prompt: 'Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.'
+    tests: ["3725", "59", "86399", "0"]
+    hints: |
+      Jam adalah t / 3600, menit adalah t % 3600 / 60, detik adalah t % 60.
+      Gabungkan dengan ":".
+      System.out.println(t / 3600 + ":" + t % 3600 / 60 + ":" + t % 60);
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int t = new Scanner(System.in).nextInt();
+              System.out.println(t / 3600 + ":" + t % 3600 / 60 + ":" + t % 60);
+          }
+      }
+  - id: java-f3-suhu
+    type: write
+    title: Suhu Napas Api
+    difficulty: 1
+    prompt: Baca suhu Celsius (bilangan bulat). Cetak Fahrenheit dengan 1 desimal.
+    tests: ["100", "0", "-40", "37"]
+    hints: |
+      c * 9 / 5 dengan int membuang desimal.
+      Pakai 9.0.
+      System.out.printf("%.1f%n", c * 9.0 / 5 + 32);
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              int c = new Scanner(System.in).nextInt();
+              System.out.printf("%.1f%n", c * 9.0 / 5 + 32);
+          }
+      }
+  - id: java-f3-predict
+    type: predict
+    title: Short-circuit
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      public class Main {
+          static int hitung = 0;
+          static boolean cek(boolean v) { hitung++; return v; }
+          public static void main(String[] args) {
+              boolean a = cek(false) && cek(true);
+              boolean b = cek(true) || cek(false);
+              System.out.println(a + " " + b + " " + hitung + " " + (-7 % 3));
+          }
+      }
+    hints: |
+      false && ... tidak mengevaluasi sisi kanan.
+      true || ... juga tidak mengevaluasi sisi kanan.
+      Tanda hasil % mengikuti pembilang.
+    solution: x
+  - id: java-f3-bug
+    type: bughunt
+    title: Sandi yang Selalu Salah
+    difficulty: 2
+    prompt: Program harus mencetak "masuk" jika sandi sama dengan "ular", tapi selalu "ditolak". Temukan bug-nya.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              String sandi = new Scanner(System.in).next();
+              if (sandi == "ular") System.out.println("masuk");
+              else System.out.println("ditolak");
+          }
+      }
+    bug_line: 6
+    tests: ["ular", "kabut"]
+    hints: |
+      == pada String membandingkan objeknya, bukan isinya.
+      Teks dari Scanner adalah objek baru.
+      if (sandi.equals("ular"))
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              String sandi = new Scanner(System.in).next();
+              if (sandi.equals("ular")) System.out.println("masuk");
+              else System.out.println("ditolak");
+          }
+      }
+  - id: java-f3-review
+    type: review
+    title: Review Pemeriksa Sandi
+    difficulty: 2
+    prompt: Tandai baris yang bermasalah.
+    code: |
+      String sandi = in.next();
+      if (sandi == "ular") {
+          System.out.println("masuk");
+      }
+      double rata = (a + b) / 2;
+    issues:
+      - line: 2
+        text: == membandingkan referensi String, bukan isinya. Pakai sandi.equals("ular").
+      - line: 5
+        text: Kalau a dan b int, (a + b) / 2 adalah pembagian int sehingga desimalnya hilang. Pakai 2.0.
+    hints: |
+      Bagaimana cara benar membandingkan String di Java?
+      Apa tipe hasil int / int?
+      Ada dua baris.

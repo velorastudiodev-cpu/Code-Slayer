@@ -1,0 +1,125 @@
+lesson:
+  - text: Array menyimpan urutan nilai, dengan indeks mulai dari 0. Method penting array adalah push, pop, includes, indexOf, dan length. Method map, filter, dan reduce mengolah array tanpa loop manual. Hati-hati, const b = a tidak menyalin array. Pakai [...a] untuk menyalin.
+    code: |
+      const pasukan = ["Tanjiro", "Zenitsu"]
+      pasukan.push("Inosuke")
+      console.log(pasukan.length, pasukan.includes("Giyu"))
+      console.log([1, 2, 3, 4].filter(x => x % 2 === 0).map(x => x * 10))
+      console.log([1, 2, 3].reduce((s, x) => s + x, 0))
+  - text: Object menyimpan pasangan kunci-nilai, misalnya { nama, umur }. Map mirip object tapi kuncinya boleh apa saja dan urutannya terjaga. Set menyimpan nilai unik. Object.entries dan for...of memudahkan iterasi.
+    code: |
+      const umur = { Tanjiro: 15, Rengoku: 20 }
+      umur.Kanao = 16
+      for (const [k, v] of Object.entries(umur)) console.log(k, v)
+      console.log(new Set([3, 1, 3, 2]).size, new Map([["a", 1]]).get("a"))
+exercises:
+  - id: js-m1-balik
+    type: write
+    title: Barisan Terbalik
+    difficulty: 1
+    prompt: Baca deretan bilangan dalam satu baris. Cetak urutan terbaliknya dipisah spasi.
+    tests: ["1 2 3", "5", "9 -1 4"]
+    hints: |
+      split(" ") membuat array.
+      .reverse() membalik array.
+      console.log(a.reverse().join(" "))
+    solution: console.log(readline().split(" ").reverse().join(" "))
+  - id: js-m1-frekuensi
+    type: write
+    title: Sensus Kata
+    difficulty: 2
+    prompt: Baca satu baris kata. Untuk setiap kata unik sesuai urutan kemunculan pertama, cetak "<kata> <jumlah>".
+    tests: ["kaa kaa gagak kaa", "a b c"]
+    hints: |
+      Map menjaga urutan kunci pertama kali dimasukkan.
+      m.set(k, (m.get(k) ?? 0) + 1)
+      for (const [k, v] of m) console.log(k, v)
+    solution: |
+      const m = new Map()
+      for (const k of readline().split(" ")) m.set(k, (m.get(k) ?? 0) + 1)
+      for (const [k, v] of m) console.log(k, v)
+  - id: js-m1-genap-kali
+    type: write
+    title: Saring dan Lipat
+    difficulty: 1
+    prompt: Baca deretan bilangan. Ambil yang genap, kalikan 3, lalu cetak jumlahnya. Gunakan filter, map, dan reduce.
+    tests: ["1 2 3 4", "1 3 5", "10"]
+    hints: |
+      filter(x => x % 2 === 0)
+      map(x => x * 3)
+      reduce((s, x) => s + x, 0), dan nilai awal 0 penting untuk array kosong.
+    solution: |
+      const a = readline().split(" ").map(Number)
+      console.log(a.filter(x => x % 2 === 0).map(x => x * 3).reduce((s, x) => s + x, 0))
+  - id: js-m1-predict
+    type: predict
+    title: Bayangan Array
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const a = [3, 1, 2]
+      const b = a
+      const c = [...a]
+      b.push(0)
+      console.log(a, c)
+      console.log(a.length, c.includes(0))
+    hints: |
+      b menunjuk array yang sama dengan a.
+      [...a] membuat salinan sebelum push.
+      Hanya a (dan b) yang berisi 0.
+    solution: x
+  - id: js-m1-bug-sort
+    type: bughunt
+    title: Urutan yang Aneh
+    difficulty: 2
+    prompt: Program harus mengurutkan bilangan dari kecil ke besar, tapi 10 muncul sebelum 9. Temukan bug-nya.
+    starter: |
+      const a = readline().split(" ").map(Number)
+      a.sort()
+      console.log(a.join(" "))
+    bug_line: 2
+    tests: ["10 9 1", "3 2 1", "100 25 3"]
+    hints: |
+      sort() tanpa argumen membandingkan sebagai TEKS.
+      "10" < "9" karena "1" < "9".
+      a.sort((x, y) => x - y)
+    solution: |
+      const a = readline().split(" ").map(Number)
+      a.sort((x, y) => x - y)
+      console.log(a.join(" "))
+  - id: js-m1-parsons
+    type: parsons
+    title: Peringkat Kedua
+    difficulty: 2
+    prompt: Susun program yang mencetak bilangan terbesar kedua yang berbeda, atau "tidak ada".
+    tests: ["3 1 4 4 2", "5 5", "1 2"]
+    hints: |
+      Buang duplikat dengan Set, lalu urutkan.
+      Periksa jumlah nilai unik dulu.
+      unik.at(-2) mengambil terbesar kedua.
+    solution: |
+      const angka = readline().split(" ").map(Number)
+      const unik = [...new Set(angka)].sort((a, b) => a - b)
+      if (unik.length < 2) console.log("tidak ada")
+      else console.log(unik.at(-2))
+  - id: js-m1-translate
+    type: translate
+    title: Terjemahkan Sensus Kata
+    difficulty: 2
+    prompt: Tulis ulang program Python ini dalam JavaScript (urutan sesuai kemunculan pertama).
+    from_lang: python
+    from_code: |
+      hitung = {}
+      for k in input().split():
+          hitung[k] = hitung.get(k, 0) + 1
+      for k, v in hitung.items():
+          print(k, v)
+    tests: ["kaa kaa gagak kaa", "a b c"]
+    hints: |
+      dict Python yang menjaga urutan setara dengan Map di JS.
+      m.set(k, (m.get(k) ?? 0) + 1)
+      for (const [k, v] of m) console.log(k, v)
+    solution: |
+      const m = new Map()
+      for (const k of readline().split(" ")) m.set(k, (m.get(k) ?? 0) + 1)
+      for (const [k, v] of m) console.log(k, v)

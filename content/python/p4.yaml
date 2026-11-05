@@ -1,0 +1,146 @@
+lesson:
+  - text: Project nyata dibangun bertahap. Mulai dari versi terkecil yang berjalan, lalu tambah fitur satu per satu sambil memastikan fitur lama tetap benar. Bab ini membangun aplikasi to-do di command line, lalu inventaris toko dan alat analisis teks.
+    code: |
+      tugas = []
+      for perintah in ["tambah latihan", "tambah misi", "lihat"]:
+          aksi, _, isi = perintah.partition(" ")
+          if aksi == "tambah":
+              tugas.append(isi)
+          elif aksi == "lihat":
+              for i, t in enumerate(tugas, 1):
+                  print(f"{i}. {t}")
+  - text: Pisahkan logika (fungsi yang mengolah data) dari input/output (membaca perintah dan mencetak). Dengan begitu logikanya mudah diuji dan bisa dipakai ulang, misalnya untuk antarmuka web nanti.
+    code: |
+      def proses(state, perintah):
+          aksi, _, isi = perintah.partition(" ")
+          if aksi == "tambah":
+              state.append(isi)
+          return state
+      print(proses([], "tambah tebas iblis"))
+exercises:
+  - id: py-p4-todo1
+    type: write
+    title: "To-do Tahap 1: Tambah & Lihat"
+    difficulty: 2
+    prompt: 'Setiap baris adalah perintah. "tambah <teks>" menambah tugas. "lihat" mencetak semua tugas "<no>. <teks>", atau "(kosong)" jika belum ada.'
+    tests: ["lihat\ntambah latihan napas\ntambah misi Natagumo\nlihat", "tambah a\nlihat\ntambah b\nlihat"]
+    hints: |
+      Simpan tugas dalam list.
+      partition(" ") memisahkan perintah dari teks.
+      enumerate(tugas, 1) untuk nomor.
+    solution: |
+      import sys
+      tugas = []
+      for baris in sys.stdin.read().splitlines():
+          aksi, _, isi = baris.partition(" ")
+          if aksi == "tambah":
+              tugas.append(isi)
+          elif aksi == "lihat":
+              if not tugas:
+                  print("(kosong)")
+              for i, t in enumerate(tugas, 1):
+                  print(f"{i}. {t}")
+  - id: py-p4-todo2
+    type: write
+    title: "To-do Tahap 2: Tandai Selesai"
+    difficulty: 2
+    prompt: 'Lanjutkan tahap 1. "selesai <no>" menandai tugas selesai. "lihat" kini mencetak "<no>. [x] <teks>" untuk yang selesai dan "<no>. [ ] <teks>" untuk yang belum.'
+    tests: ["tambah latihan\ntambah misi\nselesai 2\nlihat", "lihat\ntambah a\nselesai 1\nselesai 1\nlihat"]
+    hints: |
+      Simpan setiap tugas sebagai pasangan [teks, selesai].
+      Nomor tugas dimulai 1, sedangkan indeks list dimulai 0.
+      "x" if selesai else " "
+    solution: |
+      import sys
+      tugas = []
+      for baris in sys.stdin.read().splitlines():
+          aksi, _, isi = baris.partition(" ")
+          if aksi == "tambah":
+              tugas.append([isi, False])
+          elif aksi == "selesai":
+              tugas[int(isi) - 1][1] = True
+          elif aksi == "lihat":
+              if not tugas:
+                  print("(kosong)")
+              for i, (t, s) in enumerate(tugas, 1):
+                  print(f"{i}. [{'x' if s else ' '}] {t}")
+  - id: py-p4-todo3
+    type: write
+    title: "To-do Tahap 3: Hapus & Ringkas"
+    difficulty: 3
+    prompt: 'Lanjutkan tahap 2. Tambahkan "hapus <no>" dan "ringkas" yang mencetak "<s> selesai dari <n>". Untuk selesai/hapus dengan nomor di luar jangkauan, cetak "nomor tidak valid".'
+    tests: ["tambah a\ntambah b\ntambah c\nselesai 1\nhapus 2\nlihat\nringkas\nhapus 9", "ringkas\nselesai 1\ntambah x\nlihat"]
+    hints: |
+      Buat fungsi kecil yang memeriksa nomor valid (1 ≤ no ≤ len).
+      pop(no - 1) menghapus item.
+      sum(1 for _, s in tugas if s) menghitung yang selesai.
+    solution: |
+      import sys
+      tugas = []
+      def valid(no):
+          return 1 <= no <= len(tugas)
+      for baris in sys.stdin.read().splitlines():
+          aksi, _, isi = baris.partition(" ")
+          if aksi == "tambah":
+              tugas.append([isi, False])
+          elif aksi in ("selesai", "hapus"):
+              no = int(isi)
+              if not valid(no):
+                  print("nomor tidak valid")
+              elif aksi == "selesai":
+                  tugas[no - 1][1] = True
+              else:
+                  tugas.pop(no - 1)
+          elif aksi == "lihat":
+              if not tugas:
+                  print("(kosong)")
+              for i, (t, s) in enumerate(tugas, 1):
+                  print(f"{i}. [{'x' if s else ' '}] {t}")
+          elif aksi == "ringkas":
+              print(f"{sum(1 for _, s in tugas if s)} selesai dari {len(tugas)}")
+  - id: py-p4-inventaris
+    type: write
+    title: Inventaris Desa Penempa
+    difficulty: 3
+    prompt: 'Perintah per baris. "beli <item> <qty>" menambah stok. "jual <item> <qty>" mengurangi stok, dan jika stok kurang cetak "stok <item> kurang". "laporan" mencetak "<item> <stok>" untuk item dengan stok > 0, urut menurut nama, atau "(gudang kosong)".'
+    tests: ["beli pedang 5\nbeli haori 2\njual pedang 3\njual haori 5\nlaporan", "laporan\nbeli a 1\njual a 1\nlaporan"]
+    hints: |
+      Pakai dict item ke stok.
+      Periksa stok sebelum menjual.
+      sorted(stok.items()) lalu saring yang > 0.
+    solution: |
+      import sys
+      stok = {}
+      for baris in sys.stdin.read().splitlines():
+          aksi, *arg = baris.split()
+          if aksi == "beli":
+              stok[arg[0]] = stok.get(arg[0], 0) + int(arg[1])
+          elif aksi == "jual":
+              item, qty = arg[0], int(arg[1])
+              if stok.get(item, 0) < qty:
+                  print(f"stok {item} kurang")
+              else:
+                  stok[item] -= qty
+          elif aksi == "laporan":
+              ada = [(k, v) for k, v in sorted(stok.items()) if v > 0]
+              if not ada:
+                  print("(gudang kosong)")
+              for k, v in ada:
+                  print(k, v)
+  - id: py-p4-analisis
+    type: write
+    title: Analis Gulungan
+    difficulty: 3
+    prompt: 'Baca seluruh teks. Ubah ke huruf kecil, ganti semua karakter selain huruf dan spasi menjadi spasi, lalu cetak 3 kata paling sering dalam format "<kata> <jumlah>". Jika seri, urut menurut abjad.'
+    tests: ["Air, api! Air... petir? Api api.", "Kaa kaa KAA\ngagak gagak burung"]
+    hints: |
+      Pakai re.sub(r"[^a-z\s]", " ", teks.lower()).
+      Counter menghitung kata.
+      sorted(c.items(), key=lambda x: (-x[1], x[0]))[:3]
+    solution: |
+      import re, sys
+      from collections import Counter
+      teks = re.sub(r"[^a-z\s]", " ", sys.stdin.read().lower())
+      c = Counter(teks.split())
+      for k, v in sorted(c.items(), key=lambda x: (-x[1], x[0]))[:3]:
+          print(k, v)

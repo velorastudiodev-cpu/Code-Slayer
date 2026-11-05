@@ -1,0 +1,74 @@
+lesson:
+- text: 'Forensik digital: kumpulkan bukti tanpa mengubahnya, lalu analisis log, metadata, string di berkas biner, persistensi (cron, service), dan artefak lain. Dokumentasikan setiap langkah (chain of
+    custody).'
+  code: |
+    strings berkas | less
+    xxd berkas | head
+    grep -i failed /var/log/auth.log
+    cat /etc/crontab
+exercises:
+- id: cy-lab-for-authlog
+  type: lab
+  title: Pintu Diketuk Berulang
+  difficulty: 2
+  prompt: 'Lab sandbox: Analisis /var/log/auth.log. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-authlog
+  hints: |
+    grep "Failed password"
+    Ambil kolom IP dengan awk.
+    sort | uniq -c | sort -rn
+- id: cy-lab-for-strings
+  type: lab
+  title: Gambar Bersuara
+  difficulty: 1
+  prompt: 'Lab sandbox: Temukan teks tersembunyi di dalam berkas. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-strings
+  hints: |
+    cat menampilkan sampah biner.
+    Perintah strings menampilkan rangkaian karakter yang terbaca.
+    strings foto.png | grep SLAYER
+- id: cy-lab-for-hex
+  type: lab
+  title: Catatan Heksadesimal
+  difficulty: 1
+  prompt: 'Lab sandbox: Ubah kembali menjadi teks. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-hex
+  hints: |
+    xxd bisa membalik hex dump.
+    xxd -r -p mengubah hex polos ke byte.
+    xxd -r -p dump.hex
+- id: cy-lab-for-cron
+  type: lab
+  title: Jadwal Mencurigakan
+  difficulty: 2
+  prompt: 'Lab sandbox: Baca /etc/crontab dan decode muatannya. Temukan flag SLAYER{...} lalu serahkan.'
+  lab: for-cron
+  hints: |
+    cat /etc/crontab
+    Ambil bagian setelah echo.
+    Decode dengan base64 -d.
+- id: cy-m6-brute
+  type: write
+  title: Deteksi Brute Force
+  difficulty: 3
+  prompt: Dari auth.log, tampilkan IP yang gagal login LEBIH DARI 3 kali, dengan format "IP jumlah".
+  lang: bash
+  starter: |
+    # tulis perintahmu di sini
+  pre: |
+    cat > auth.log <<'EOF'
+    Nov 5 09:00:01 markas sshd[1]: Failed password for root from 10.6.6.6
+    Nov 5 09:00:02 markas sshd[2]: Failed password for root from 10.6.6.6
+    Nov 5 09:00:03 markas sshd[3]: Failed password for admin from 10.4.4.4
+    Nov 5 09:00:04 markas sshd[4]: Failed password for root from 10.6.6.6
+    Nov 5 09:00:05 markas sshd[5]: Accepted password for slayer from 10.0.0.5
+    Nov 5 09:00:06 markas sshd[6]: Failed password for root from 10.6.6.6
+    Nov 5 09:00:07 markas sshd[7]: Failed password for test from 10.4.4.4
+    Nov 5 09:00:08 markas sshd[8]: Failed password for root from 10.6.6.6
+    EOF
+  hints: |
+    Saring baris Failed password.
+    IP ada di kolom terakhir ($NF).
+    Hitung dengan array awk, cetak yang > 3.
+  solution: |
+    grep 'Failed password' auth.log | awk '{ n[$NF]++ } END { for (ip in n) if (n[ip] > 3) print ip, n[ip] }'

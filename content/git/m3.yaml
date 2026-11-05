@@ -1,0 +1,78 @@
+lesson:
+- text: git stash menyimpan perubahan yang belum di-commit ke tumpukan sementara dan membersihkan working tree. Berguna saat harus pindah branch mendadak. git stash pop mengembalikan perubahan terakhir
+    dan menghapusnya dari tumpukan.
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo "setengah jadi" >> misi.txt
+    git stash
+    cat misi.txt
+    git stash pop
+    cat misi.txt
+exercises:
+- id: git-m3-darurat
+  type: write
+  title: Panggilan Darurat
+  difficulty: 2
+  prompt: Kamu sedang mengubah misi.txt di main (belum di-commit) saat ada tugas darurat. Simpan perubahan itu ke stash, buat branch darurat dan commit file darurat.txt berisi "segera" dengan pesan "Tangani
+    darurat". Biarkan perubahan tetap di stash.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    echo "catatan rahasia" >> misi.txt
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+    git stash list | wc -l
+  hints: |
+    Simpan dulu perubahanmu.
+    git stash membersihkan working tree.
+    Lalu buat branch dan commit seperti biasa.
+  solution: |
+    git stash
+    git switch -c darurat
+    echo "segera" > darurat.txt
+    git add darurat.txt
+    git commit -m "Tangani darurat"
+- id: git-m3-pop
+  type: predict
+  title: Kembali dari Tumpukan
+  difficulty: 2
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    echo "draf" >> misi.txt
+    git stash -q
+    cat misi.txt
+    git stash pop -q
+    cat misi.txt
+    git stash list | wc -l
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+  hints: |
+    Setelah stash, file kembali ke isi commit terakhir.
+    pop mengembalikan perubahan.
+    pop juga menghapus entri dari tumpukan.
+  solution: x
+- id: git-m3-list
+  type: answer
+  title: Isi Tumpukan
+  difficulty: 1
+  prompt: Perintah untuk melihat daftar semua stash yang tersimpan adalah...
+  accept:
+  - git stash list
+  explain: git stash list menampilkan stash@{0}, stash@{1}, dst. Yang terbaru di atas.
+  hints: |
+    git stash ...
+    Daftar.
+    git stash list

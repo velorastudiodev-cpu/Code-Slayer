@@ -1,0 +1,132 @@
+lesson:
+  - text: Rekursi adalah fungsi yang memanggil dirinya sendiri untuk versi masalah yang lebih kecil. Setiap rekursi butuh base case (kapan berhenti) dan langkah yang MENGECIL menuju base case. Tanpa itu, Python akan berhenti dengan RecursionError.
+    code: |
+      def hitung_mundur(n):
+          if n == 0:
+              print("Serang!")
+              return
+          print(n)
+          hitung_mundur(n - 1)
+      hitung_mundur(3)
+  - text: 'Rekursi pintar bisa jauh lebih cepat. Pangkat cepat memakai fakta a^b = (a^(b/2))², sehingga butuh O(log b) langkah, bukan O(b). Teknik ini dipakai di soal modulo besar di OSN dan Codeforces.'
+    code: |
+      def pangkat(a, b, m):
+          if b == 0:
+              return 1
+          h = pangkat(a, b // 2, m)
+          return h * h % m * (a if b % 2 else 1) % m
+      print(pangkat(2, 10, 10**9 + 7), pangkat(3, 10**18, 10**9 + 7))
+exercises:
+  - id: dsa-f4-pangkat
+    type: write
+    title: Pangkat Kilat
+    difficulty: 3
+    prompt: Baca a dan b (0 ≤ a ≤ 10^9, 0 ≤ b ≤ 10^18). Cetak a^b mod 1.000.000.007 dengan pangkat cepat rekursif (jangan pakai pow bawaan).
+    tests: ["2 10", "3 0", "5 1000000000000000000", "0 5"]
+    hints: |
+      Base case b == 0 mengembalikan 1.
+      Hitung h = pangkat(a, b // 2) sekali saja.
+      Kalau b ganjil, kalikan sekali lagi dengan a.
+    solution: |
+      M = 10**9 + 7
+      def pangkat(a, b):
+          if b == 0:
+              return 1
+          h = pangkat(a, b // 2)
+          return h * h % M * (a % M if b % 2 else 1) % M
+      a, b = map(int, input().split())
+      print(pangkat(a, b))
+  - id: dsa-f4-subset
+    type: write
+    title: Semua Formasi Regu
+    difficulty: 3
+    prompt: 'Baca string berisi huruf berbeda (≤ 10 huruf). Cetak semua subset hurufnya (urutan huruf mengikuti string asli), urut menurut abjad, satu per baris. Subset kosong ditulis "-".'
+    tests: ["abc", "a", "ba"]
+    hints: |
+      Untuk setiap huruf ada dua pilihan, yaitu diambil atau tidak.
+      Rekursi pilih(i, sekarang) mencoba dua cabang.
+      Kumpulkan semua hasil, urutkan, lalu cetak.
+    solution: |
+      s = input()
+      hasil = []
+      def pilih(i, cur):
+          if i == len(s):
+              hasil.append(cur or "-")
+              return
+          pilih(i + 1, cur + s[i])
+          pilih(i + 1, cur)
+      pilih(0, "")
+      print("\n".join(sorted(hasil)))
+  - id: dsa-f4-fill-digit
+    type: fill
+    title: Jumlah Digit Rekursif
+    difficulty: 1
+    prompt: Lengkapi fungsi rekursif yang menjumlahkan digit n.
+    code: |
+      def jumlah_digit(n):
+          if n < 10:
+              return ⟦n⟧
+          return n % 10 + jumlah_digit(⟦n // 10⟧)
+      print(jumlah_digit(int(input())))
+    tests: ["12345", "7", "1000000"]
+    hints: |
+      Bilangan satu digit adalah jumlah digitnya sendiri.
+      n % 10 adalah digit terakhir.
+      Sisanya adalah n // 10.
+  - id: dsa-f4-complexity
+    type: complexity
+    title: Kompleksitas Pangkat Cepat
+    difficulty: 2
+    prompt: Berapa kompleksitas waktu pangkat(a, b) terhadap b?
+    code: |
+      def pangkat(a, b):
+          if b == 0:
+              return 1
+          h = pangkat(a, b // 2)
+          return h * h * (a if b % 2 else 1)
+    answer: O(log n)
+    explain: Setiap panggilan membagi b dengan 2 dan hanya memanggil diri sekali, jadi kedalamannya sekitar log₂ b.
+    hints: |
+      Berapa panggilan rekursif per tingkat?
+      b menjadi separuh setiap tingkat.
+      Sama seperti binary search.
+  - id: dsa-f4-readerror
+    type: readerror
+    title: Rekursi Tak Berujung
+    difficulty: 1
+    prompt: Program ini crash. Baca pesan error-nya.
+    code: |
+      def hitung(n):
+          return n + hitung(n - 1)
+      print(hitung(5))
+    options:
+      - Tidak ada base case, jadi rekursi tidak pernah berhenti. Tambahkan if n == 0, return 0.
+      - Python tidak mendukung fungsi yang memanggil dirinya sendiri.
+      - n - 1 harus ditulis tanpa spasi menjadi n-1.
+      - print tidak boleh memanggil fungsi.
+    explain: RecursionError berarti tumpukan panggilan terlalu dalam. Setiap fungsi rekursif wajib punya kondisi berhenti.
+    hints: |
+      Baca baris terakhir pesan error.
+      Kapan hitung berhenti memanggil dirinya?
+      Base case.
+  - id: dsa-f4-hanoi
+    type: write
+    title: Menara Hanoi
+    difficulty: 3
+    prompt: 'Baca n (1 ≤ n ≤ 5). Pindahkan n cakram dari tiang A ke C (bantu B). Cetak setiap langkah sebagai "A->C", lalu baris terakhir jumlah langkahnya.'
+    tests: ["1", "2", "3"]
+    hints: |
+      Pindahkan n-1 cakram ke tiang bantu dulu.
+      Pindahkan cakram terbesar ke tujuan.
+      Pindahkan n-1 cakram dari tiang bantu ke tujuan.
+    solution: |
+      langkah = []
+      def hanoi(n, dari, ke, bantu):
+          if n == 0:
+              return
+          hanoi(n - 1, dari, bantu, ke)
+          langkah.append(f"{dari}->{ke}")
+          hanoi(n - 1, bantu, ke, dari)
+      hanoi(int(input()), "A", "C", "B")
+      print("\n".join(langkah))
+      print(len(langkah))

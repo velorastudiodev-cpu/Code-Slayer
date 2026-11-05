@@ -1,0 +1,109 @@
+lesson:
+  - text: 'Big-O menggambarkan bagaimana waktu bertambah saat input membesar, bukan waktu persisnya. Satu loop atas n elemen adalah O(n). Loop bersarang n × n adalah O(n²). Membagi masalah menjadi separuh setiap langkah adalah O(log n). Konstanta dan suku kecil diabaikan, jadi O(2n + 5) = O(n).'
+    code: |
+      import math
+      for n in [10, 1000, 10**6]:
+          print(n, "→ log n ≈", round(math.log2(n)), "| n² =", n * n)
+  - text: 'Urutan dari tercepat ke terlambat adalah O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ). Batas kasar di kompetisi adalah sekitar 10^8 operasi per detik. Untuk n = 10^5, O(n²) = 10^10 (terlalu lambat), sedangkan O(n log n) ≈ 1,7 juta (aman).'
+    code: |
+      n = 10**5
+      print(n * n, n * 17)
+exercises:
+  - id: dsa-f2-linear
+    type: complexity
+    title: Satu Putaran
+    difficulty: 1
+    prompt: Berapa kompleksitas waktu fungsi ini terhadap panjang list a (n)?
+    code: |
+      def jumlah(a):
+          total = 0
+          for x in a:
+              total += x
+          return total
+    answer: O(n)
+    explain: Loop mengunjungi setiap elemen tepat sekali, jadi ada n langkah.
+    hints: |
+      Hitung berapa kali isi loop dijalankan.
+      Satu loop atas n elemen.
+      Langkahnya sebanding dengan n.
+  - id: dsa-f2-kuadrat
+    type: complexity
+    title: Loop Berlapis
+    difficulty: 1
+    prompt: Berapa kompleksitas waktunya terhadap n = len(a)?
+    code: |
+      def ada_pasangan(a, target):
+          for i in range(len(a)):
+              for j in range(len(a)):
+                  if i != j and a[i] + a[j] == target:
+                      return True
+          return False
+    answer: O(n²)
+    explain: Untuk setiap i ada n nilai j, sehingga terburuknya n × n pemeriksaan.
+    hints: |
+      Ada dua loop bersarang.
+      Masing-masing loop berjalan n kali.
+      n × n.
+  - id: dsa-f2-log
+    type: complexity
+    title: Dibagi Dua Terus
+    difficulty: 2
+    prompt: Berapa kompleksitas waktu fungsi ini terhadap n?
+    code: |
+      def bit(n):
+          langkah = 0
+          while n > 1:
+              n //= 2
+              langkah += 1
+          return langkah
+    answer: O(log n)
+    explain: n dibagi dua setiap putaran, jadi loop berjalan sekitar log₂ n kali.
+    hints: |
+      Apa yang terjadi pada n di setiap putaran?
+      Berapa kali 1024 bisa dibagi 2 sampai 1?
+      Jumlah putaran = log₂ n.
+  - id: dsa-f2-konstan
+    type: complexity
+    title: Ujung ke Ujung
+    difficulty: 1
+    prompt: Berapa kompleksitas waktunya terhadap n = len(a)?
+    code: |
+      def ujung(a):
+          return a[0] + a[-1]
+    answer: O(1)
+    explain: Mengakses indeks list butuh waktu tetap, tidak tergantung panjangnya.
+    hints: |
+      Apakah ada loop?
+      Akses a[i] berwaktu tetap.
+      Waktunya tidak tumbuh bersama n.
+  - id: dsa-f2-nlogn
+    type: complexity
+    title: Urutkan Lalu Telusuri
+    difficulty: 2
+    prompt: Berapa kompleksitas waktunya terhadap n = len(a)?
+    code: |
+      def cetak_urut(a):
+          for x in sorted(a):
+              print(x)
+    answer: O(n log n)
+    explain: sorted() memakai Timsort O(n log n), sedangkan loop setelahnya hanya O(n). Yang dominan O(n log n).
+    hints: |
+      Ada dua bagian, yaitu sorted() dan loop.
+      Kompleksitas sorted() adalah O(n log n).
+      Ambil suku yang paling besar.
+  - id: dsa-f2-eksponen
+    type: complexity
+    title: Fibonacci Naif
+    difficulty: 3
+    prompt: Berapa kompleksitas waktu fib(n) versi rekursif naif ini?
+    code: |
+      def fib(n):
+          if n < 2:
+              return n
+          return fib(n - 1) + fib(n - 2)
+    answer: O(2ⁿ)
+    explain: Setiap panggilan bercabang dua dan hasilnya tidak disimpan, sehingga jumlah panggilan berlipat ganda kira-kira setiap n bertambah 1.
+    hints: |
+      Gambarkan pohon panggilan fib(5).
+      Setiap simpul memanggil dua anak.
+      Nilai yang sama dihitung berulang-ulang.

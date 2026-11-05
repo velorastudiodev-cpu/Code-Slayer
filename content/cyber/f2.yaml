@@ -1,0 +1,64 @@
+lesson:
+- text: 'Tiga pilar keamanan (CIA triad): Confidentiality (hanya yang berhak bisa membaca), Integrity (data tidak diubah tanpa izin), Availability (layanan tersedia saat dibutuhkan). Threat model menjawab:
+    apa yang dilindungi, dari siapa, lewat jalur apa, dan apa dampaknya.'
+exercises:
+- id: cy-f2-c
+  type: quiz
+  title: Surat Terbaca
+  difficulty: 1
+  prompt: Pesan rahasia gagak dibaca oleh iblis. Pilar CIA mana yang dilanggar?
+  options:
+  - Confidentiality
+  - Integrity
+  - Availability
+  - Accountability
+  explain: Kerahasiaan dilanggar ketika pihak tak berhak bisa membaca informasi.
+  hints: |
+    Dibaca, bukan diubah.
+    Kerahasiaan.
+    C.
+- id: cy-f2-i
+  type: quiz
+  title: Pesan Diubah
+  difficulty: 1
+  prompt: Isi perintah misi diubah di tengah jalan sehingga regu dikirim ke tempat yang salah. Pilar mana yang dilanggar?
+  options:
+  - Integrity
+  - Confidentiality
+  - Availability
+  - Authentication
+  explain: Integritas berarti data tidak dimodifikasi tanpa izin. Hash/MAC/tanda tangan digital melindunginya.
+  hints: |
+    Diubah.
+    Keutuhan data.
+    I.
+- id: cy-f2-a
+  type: quiz
+  title: Markas Tak Terjangkau
+  difficulty: 1
+  prompt: Server Markas dibanjiri request sampai tidak bisa melayani slayer. Pilar mana yang terganggu?
+  options:
+  - Availability
+  - Integrity
+  - Confidentiality
+  - Non-repudiation
+  explain: Serangan DoS/DDoS menyerang ketersediaan.
+  hints: |
+    Tidak bisa diakses.
+    Ketersediaan.
+    A.
+- id: cy-f2-threat
+  type: quiz
+  title: Model Ancaman
+  difficulty: 2
+  prompt: Pertanyaan pertama yang paling tepat saat membuat threat model aplikasi absensi adalah...
+  options:
+  - Aset apa yang perlu dilindungi (mis. data kehadiran & akun)?
+  - Framework apa yang paling populer?
+  - Berapa jumlah server?
+  - Warna tema aplikasinya?
+  explain: Threat model dimulai dari aset, lalu penyerang, jalur serangan, dan dampaknya.
+  hints: |
+    Mulai dari yang berharga.
+    Apa yang dilindungi?
+    Aset.

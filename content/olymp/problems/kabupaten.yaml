@@ -1,0 +1,231 @@
+# Soal orisinal setara OSN-K (pemrograman dasar). Python diizinkan.
+# gen: badan fungsi JS (R = PRNG berbiji `seed`): R.int(a,b), R.arr(n,a,b), R.perm(n), R.str(n, huruf). Mengembalikan string input.
+- id: ol-k-jarak
+  title: Total Jarak Latihan
+  stage: kabupaten
+  topics: [implementasi, tipe-data]
+  tl: 1000
+  statement: |
+    Tanjiro mencatat jarak lari latihannya selama N hari. Hari ke-i ia berlari A_i meter.
+    Berapa total jarak yang ia tempuh?
+  input: |
+    Baris pertama berisi N. Baris kedua berisi N bilangan A_1 … A_N.
+  output: |
+    Satu bilangan: total jarak.
+  constraints: |
+    1 ≤ N ≤ 200.000, 1 ≤ A_i ≤ 10^9
+  samples: ["3\n5 10 7\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 100, A_i ≤ 1000"
+      tests: ["1\n1\n", {gen: "const n=100;return n+'\\n'+R.arr(n,1,1000).join(' ')", seed: 1}, {gen: "const n=R.int(1,100);return n+'\\n'+R.arr(n,1,1000).join(' ')", seed: 2}]
+    - points: 60
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000;return n+'\\n'+R.arr(n,1e9-1000,1e9).join(' ')", seed: 3}, {gen: "const n=150000;return n+'\\n'+R.arr(n,1,1e9).join(' ')", seed: 4}, "3\n1000000000 1000000000 1000000000\n"]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; scanf("%d", &n);
+        long long total = 0;
+        for (int i = 0; i < n; i++) { long long a; scanf("%lld", &a); total += a; }
+        printf("%lld\n", total);
+    }
+  python: |
+    input()
+    print(sum(map(int, input().split())))
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      int main() {
+          int n; scanf("%d", &n);
+          int total = 0; // overflow untuk nilai besar
+          for (int i = 0; i < n; i++) { int a; scanf("%d", &a); total += a; }
+          printf("%d\n", total);
+      }
+  editorial:
+    hint: Berapa nilai terbesar yang mungkin untuk totalnya? Apakah muat di int?
+    idea: Total bisa mencapai 2·10^5 × 10^9 = 2·10^14, jauh melebihi batas int (≈ 2,1·10^9). Gunakan long long.
+    solution: Jumlahkan dengan variabel long long (C++) atau int Python yang tak terbatas.
+    complexity: O(N)
+
+- id: ol-k-prima
+  title: Gerbang Prima
+  stage: kabupaten
+  topics: [bilangan, sieve]
+  tl: 1000
+  statement: |
+    Gerbang Desa Penempa hanya terbuka bagi bilangan prima. Hitung banyaknya bilangan prima dari 1 sampai N.
+  input: |
+    Satu bilangan N.
+  output: |
+    Banyaknya bilangan prima ≤ N.
+  constraints: |
+    1 ≤ N ≤ 10^7
+  samples: ["10\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 1000"
+      tests: ["1\n", "2\n", "1000\n", "97\n"]
+    - points: 70
+      desc: "N ≤ 10^7"
+      tests: ["10000000\n", "9999991\n", "5000000\n"]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; scanf("%d", &n);
+        vector<bool> komposit(n + 1, false);
+        int jumlah = 0;
+        for (long long i = 2; i <= n; i++) {
+            if (komposit[i]) continue;
+            jumlah++;
+            for (long long j = i * i; j <= n; j += i) komposit[j] = true;
+        }
+        printf("%d\n", jumlah);
+    }
+  python: |
+    n = int(input())
+    if n < 2:
+        print(0)
+    else:
+        s = bytearray([1]) * (n + 1)
+        s[0] = s[1] = 0
+        for i in range(2, int(n ** 0.5) + 1):
+            if s[i]:
+                s[i * i :: i] = bytearray(len(range(i * i, n + 1, i)))
+        print(sum(s))
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      int main() {
+          int n; scanf("%d", &n);
+          int jumlah = 0;
+          for (int x = 2; x <= n; x++) {
+              bool prima = true;
+              for (int d = 2; d < x; d++) if (x % d == 0) { prima = false; break; }
+              jumlah += prima;
+          }
+          printf("%d\n", jumlah);
+      }
+  editorial:
+    hint: Mengecek setiap bilangan satu per satu terlalu lambat untuk N = 10^7. Bisakah kita "mencoret" bilangan komposit sekaligus?
+    idea: Saringan Eratosthenes. Setiap prima p mencoret kelipatannya mulai dari p².
+    solution: Buat array boolean berukuran N+1, iterasi i dari 2; jika belum dicoret, i prima dan coret i², i²+i, …
+    complexity: O(N log log N) waktu, O(N) memori
+
+- id: ol-k-tangga
+  title: Tangga Kuil
+  stage: kabupaten
+  topics: [dp, rekursi]
+  tl: 1000
+  statement: |
+    Untuk mencapai kuil di puncak gunung, Zenitsu harus menaiki N anak tangga. Setiap langkah ia naik 1 atau 2 anak tangga.
+    Ada berapa cara berbeda untuk sampai tepat di anak tangga ke-N? Cetak jawabannya modulo 1.000.000.007.
+  input: |
+    Satu bilangan N.
+  output: |
+    Banyak cara modulo 10^9+7.
+  constraints: |
+    1 ≤ N ≤ 10^6
+  samples: ["4\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 25"
+      tests: ["1\n", "2\n", "25\n", "17\n"]
+    - points: 70
+      desc: "N ≤ 10^6"
+      tests: ["1000000\n", "999999\n", "100\n"]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; scanf("%d", &n);
+        const long long MOD = 1000000007;
+        long long a = 1, b = 1; // cara ke tangga 0 dan 1
+        for (int i = 2; i <= n; i++) { long long c = (a + b) % MOD; a = b; b = c; }
+        printf("%lld\n", b);
+    }
+  python: |
+    n = int(input())
+    a, b = 1, 1
+    for _ in range(n - 1):
+        a, b = b, (a + b) % 1000000007
+    print(b)
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      long long cara(int n) { return n <= 1 ? 1 : (cara(n - 1) + cara(n - 2)) % 1000000007; }
+      int main() { int n; scanf("%d", &n); printf("%lld\n", cara(n)); }
+  editorial:
+    hint: Langkah terakhir ke tangga N datang dari tangga N−1 atau N−2.
+    idea: cara(N) = cara(N−1) + cara(N−2). Rekursi polos menghitung ulang nilai yang sama berkali-kali (eksponensial).
+    solution: Simpan dua nilai terakhir dan iterasi dari bawah (dynamic programming), ambil modulo setiap langkah.
+    complexity: O(N) waktu, O(1) memori
+
+- id: ol-k-pasangan
+  title: Pasangan Tebasan
+  stage: kabupaten
+  topics: [hash-map, counting]
+  tl: 1000
+  statement: |
+    Ada N pedang dengan kekuatan A_1 … A_N. Dua pedang berbeda (i < j) disebut serasi jika A_i + A_j = K.
+    Hitung banyak pasangan serasi.
+  input: |
+    Baris pertama berisi N dan K. Baris kedua berisi A_1 … A_N.
+  output: |
+    Banyak pasangan (i, j) dengan i < j dan A_i + A_j = K.
+  constraints: |
+    1 ≤ N ≤ 200.000, 1 ≤ A_i ≤ 10^9, 2 ≤ K ≤ 2·10^9
+  samples: ["5 6\n1 5 3 3 2\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 2000"
+      tests: [{gen: "const n=2000;return n+' 10\\n'+R.arr(n,1,9).join(' ')", seed: 5}, {gen: "const n=1500;return n+' 1000\\n'+R.arr(n,1,999).join(' ')", seed: 6}, "1 2\n1\n"]
+    - points: 60
+      desc: "N ≤ 200.000"
+      tests: [{gen: "const n=200000;return n+' 10\\n'+R.arr(n,1,9).join(' ')", seed: 7}, {gen: "const n=200000;return n+' 1000000000\\n'+R.arr(n,1,999999999).join(' ')", seed: 8}, {gen: "const n=200000;return n+' 4\\n'+Array(n).fill(2).join(' ')", seed: 9}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; long long k; scanf("%d %lld", &n, &k);
+        unordered_map<long long, long long> lihat;
+        lihat.reserve(n * 2);
+        long long hasil = 0;
+        for (int i = 0; i < n; i++) {
+            long long a; scanf("%lld", &a);
+            auto it = lihat.find(k - a);
+            if (it != lihat.end()) hasil += it->second;
+            lihat[a]++;
+        }
+        printf("%lld\n", hasil);
+    }
+  python: |
+    n, k = map(int, input().split())
+    lihat = {}
+    hasil = 0
+    for a in map(int, input().split()):
+        hasil += lihat.get(k - a, 0)
+        lihat[a] = lihat.get(a, 0) + 1
+    print(hasil)
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      int main() {
+          int n; long long k; scanf("%d %lld", &n, &k);
+          std::vector<long long> a(n);
+          for (auto &x : a) scanf("%lld", &x);
+          long long hasil = 0;
+          for (int i = 0; i < n; i++) for (int j = i + 1; j < n; j++) if (a[i] + a[j] == k) hasil++;
+          printf("%lld\n", hasil);
+      }
+  editorial:
+    hint: Saat melihat A_j, pasangan yang dibutuhkan pasti bernilai K − A_j.
+    idea: Simpan berapa kali setiap nilai sudah muncul sebelumnya. Jawaban bisa sangat besar (hingga ~2·10^10), jadi pakai long long.
+    solution: Iterasi kiri ke kanan; tambahkan hitungan[K − A_j] ke jawaban, lalu tambah hitungan[A_j].
+    complexity: O(N) rata-rata dengan hash map

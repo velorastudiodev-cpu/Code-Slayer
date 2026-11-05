@@ -1,0 +1,125 @@
+lesson:
+  - text: open(nama, mode) membuka file. Mode "w" menulis ulang, "a" menambah di akhir, dan "r" (default) membaca. Selalu pakai with supaya file otomatis ditutup walau terjadi error. Di aplikasi ini file disimpan di folder /tmp milik sandbox.
+    code: |
+      with open("/tmp/catatan.txt", "w") as f:
+          f.write("Misi 1: Gunung Natagumo\n")
+          f.write("Misi 2: Kereta Mugen\n")
+      with open("/tmp/catatan.txt") as f:
+          for baris in f:
+              print(baris.strip())
+  - text: f.read() membaca semuanya sebagai satu string, sedangkan f.readlines() membaca list baris. Untuk membaca SELURUH input sekaligus, pakai sys.stdin.read(). Modul csv membantu membaca data berformat koma.
+    code: |
+      import csv, io
+      data = io.StringIO("nama,nilai\nTanjiro,90\nZenitsu,75\n")
+      for baris in csv.DictReader(data):
+          print(baris["nama"], int(baris["nilai"]) + 5)
+exercises:
+  - id: py-m4-tulis-baca
+    type: write
+    title: Buku Catatan Misi
+    difficulty: 2
+    prompt: Baris pertama berisi n, lalu n baris catatan. Tulis semuanya ke /tmp/misi.txt (satu catatan per baris), lalu baca ulang file itu dan cetak setiap baris diawali nomornya, "1. ...".
+    tests: ["2\nNatagumo\nKereta Mugen", "1\nDistrik Hiburan", "3\na\nb\nc"]
+    hints: |
+      Tulis dengan mode "w" dan tambahkan "\n" di setiap baris.
+      Baca ulang dengan open(...) tanpa mode.
+      enumerate(f, 1) memberi nomor mulai dari 1.
+    solution: |
+      n = int(input())
+      with open("/tmp/misi.txt", "w") as f:
+          for _ in range(n):
+              f.write(input() + "\n")
+      with open("/tmp/misi.txt") as f:
+          for i, baris in enumerate(f, 1):
+              print(f"{i}. {baris.strip()}")
+  - id: py-m4-statistik
+    type: write
+    title: Statistik Gulungan
+    difficulty: 2
+    prompt: Baca SELURUH input (beberapa baris) dengan sys.stdin.read(), simpan ke /tmp/gulungan.txt, lalu baca ulang file itu dan cetak "<jumlah baris> <jumlah kata>".
+    tests: ["air api\npetir", "satu", "a b c\n\nd e"]
+    hints: |
+      import sys lalu teks = sys.stdin.read().
+      splitlines() memecah per baris, split() memecah per kata.
+      print(len(isi.splitlines()), len(isi.split()))
+    solution: |
+      import sys
+      with open("/tmp/gulungan.txt", "w") as f:
+          f.write(sys.stdin.read())
+      with open("/tmp/gulungan.txt") as f:
+          isi = f.read()
+      print(len(isi.splitlines()), len(isi.split()))
+  - id: py-m4-predict
+    type: predict
+    title: Tulis, Tambah, Baca
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      with open("/tmp/a.txt", "w") as f:
+          f.write("satu\n")
+          f.write("dua\n")
+      with open("/tmp/a.txt", "a") as f:
+          f.write("tiga\n")
+      with open("/tmp/a.txt", "w") as f:
+          f.write("empat\n")
+      with open("/tmp/a.txt") as f:
+          print(len(f.readlines()))
+    hints: |
+      Mode "w" menghapus isi lama.
+      Perhatikan pembukaan file yang terakhir sebelum dibaca.
+      Hanya baris setelah "w" terakhir yang tersisa.
+    solution: x
+  - id: py-m4-bug-newline
+    type: bughunt
+    title: Log yang Menempel
+    difficulty: 1
+    prompt: Program menulis 3 baris log lalu menghitung barisnya. Seharusnya 3, tapi hasilnya 1. Temukan bug-nya.
+    starter: |
+      with open("/tmp/log.txt", "w") as f:
+          for i in range(3):
+              f.write("baris " + str(i))
+      with open("/tmp/log.txt") as f:
+          print(len(f.readlines()))
+    bug_line: 3
+    hints: |
+      write() tidak menambahkan baris baru otomatis.
+      Ketiga teks tertulis menempel dalam satu baris.
+      f.write("baris " + str(i) + "\n")
+    solution: |
+      with open("/tmp/log.txt", "w") as f:
+          for i in range(3):
+              f.write("baris " + str(i) + "\n")
+      with open("/tmp/log.txt") as f:
+          print(len(f.readlines()))
+  - id: py-m4-csv
+    type: write
+    title: Rekap Nilai CSV
+    difficulty: 3
+    prompt: Input berupa data CSV dengan header "nama,nilai". Cetak rata-rata nilai dengan 2 desimal, lalu nama dengan nilai tertinggi (yang pertama jika seri).
+    tests: ["nama,nilai\nTanjiro,90\nZenitsu,75\nInosuke,80", "nama,nilai\nKanao,100", "nama,nilai\nA,70\nB,70"]
+    hints: |
+      csv.DictReader(sys.stdin) membaca baris sebagai dict.
+      Ubah nilai ke int.
+      max(data, key=...) mencari yang tertinggi, dan yang pertama menang jika seri.
+    solution: |
+      import csv, sys
+      data = [(r["nama"], int(r["nilai"])) for r in csv.DictReader(sys.stdin)]
+      print(f"{sum(v for _, v in data) / len(data):.2f}")
+      print(max(data, key=lambda x: x[1])[0])
+  - id: py-m4-parsons
+    type: parsons
+    title: Arsip Huruf Besar
+    difficulty: 2
+    prompt: Susun program yang menyimpan seluruh input ke /tmp/x.txt, lalu membacanya kembali dan mencetaknya dalam huruf besar.
+    tests: ["halo\nslayer", "kaa"]
+    hints: |
+      import diletakkan paling atas.
+      Tulis file dulu, baru baca.
+      upper() mengubah ke huruf besar.
+    solution: |
+      import sys
+      data = sys.stdin.read().splitlines()
+      with open("/tmp/x.txt", "w") as f:
+          f.write("\n".join(data))
+      with open("/tmp/x.txt") as f:
+          print(f.read().upper())

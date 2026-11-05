@@ -1,0 +1,1793 @@
+{
+ "hash": "997dca15f462",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "SELECT kolom FROM tabel mengambil kolom tertentu; * berarti semua kolom. Kolom bisa dihitung dan diberi nama baru dengan AS.",
+     "code": "SELECT nama, umur, umur + 1 AS umur_depan FROM slayer ORDER BY id;\n"
+    },
+    {
+     "text": "DISTINCT membuang baris hasil yang kembar, berguna untuk melihat nilai-nilai berbeda dalam satu kolom.",
+     "code": "SELECT DISTINCT pernapasan FROM slayer ORDER BY pernapasan;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-semua-nama",
+     "type": "write",
+     "title": "Daftar Anggota Korps",
+     "difficulty": 1,
+     "prompt": "Tampilkan kolom nama dari tabel slayer, urut berdasarkan id.",
+     "lang": "sql",
+     "starter": "SELECT\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Tanjiro\nZenitsu\nInosuke\nGiyu\nRengoku\nShinobu\nKanao\nMurata\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro\nZenitsu\nInosuke\nGiyu\nRengoku\nShinobu\nKanao\nMurata\nSabito\nMitsuri\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Bentuk dasarnya SELECT kolom FROM tabel.",
+      "Pengurutan memakai ORDER BY.",
+      "SELECT nama FROM slayer ORDER BY id;"
+     ],
+     "solutions": [
+      "SELECT nama FROM slayer ORDER BY id;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f1"
+    },
+    {
+     "id": "sql-f1-alias",
+     "type": "write",
+     "title": "Ulang Tahun Berikutnya",
+     "difficulty": 1,
+     "prompt": "Tampilkan nama dan umur tahun depan dengan nama kolom umur_depan, urut berdasarkan id.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|16\nZenitsu|17\nInosuke|16\nGiyu|22\nRengoku|21\nShinobu|19\nKanao|17\nMurata|20\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro|16\nZenitsu|17\nInosuke|16\nGiyu|22\nRengoku|21\nShinobu|19\nKanao|17\nMurata|20\nSabito|14\nMitsuri|20\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Kolom bisa berupa ekspresi: umur + 1.",
+      "Beri nama dengan AS umur_depan.",
+      "Jangan lupa ORDER BY id."
+     ],
+     "solutions": [
+      "SELECT nama, umur + 1 AS umur_depan FROM slayer ORDER BY id;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f1"
+    },
+    {
+     "id": "sql-f1-distinct",
+     "type": "predict",
+     "title": "Aliran yang Berbeda",
+     "difficulty": 1,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "SELECT DISTINCT pernapasan FROM slayer ORDER BY pernapasan;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air\nApi\nBinatang\nBunga\nPetir\nSerangga\n"
+      }
+     ],
+     "hints": [
+      "DISTINCT menghapus nilai yang sama.",
+      "Air muncul tiga kali tapi ditampilkan sekali.",
+      "Urutan abjad: huruf A (Air, Api) duluan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "WHERE menyaring baris. Teks diapit kutip tunggal. Gabungkan syarat dengan AND / OR; BETWEEN a AND b mencakup kedua ujung; IN (..) mencocokkan daftar nilai.",
+     "code": "SELECT nama FROM slayer WHERE pernapasan IN ('Air', 'Api') AND umur BETWEEN 16 AND 21;\n"
+    },
+    {
+     "text": "NULL artinya \"tidak ada nilai\". Membandingkan dengan = NULL selalu gagal; gunakan IS NULL atau IS NOT NULL. LIKE mencocokkan pola: % = teks apa saja, _ = satu karakter.",
+     "code": "SELECT nama FROM iblis WHERE peringkat IS NULL OR nama LIKE 'R%';\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-air",
+     "type": "write",
+     "title": "Pengguna Pernapasan Air",
+     "difficulty": 1,
+     "prompt": "Tampilkan nama dan umur slayer dengan pernapasan 'Air', urut dari yang termuda (kalau sama, urut nama).",
+     "lang": "sql",
+     "starter": "SELECT nama, umur FROM slayer\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|15\nMurata|19\nGiyu|21\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Sabito|13\nTanjiro|15\nMurata|19\nGiyu|21\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Saring baris dengan WHERE.",
+      "Teks di SQL diapit tanda kutip tunggal, misalnya 'Air'.",
+      "Tambahkan ORDER BY umur, nama."
+     ],
+     "solutions": [
+      "SELECT nama, umur FROM slayer WHERE pernapasan = 'Air' ORDER BY umur, nama;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f2"
+    },
+    {
+     "id": "sql-f2-rentang",
+     "type": "write",
+     "title": "Kadet Usia Tanggung",
+     "difficulty": 1,
+     "prompt": "Tampilkan nama slayer berumur 16 sampai 19 tahun (termasuk keduanya), urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Kanao\nMurata\nShinobu\nZenitsu\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Kanao\nMitsuri\nMurata\nShinobu\nZenitsu\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "BETWEEN a AND b mencakup a dan b.",
+      "Atau umur >= 16 AND umur <= 19.",
+      "Urutkan dengan ORDER BY nama."
+     ],
+     "solutions": [
+      "SELECT nama FROM slayer WHERE umur BETWEEN 16 AND 19 ORDER BY nama;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f2"
+    },
+    {
+     "id": "sql-f2-null",
+     "type": "write",
+     "title": "Iblis Tanpa Gelar",
+     "difficulty": 2,
+     "prompt": "Tampilkan nama iblis yang kolom peringkat-nya kosong (NULL), urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Iblis Rawa\n"
+      },
+      {
+       "input": "INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL);",
+       "expected": "Iblis Rawa\nIblis Tangan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "NULL tidak bisa dibandingkan dengan =.",
+      "Gunakan IS NULL.",
+      "Urutkan dengan ORDER BY nama."
+     ],
+     "solutions": [
+      "SELECT nama FROM iblis WHERE peringkat IS NULL ORDER BY nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f2"
+    },
+    {
+     "id": "sql-f2-bug",
+     "type": "bughunt",
+     "title": "Kutip yang Hilang",
+     "difficulty": 1,
+     "prompt": "Query harus menampilkan nama slayer pernapasan Petir, tapi error \"no such column\". Temukan baris yang salah.",
+     "lang": "sql",
+     "starter": "SELECT nama\nFROM slayer\nWHERE pernapasan = Petir\nORDER BY nama;\n",
+     "bug_line": 3,
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Zenitsu\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Zenitsu\n"
+      }
+     ],
+     "hints": [
+      "Pesan \"no such column: Petir\" berarti Petir dianggap nama kolom.",
+      "Teks harus diapit kutip tunggal.",
+      "pernapasan = 'Petir'"
+     ],
+     "solutions": [
+      "SELECT nama\nFROM slayer\nWHERE pernapasan = 'Petir'\nORDER BY nama;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "ORDER BY mengurutkan hasil; ASC menaik (bawaan), DESC menurun. Beberapa kolom: urut kolom pertama dulu, lalu kolom kedua untuk nilai yang sama.",
+     "code": "SELECT nama, pernapasan, umur FROM slayer ORDER BY pernapasan, umur DESC;\n"
+    },
+    {
+     "text": "LIMIT n membatasi jumlah baris; OFFSET k melewati k baris pertama. Selalu pasangkan dengan ORDER BY supaya hasilnya pasti.",
+     "code": "SELECT nama, umur FROM slayer ORDER BY umur DESC, nama LIMIT 2 OFFSET 1;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-f3-termuda",
+     "type": "write",
+     "title": "Tiga Termuda",
+     "difficulty": 1,
+     "prompt": "Tampilkan nama dan umur 3 slayer termuda. Kalau umurnya sama, urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Inosuke|15\nTanjiro|15\nKanao|16\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Sabito|13\nInosuke|15\nTanjiro|15\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Urutkan dari umur terkecil.",
+      "Tambahkan nama sebagai kunci kedua.",
+      "LIMIT 3."
+     ],
+     "solutions": [
+      "SELECT nama, umur FROM slayer ORDER BY umur, nama LIMIT 3;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f3"
+    },
+    {
+     "id": "sql-f3-ganda",
+     "type": "write",
+     "title": "Barisan per Aliran",
+     "difficulty": 2,
+     "prompt": "Tampilkan pernapasan, nama, dan umur semua slayer: urut pernapasan (A-Z), lalu umur dari yang TERTUA, lalu nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air|Giyu|21\nAir|Murata|19\nAir|Tanjiro|15\nApi|Rengoku|20\nBinatang|Inosuke|15\nBunga|Kanao|16\nPetir|Zenitsu|16\nSerangga|Shinobu|18\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Air|Giyu|21\nAir|Murata|19\nAir|Tanjiro|15\nAir|Sabito|13\nApi|Rengoku|20\nBinatang|Inosuke|15\nBunga|Kanao|16\nCinta|Mitsuri|19\nPetir|Zenitsu|16\nSerangga|Shinobu|18\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "ORDER BY boleh berisi beberapa kolom.",
+      "DESC hanya berlaku untuk kolom yang ditulisinya.",
+      "ORDER BY pernapasan, umur DESC, nama"
+     ],
+     "solutions": [
+      "SELECT pernapasan, nama, umur FROM slayer ORDER BY pernapasan, umur DESC, nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f3"
+    },
+    {
+     "id": "sql-f3-offset",
+     "type": "predict",
+     "title": "Melewati Barisan",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "SELECT nama FROM slayer ORDER BY umur DESC, nama LIMIT 2 OFFSET 2;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Murata\nShinobu\n"
+      }
+     ],
+     "hints": [
+      "Urutkan dulu dari umur tertua.",
+      "OFFSET 2 melewati dua baris pertama.",
+      "LIMIT 2 mengambil dua baris berikutnya."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Fungsi agregat merangkum banyak baris menjadi satu nilai: COUNT, SUM, AVG, MIN, MAX. COUNT(*) menghitung baris; COUNT(kolom) hanya menghitung yang tidak NULL.",
+     "code": "SELECT COUNT(*), COUNT(peringkat), MIN(nama) FROM iblis;\n"
+    },
+    {
+     "text": "ROUND(x, n) membulatkan ke n desimal, berguna untuk AVG yang hasilnya pecahan.",
+     "code": "SELECT ROUND(AVG(umur), 2), SUM(umur) FROM slayer;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-predict-count",
+     "type": "predict",
+     "title": "Menghitung Kadet Muda",
+     "difficulty": 1,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "SELECT COUNT(*) FROM slayer WHERE umur < 18;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "4\n"
+      }
+     ],
+     "hints": [
+      "COUNT(*) menghitung banyak baris yang lolos WHERE.",
+      "Periksa umur tiap slayer satu per satu.",
+      "18 tidak memenuhi umur < 18."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f4"
+    },
+    {
+     "id": "sql-f4-koban",
+     "type": "write",
+     "title": "Total Upah Korps",
+     "difficulty": 1,
+     "prompt": "Tampilkan total koban dari misi yang berhasil (berhasil = 1).",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "1210\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "1600\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Saring dulu misi yang berhasil.",
+      "SUM menjumlah satu kolom.",
+      "SELECT SUM(koban) FROM misi WHERE ..."
+     ],
+     "solutions": [
+      "SELECT SUM(koban) FROM misi WHERE berhasil = 1;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f4"
+    },
+    {
+     "id": "sql-f4-rata",
+     "type": "write",
+     "title": "Rata-rata Umur",
+     "difficulty": 1,
+     "prompt": "Tampilkan rata-rata umur slayer, dibulatkan 1 desimal.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "17.5\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "17.2\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "AVG menghitung rata-rata.",
+      "ROUND(nilai, 1) membulatkan.",
+      "Bungkus AVG di dalam ROUND."
+     ],
+     "solutions": [
+      "SELECT ROUND(AVG(umur), 1) FROM slayer;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f4"
+    },
+    {
+     "id": "sql-f4-bug",
+     "type": "bughunt",
+     "title": "Iblis yang Tak Terhitung",
+     "difficulty": 2,
+     "prompt": "Query harus menghitung SEMUA iblis, tapi hasilnya kurang. Temukan baris yang salah.",
+     "lang": "sql",
+     "starter": "SELECT\n  COUNT(peringkat) AS jumlah\nFROM iblis;\n",
+     "bug_line": 2,
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "6\n"
+      },
+      {
+       "input": "INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL);",
+       "expected": "8\n"
+      }
+     ],
+     "hints": [
+      "Ada iblis yang peringkatnya NULL.",
+      "COUNT(kolom) melewati nilai NULL.",
+      "Gunakan COUNT(*)."
+     ],
+     "solutions": [
+      "SELECT\n  COUNT(*) AS jumlah\nFROM iblis;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "GROUP BY mengelompokkan baris yang nilainya sama, lalu agregat dihitung per kelompok. Kolom yang ditampilkan harus kolom pengelompokan atau hasil agregat.",
+     "code": "SELECT pernapasan, COUNT(*) AS jumlah FROM slayer GROUP BY pernapasan ORDER BY jumlah DESC, pernapasan;\n"
+    },
+    {
+     "text": "HAVING menyaring KELOMPOK (setelah agregat), sedangkan WHERE menyaring BARIS (sebelum dikelompokkan).",
+     "code": "SELECT slayer_id, SUM(koban) FROM misi WHERE berhasil = 1 GROUP BY slayer_id HAVING SUM(koban) > 150;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-f5-aliran",
+     "type": "write",
+     "title": "Sensus Pernapasan",
+     "difficulty": 1,
+     "prompt": "Tampilkan setiap pernapasan dan banyak slayer-nya (kolom jumlah), urut jumlah terbanyak lalu nama pernapasan.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air|3\nApi|1\nBinatang|1\nBunga|1\nPetir|1\nSerangga|1\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Air|4\nApi|1\nBinatang|1\nBunga|1\nCinta|1\nPetir|1\nSerangga|1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Kelompokkan dengan GROUP BY pernapasan.",
+      "COUNT(*) per kelompok.",
+      "ORDER BY jumlah DESC, pernapasan"
+     ],
+     "solutions": [
+      "SELECT pernapasan, COUNT(*) AS jumlah FROM slayer GROUP BY pernapasan ORDER BY jumlah DESC, pernapasan;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f5"
+    },
+    {
+     "id": "sql-f5-having",
+     "type": "write",
+     "title": "Aliran Ramai",
+     "difficulty": 2,
+     "prompt": "Tampilkan pernapasan yang dipakai lebih dari satu slayer, urut nama pernapasan.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Air\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Syarat pada hasil agregat memakai HAVING.",
+      "HAVING ditulis setelah GROUP BY.",
+      "HAVING COUNT(*) > 1"
+     ],
+     "solutions": [
+      "SELECT pernapasan FROM slayer GROUP BY pernapasan HAVING COUNT(*) > 1 ORDER BY pernapasan;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f5"
+    },
+    {
+     "id": "sql-f5-upah",
+     "type": "write",
+     "title": "Upah per Slayer",
+     "difficulty": 2,
+     "prompt": "Tampilkan slayer_id dan total koban (kolom total) dari misi yang berhasil, urut total terbesar lalu slayer_id.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "1|370\n5|250\n2|200\n7|180\n4|150\n6|60\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "1|370\n3|300\n5|250\n2|200\n7|180\n4|150\n8|90\n6|60\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Saring misi berhasil dengan WHERE.",
+      "Kelompokkan per slayer_id.",
+      "Urutkan dengan ORDER BY total DESC, slayer_id."
+     ],
+     "solutions": [
+      "SELECT slayer_id, SUM(koban) AS total FROM misi WHERE berhasil = 1 GROUP BY slayer_id ORDER BY total DESC, slayer_id;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f5"
+    },
+    {
+     "id": "sql-f5-bug",
+     "type": "bughunt",
+     "title": "WHERE atau HAVING?",
+     "difficulty": 2,
+     "prompt": "Query harus menampilkan pernapasan yang dipakai lebih dari satu slayer (urut nama), tapi error. Temukan baris yang salah.",
+     "lang": "sql",
+     "starter": "SELECT pernapasan\nFROM slayer\nGROUP BY pernapasan\nWHERE COUNT(*) > 1\nORDER BY pernapasan;\n",
+     "bug_line": 4,
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Air\n"
+      }
+     ],
+     "hints": [
+      "WHERE menyaring baris SEBELUM dikelompokkan, jadi tidak boleh berisi agregat.",
+      "Syarat untuk kelompok memakai HAVING, setelah GROUP BY.",
+      "Ganti WHERE dengan HAVING."
+     ],
+     "solutions": [
+      "SELECT pernapasan\nFROM slayer\nGROUP BY pernapasan\nHAVING COUNT(*) > 1\nORDER BY pernapasan;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "JOIN menggabungkan baris dari dua tabel lewat kolom yang berhubungan. Alias tabel (slayer s) membuat query lebih ringkas: s.nama, p.nama.",
+     "code": "SELECT s.nama, p.nama AS pangkat FROM slayer s JOIN pangkat p ON p.id = s.pangkat_id ORDER BY s.id;\n"
+    },
+    {
+     "text": "LEFT JOIN tetap menampilkan semua baris tabel kiri; kolom tabel kanan bernilai NULL kalau tidak ada pasangannya. Cocok untuk mencari yang \"belum punya\".",
+     "code": "SELECT s.nama, COUNT(m.id) FROM slayer s LEFT JOIN misi m ON m.slayer_id = s.id GROUP BY s.id ORDER BY s.id;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-f6-pangkat",
+     "type": "write",
+     "title": "Nama dan Pangkat",
+     "difficulty": 1,
+     "prompt": "Tampilkan nama slayer dan nama pangkatnya (kolom pangkat), urut id slayer.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|Kanoe\nZenitsu|Kanoe\nInosuke|Kanoe\nGiyu|Hashira\nRengoku|Hashira\nShinobu|Hashira\nKanao|Kinoe\nMurata|Mizunoto\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro|Kanoe\nZenitsu|Kanoe\nInosuke|Kanoe\nGiyu|Hashira\nRengoku|Hashira\nShinobu|Hashira\nKanao|Kinoe\nMurata|Mizunoto\nSabito|Mizunoto\nMitsuri|Hashira\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hubungkan slayer.pangkat_id dengan pangkat.id.",
+      "Pakai alias supaya jelas kolom nama mana yang dimaksud.",
+      "JOIN pangkat p ON p.id = s.pangkat_id"
+     ],
+     "solutions": [
+      "SELECT s.nama, p.nama AS pangkat FROM slayer s JOIN pangkat p ON p.id = s.pangkat_id ORDER BY s.id;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f6"
+    },
+    {
+     "id": "sql-f6-laporan",
+     "type": "write",
+     "title": "Laporan Misi",
+     "difficulty": 2,
+     "prompt": "Tampilkan tanggal, nama slayer, dan nama iblis untuk setiap misi yang berhasil, urut tanggal lalu nama slayer.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "2026-01-10|Tanjiro|Iblis Rawa\n2026-01-10|Zenitsu|Iblis Rawa\n2026-02-03|Giyu|Rui\n2026-02-03|Tanjiro|Rui\n2026-03-15|Rengoku|Enmu\n2026-03-15|Tanjiro|Enmu\n2026-04-20|Kanao|Daki\n2026-04-20|Zenitsu|Daki\n2026-05-02|Shinobu|Iblis Rawa\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "2026-01-10|Tanjiro|Iblis Rawa\n2026-01-10|Zenitsu|Iblis Rawa\n2026-02-03|Giyu|Rui\n2026-02-03|Tanjiro|Rui\n2026-03-15|Rengoku|Enmu\n2026-03-15|Tanjiro|Enmu\n2026-04-20|Kanao|Daki\n2026-04-20|Zenitsu|Daki\n2026-05-02|Shinobu|Iblis Rawa\n2026-06-01|Murata|Gyokko\n2026-06-02|Inosuke|Akaza\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Butuh tiga tabel: misi, slayer, iblis.",
+      "Dua JOIN berurutan.",
+      "Saring berhasil = 1 lalu ORDER BY m.tanggal, s.nama."
+     ],
+     "solutions": [
+      "SELECT m.tanggal, s.nama, i.nama FROM misi m JOIN slayer s ON s.id = m.slayer_id JOIN iblis i ON i.id = m.iblis_id WHERE m.berhasil = 1 ORDER BY m.tanggal, s.nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f6"
+    },
+    {
+     "id": "sql-f6-kosong",
+     "type": "write",
+     "title": "Belum Pernah Bertugas",
+     "difficulty": 2,
+     "prompt": "Tampilkan nama slayer yang belum pernah punya misi sama sekali, urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Murata\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Mitsuri\nMurata\nSabito\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "LEFT JOIN mempertahankan semua slayer.",
+      "Slayer tanpa misi punya m.id NULL.",
+      "WHERE m.id IS NULL"
+     ],
+     "solutions": [
+      "SELECT s.nama FROM slayer s LEFT JOIN misi m ON m.slayer_id = s.id WHERE m.id IS NULL ORDER BY s.nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f6"
+    },
+    {
+     "id": "sql-f6-parsons",
+     "type": "parsons",
+     "title": "Susun Query Hashira",
+     "difficulty": 1,
+     "prompt": "Susun query yang menampilkan nama slayer berpangkat dengan urutan ≥ 10, urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Giyu\nKanao\nRengoku\nShinobu\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Giyu\nKanao\nMitsuri\nRengoku\nShinobu\n"
+      }
+     ],
+     "hints": [
+      "Urutan klausa: SELECT, FROM, JOIN, WHERE, ORDER BY.",
+      "JOIN langsung setelah FROM.",
+      "ORDER BY selalu terakhir."
+     ],
+     "solutions": [
+      "SELECT s.nama\nFROM slayer s\nJOIN pangkat p ON p.id = s.pangkat_id\nWHERE p.urutan >= 10\nORDER BY s.nama;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Subquery adalah query di dalam query. Di WHERE, subquery bisa menghasilkan satu nilai (dibandingkan dengan > atau =) atau daftar nilai (dipakai dengan IN / NOT IN).",
+     "code": "SELECT nama, umur FROM slayer WHERE umur > (SELECT AVG(umur) FROM slayer) ORDER BY nama;\n"
+    },
+    {
+     "text": "EXISTS (subquery) bernilai benar kalau subquery menghasilkan minimal satu baris. Subquery boleh merujuk tabel di luar (correlated subquery).",
+     "code": "SELECT nama FROM iblis i WHERE EXISTS (SELECT 1 FROM misi m WHERE m.iblis_id = i.id AND m.berhasil = 0);\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-f7-diatas",
+     "type": "write",
+     "title": "Lebih Tua dari Rata-rata",
+     "difficulty": 2,
+     "prompt": "Tampilkan nama slayer yang umurnya di atas rata-rata umur semua slayer, urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Giyu\nMurata\nRengoku\nShinobu\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Giyu\nMitsuri\nMurata\nRengoku\nShinobu\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Hitung rata-rata dengan subquery.",
+      "Bandingkan umur > (SELECT AVG(umur) FROM slayer).",
+      "Urutkan nama."
+     ],
+     "solutions": [
+      "SELECT nama FROM slayer WHERE umur > (SELECT AVG(umur) FROM slayer) ORDER BY nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f7"
+    },
+    {
+     "id": "sql-f7-bebas",
+     "type": "write",
+     "title": "Iblis yang Belum Diburu",
+     "difficulty": 2,
+     "prompt": "Tampilkan nama iblis yang tidak pernah muncul di tabel misi, urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Gyokko\n"
+      },
+      {
+       "input": "INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL);",
+       "expected": "Gyokko\nIblis Tangan\nKokushibo\n",
+       "hidden": true
+      },
+      {
+       "input": "INSERT INTO iblis VALUES (7, 'Kokushibo', 'Upper Moon 1'), (8, 'Iblis Tangan', NULL); INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "Iblis Tangan\nKokushibo\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Ambil semua iblis_id dari misi.",
+      "Gunakan NOT IN.",
+      "Urutkan nama."
+     ],
+     "solutions": [
+      "SELECT nama FROM iblis WHERE id NOT IN (SELECT iblis_id FROM misi) ORDER BY nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f7"
+    },
+    {
+     "id": "sql-f7-terbesar",
+     "type": "write",
+     "title": "Upah Tertinggi",
+     "difficulty": 2,
+     "prompt": "Tampilkan nama slayer dan koban dari misi dengan koban terbesar (kalau ada yang sama, tampilkan semuanya, urut nama).",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Rengoku|250\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "Inosuke|300\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Cari dulu MAX(koban) dengan subquery.",
+      "Lalu ambil misi yang koban-nya sama dengan nilai itu.",
+      "JOIN ke slayer untuk namanya."
+     ],
+     "solutions": [
+      "SELECT s.nama, m.koban FROM misi m JOIN slayer s ON s.id = m.slayer_id WHERE m.koban = (SELECT MAX(koban) FROM misi) ORDER BY s.nama;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f7"
+    },
+    {
+     "id": "sql-f7-exists",
+     "type": "predict",
+     "title": "Pernah Gagal",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "SELECT nama FROM slayer s WHERE EXISTS (SELECT 1 FROM misi m WHERE m.slayer_id = s.id AND m.berhasil = 0) ORDER BY nama;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Inosuke\nRengoku\n"
+      }
+     ],
+     "hints": [
+      "Cari misi dengan berhasil = 0.",
+      "Lihat slayer_id dari misi-misi itu.",
+      "EXISTS benar kalau ada minimal satu misi gagal."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "l1": {
+   "lesson": [
+    {
+     "text": "Window function menghitung nilai dari \"jendela\" baris tanpa menggabungkannya seperti GROUP BY: ROW_NUMBER(), RANK(), SUM() OVER (...). PARTITION BY membagi jendela per kelompok, ORDER BY di dalam OVER menentukan urutannya.",
+     "code": "SELECT nama, pernapasan, umur, ROW_NUMBER() OVER (PARTITION BY pernapasan ORDER BY umur DESC, nama) AS ke FROM slayer ORDER BY pernapasan, ke;\n"
+    },
+    {
+     "text": "SUM(..) OVER (ORDER BY ..) menghasilkan total berjalan (running total). LAG(kolom) mengambil nilai dari baris sebelumnya.",
+     "code": "SELECT tanggal, koban, SUM(koban) OVER (ORDER BY id) AS kumulatif, LAG(koban) OVER (ORDER BY id) AS sebelumnya FROM misi WHERE berhasil = 1 ORDER BY id;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-l1-rownum",
+     "type": "write",
+     "title": "Tertua per Aliran",
+     "difficulty": 3,
+     "prompt": "Tampilkan pernapasan, nama, dan umur slayer TERTUA di setiap pernapasan (kalau sama umur, ambil nama terkecil secara abjad), urut pernapasan.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air|Giyu|21\nApi|Rengoku|20\nBinatang|Inosuke|15\nBunga|Kanao|16\nPetir|Zenitsu|16\nSerangga|Shinobu|18\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Air|Giyu|21\nApi|Rengoku|20\nBinatang|Inosuke|15\nBunga|Kanao|16\nCinta|Mitsuri|19\nPetir|Zenitsu|16\nSerangga|Shinobu|18\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "ROW_NUMBER() OVER (PARTITION BY pernapasan ORDER BY umur DESC, nama).",
+      "Bungkus dalam subquery, lalu ambil rn = 1.",
+      "Urutkan hasil akhir per pernapasan."
+     ],
+     "solutions": [
+      "SELECT pernapasan, nama, umur FROM (SELECT pernapasan, nama, umur, ROW_NUMBER() OVER (PARTITION BY pernapasan ORDER BY umur DESC, nama) AS rn FROM slayer) WHERE rn = 1 ORDER BY pernapasan;\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "l1"
+    },
+    {
+     "id": "sql-l1-kumulatif",
+     "type": "write",
+     "title": "Upah Kumulatif",
+     "difficulty": 3,
+     "prompt": "Untuk misi yang berhasil, tampilkan id, koban, dan total koban kumulatif (kolom kumulatif) berdasarkan urutan id.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "1|50|50\n2|120|170\n3|40|210\n5|200|410\n6|250|660\n8|150|810\n9|180|990\n10|160|1150\n11|60|1210\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "1|50|50\n2|120|170\n3|40|210\n5|200|410\n6|250|660\n8|150|810\n9|180|990\n10|160|1150\n11|60|1210\n12|90|1300\n13|300|1600\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Total berjalan = SUM(...) OVER (ORDER BY ...).",
+      "Saring berhasil = 1 di WHERE.",
+      "ORDER BY id di dalam OVER dan di akhir query."
+     ],
+     "solutions": [
+      "SELECT id, koban, SUM(koban) OVER (ORDER BY id) AS kumulatif FROM misi WHERE berhasil = 1 ORDER BY id;\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "l1"
+    },
+    {
+     "id": "sql-l1-rank",
+     "type": "write",
+     "title": "Peringkat Pemburu",
+     "difficulty": 3,
+     "prompt": "Hitung total koban per slayer (misi berhasil), lalu tampilkan nama, total, dan peringkat (kolom peringkat, RANK dari total terbesar). Urut peringkat lalu nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|370|1\nRengoku|250|2\nZenitsu|200|3\nKanao|180|4\nGiyu|150|5\nShinobu|60|6\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "Tanjiro|370|1\nInosuke|300|2\nRengoku|250|3\nZenitsu|200|4\nKanao|180|5\nGiyu|150|6\nMurata|90|7\nShinobu|60|8\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Kelompokkan per slayer dulu (GROUP BY).",
+      "RANK() OVER (ORDER BY SUM(koban) DESC).",
+      "Window function dihitung setelah GROUP BY."
+     ],
+     "solutions": [
+      "SELECT s.nama, SUM(m.koban) AS total, RANK() OVER (ORDER BY SUM(m.koban) DESC) AS peringkat FROM misi m JOIN slayer s ON s.id = m.slayer_id WHERE m.berhasil = 1 GROUP BY s.id ORDER BY peringkat, s.nama;\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "l1"
+    }
+   ]
+  },
+  "l2": {
+   "lesson": [
+    {
+     "text": "WITH (Common Table Expression) memberi nama pada subquery supaya query panjang lebih mudah dibaca. CTE bisa dipakai beberapa kali dalam query utama.",
+     "code": "WITH upah AS (SELECT slayer_id, SUM(koban) AS total FROM misi GROUP BY slayer_id)\nSELECT s.nama, u.total FROM upah u JOIN slayer s ON s.id = u.slayer_id ORDER BY u.total DESC;\n"
+    },
+    {
+     "text": "WITH RECURSIVE membuat CTE yang merujuk dirinya sendiri: bagian awal (anchor) UNION ALL bagian rekursif, sampai tidak ada baris baru. Cocok untuk deret dan hierarki (guru-murid).",
+     "code": "WITH RECURSIVE n(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM n WHERE x < 5)\nSELECT group_concat(x) FROM n;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-l2-cte",
+     "type": "write",
+     "title": "Aliran Paling Berharga",
+     "difficulty": 3,
+     "prompt": "Dengan CTE, hitung total koban misi berhasil per pernapasan, lalu tampilkan pernapasan dan total untuk total di atas 200, urut total terbesar.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Air|520\nApi|250\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "Air|610\nBinatang|300\nApi|250\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "WITH nama AS (SELECT ...) lalu SELECT dari nama itu.",
+      "Di dalam CTE: JOIN misi-slayer, GROUP BY pernapasan.",
+      "Saring total > 200 di query utama."
+     ],
+     "solutions": [
+      "WITH per_aliran AS (SELECT s.pernapasan, SUM(m.koban) AS total FROM misi m JOIN slayer s ON s.id = m.slayer_id WHERE m.berhasil = 1 GROUP BY s.pernapasan)\nSELECT pernapasan, total FROM per_aliran WHERE total > 200 ORDER BY total DESC;\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "l2"
+    },
+    {
+     "id": "sql-l2-deret",
+     "type": "predict",
+     "title": "Deret Pangkat Dua",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "WITH RECURSIVE p(n) AS (SELECT 1 UNION ALL SELECT n * 2 FROM p WHERE n < 100)\nSELECT group_concat(n, ' ') FROM p;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "1 2 4 8 16 32 64 128\n"
+      }
+     ],
+     "hints": [
+      "Mulai dari 1.",
+      "Setiap langkah dikali 2 selama n < 100.",
+      "64 < 100 masih lanjut ke 128, lalu berhenti."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "l2"
+    },
+    {
+     "id": "sql-l2-murid",
+     "type": "write",
+     "title": "Silsilah Urokodaki",
+     "difficulty": 3,
+     "prompt": "Dengan WITH RECURSIVE, tampilkan semua murid (langsung maupun tidak langsung) dari 'Urokodaki' di tabel guru, urut nama.",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "Giyu\nMurata\nSabito\nTanjiro\n"
+      },
+      {
+       "input": "INSERT INTO guru VALUES ('Genya', 'Murata');",
+       "expected": "Genya\nGiyu\nMurata\nSabito\nTanjiro\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Anchor: murid langsung Urokodaki.",
+      "Bagian rekursif: siapa yang gurunya ada di hasil sebelumnya.",
+      "JOIN guru g ON g.guru = m.nama"
+     ],
+     "solutions": [
+      "WITH RECURSIVE murid(nama) AS (\n  SELECT murid FROM guru WHERE guru = 'Urokodaki'\n  UNION ALL\n  SELECT g.murid FROM guru g JOIN murid m ON g.guru = m.nama\n)\nSELECT nama FROM murid ORDER BY nama;\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "l2"
+    }
+   ]
+  },
+  "l3": {
+   "lesson": [
+    {
+     "text": "Query plan memperlihatkan strategi SQLite. SCAN berarti membaca semua baris; SEARCH ... USING INDEX berarti melompat langsung lewat index. Untuk tabel besar, perbedaannya bisa ribuan kali lipat.",
+     "code": "CREATE INDEX idx_slayer_umur ON slayer(umur);\nEXPLAIN QUERY PLAN SELECT nama FROM slayer WHERE umur = 15;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-l3-search",
+     "type": "predict",
+     "title": "Lompat Lewat Index",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "CREATE INDEX idx_misi_slayer ON misi(slayer_id);\nEXPLAIN QUERY PLAN SELECT koban FROM misi WHERE slayer_id = 1;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "QUERY PLAN\n`--SEARCH misi USING INDEX idx_misi_slayer (slayer_id=?)\n"
+      }
+     ],
+     "hints": [
+      "Index dibuat pada slayer_id.",
+      "WHERE slayer_id = 1 bisa memakai index itu.",
+      "Teks rencana: SEARCH misi USING INDEX ..."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "l3"
+    },
+    {
+     "id": "sql-l3-pilih",
+     "type": "write",
+     "title": "Pilih Index yang Tepat",
+     "difficulty": 3,
+     "prompt": "Query yang sering dipakai: SELECT nama FROM slayer WHERE pernapasan = ? AND umur > ?. Buat index bernama idx_aliran_umur yang membuat query ini memakai index untuk KEDUA kolom. (Pemeriksa menjalankan EXPLAIN QUERY PLAN.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "EXPLAIN QUERY PLAN SELECT nama FROM slayer WHERE pernapasan = 'Air' AND umur > 16;\n",
+     "tests": [
+      {
+       "expected": "QUERY PLAN\n`--SEARCH slayer USING INDEX idx_aliran_umur (pernapasan=? AND umur>?)\n"
+      }
+     ],
+     "hints": [
+      "Index bisa berisi beberapa kolom.",
+      "Kolom yang dibandingkan dengan = diletakkan duluan.",
+      "ON slayer(pernapasan, umur)"
+     ],
+     "solutions": [
+      "CREATE INDEX idx_aliran_umur ON slayer(pernapasan, umur);\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "l3"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "INSERT INTO menambah baris, UPDATE ... SET mengubah, DELETE FROM menghapus. UPDATE dan DELETE tanpa WHERE mengenai SEMUA baris, jadi selalu periksa WHERE-nya.",
+     "code": "INSERT INTO slayer (nama, pernapasan, umur) VALUES ('Genya', 'Angin', 16);\nUPDATE slayer SET umur = umur + 1 WHERE nama = 'Genya';\nSELECT nama, umur FROM slayer WHERE nama = 'Genya';\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-m1-insert",
+     "type": "write",
+     "title": "Anggota Baru",
+     "difficulty": 1,
+     "prompt": "Tambahkan slayer bernama 'Genya' dengan pernapasan 'Angin', umur 16, dan pangkat_id 1. (Daftar nama akan diperiksa setelah kodemu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, pernapasan, umur, pangkat_id FROM slayer ORDER BY id;\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|Air|15|2\nZenitsu|Petir|16|2\nInosuke|Binatang|15|2\nGiyu|Air|21|4\nRengoku|Api|20|4\nShinobu|Serangga|18|4\nKanao|Bunga|16|3\nMurata|Air|19|1\nGenya|Angin|16|1\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro|Air|15|2\nZenitsu|Petir|16|2\nInosuke|Binatang|15|2\nGiyu|Air|21|4\nRengoku|Api|20|4\nShinobu|Serangga|18|4\nKanao|Bunga|16|3\nMurata|Air|19|1\nSabito|Air|13|1\nMitsuri|Cinta|19|4\nGenya|Angin|16|1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "INSERT INTO tabel (kolom, ...) VALUES (nilai, ...).",
+      "id terisi otomatis kalau tidak ditulis.",
+      "Urutan nilai harus sama dengan urutan kolom."
+     ],
+     "solutions": [
+      "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Genya', 'Angin', 16, 1);\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "m1"
+    },
+    {
+     "id": "sql-m1-update",
+     "type": "write",
+     "title": "Ulang Tahun Aliran Air",
+     "difficulty": 1,
+     "prompt": "Tambah 1 tahun ke umur semua slayer pernapasan 'Air'. (Hasil diperiksa setelah kodemu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, umur FROM slayer ORDER BY id;\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|16\nZenitsu|16\nInosuke|15\nGiyu|22\nRengoku|20\nShinobu|18\nKanao|16\nMurata|20\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro|16\nZenitsu|16\nInosuke|15\nGiyu|22\nRengoku|20\nShinobu|18\nKanao|16\nMurata|20\nSabito|14\nMitsuri|19\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "UPDATE tabel SET kolom = nilai WHERE syarat.",
+      "Nilai baru boleh dihitung dari nilai lama.",
+      "umur = umur + 1 WHERE pernapasan = 'Air'"
+     ],
+     "solutions": [
+      "UPDATE slayer SET umur = umur + 1 WHERE pernapasan = 'Air';\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "m1"
+    },
+    {
+     "id": "sql-m1-delete",
+     "type": "write",
+     "title": "Hapus Misi Gagal",
+     "difficulty": 1,
+     "prompt": "Hapus semua misi yang gagal (berhasil = 0). (Isi tabel misi diperiksa setelah kodemu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT id, berhasil FROM misi ORDER BY id;\n",
+     "tests": [
+      {
+       "expected": "1|1\n2|1\n3|1\n5|1\n6|1\n8|1\n9|1\n10|1\n11|1\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (2, 3, '2026-06-03', 0, 0);",
+       "expected": "1|1\n2|1\n3|1\n5|1\n6|1\n8|1\n9|1\n10|1\n11|1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "DELETE FROM tabel WHERE syarat.",
+      "Tanpa WHERE semua baris terhapus!",
+      "WHERE berhasil = 0"
+     ],
+     "solutions": [
+      "DELETE FROM misi WHERE berhasil = 0;\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "m1"
+    },
+    {
+     "id": "sql-m1-bug",
+     "type": "bughunt",
+     "title": "Kenaikan Pangkat Massal",
+     "difficulty": 2,
+     "prompt": "Hanya Tanjiro yang seharusnya naik ke pangkat_id 3, tapi semua slayer ikut naik. Temukan baris yang salah.",
+     "lang": "sql",
+     "starter": "UPDATE slayer\nSET pangkat_id = 3\nWHERE nama = nama;\n",
+     "bug_line": 3,
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, pangkat_id FROM slayer ORDER BY id;\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|3\nZenitsu|2\nInosuke|2\nGiyu|4\nRengoku|4\nShinobu|4\nKanao|3\nMurata|1\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro|3\nZenitsu|2\nInosuke|2\nGiyu|4\nRengoku|4\nShinobu|4\nKanao|3\nMurata|1\nSabito|1\nMitsuri|4\n"
+      }
+     ],
+     "hints": [
+      "nama = nama selalu benar untuk setiap baris.",
+      "Bandingkan dengan teks yang tepat.",
+      "WHERE nama = 'Tanjiro'"
+     ],
+     "solutions": [
+      "UPDATE slayer\nSET pangkat_id = 3\nWHERE nama = 'Tanjiro';\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "CREATE TABLE mendefinisikan kolom dan tipenya. INTEGER PRIMARY KEY di SQLite otomatis bernomor. Pilih tipe yang sesuai: INTEGER, REAL, TEXT.",
+     "code": "CREATE TABLE gagak (id INTEGER PRIMARY KEY, nama TEXT, tuan TEXT);\nINSERT INTO gagak (nama, tuan) VALUES ('Matsuemon', 'Tanjiro');\nSELECT * FROM gagak;\n"
+    },
+    {
+     "text": "ALTER TABLE menambah kolom ke tabel yang sudah ada. Baris lama mendapat nilai DEFAULT (atau NULL kalau tidak ada default).",
+     "code": "ALTER TABLE slayer ADD COLUMN aktif INTEGER DEFAULT 1;\nSELECT nama, aktif FROM slayer LIMIT 2;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-m2-create",
+     "type": "write",
+     "title": "Buku Gagak Kasugai",
+     "difficulty": 2,
+     "prompt": "Buat tabel gagak dengan kolom id (INTEGER PRIMARY KEY), nama (TEXT), dan tuan (TEXT). (Data contoh dimasukkan dan dibaca setelah kodemu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "INSERT INTO gagak (nama, tuan) VALUES ('Matsuemon', 'Tanjiro'), ('Chuntaro', 'Zenitsu');\nSELECT id, nama, tuan FROM gagak ORDER BY id;\n",
+     "tests": [
+      {
+       "expected": "1|Matsuemon|Tanjiro\n2|Chuntaro|Zenitsu\n"
+      }
+     ],
+     "hints": [
+      "CREATE TABLE nama (kolom tipe, ...).",
+      "INTEGER PRIMARY KEY bernomor otomatis.",
+      "Tiga kolom: id, nama, tuan."
+     ],
+     "solutions": [
+      "CREATE TABLE gagak (id INTEGER PRIMARY KEY, nama TEXT, tuan TEXT);\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m2"
+    },
+    {
+     "id": "sql-m2-alter",
+     "type": "write",
+     "title": "Kolom Status Aktif",
+     "difficulty": 2,
+     "prompt": "Tambahkan kolom aktif (INTEGER) ke tabel slayer dengan nilai bawaan 1. (Diperiksa setelah kodemu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, aktif FROM slayer ORDER BY id;\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|1\nZenitsu|1\nInosuke|1\nGiyu|1\nRengoku|1\nShinobu|1\nKanao|1\nMurata|1\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Tanjiro|1\nZenitsu|1\nInosuke|1\nGiyu|1\nRengoku|1\nShinobu|1\nKanao|1\nMurata|1\nSabito|1\nMitsuri|1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "ALTER TABLE tabel ADD COLUMN kolom tipe.",
+      "Nilai bawaan ditulis dengan DEFAULT.",
+      "DEFAULT 1"
+     ],
+     "solutions": [
+      "ALTER TABLE slayer ADD COLUMN aktif INTEGER DEFAULT 1;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m2"
+    },
+    {
+     "id": "sql-m2-typeof",
+     "type": "predict",
+     "title": "Tipe yang Tersimpan",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "SELECT typeof(umur), typeof(nama), typeof(pangkat_id), typeof(umur / 2.0) FROM slayer WHERE id = 1;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "integer|text|integer|real\n"
+      }
+     ],
+     "hints": [
+      "typeof() menyebut tipe nilai yang tersimpan.",
+      "Angka bulat = integer, teks = text.",
+      "Pembagian dengan 2.0 menghasilkan real."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "Constraint menjaga data tetap valid: NOT NULL (wajib diisi), UNIQUE (tidak boleh kembar), CHECK (syarat bebas), PRIMARY KEY (unik dan wajib). Pelanggaran membuat INSERT ditolak.",
+     "code": "CREATE TABLE akun (email TEXT NOT NULL UNIQUE, umur INTEGER CHECK (umur >= 0));\nINSERT INTO akun VALUES ('a@korps.id', 15);\nINSERT OR IGNORE INTO akun VALUES ('a@korps.id', 16);\nSELECT COUNT(*) FROM akun;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-m3-unique",
+     "type": "write",
+     "title": "Satu Email Satu Akun",
+     "difficulty": 2,
+     "prompt": "Buat tabel akun dengan kolom email (TEXT) yang wajib diisi dan tidak boleh kembar, serta nama (TEXT). (Pemeriksa mencoba memasukkan email kembar dan email NULL.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "INSERT OR IGNORE INTO akun VALUES ('t@korps.id', 'Tanjiro'), ('t@korps.id', 'Tiruan'), (NULL, 'Tanpa Email'), ('z@korps.id', 'Zenitsu');\nSELECT email, nama FROM akun ORDER BY email;\n",
+     "tests": [
+      {
+       "expected": "t@korps.id|Tanjiro\nz@korps.id|Zenitsu\n"
+      }
+     ],
+     "hints": [
+      "NOT NULL: wajib diisi.",
+      "UNIQUE: tidak boleh ada dua yang sama.",
+      "email TEXT NOT NULL UNIQUE"
+     ],
+     "solutions": [
+      "CREATE TABLE akun (email TEXT NOT NULL UNIQUE, nama TEXT);\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m3"
+    },
+    {
+     "id": "sql-m3-check",
+     "type": "write",
+     "title": "Umur Tidak Boleh Negatif",
+     "difficulty": 2,
+     "prompt": "Buat tabel kadet dengan kolom nama (TEXT) dan umur (INTEGER) yang harus antara 10 dan 30. (Pemeriksa mencoba memasukkan umur di luar batas.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "INSERT OR IGNORE INTO kadet VALUES ('Tanjiro', 15), ('Bayi', 2), ('Kakek', 80), ('Kanao', 16), ('Batas', 30);\nSELECT nama FROM kadet ORDER BY nama;\n",
+     "tests": [
+      {
+       "expected": "Batas\nKanao\nTanjiro\n"
+      }
+     ],
+     "hints": [
+      "CHECK (syarat) ditulis setelah tipe kolom.",
+      "Syarat boleh memakai BETWEEN.",
+      "CHECK (umur BETWEEN 10 AND 30)"
+     ],
+     "solutions": [
+      "CREATE TABLE kadet (nama TEXT, umur INTEGER CHECK (umur BETWEEN 10 AND 30));\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m3"
+    },
+    {
+     "id": "sql-m3-bug",
+     "type": "bughunt",
+     "title": "Kunci yang Bisa Kembar",
+     "difficulty": 2,
+     "prompt": "Tabel pedang seharusnya menolak kode yang sama dua kali, tapi duplikat tetap masuk. Temukan baris yang salah.",
+     "lang": "sql",
+     "starter": "CREATE TABLE pedang (\n  kode TEXT,\n  pemilik TEXT\n);\n",
+     "bug_line": 2,
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "INSERT OR IGNORE INTO pedang VALUES ('N-001', 'Tanjiro'), ('N-001', 'Pencuri'), ('N-002', 'Giyu');\nSELECT kode, pemilik FROM pedang ORDER BY kode;\n",
+     "tests": [
+      {
+       "expected": "N-001|Tanjiro\nN-002|Giyu\n"
+      }
+     ],
+     "hints": [
+      "Kolom mana yang harus unik?",
+      "Tanpa constraint, data kembar diterima.",
+      "Jadikan kode PRIMARY KEY."
+     ],
+     "solutions": [
+      "CREATE TABLE pedang (\n  kode TEXT PRIMARY KEY,\n  pemilik TEXT\n);\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "Index mempercepat pencarian seperti indeks di buku: CREATE INDEX nama ON tabel(kolom). EXPLAIN QUERY PLAN menunjukkan apakah database memakai index (SEARCH ... USING INDEX) atau membaca seluruh tabel (SCAN).",
+     "code": "EXPLAIN QUERY PLAN SELECT * FROM misi WHERE tanggal = '2026-03-15';\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-m4-index",
+     "type": "write",
+     "title": "Indeks Tanggal Misi",
+     "difficulty": 2,
+     "prompt": "Buat index bernama idx_misi_tanggal pada kolom tanggal di tabel misi. (Pemeriksa menjalankan EXPLAIN QUERY PLAN untuk pencarian berdasarkan tanggal.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "EXPLAIN QUERY PLAN SELECT * FROM misi WHERE tanggal = '2026-03-15';\n",
+     "tests": [
+      {
+       "expected": "QUERY PLAN\n`--SEARCH misi USING INDEX idx_misi_tanggal (tanggal=?)\n"
+      }
+     ],
+     "hints": [
+      "CREATE INDEX nama ON tabel(kolom).",
+      "Nama index harus persis idx_misi_tanggal.",
+      "Kolomnya tanggal."
+     ],
+     "solutions": [
+      "CREATE INDEX idx_misi_tanggal ON misi(tanggal);\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m4"
+    },
+    {
+     "id": "sql-m4-scan",
+     "type": "predict",
+     "title": "Membaca Seluruh Tabel",
+     "difficulty": 1,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "EXPLAIN QUERY PLAN SELECT * FROM slayer WHERE umur = 15;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "QUERY PLAN\n`--SCAN slayer\n"
+      }
+     ],
+     "hints": [
+      "Belum ada index untuk kolom umur.",
+      "Tanpa index, SQLite membaca semua baris.",
+      "Kolom terakhir berisi teks rencana: SCAN ..."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "sql",
+     "chapter": "m4"
+    },
+    {
+     "id": "sql-m4-unique",
+     "type": "write",
+     "title": "Index Unik",
+     "difficulty": 2,
+     "prompt": "Buat UNIQUE INDEX bernama idx_iblis_nama pada iblis(nama). (Pemeriksa mencoba memasukkan nama iblis kembar.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "INSERT OR IGNORE INTO iblis (nama, peringkat) VALUES ('Akaza', 'Tiruan'), ('Kaigaku', 'Upper Moon 6');\nSELECT nama FROM iblis ORDER BY nama;\n",
+     "tests": [
+      {
+       "expected": "Akaza\nDaki\nEnmu\nGyokko\nIblis Rawa\nKaigaku\nRui\n"
+      }
+     ],
+     "hints": [
+      "UNIQUE INDEX sekaligus menolak nilai kembar.",
+      "CREATE UNIQUE INDEX nama ON tabel(kolom).",
+      "Namanya idx_iblis_nama."
+     ],
+     "solutions": [
+      "CREATE UNIQUE INDEX idx_iblis_nama ON iblis(nama);\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m4"
+    }
+   ]
+  },
+  "m5": {
+   "lesson": [
+    {
+     "text": "VIEW adalah query yang disimpan dengan nama dan dipakai seperti tabel. Isinya selalu dihitung ulang dari tabel aslinya, jadi data terbaru ikut terlihat.",
+     "code": "CREATE VIEW hashira AS SELECT s.nama FROM slayer s JOIN pangkat p ON p.id = s.pangkat_id WHERE p.nama = 'Hashira';\nSELECT * FROM hashira ORDER BY nama;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-m5-view",
+     "type": "write",
+     "title": "Daftar Hashira",
+     "difficulty": 2,
+     "prompt": "Buat view bernama hashira yang berisi kolom nama dan umur dari slayer berpangkat 'Hashira'. (Pemeriksa membaca view itu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, umur FROM hashira ORDER BY nama;\n",
+     "tests": [
+      {
+       "expected": "Giyu|21\nRengoku|20\nShinobu|18\n"
+      },
+      {
+       "input": "INSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES ('Sabito', 'Air', 13, 1), ('Mitsuri', 'Cinta', 19, 4);",
+       "expected": "Giyu|21\nMitsuri|19\nRengoku|20\nShinobu|18\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "CREATE VIEW nama AS SELECT ...",
+      "Butuh JOIN ke tabel pangkat.",
+      "WHERE p.nama = 'Hashira'"
+     ],
+     "solutions": [
+      "CREATE VIEW hashira AS SELECT s.nama, s.umur FROM slayer s JOIN pangkat p ON p.id = s.pangkat_id WHERE p.nama = 'Hashira';\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m5"
+    },
+    {
+     "id": "sql-m5-rekap",
+     "type": "write",
+     "title": "Rekap Upah",
+     "difficulty": 3,
+     "prompt": "Buat view rekap_upah berisi nama slayer dan total koban dari misi berhasil (kolom total). Slayer tanpa misi berhasil tidak perlu muncul. (Pemeriksa membaca view itu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, total FROM rekap_upah ORDER BY total DESC, nama;\n",
+     "tests": [
+      {
+       "expected": "Tanjiro|370\nRengoku|250\nZenitsu|200\nKanao|180\nGiyu|150\nShinobu|60\n"
+      },
+      {
+       "input": "INSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES (8, 6, '2026-06-01', 1, 90), (3, 3, '2026-06-02', 1, 300);",
+       "expected": "Tanjiro|370\nInosuke|300\nRengoku|250\nZenitsu|200\nKanao|180\nGiyu|150\nMurata|90\nShinobu|60\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "View boleh berisi JOIN dan GROUP BY.",
+      "Beri nama kolom dengan AS total.",
+      "GROUP BY per slayer."
+     ],
+     "solutions": [
+      "CREATE VIEW rekap_upah AS SELECT s.nama, SUM(m.koban) AS total FROM misi m JOIN slayer s ON s.id = m.slayer_id WHERE m.berhasil = 1 GROUP BY s.id;\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "sql",
+     "chapter": "m5"
+    },
+    {
+     "id": "sql-m5-hidup",
+     "type": "predict",
+     "title": "View Mengikuti Data",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "CREATE VIEW muda AS SELECT nama FROM slayer WHERE umur < 16;\nINSERT INTO slayer (nama, umur) VALUES ('Sabito', 13);\nSELECT COUNT(*) FROM muda;\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "3\n"
+      }
+     ],
+     "hints": [
+      "View tidak menyimpan salinan data.",
+      "Sabito dimasukkan SETELAH view dibuat.",
+      "Hitung slayer dengan umur < 16 termasuk Sabito."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m5"
+    }
+   ]
+  },
+  "m6": {
+   "lesson": [
+    {
+     "text": "Transaksi mengelompokkan beberapa perubahan menjadi satu: BEGIN, lalu perubahan, lalu COMMIT untuk menyimpan semuanya atau ROLLBACK untuk membatalkan semuanya. Cocok untuk transfer saldo: tidak boleh setengah jadi.",
+     "code": "BEGIN;\nUPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Tanjiro';\nUPDATE dompet SET saldo = saldo + 50 WHERE nama = 'Zenitsu';\nCOMMIT;\nSELECT * FROM dompet;\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "sql-m6-transfer",
+     "type": "write",
+     "title": "Transfer Koban",
+     "difficulty": 2,
+     "prompt": "Dalam satu transaksi, pindahkan 100 koban dari 'Kas Korps' ke 'Tanjiro'. (Saldo semua dompet diperiksa setelah kodemu.)",
+     "lang": "sql",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, saldo FROM dompet ORDER BY nama;\n",
+     "tests": [
+      {
+       "expected": "Kas Korps|900\nTanjiro|400\nZenitsu|120\n"
+      }
+     ],
+     "hints": [
+      "Mulai dengan BEGIN, akhiri dengan COMMIT.",
+      "Dua UPDATE: kurangi pengirim, tambah penerima.",
+      "Periksa WHERE nama di setiap UPDATE."
+     ],
+     "solutions": [
+      "BEGIN;\nUPDATE dompet SET saldo = saldo - 100 WHERE nama = 'Kas Korps';\nUPDATE dompet SET saldo = saldo + 100 WHERE nama = 'Tanjiro';\nCOMMIT;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m6"
+    },
+    {
+     "id": "sql-m6-rollback",
+     "type": "predict",
+     "title": "Transaksi Dibatalkan",
+     "difficulty": 2,
+     "prompt": "Dengan dataset bab ini, apa hasil query berikut? Tulis persis seperti tabel hasil (kolom dipisah |).",
+     "lang": "sql",
+     "code": "BEGIN;\nUPDATE dompet SET saldo = 0 WHERE nama = 'Zenitsu';\nROLLBACK;\nSELECT saldo FROM dompet WHERE nama = 'Zenitsu';\n",
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "tests": [
+      {
+       "expected": "120\n"
+      }
+     ],
+     "hints": [
+      "ROLLBACK membatalkan semua perubahan sejak BEGIN.",
+      "Saldo kembali seperti sebelum BEGIN.",
+      "Lihat data awal tabel dompet."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m6"
+    },
+    {
+     "id": "sql-m6-bug",
+     "type": "bughunt",
+     "title": "Koban yang Menguap",
+     "difficulty": 2,
+     "prompt": "Transfer 50 koban dari Zenitsu ke Tanjiro, tapi total koban di semua dompet berkurang 50. Temukan baris yang salah.",
+     "lang": "sql",
+     "starter": "BEGIN;\nUPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Zenitsu';\nUPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Tanjiro';\nCOMMIT;\n",
+     "bug_line": 3,
+     "setup": "CREATE TABLE pangkat (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, urutan INTEGER NOT NULL);\nINSERT INTO pangkat VALUES (1, 'Mizunoto', 1), (2, 'Kanoe', 4), (3, 'Kinoe', 10), (4, 'Hashira', 11);\nCREATE TABLE slayer (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, pernapasan TEXT, umur INTEGER, pangkat_id INTEGER);\nINSERT INTO slayer (nama, pernapasan, umur, pangkat_id) VALUES\n  ('Tanjiro', 'Air', 15, 2), ('Zenitsu', 'Petir', 16, 2), ('Inosuke', 'Binatang', 15, 2), ('Giyu', 'Air', 21, 4),\n  ('Rengoku', 'Api', 20, 4), ('Shinobu', 'Serangga', 18, 4), ('Kanao', 'Bunga', 16, 3), ('Murata', 'Air', 19, 1);\nCREATE TABLE iblis (id INTEGER PRIMARY KEY, nama TEXT NOT NULL, peringkat TEXT);\nINSERT INTO iblis VALUES (1, 'Rui', 'Lower Moon 5'), (2, 'Enmu', 'Lower Moon 1'), (3, 'Akaza', 'Upper Moon 3'), (4, 'Daki', 'Upper Moon 6'), (5, 'Iblis Rawa', NULL), (6, 'Gyokko', 'Upper Moon 5');\nCREATE TABLE misi (id INTEGER PRIMARY KEY, slayer_id INTEGER, iblis_id INTEGER, tanggal TEXT, berhasil INTEGER, koban INTEGER);\nINSERT INTO misi (slayer_id, iblis_id, tanggal, berhasil, koban) VALUES\n  (1, 5, '2026-01-10', 1, 50), (1, 1, '2026-02-03', 1, 120), (2, 5, '2026-01-10', 1, 40), (3, 5, '2026-01-11', 0, 0),\n  (1, 2, '2026-03-15', 1, 200), (5, 2, '2026-03-15', 1, 250), (5, 3, '2026-03-16', 0, 0), (4, 1, '2026-02-03', 1, 150),\n  (7, 4, '2026-04-20', 1, 180), (2, 4, '2026-04-20', 1, 160), (6, 5, '2026-05-02', 1, 60);\nCREATE TABLE dompet (nama TEXT PRIMARY KEY, saldo INTEGER NOT NULL);\nINSERT INTO dompet VALUES ('Tanjiro', 300), ('Zenitsu', 120), ('Kas Korps', 1000);\nCREATE TABLE guru (murid TEXT PRIMARY KEY, guru TEXT);\nINSERT INTO guru VALUES ('Urokodaki', NULL), ('Sabito', 'Urokodaki'), ('Giyu', 'Urokodaki'), ('Tanjiro', 'Urokodaki'), ('Murata', 'Giyu'), ('Kanae', NULL), ('Shinobu', 'Kanae'), ('Kanao', 'Shinobu');\n",
+     "after": "SELECT nama, saldo FROM dompet ORDER BY nama;\n",
+     "tests": [
+      {
+       "expected": "Kas Korps|1000\nTanjiro|350\nZenitsu|70\n"
+      }
+     ],
+     "hints": [
+      "Total semua saldo harus tetap sama setelah transfer.",
+      "Penerima seharusnya bertambah, bukan berkurang.",
+      "saldo = saldo + 50 untuk Tanjiro."
+     ],
+     "solutions": [
+      "BEGIN;\nUPDATE dompet SET saldo = saldo - 50 WHERE nama = 'Zenitsu';\nUPDATE dompet SET saldo = saldo + 50 WHERE nama = 'Tanjiro';\nCOMMIT;\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "sql",
+     "chapter": "m6"
+    }
+   ]
+  }
+ }
+}

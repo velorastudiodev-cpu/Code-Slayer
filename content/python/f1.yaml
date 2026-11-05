@@ -1,0 +1,85 @@
+lesson:
+  - text: 'Program Python dijalankan baris demi baris dari atas ke bawah. print() mencetak sesuatu ke layar lalu pindah ke baris baru. Teks (string) diapit tanda kutip ganda atau tunggal. Baris yang diawali # adalah komentar dan tidak dijalankan.'
+    code: |
+      # komentar tidak dijalankan
+      print("Halo, Slayer!")
+      print('Kisatsutai siap!')
+  - text: print() bisa menerima beberapa nilai sekaligus, dan nilai-nilai itu dipisah spasi. Parameter sep mengganti pemisahnya, sedangkan end mengganti akhiran baris (defaultnya baris baru).
+    code: |
+      print("Tanjiro", "Kamado")
+      print("2026", "10", "30", sep="-")
+      print("Kaa", end="! ")
+      print("Kaa!")
+exercises:
+  - id: py-halo
+    type: write
+    title: Salam Pertama Seorang Slayer
+    difficulty: 1
+    story: Gagak Kasugai menunggu laporan pertamamu.
+    prompt: Cetak tepat satu baris "Halo, Slayer!" (tanpa tanda kutip).
+    starter: |
+      # Tulis kodemu di sini
+    hints: [Fungsi untuk mencetak ke layar di Python adalah print., 'Teks harus diapit tanda kutip, misalnya print("...").', 'print("Halo, Slayer!")']
+    solution: print("Halo, Slayer!")
+    concepts: [print, string]
+  - id: py-f1-dua-baris
+    type: write
+    title: Kakak dan Adik
+    difficulty: 1
+    prompt: Cetak "Tanjiro" di baris pertama dan "Nezuko" di baris kedua.
+    hints: [Setiap print() menghasilkan satu baris., Pakai dua kali print()., 'print("Tanjiro") lalu print("Nezuko")']
+    solution: |
+      print("Tanjiro")
+      print("Nezuko")
+  - id: py-f1-sep
+    type: write
+    title: Tanggal Final Selection
+    difficulty: 1
+    prompt: Cetak tanggal 2026-10-30 dengan SATU print yang menerima tiga argumen "2026", "10", "30" dan parameter sep.
+    hints: [sep menentukan teks di antara argumen., Pemisahnya tanda minus., 'print("2026", "10", "30", sep="-")']
+    solution: print("2026", "10", "30", sep="-")
+  - id: py-f1-predict-end
+    type: predict
+    title: Akhiran yang Tersembunyi
+    difficulty: 1
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      print("A", end="")
+      print("B")
+      print("C", "D", sep="")
+    hints: [end="" berarti print tidak pindah baris., print("B") menyambung di baris yang sama dengan A., sep="" menempelkan C dan D tanpa spasi.]
+    solution: x
+  - id: py-f1-bug-kutip
+    type: bughunt
+    title: Iblis Pencuri Kutip
+    difficulty: 1
+    prompt: Program harus mencetak "Halo" lalu "Slayer". Temukan baris yang salah dan perbaiki.
+    starter: |
+      print("Halo")
+      print(Slayer)
+    bug_line: 2
+    hints: |
+      Baca pesan error-nya, NameError berarti Python mengira itu nama variabel.
+      Teks harus diapit tanda kutip.
+      print("Slayer")
+    solution: |
+      print("Halo")
+      print("Slayer")
+  - id: py-f1-parsons
+    type: parsons
+    title: Urutan Barisan
+    difficulty: 1
+    prompt: Susun program yang mencetak daftar 1. Tanjiro, 2. Zenitsu, 3. Inosuke sesuai urutan nomor.
+    hints: [Program berjalan dari atas ke bawah., Baris dengan nomor 1 harus paling atas., Urutkan berdasarkan nomornya.]
+    solution: |
+      print("1. Tanjiro")
+      print("2. Zenitsu")
+      print("3. Inosuke")
+  - id: py-f1-typing
+    type: typing
+    title: Ketik Kilat Pertama
+    difficulty: 1
+    prompt: Ketik ulang kode berikut secepat dan setepat mungkin. Akurasi minimal 95%.
+    code: |
+      print("Halo, Slayer!")
+      print("Kaa!", "Misi baru")

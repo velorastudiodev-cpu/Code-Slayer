@@ -1,0 +1,150 @@
+lesson:
+  - text: Tes otomatis memanggil fungsi dengan input tertentu lalu membandingkan hasilnya dengan harapan. Di proyek JS nyata dipakai Vitest atau Jest, misalnya expect(tambah(1, 2)).toBe(3). Tes yang baik mencakup kasus tepi seperti array kosong, angka negatif, dan string kosong.
+    code: |
+      function cek(nama, hasil, harap) {
+        const ok = JSON.stringify(hasil) === JSON.stringify(harap)
+        console.log(ok ? "LOLOS" : "GAGAL", nama)
+      }
+      const maks = a => (a.length ? Math.max(...a) : null)
+      cek("biasa", maks([3, 9, 2]), 9)
+      cek("negatif", maks([-5]), -5)
+      cek("kosong", maks([]), null)
+  - text: Membandingkan objek atau array dengan === hanya memeriksa apakah keduanya objek yang SAMA, bukan isinya. Untuk membandingkan isi, gunakan perbandingan mendalam (deep equal) seperti toEqual di Vitest, atau cara sederhana dengan JSON.stringify.
+    code: |
+      console.log([1, 2] === [1, 2], JSON.stringify([1, 2]) === JSON.stringify([1, 2]))
+exercises:
+  - id: js-l3-prima
+    type: write
+    title: Lolos Uji Prima
+    difficulty: 2
+    prompt: Lengkapi fungsi adalahPrima(n) sampai semua tes LOLOS.
+    starter: |
+      function adalahPrima(n) {
+        // lengkapi
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("2", adalahPrima(2), true)
+      cek("97", adalahPrima(97), true)
+      cek("1", adalahPrima(1), false)
+      cek("91", adalahPrima(91), false)
+      cek("-7", adalahPrima(-7), false)
+    hints: |
+      Bilangan ≤ 1 bukan prima.
+      Cek pembagi d selama d * d <= n.
+      Kembalikan boolean (true/false), bukan undefined.
+    solution: |
+      function adalahPrima(n) {
+        if (n <= 1) return false
+        for (let d = 2; d * d <= n; d++) if (n % d === 0) return false
+        return true
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("2", adalahPrima(2), true)
+      cek("97", adalahPrima(97), true)
+      cek("1", adalahPrima(1), false)
+      cek("91", adalahPrima(91), false)
+      cek("-7", adalahPrima(-7), false)
+  - id: js-l3-deep
+    type: write
+    title: Perbandingan Mendalam
+    difficulty: 3
+    prompt: Lengkapi fungsi samaDalam(a, b) yang membandingkan isi array/objek bersarang dan nilai primitif, sampai semua tes LOLOS.
+    starter: |
+      function samaDalam(a, b) {
+        return a === b
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("primitif", samaDalam(3, 3), true)
+      cek("array", samaDalam([1, [2, 3]], [1, [2, 3]]), true)
+      cek("objek", samaDalam({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } }), true)
+      cek("beda", samaDalam({ a: 1 }, { a: 2 }), false)
+      cek("beda panjang", samaDalam([1], [1, 2]), false)
+      cek("tipe", samaDalam([1], { 0: 1 }), false)
+    hints: |
+      Kalau salah satunya bukan objek, bandingkan dengan ===.
+      Periksa juga Array.isArray keduanya sama.
+      Bandingkan jumlah kunci, lalu rekursi untuk setiap kunci.
+    solution: |
+      function samaDalam(a, b) {
+        if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) return a === b
+        if (Array.isArray(a) !== Array.isArray(b)) return false
+        const ka = Object.keys(a), kb = Object.keys(b)
+        return ka.length === kb.length && ka.every(k => samaDalam(a[k], b[k]))
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("primitif", samaDalam(3, 3), true)
+      cek("array", samaDalam([1, [2, 3]], [1, [2, 3]]), true)
+      cek("objek", samaDalam({ a: 1, b: { c: 2 } }, { a: 1, b: { c: 2 } }), true)
+      cek("beda", samaDalam({ a: 1 }, { a: 2 }), false)
+      cek("beda panjang", samaDalam([1], [1, 2]), false)
+      cek("tipe", samaDalam([1], { 0: 1 }), false)
+  - id: js-l3-predict
+    type: predict
+    title: Laporan Penguji
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("tambah", 0.1 + 0.2, 0.3)
+      cek("array", [1, 2], [1, 2])
+      cek("string", "a" + "b", "ab")
+      cek("NaN", NaN, NaN)
+    hints: |
+      0.1 + 0.2 di floating point adalah 0.30000000000000004.
+      Dua array literal adalah objek yang berbeda.
+      NaN tidak pernah === dengan apa pun, bahkan dirinya sendiri.
+    solution: x
+  - id: js-l3-bug-range
+    type: bughunt
+    title: Tes Menangkap Iblis
+    difficulty: 1
+    prompt: Tes membuktikan jumlahSampai(n) salah karena seharusnya menjumlah 1 sampai n. Perbaiki sampai semua LOLOS.
+    starter: |
+      function jumlahSampai(n) {
+        let t = 0
+        for (let i = 1; i < n; i++) t += i
+        return t
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("n=1", jumlahSampai(1), 1)
+      cek("n=4", jumlahSampai(4), 10)
+    bug_line: 3
+    hints: |
+      Apakah n sendiri ikut dijumlah?
+      Kondisi i < n berhenti sebelum n.
+      i <= n
+    solution: |
+      function jumlahSampai(n) {
+        let t = 0
+        for (let i = 1; i <= n; i++) t += i
+        return t
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("n=1", jumlahSampai(1), 1)
+      cek("n=4", jumlahSampai(4), 10)
+  - id: js-l3-uang
+    type: write
+    title: Uang Tanpa Iblis Desimal
+    difficulty: 2
+    prompt: 'Uang sebaiknya dihitung dalam satuan terkecil (sen) sebagai bilangan bulat. Lengkapi totalHarga(harga) yang menerima array string harga seperti "0.10" dan mengembalikan total sebagai string 2 desimal, sampai semua tes LOLOS.'
+    starter: |
+      function totalHarga(harga) {
+        return String(harga.reduce((s, h) => s + Number(h), 0))
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("klasik", totalHarga(["0.10", "0.20"]), "0.30")
+      cek("bulat", totalHarga(["5", "2.50"]), "7.50")
+      cek("kosong", totalHarga([]), "0.00")
+    hints: |
+      Ubah setiap harga ke sen dengan Math.round(Number(h) * 100).
+      Jumlahkan sebagai bilangan bulat.
+      Kembalikan (total / 100).toFixed(2).
+    solution: |
+      function totalHarga(harga) {
+        const sen = harga.reduce((s, h) => s + Math.round(Number(h) * 100), 0)
+        return (sen / 100).toFixed(2)
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("klasik", totalHarga(["0.10", "0.20"]), "0.30")
+      cek("bulat", totalHarga(["5", "2.50"]), "7.50")
+      cek("kosong", totalHarga([]), "0.00")

@@ -1,0 +1,52 @@
+lesson:
+- text: Wireshark/tcpdump merekam paket yang lewat. Ringkasan paket biasanya berisi waktu, sumber, tujuan, protokol, dan info. Filter tampilan membantu fokus, misalnya http.request atau ip.addr == 10.0.0.5.
+exercises:
+- id: net-m5-hitung
+  type: write
+  title: Menyaring Rekaman
+  difficulty: 2
+  prompt: 'Input berisi ringkasan paket, satu per baris: "waktu sumber tujuan PROTOKOL info...". Cetak setiap protokol dan jumlah paketnya, urut jumlah terbanyak lalu nama protokol.'
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    0.01 10.0.0.5 8.8.8.8 DNS query korps.id
+    0.02 8.8.8.8 10.0.0.5 DNS response A 10.0.0.9
+    0.03 10.0.0.5 10.0.0.9 TCP SYN
+    0.04 10.0.0.9 10.0.0.5 TCP SYN-ACK
+    0.05 10.0.0.5 10.0.0.9 HTTP GET /
+  - |-
+    1.0 a b ICMP echo
+    1.1 b a ICMP reply
+    1.2 a c UDP data
+  hints: |
+    Protokol ada di kolom ke-4 (indeks 3).
+    Hitung dengan dict.
+    Urutkan dengan key=lambda x: (-jumlah, nama).
+  solution: |
+    import sys
+
+    jumlah = {}
+    for baris in sys.stdin.read().splitlines():
+        if baris.strip():
+            p = baris.split()[3]
+            jumlah[p] = jumlah.get(p, 0) + 1
+    for p, n in sorted(jumlah.items(), key=lambda x: (-x[1], x[0])):
+        print(p, n)
+- id: net-m5-filter
+  type: quiz
+  title: Filter yang Tepat
+  difficulty: 2
+  prompt: Di Wireshark, filter tampilan untuk melihat hanya permintaan HTTP adalah...
+  options:
+  - http.request
+  - port 80 only
+  - tcp.syn == http
+  - show http
+  explain: http.request menampilkan paket HTTP yang merupakan request (GET, POST, dll.). Sintaks "port 80" adalah capture filter, bukan display filter.
+  hints: |
+    Filter tampilan memakai nama field protokol.
+    Formatnya protokol.field.
+    http.request

@@ -1,0 +1,1205 @@
+{
+ "hash": "7bffc9a6c410",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "HTML menyusun isi halaman dengan tag berpasangan: <tag>isi</tag>. Setiap dokumen punya <!doctype html>, <html>, <head> (info halaman: judul, charset, CSS) dan <body> (yang tampil).",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <h1>Markas Korps</h1>\n  <p>Selamat datang, Slayer.</p>\n</body>\n</html>\n"
+    },
+    {
+     "text": "Tag semantik menjelaskan peran isinya: <header> kepala halaman, <nav> navigasi, <main> isi utama, <footer> kaki halaman. Pembaca layar dan mesin pencari memahaminya lebih baik daripada <div> biasa.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <header><h1>Korps</h1></header>\n  <main><p>Isi utama</p></main>\n  <footer>Hak cipta Korps</footer>\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f1-kerangka",
+     "type": "write",
+     "title": "Kerangka Markas",
+     "difficulty": 1,
+     "prompt": "Buat dokumen HTML dengan judul halaman (title) \"Markas Korps\" dan satu <h1> bertuliskan \"Selamat datang, Slayer\".",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Judul</title>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"title\",\"text\":\"Markas Korps\"},{\"sel\":\"h1\",\"count\":1},{\"sel\":\"h1\",\"text\":\"Selamat datang, Slayer\"}]",
+       "expected": "✓ title berisi teks \"Markas Korps\"\n✓ h1: ada 1\n✓ h1 berisi teks \"Selamat datang, Slayer\"\n"
+      }
+     ],
+     "hints": [
+      "<title> ada di dalam <head>.",
+      "<h1> ada di dalam <body>.",
+      "Teks harus persis sama."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Markas Korps</title>\n</head>\n<body>\n  <h1>Selamat datang, Slayer</h1>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f1"
+    },
+    {
+     "id": "web-f1-semantik",
+     "type": "write",
+     "title": "Tiga Bagian",
+     "difficulty": 1,
+     "prompt": "Di dalam body, buat <header> berisi <h1>Korps</h1>, <main> berisi satu <p>, dan <footer> bertuliskan \"Hak cipta Korps\".",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <!-- header, main, footer -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"body > header > h1\",\"text\":\"Korps\"},{\"sel\":\"body > main > p\",\"count\":\"≥1\"},{\"sel\":\"body > footer\",\"text\":\"Hak cipta Korps\"}]",
+       "expected": "✓ body > header > h1 berisi teks \"Korps\"\n✓ body > main > p: ada ≥1\n✓ body > footer berisi teks \"Hak cipta Korps\"\n"
+      }
+     ],
+     "hints": [
+      "Tiga tag semantik: header, main, footer.",
+      "h1 di dalam header, p di dalam main.",
+      "Urutan: header, main, footer."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <header><h1>Korps</h1></header>\n  <main>\n    <p>Laporan misi hari ini.</p>\n  </main>\n  <footer>Hak cipta Korps</footer>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f1"
+    },
+    {
+     "id": "web-f1-semantik-q",
+     "type": "quiz",
+     "title": "Div atau Semantik?",
+     "difficulty": 1,
+     "prompt": "Mengapa <nav> lebih baik daripada <div class=\"nav\"> untuk menu navigasi?",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Pikirkan pengguna tunanetra.",
+      "Tampilannya bisa sama persis.",
+      "Bedanya ada di makna, bukan gaya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Pembaca layar & mesin pencari langsung mengenali perannya",
+      "nav otomatis berwarna",
+      "div tidak bisa berisi link",
+      "nav lebih cepat dimuat"
+     ],
+     "explain": "Tag semantik membawa makna. Teknologi bantu (screen reader) bisa melompat langsung ke navigasi, dan kode lebih mudah dibaca.",
+     "track": "web",
+     "chapter": "f1"
+    },
+    {
+     "id": "web-f1-p",
+     "type": "answer",
+     "title": "Tag Paragraf",
+     "difficulty": 1,
+     "prompt": "Nama tag HTML untuk paragraf adalah... (tulis tanpa < >)",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Satu huruf.",
+      "paragraph",
+      "p"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "p",
+      "<p>"
+     ],
+     "explain": "<p> membuat paragraf; browser memberi jarak atas-bawah secara bawaan.",
+     "track": "web",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Judul bertingkat <h1>-<h6> membentuk kerangka isi: satu <h1> per halaman, lalu <h2> untuk bagian, <h3> untuk sub-bagian. Daftar memakai <ul> (titik) atau <ol> (bernomor) dengan <li> di dalamnya.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <h1>Korps</h1>\n  <h2>Hashira</h2>\n  <ol>\n    <li>Giyu</li>\n    <li>Rengoku</li>\n  </ol>\n</body>\n</html>\n"
+    },
+    {
+     "text": "Link memakai <a href=\"alamat\">teks</a>. target=\"_blank\" membuka tab baru; tambahkan rel=\"noopener\" supaya halaman tujuan tidak bisa mengendalikan tab asal.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <p>Kunjungi <a href=\"https://korps.id\" target=\"_blank\" rel=\"noopener\">markas</a>.</p>\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f2-link",
+     "type": "write",
+     "title": "Jalan ke Markas",
+     "difficulty": 1,
+     "prompt": "Buat link dengan teks \"Markas\" yang menuju https://korps.id, terbuka di tab baru, dan aman (rel=\"noopener\").",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"a\",\"text\":\"Markas\"},{\"sel\":\"a\",\"attr\":\"href\",\"value\":\"https://korps.id\"},{\"sel\":\"a\",\"attr\":\"target\",\"value\":\"_blank\"},{\"sel\":\"a\",\"attr\":\"rel\",\"value\":\"noopener\"}]",
+       "expected": "✓ a berisi teks \"Markas\"\n✓ a punya href=\"https://korps.id\"\n✓ a punya target=\"_blank\"\n✓ a punya rel=\"noopener\"\n"
+      }
+     ],
+     "hints": [
+      "<a href=\"...\">teks</a>",
+      "target=\"_blank\" untuk tab baru.",
+      "rel=\"noopener\" untuk keamanan."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <a href=\"https://korps.id\" target=\"_blank\" rel=\"noopener\">Markas</a>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f2"
+    },
+    {
+     "id": "web-f2-daftar",
+     "type": "write",
+     "title": "Daftar Regu",
+     "difficulty": 1,
+     "prompt": "Buat daftar TIDAK bernomor berisi tiga nama: Tanjiro, Zenitsu, Inosuke (berurutan).",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"ul > li\",\"count\":3},{\"sel\":\"ul > li:nth-child(1)\",\"text\":\"Tanjiro\"},{\"sel\":\"ul > li:nth-child(3)\",\"text\":\"Inosuke\"},{\"sel\":\"ol\",\"count\":0}]",
+       "expected": "✓ ul > li: ada 3\n✓ ul > li:nth-child(1) berisi teks \"Tanjiro\"\n✓ ul > li:nth-child(3) berisi teks \"Inosuke\"\n✓ ol: tidak ada\n"
+      }
+     ],
+     "hints": [
+      "Daftar titik = <ul>.",
+      "Setiap item = <li>.",
+      "Urutan harus sama."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <ul>\n    <li>Tanjiro</li>\n    <li>Zenitsu</li>\n    <li>Inosuke</li>\n  </ul>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f2"
+    },
+    {
+     "id": "web-f2-judul",
+     "type": "write",
+     "title": "Kerangka Laporan",
+     "difficulty": 2,
+     "prompt": "Buat satu <h1> \"Laporan Misi\" lalu dua <h2>: \"Lokasi\" dan \"Hasil\", masing-masing diikuti satu <p>.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"h1\",\"count\":1},{\"sel\":\"h1\",\"text\":\"Laporan Misi\"},{\"sel\":\"h2\",\"count\":2},{\"sel\":\"h2 + p\",\"count\":2},{\"sel\":\"h2:nth-of-type(2)\",\"text\":\"Hasil\"}]",
+       "expected": "✓ h1: ada 1\n✓ h1 berisi teks \"Laporan Misi\"\n✓ h2: ada 2\n✓ h2 + p: ada 2\n✓ h2:nth-of-type(2) berisi teks \"Hasil\"\n"
+      }
+     ],
+     "hints": [
+      "Hanya satu h1.",
+      "Setiap h2 langsung diikuti p.",
+      "h2 kedua bertuliskan Hasil."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <h1>Laporan Misi</h1>\n  <h2>Lokasi</h2>\n  <p>Gunung Natagumo.</p>\n  <h2>Hasil</h2>\n  <p>Rui tertebas.</p>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "f2"
+    },
+    {
+     "id": "web-f2-bug",
+     "type": "bughunt",
+     "title": "Link yang Mati",
+     "difficulty": 1,
+     "prompt": "Link ke markas tidak bisa diklik karena salah ketik nama atribut. Temukan baris yang salah.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<body>\n  <a herf=\"https://korps.id\">Markas</a>\n</body>\n</html>\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "[{\"sel\":\"a\",\"attr\":\"href\",\"value\":\"https://korps.id\"}]",
+       "expected": "✓ a punya href=\"https://korps.id\"\n"
+      }
+     ],
+     "hints": [
+      "Atribut alamat link punya nama khusus.",
+      "Ejaannya h-r-e-f.",
+      "href = hypertext reference."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<body>\n  <a href=\"https://korps.id\">Markas</a>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "<img src=\"...\" alt=\"...\"> menampilkan gambar. alt WAJIB: dibaca screen reader dan muncul saat gambar gagal dimuat. Gambar dekoratif cukup alt=\"\" (kosong).",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <img src=\"pedang.png\" alt=\"Pedang Nichirin hitam milik Tanjiro\" width=\"200\">\n</body>\n</html>\n"
+    },
+    {
+     "text": "<figure> membungkus gambar beserta keterangannya <figcaption>. <video> dan <audio> dengan atribut controls menampilkan tombol putar.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <figure>\n    <img src=\"gagak.png\" alt=\"Gagak Kasugai\">\n    <figcaption>Gagak pembawa pesan</figcaption>\n  </figure>\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f3-img",
+     "type": "write",
+     "title": "Potret Pedang",
+     "difficulty": 1,
+     "prompt": "Tampilkan gambar pedang.png dengan teks alternatif \"Pedang Nichirin hitam\".",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"img\",\"count\":1},{\"sel\":\"img\",\"attr\":\"src\",\"value\":\"pedang.png\"},{\"sel\":\"img\",\"attr\":\"alt\",\"value\":\"Pedang Nichirin hitam\"}]",
+       "expected": "✓ img: ada 1\n✓ img punya src=\"pedang.png\"\n✓ img punya alt=\"Pedang Nichirin hitam\"\n"
+      }
+     ],
+     "hints": [
+      "Tag img tidak punya tag penutup.",
+      "src = alamat gambar.",
+      "alt = deskripsi untuk yang tidak bisa melihat."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <img src=\"pedang.png\" alt=\"Pedang Nichirin hitam\">\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f3"
+    },
+    {
+     "id": "web-f3-figure",
+     "type": "write",
+     "title": "Bingkai Kenangan",
+     "difficulty": 2,
+     "prompt": "Bungkus gambar gagak.png (alt \"Gagak Kasugai\") dalam <figure> dengan keterangan \"Gagak pembawa pesan\".",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"figure > img\",\"count\":1},{\"sel\":\"figure > img\",\"alt\":true},{\"sel\":\"figure > figcaption\",\"text\":\"Gagak pembawa pesan\"}]",
+       "expected": "✓ figure > img: ada 1\n✓ figure > img punya alt\n✓ figure > figcaption berisi teks \"Gagak pembawa pesan\"\n"
+      }
+     ],
+     "hints": [
+      "figure membungkus img dan figcaption.",
+      "figcaption = keterangan.",
+      "Jangan lupa alt."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <figure>\n    <img src=\"gagak.png\" alt=\"Gagak Kasugai\">\n    <figcaption>Gagak pembawa pesan</figcaption>\n  </figure>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "f3"
+    },
+    {
+     "id": "web-f3-alt",
+     "type": "quiz",
+     "title": "Untuk Siapa alt?",
+     "difficulty": 1,
+     "prompt": "Fungsi utama atribut alt pada <img> adalah...",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Pengguna tunanetra tidak melihat gambar.",
+      "Juga muncul saat gambar rusak.",
+      "Teks pengganti."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Memberi deskripsi bagi screen reader dan saat gambar gagal dimuat",
+      "Mengatur ukuran gambar",
+      "Menampilkan tooltip saat kursor di atas gambar",
+      "Mempercepat pemuatan gambar"
+     ],
+     "explain": "alt adalah teks pengganti. Tooltip berasal dari atribut title, bukan alt.",
+     "track": "web",
+     "chapter": "f3"
+    },
+    {
+     "id": "web-f3-attr",
+     "type": "answer",
+     "title": "Atribut Sumber",
+     "difficulty": 1,
+     "prompt": "Atribut <img> yang berisi alamat file gambar adalah...",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "source",
+      "Tiga huruf.",
+      "src"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "src"
+     ],
+     "explain": "src = source. Contoh: <img src=\"pedang.png\" alt=\"...\">.",
+     "track": "web",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "<form> mengumpulkan input. Setiap <input> sebaiknya punya <label for=\"id\"> yang cocok dengan id input, supaya mengetuk label memfokuskan input dan screen reader tahu artinya. type=\"email\", \"password\", \"number\" memberi keyboard & validasi yang tepat.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <form>\n    <label for=\"email\">Email</label>\n    <input id=\"email\" type=\"email\" name=\"email\" required>\n    <button type=\"submit\">Masuk</button>\n  </form>\n</body>\n</html>\n"
+    },
+    {
+     "text": "Data rahasia (password) dikirim dengan method=\"post\" supaya tidak muncul di URL. required membuat browser menolak form kosong."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f4-login",
+     "type": "write",
+     "title": "Gerbang Login",
+     "difficulty": 2,
+     "prompt": "Buat form login (method post) berisi: input email (id email, name email, type email, wajib), input password (id sandi, name sandi, type password, wajib), masing-masing dengan <label for> yang cocok, dan tombol submit \"Masuk\".",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"form\",\"attr\":\"method\",\"value\":\"post\"},{\"sel\":\"input#email\",\"attr\":\"type\",\"value\":\"email\"},{\"sel\":\"input#sandi\",\"attr\":\"type\",\"value\":\"password\"},{\"sel\":\"input\",\"attr\":\"required\"},{\"sel\":\"input\",\"label\":true},{\"sel\":\"button[type=submit]\",\"text\":\"Masuk\"}]",
+       "expected": "✓ form punya method=\"post\"\n✓ input#email punya type=\"email\"\n✓ input#sandi punya type=\"password\"\n✓ input punya atribut required\n✓ input punya label\n✓ button[type=submit] berisi teks \"Masuk\"\n"
+      }
+     ],
+     "hints": [
+      "Setiap input punya label for=\"id\".",
+      "type email dan password.",
+      "required untuk wajib diisi."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <form method=\"post\">\n    <label for=\"email\">Email</label>\n    <input id=\"email\" name=\"email\" type=\"email\" required>\n    <label for=\"sandi\">Kata sandi</label>\n    <input id=\"sandi\" name=\"sandi\" type=\"password\" required>\n    <button type=\"submit\">Masuk</button>\n  </form>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "f4"
+    },
+    {
+     "id": "web-f4-select",
+     "type": "write",
+     "title": "Pilih Pernapasan",
+     "difficulty": 1,
+     "prompt": "Buat <select> dengan id napas (punya label \"Pernapasan\") berisi tiga pilihan: Air, Petir, Api.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <!-- tulis HTML-mu di sini -->\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"select#napas > option\",\"count\":3},{\"sel\":\"select#napas\",\"label\":true},{\"sel\":\"option:nth-child(2)\",\"text\":\"Petir\"}]",
+       "expected": "✓ select#napas > option: ada 3\n✓ select#napas punya label\n✓ option:nth-child(2) berisi teks \"Petir\"\n"
+      }
+     ],
+     "hints": [
+      "select berisi beberapa option.",
+      "Label for harus sama dengan id select.",
+      "Urutan: Air, Petir, Api."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <label for=\"napas\">Pernapasan</label>\n  <select id=\"napas\" name=\"napas\">\n    <option>Air</option>\n    <option>Petir</option>\n    <option>Api</option>\n  </select>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f4"
+    },
+    {
+     "id": "web-f4-bug",
+     "type": "bughunt",
+     "title": "Label Salah Alamat",
+     "difficulty": 2,
+     "prompt": "Mengetuk label \"Nama\" tidak memfokuskan input-nya karena label menunjuk id yang salah. Temukan baris yang salah.",
+     "lang": "html",
+     "starter": "<form>\n  <label for=\"name\">Nama</label>\n  <input id=\"nama\" name=\"nama\">\n</form>\n",
+     "bug_line": 2,
+     "tests": [
+      {
+       "input": "[{\"sel\":\"input#nama\",\"label\":true}]",
+       "expected": "✓ input#nama punya label\n"
+      }
+     ],
+     "hints": [
+      "for harus sama persis dengan id input.",
+      "id input-nya \"nama\".",
+      "Perbaiki atribut for."
+     ],
+     "solutions": [
+      "<form>\n  <label for=\"nama\">Nama</label>\n  <input id=\"nama\" name=\"nama\">\n</form>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "f4"
+    },
+    {
+     "id": "web-f4-post",
+     "type": "quiz",
+     "title": "Rahasia di Alamat",
+     "difficulty": 2,
+     "prompt": "Form login memakai method=\"get\". Apa risikonya?",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Lihat ke mana data GET dikirim.",
+      "Query string ?email=...&sandi=...",
+      "URL tersimpan di banyak tempat."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Password muncul di URL, riwayat browser, dan log server",
+      "Form tidak bisa dikirim",
+      "Password terenkripsi dua kali",
+      "Tidak ada bedanya dengan post"
+     ],
+     "explain": "GET menaruh data form di query string URL. Gunakan POST (dan HTTPS) untuk data rahasia.",
+     "track": "web",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "CSS memilih elemen dengan selector: tag (p), class (.nama), id (#nama), keturunan (nav a), anak langsung (ul > li). Satu class boleh dipakai banyak elemen; id harus unik.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\np { color: #555; }\n.hashira { color: crimson; font-weight: bold; }\n  </style>\n</head>\n<body>\n  <p class=\"hashira\">Rengoku</p>\n  <p>Tanjiro</p>\n</body>\n</html>\n"
+    },
+    {
+     "text": "Kalau beberapa aturan bertabrakan, yang menang adalah yang paling spesifik: id > class > tag. Kalau sama spesifiknya, yang ditulis paling akhir menang."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f5-class",
+     "type": "write",
+     "title": "Tanda Hashira",
+     "difficulty": 1,
+     "prompt": "Buat semua elemen ber-class hashira berwarna crimson dan tebal (bold). Elemen lain tidak berubah.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <p class=\"hashira\">Rengoku</p>\n  <p>Tanjiro</p>\n  <p class=\"hashira\">Giyu</p>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".hashira\",\"css\":\"color\",\"value\":\"crimson\"},{\"sel\":\".hashira\",\"css\":\"font-weight\",\"value\":\"bold\"},{\"sel\":\"p:not(.hashira)\",\"css\":\"color\",\"value\":\"black\"}]",
+       "expected": "✓ .hashira { color: crimson }\n✓ .hashira { font-weight: bold }\n✓ p:not(.hashira) { color: black }\n"
+      }
+     ],
+     "hints": [
+      "Selector class diawali titik.",
+      "color dan font-weight.",
+      ".hashira { ... }"
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.hashira { color: crimson; font-weight: bold; }\n  </style>\n</head>\n<body>\n  <p class=\"hashira\">Rengoku</p>\n  <p>Tanjiro</p>\n  <p class=\"hashira\">Giyu</p>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f5"
+    },
+    {
+     "id": "web-f5-nav",
+     "type": "write",
+     "title": "Link di Navigasi",
+     "difficulty": 2,
+     "prompt": "Buat link di dalam nav berwarna white dengan latar (background-color) #222, TANPA mengubah link di luar nav.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n  <p><a href=\"#\">Link biasa</a></p>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"nav a\",\"css\":\"color\",\"value\":\"white\"},{\"sel\":\"nav a\",\"css\":\"background-color\",\"value\":\"#222\"},{\"sel\":\"p a\",\"css\":\"color\",\"value\":\"black\"}]",
+       "expected": "✓ nav a { color: white }\n✓ nav a { background-color: #222 }\n✓ p a { color: black }\n"
+      }
+     ],
+     "hints": [
+      "Selector keturunan: nav a.",
+      "Link lain jangan ikut berubah.",
+      "nav a { color: white; background-color: #222; }"
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nnav a { color: white; background-color: #222; }\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n  <p><a href=\"#\">Link biasa</a></p>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "f5"
+    },
+    {
+     "id": "web-f5-menang",
+     "type": "quiz",
+     "title": "Siapa yang Menang?",
+     "difficulty": 2,
+     "prompt": "Elemen <p id=\"x\" class=\"y\">. Aturan: p { color: red } .y { color: green } #x { color: blue }. Warnanya?",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Bandingkan kekuatan selector.",
+      "id paling kuat di antara ketiganya.",
+      "#x menang."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "blue",
+      "green",
+      "red",
+      "hitam (bawaan)"
+     ],
+     "explain": "Specificity: id (#x) > class (.y) > tag (p). Urutan penulisan hanya penentu kalau specificity sama.",
+     "track": "web",
+     "chapter": "f5"
+    },
+    {
+     "id": "web-f5-bug",
+     "type": "bughunt",
+     "title": "Class yang Tidak Dikenali",
+     "difficulty": 1,
+     "prompt": "Paragraf ber-class hashira seharusnya merah, tapi tetap hitam. Temukan baris yang salah.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<style>\n  .Hashira { color: red; }\n</style>\n<p class=\"hashira\">Rengoku</p>\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "[{\"sel\":\".hashira\",\"css\":\"color\",\"value\":\"red\"}]",
+       "expected": "✓ .hashira { color: red }\n"
+      }
+     ],
+     "hints": [
+      "Nama class peka huruf besar/kecil.",
+      "Bandingkan selector dengan atribut class.",
+      ".hashira, bukan .Hashira."
+     ],
+     "solutions": [
+      "<!doctype html>\n<style>\n  .hashira { color: red; }\n</style>\n<p class=\"hashira\">Rengoku</p>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "Box model: setiap elemen adalah kotak berlapis: content, padding (ruang dalam), border (garis), margin (ruang luar). margin: 0 auto pada elemen block berlebar tetap membuatnya berada di tengah.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.kartu {\n  width: 260px;\n  padding: 16px;\n  border: 3px solid #222;\n  margin: 0 auto;\n}\n  </style>\n</head>\n<body>\n  <div class=\"kartu\">\n    <h2>Kamado Tanjiro</h2>\n    <p>Pernapasan Air</p>\n  </div>\n</body>\n</html>\n"
+    },
+    {
+     "text": "box-sizing: border-box membuat width sudah termasuk padding dan border, sehingga ukuran kotak lebih mudah ditebak. Banyak proyek memasangnya ke semua elemen: * { box-sizing: border-box }."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f6-kartu",
+     "type": "write",
+     "title": "Kartu Slayer",
+     "difficulty": 1,
+     "prompt": "Beri .kartu padding 16px, border 2px solid black, dan margin 8px.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.kartu {\n\n}\n  </style>\n</head>\n<body>\n  <div class=\"kartu\">\n    <h2>Kamado Tanjiro</h2>\n    <p>Pernapasan Air</p>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".kartu\",\"css\":\"padding-top\",\"value\":\"16px\"},{\"sel\":\".kartu\",\"css\":\"padding-left\",\"value\":\"16px\"},{\"sel\":\".kartu\",\"css\":\"border-top-style\",\"value\":\"solid\"},{\"sel\":\".kartu\",\"css\":\"border-bottom-width\",\"value\":\"2px\"},{\"sel\":\".kartu\",\"css\":\"margin-right\",\"value\":\"8px\"}]",
+       "expected": "✓ .kartu { padding-top: 16px }\n✓ .kartu { padding-left: 16px }\n✓ .kartu { border-top-style: solid }\n✓ .kartu { border-bottom-width: 2px }\n✓ .kartu { margin-right: 8px }\n"
+      }
+     ],
+     "hints": [
+      "padding = ruang di dalam border.",
+      "border: tebal gaya warna.",
+      "margin = ruang di luar border."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.kartu {\n  padding: 16px;\n  border: 2px solid black;\n  margin: 8px;\n}\n  </style>\n</head>\n<body>\n  <div class=\"kartu\">\n    <h2>Kamado Tanjiro</h2>\n    <p>Pernapasan Air</p>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f6"
+    },
+    {
+     "id": "web-f6-tengah",
+     "type": "write",
+     "title": "Di Tengah Panggung",
+     "difficulty": 2,
+     "prompt": "Buat .kartu lebarnya 300px dan berada di tengah secara horizontal memakai margin (atas-bawah 0).",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.kartu {\n\n}\n  </style>\n</head>\n<body>\n  <div class=\"kartu\">\n    <h2>Kamado Tanjiro</h2>\n    <p>Pernapasan Air</p>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".kartu\",\"css\":\"width\",\"value\":\"300px\"},{\"sel\":\".kartu\",\"css\":\"margin-left\",\"value\":\"auto\"},{\"sel\":\".kartu\",\"css\":\"margin-right\",\"value\":\"auto\"},{\"sel\":\".kartu\",\"css\":\"margin-top\",\"value\":\"0\"}]",
+       "expected": "✓ .kartu { width: 300px }\n✓ .kartu { margin-left: auto }\n✓ .kartu { margin-right: auto }\n✓ .kartu { margin-top: 0 }\n"
+      }
+     ],
+     "hints": [
+      "Elemen block butuh lebar tetap untuk ditengahkan.",
+      "margin kiri dan kanan auto.",
+      "margin: 0 auto;"
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.kartu {\n  width: 300px;\n  margin: 0 auto;\n}\n  </style>\n</head>\n<body>\n  <div class=\"kartu\">\n    <h2>Kamado Tanjiro</h2>\n    <p>Pernapasan Air</p>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "f6"
+    },
+    {
+     "id": "web-f6-boxsizing",
+     "type": "quiz",
+     "title": "Lebar yang Jujur",
+     "difficulty": 2,
+     "prompt": "Sebuah kotak punya width: 200px, padding: 20px, border: 5px. Dengan box-sizing: border-box, berapa lebar total yang terlihat?",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "border-box = width mencakup semuanya.",
+      "Konten yang mengecil.",
+      "Lebar total tetap sesuai width."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "200px",
+      "250px",
+      "240px",
+      "210px"
+     ],
+     "explain": "Dengan border-box, width SUDAH termasuk padding dan border; area konten yang menyusut menjadi 150px. Tanpa border-box (content-box) lebarnya 200 + 2×20 + 2×5 = 250px.",
+     "track": "web",
+     "chapter": "f6"
+    },
+    {
+     "id": "web-f6-padding",
+     "type": "answer",
+     "title": "Ruang Dalam",
+     "difficulty": 1,
+     "prompt": "Properti CSS untuk ruang di antara isi dan border elemen adalah...",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Bukan margin.",
+      "Bantalan.",
+      "padding"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "padding"
+     ],
+     "explain": "padding = ruang dalam; margin = ruang luar (di luar border).",
+     "track": "web",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Warna bisa ditulis dengan nama (crimson), hex (#b3122e), atau rgb(). Tipografi: font-family (pilih cadangan, misalnya sans-serif), font-size, font-weight, line-height (jarak baris, 1.5–1.7 nyaman dibaca), text-align.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nbody { font-family: Georgia, serif; line-height: 1.6; }\nh1 { color: #b3122e; }\n  </style>\n</head>\n<body>\n  <h1>Korps</h1>\n  <p>Teks yang nyaman dibaca punya jarak baris cukup.</p>\n</body>\n</html>\n"
+    },
+    {
+     "text": "Pastikan kontras teks dan latar cukup (minimal 4.5:1 untuk teks biasa). Teks abu-abu muda di atas putih sulit dibaca, terutama di layar HP di bawah matahari."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-f7-tipografi",
+     "type": "write",
+     "title": "Gaya Surat Korps",
+     "difficulty": 1,
+     "prompt": "Atur body memakai font-family sans-serif dan line-height 1.6, lalu h1 berwarna #b3122e.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <h1>Surat Korps</h1>\n  <p>Misi berikutnya di Desa Penempa.</p>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"p\",\"css\":\"font-family\",\"value\":\"sans-serif\"},{\"sel\":\"p\",\"css\":\"line-height\",\"value\":\"1.6\"},{\"sel\":\"h1\",\"css\":\"color\",\"value\":\"#b3122e\"}]",
+       "expected": "✓ p { font-family: sans-serif }\n✓ p { line-height: 1.6 }\n✓ h1 { color: #b3122e }\n"
+      }
+     ],
+     "hints": [
+      "font-family dan line-height diwariskan ke anak.",
+      "Cukup pasang di body.",
+      "h1 { color: #b3122e; }"
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nbody { font-family: sans-serif; line-height: 1.6; }\nh1 { color: #b3122e; }\n  </style>\n</head>\n<body>\n  <h1>Surat Korps</h1>\n  <p>Misi berikutnya di Desa Penempa.</p>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f7"
+    },
+    {
+     "id": "web-f7-footer",
+     "type": "write",
+     "title": "Kaki Halaman",
+     "difficulty": 1,
+     "prompt": "Buat footer: teks rata tengah, tebal, dan berwarna gray.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <main><p>Isi</p></main>\n  <footer>Hak cipta Korps</footer>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"footer\",\"css\":\"text-align\",\"value\":\"center\"},{\"sel\":\"footer\",\"css\":\"font-weight\",\"value\":\"bold\"},{\"sel\":\"footer\",\"css\":\"color\",\"value\":\"gray\"}]",
+       "expected": "✓ footer { text-align: center }\n✓ footer { font-weight: bold }\n✓ footer { color: gray }\n"
+      }
+     ],
+     "hints": [
+      "text-align untuk perataan.",
+      "font-weight: bold.",
+      "color: gray."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nfooter { text-align: center; font-weight: bold; color: gray; }\n  </style>\n</head>\n<body>\n  <main><p>Isi</p></main>\n  <footer>Hak cipta Korps</footer>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f7"
+    },
+    {
+     "id": "web-f7-bug",
+     "type": "bughunt",
+     "title": "Warna Ejaan Inggris",
+     "difficulty": 1,
+     "prompt": "Judul seharusnya merah tua, tapi tetap hitam karena nama properti salah. Temukan baris yang salah.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<style>\n  h1 {\n    colour: darkred;\n  }\n</style>\n<h1>Korps</h1>\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "input": "[{\"sel\":\"h1\",\"css\":\"color\",\"value\":\"darkred\"}]",
+       "expected": "✓ h1 { color: darkred }\n"
+      }
+     ],
+     "hints": [
+      "CSS memakai ejaan Amerika.",
+      "Properti yang tidak dikenal diabaikan diam-diam.",
+      "color, bukan colour."
+     ],
+     "solutions": [
+      "<!doctype html>\n<style>\n  h1 {\n    color: darkred;\n  }\n</style>\n<h1>Korps</h1>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "f7"
+    },
+    {
+     "id": "web-f7-kontras",
+     "type": "quiz",
+     "title": "Mudah Dibaca?",
+     "difficulty": 1,
+     "prompt": "Kombinasi mana yang PALING mudah dibaca untuk paragraf panjang?",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Cari kontras paling tinggi.",
+      "Gelap di atas terang.",
+      "Hindari merah-hijau."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Teks #222 di atas latar #fafafa",
+      "Teks #ccc di atas latar #fff",
+      "Teks kuning di atas latar putih",
+      "Teks merah di atas latar hijau"
+     ],
+     "explain": "Kontras tinggi (gelap di atas terang) membuat teks mudah dibaca. Abu-abu muda di atas putih dan kuning di atas putih punya kontras rendah; merah-hijau menyulitkan orang buta warna.",
+     "track": "web",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "Flexbox menyusun anak-anak elemen dalam satu baris (atau kolom): display: flex pada induknya. justify-content mengatur sumbu utama (start, center, space-between), align-items sumbu silang, gap jarak antar item.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nnav ul {\n  display: flex;\n  justify-content: space-between;\n  gap: 12px;\n  list-style: none;\n  padding: 0;\n}\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-m1-nav",
+     "type": "write",
+     "title": "Menu Sebaris",
+     "difficulty": 2,
+     "prompt": "Jadikan nav ul flex container dengan item tersebar (space-between) dan tanpa bullet (list-style: none).",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"nav ul\",\"css\":\"display\",\"value\":\"flex\"},{\"sel\":\"nav ul\",\"css\":\"justify-content\",\"value\":\"space-between\"},{\"sel\":\"nav ul\",\"css\":\"list-style\",\"value\":\"none\"}]",
+       "expected": "✓ nav ul { display: flex }\n✓ nav ul { justify-content: space-between }\n✓ nav ul { list-style: none }\n"
+      }
+     ],
+     "hints": [
+      "display: flex pada ul (induk li).",
+      "justify-content mengatur penyebaran.",
+      "list-style: none menghapus bullet."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nnav ul {\n  display: flex;\n  justify-content: space-between;\n  list-style: none;\n}\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m1"
+    },
+    {
+     "id": "web-m1-tengah",
+     "type": "write",
+     "title": "Tepat di Tengah",
+     "difficulty": 2,
+     "prompt": "Buat .panggung menjadi flex container yang menaruh isinya tepat di tengah (horizontal & vertikal), dengan tinggi 200px.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <div class=\"panggung\">\n    <p>Iblis tertebas!</p>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".panggung\",\"css\":\"display\",\"value\":\"flex\"},{\"sel\":\".panggung\",\"css\":\"justify-content\",\"value\":\"center\"},{\"sel\":\".panggung\",\"css\":\"align-items\",\"value\":\"center\"},{\"sel\":\".panggung\",\"css\":\"height\",\"value\":\"200px\"}]",
+       "expected": "✓ .panggung { display: flex }\n✓ .panggung { justify-content: center }\n✓ .panggung { align-items: center }\n✓ .panggung { height: 200px }\n"
+      }
+     ],
+     "hints": [
+      "justify-content = horizontal (sumbu utama).",
+      "align-items = vertikal (sumbu silang).",
+      "Keduanya center."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.panggung {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 200px;\n}\n  </style>\n</head>\n<body>\n  <div class=\"panggung\">\n    <p>Iblis tertebas!</p>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m1"
+    },
+    {
+     "id": "web-m1-wrap",
+     "type": "write",
+     "title": "Kartu yang Membungkus",
+     "difficulty": 2,
+     "prompt": "Buat .galeri flex container yang membungkus item ke baris berikutnya (flex-wrap: wrap) dengan gap 16px, dan setiap .item tumbuh rata (flex: 1).",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".galeri\",\"css\":\"display\",\"value\":\"flex\"},{\"sel\":\".galeri\",\"css\":\"flex-wrap\",\"value\":\"wrap\"},{\"sel\":\".galeri\",\"css\":\"column-gap\",\"value\":\"16px\"},{\"sel\":\".item\",\"css\":\"flex-grow\",\"value\":\"1\"}]",
+       "expected": "✓ .galeri { display: flex }\n✓ .galeri { flex-wrap: wrap }\n✓ .galeri { column-gap: 16px }\n✓ .item { flex-grow: 1 }\n"
+      }
+     ],
+     "hints": [
+      "flex-wrap: wrap mengizinkan baris baru.",
+      "gap memberi jarak.",
+      "flex: 1 pada item."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 16px;\n}\n.item {\n  flex: 1;\n}\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "CSS Grid membagi area menjadi baris dan kolom. grid-template-columns: repeat(3, 1fr) membuat tiga kolom sama lebar (fr = bagian dari sisa ruang). Item bisa melebar dengan grid-column: span 2.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-m2-tiga",
+     "type": "write",
+     "title": "Galeri Tiga Kolom",
+     "difficulty": 2,
+     "prompt": "Jadikan .galeri grid dengan tiga kolom sama lebar (repeat(3, 1fr)) dan gap 12px.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".galeri\",\"css\":\"display\",\"value\":\"grid\"},{\"sel\":\".galeri\",\"css\":\"grid-template-columns\",\"value\":\"repeat(3, 1fr)\"},{\"sel\":\".galeri\",\"css\":\"row-gap\",\"value\":\"12px\"}]",
+       "expected": "✓ .galeri { display: grid }\n✓ .galeri { grid-template-columns: repeat(3, 1fr) }\n✓ .galeri { row-gap: 12px }\n"
+      }
+     ],
+     "hints": [
+      "display: grid.",
+      "grid-template-columns menentukan kolom.",
+      "repeat(3, 1fr)."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m2"
+    },
+    {
+     "id": "web-m2-span",
+     "type": "write",
+     "title": "Pahlawan Utama",
+     "difficulty": 2,
+     "prompt": "Dalam grid tiga kolom (sudah disediakan), buat item pertama (.item:first-child) melebar dua kolom.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri { display: grid; grid-template-columns: repeat(3, 1fr); }\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".item:first-child\",\"css\":\"grid-column\",\"value\":\"span 2\"},{\"sel\":\".galeri\",\"css\":\"display\",\"value\":\"grid\"}]",
+       "expected": "✓ .item:first-child { grid-column: span 2 }\n✓ .galeri { display: grid }\n"
+      }
+     ],
+     "hints": [
+      "Atur di item, bukan di galeri.",
+      "grid-column: span n.",
+      "span 2."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri { display: grid; grid-template-columns: repeat(3, 1fr); }\n.item:first-child { grid-column: span 2; }\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m2"
+    },
+    {
+     "id": "web-m2-dua",
+     "type": "write",
+     "title": "Kolom Samping",
+     "difficulty": 2,
+     "prompt": "Buat .tata letak grid dua kolom: kolom pertama 200px, kolom kedua mengisi sisa ruang (1fr), gap 20px.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n\n  </style>\n</head>\n<body>\n  <div class=\"tata\">\n    <aside>Menu</aside>\n    <main>Isi</main>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".tata\",\"css\":\"display\",\"value\":\"grid\"},{\"sel\":\".tata\",\"css\":\"grid-template-columns\",\"value\":\"200px 1fr\"},{\"sel\":\".tata\",\"css\":\"column-gap\",\"value\":\"20px\"}]",
+       "expected": "✓ .tata { display: grid }\n✓ .tata { grid-template-columns: 200px 1fr }\n✓ .tata { column-gap: 20px }\n"
+      }
+     ],
+     "hints": [
+      "Dua nilai = dua kolom.",
+      "Kolom tetap: 200px.",
+      "Sisa ruang: 1fr."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.tata {\n  display: grid;\n  grid-template-columns: 200px 1fr;\n  gap: 20px;\n}\n  </style>\n</head>\n<body>\n  <div class=\"tata\">\n    <aside>Menu</aside>\n    <main>Isi</main>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "Desain responsif menyesuaikan tampilan dengan lebar layar. Tambahkan <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> agar HP tidak memperkecil halaman, lalu pakai @media (max-width: 600px) { ... } untuk aturan khusus layar kecil.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri { display: grid; grid-template-columns: repeat(3, 1fr); }\n@media (max-width: 600px) {\n  .galeri { grid-template-columns: 1fr; }\n}\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-m3-viewport",
+     "type": "write",
+     "title": "Kacamata untuk HP",
+     "difficulty": 1,
+     "prompt": "Tambahkan meta viewport dengan content \"width=device-width, initial-scale=1\" di dalam head.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <h1>Korps</h1>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"head > meta[name=viewport]\",\"count\":1},{\"sel\":\"meta[name=viewport]\",\"attr\":\"content\",\"value\":\"width=device-width, initial-scale=1\"}]",
+       "expected": "✓ head > meta[name=viewport]: ada 1\n✓ meta[name=viewport] punya content=\"width=device-width, initial-scale=1\"\n"
+      }
+     ],
+     "hints": [
+      "Meta tag ada di head.",
+      "name=\"viewport\".",
+      "content=\"width=device-width, initial-scale=1\""
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Korps</title>\n</head>\n<body>\n  <h1>Korps</h1>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "web",
+     "chapter": "m3"
+    },
+    {
+     "id": "web-m3-galeri",
+     "type": "write",
+     "title": "Satu Kolom di HP",
+     "difficulty": 2,
+     "prompt": "Galeri sudah tiga kolom. Tambahkan media query sehingga pada lebar maksimal 600px galeri menjadi satu kolom (grid-template-columns: 1fr).",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri { display: grid; grid-template-columns: repeat(3, 1fr); }\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\".galeri\",\"css\":\"grid-template-columns\",\"value\":\"repeat(3, 1fr)\",\"width\":1024},{\"sel\":\".galeri\",\"css\":\"grid-template-columns\",\"value\":\"1fr\",\"width\":400}]",
+       "expected": "✓ .galeri { grid-template-columns: repeat(3, 1fr) } saat lebar 1024px\n✓ .galeri { grid-template-columns: 1fr } saat lebar 400px\n"
+      }
+     ],
+     "hints": [
+      "@media (max-width: 600px) { ... }",
+      "Di dalamnya timpa grid-template-columns.",
+      "Satu kolom = 1fr."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\n.galeri { display: grid; grid-template-columns: repeat(3, 1fr); }\n@media (max-width: 600px) {\n  .galeri { grid-template-columns: 1fr; }\n}\n  </style>\n</head>\n<body>\n  <div class=\"galeri\">\n    <div class=\"item\">Tanjiro</div>\n    <div class=\"item\">Zenitsu</div>\n    <div class=\"item\">Inosuke</div>\n    <div class=\"item\">Kanao</div>\n    <div class=\"item\">Genya</div>\n    <div class=\"item\">Nezuko</div>\n  </div>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m3"
+    },
+    {
+     "id": "web-m3-nav",
+     "type": "write",
+     "title": "Menu Bertumpuk",
+     "difficulty": 2,
+     "prompt": "Menu nav ul sudah flex sebaris. Di layar maksimal 600px, ubah arahnya menjadi kolom (flex-direction: column).",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nnav ul { display: flex; gap: 12px; }\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"nav ul\",\"css\":\"flex-direction\",\"value\":\"row\",\"width\":1024},{\"sel\":\"nav ul\",\"css\":\"flex-direction\",\"value\":\"column\",\"width\":360},{\"sel\":\"nav ul\",\"css\":\"display\",\"value\":\"flex\",\"width\":360}]",
+       "expected": "✓ nav ul { flex-direction: row } saat lebar 1024px\n✓ nav ul { flex-direction: column } saat lebar 360px\n✓ nav ul { display: flex } saat lebar 360px\n"
+      }
+     ],
+     "hints": [
+      "Media query untuk layar kecil.",
+      "flex-direction: column menumpuk item.",
+      "Di layar lebar tetap row."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n  <style>\nnav ul { display: flex; gap: 12px; }\n@media (max-width: 600px) {\n  nav ul { flex-direction: column; }\n}\n  </style>\n</head>\n<body>\n  <nav>\n    <ul>\n      <li><a href=\"#\">Beranda</a></li>\n      <li><a href=\"#\">Misi</a></li>\n      <li><a href=\"#\">Korps</a></li>\n    </ul>\n  </nav>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "Aksesibilitas membuat halaman bisa dipakai semua orang: gambar punya alt, input punya label, tombol memakai <button> (bukan <div> yang bisa diklik), urutan heading masuk akal, dan halaman punya lang. Uji dengan keyboard: semua bisa dijangkau dengan Tab.",
+     "code": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <button type=\"button\">Kirim gagak</button>\n  <img src=\"gagak.png\" alt=\"Gagak Kasugai terbang\">\n</body>\n</html>\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "web-m4-perbaiki",
+     "type": "write",
+     "title": "Halaman Ramah Semua",
+     "difficulty": 2,
+     "prompt": "Perbaiki halaman ini: beri alt yang bermakna untuk KEDUA gambar, dan ganti div yang dipakai sebagai tombol menjadi <button type=\"button\"> dengan teks yang sama.",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <img src=\"tanjiro.png\">\n  <img src=\"nezuko.png\" alt=\"\">\n  <div onclick=\"kirim()\">Kirim laporan</div>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"img\",\"alt\":true},{\"sel\":\"img\",\"count\":2},{\"sel\":\"button[type=button]\",\"text\":\"Kirim laporan\"},{\"sel\":\"div[onclick]\",\"count\":0}]",
+       "expected": "✓ img punya alt\n✓ img: ada 2\n✓ button[type=button] berisi teks \"Kirim laporan\"\n✓ div[onclick]: tidak ada\n"
+      }
+     ],
+     "hints": [
+      "Setiap gambar butuh alt yang menjelaskan isinya.",
+      "div tidak bisa difokus keyboard.",
+      "<button type=\"button\">Kirim laporan</button>"
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Korps</title>\n</head>\n<body>\n  <img src=\"tanjiro.png\" alt=\"Tanjiro memegang pedang\">\n  <img src=\"nezuko.png\" alt=\"Nezuko dengan bambu di mulut\">\n  <button type=\"button\">Kirim laporan</button>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m4"
+    },
+    {
+     "id": "web-m4-form",
+     "type": "write",
+     "title": "Formulir yang Bisa Dibaca",
+     "difficulty": 2,
+     "prompt": "Setiap input di form pendaftaran harus punya label. Tambahkan label \"Nama\" untuk #nama dan \"Umur\" untuk #umur, dan beri html atribut lang=\"id\".",
+     "lang": "html",
+     "starter": "<!doctype html>\n<html>\n<body>\n  <form>\n    <input id=\"nama\" placeholder=\"Nama\">\n    <input id=\"umur\" type=\"number\" placeholder=\"Umur\">\n  </form>\n</body>\n</html>\n",
+     "tests": [
+      {
+       "input": "[{\"sel\":\"input\",\"label\":true},{\"sel\":\"html\",\"attr\":\"lang\",\"value\":\"id\"},{\"sel\":\"label[for=umur]\",\"text\":\"Umur\"}]",
+       "expected": "✓ input punya label\n✓ html punya lang=\"id\"\n✓ label[for=umur] berisi teks \"Umur\"\n"
+      }
+     ],
+     "hints": [
+      "label for=\"id-input\".",
+      "Atribut lang ada di tag html.",
+      "Teks label: Nama dan Umur."
+     ],
+     "solutions": [
+      "<!doctype html>\n<html lang=\"id\">\n<body>\n  <form>\n    <label for=\"nama\">Nama</label>\n    <input id=\"nama\">\n    <label for=\"umur\">Umur</label>\n    <input id=\"umur\" type=\"number\">\n  </form>\n</body>\n</html>\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "web",
+     "chapter": "m4"
+    },
+    {
+     "id": "web-m4-placeholder",
+     "type": "quiz",
+     "title": "Placeholder Bukan Label",
+     "difficulty": 2,
+     "prompt": "Mengapa placeholder tidak cukup sebagai pengganti <label>?",
+     "lang": "html",
+     "tests": [],
+     "hints": [
+      "Apa yang terjadi saat mulai mengetik?",
+      "Pengguna bisa lupa isi field.",
+      "Label tetap terlihat."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Placeholder hilang saat mengetik dan tidak selalu dibaca screen reader",
+      "Placeholder tidak bisa diberi warna",
+      "Placeholder membuat form lebih lambat",
+      "Placeholder hanya berfungsi di HP"
+     ],
+     "explain": "Saat pengguna mulai mengetik, placeholder lenyap sehingga mereka lupa field itu untuk apa. Label tetap terlihat dan terhubung dengan input.",
+     "track": "web",
+     "chapter": "m4"
+    }
+   ]
+  }
+ }
+}

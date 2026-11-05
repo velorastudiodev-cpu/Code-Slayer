@@ -1,0 +1,136 @@
+lesson:
+  - text: Tes otomatis memeriksa apakah kode berperilaku sesuai harapan. Bentuk paling sederhana adalah assert kondisi, yang diam kalau benar dan melempar AssertionError kalau salah. Tes yang baik mencakup kasus biasa DAN kasus tepi seperti list kosong, angka 0, atau angka negatif.
+    code: |
+      def maks(daftar):
+          return max(daftar) if daftar else None
+      assert maks([3, 9, 2]) == 9
+      assert maks([-5]) == -5
+      assert maks([]) is None
+      print("semua tes lolos")
+  - text: Di proyek nyata, tes dikumpulkan dengan unittest atau pytest dan dijalankan otomatis setiap kode berubah. Prinsipnya tetap sama, yaitu panggil fungsi dengan input tertentu lalu bandingkan hasilnya dengan harapan.
+    code: |
+      import unittest
+      class TesTambah(unittest.TestCase):
+          def test_dasar(self):
+              self.assertEqual(1 + 1, 2)
+      hasil = unittest.main(argv=["x"], exit=False, verbosity=0).result
+      print("gagal:", len(hasil.failures))
+exercises:
+  - id: py-l3-prima
+    type: write
+    title: Lolos Uji Prima
+    difficulty: 2
+    prompt: Lengkapi fungsi adalah_prima(n) sampai semua assert lolos. Program akan mencetak OK.
+    starter: |
+      def adalah_prima(n):
+          pass  # lengkapi
+      assert adalah_prima(2)
+      assert adalah_prima(97)
+      assert not adalah_prima(1)
+      assert not adalah_prima(0)
+      assert not adalah_prima(91)
+      assert not adalah_prima(-7)
+      print("OK")
+    hints: |
+      Bilangan ≤ 1 bukan prima.
+      Cukup periksa pembagi sampai akar n.
+      return n > 1 and all(n % d for d in range(2, int(n ** 0.5) + 1))
+    solution: |
+      def adalah_prima(n):
+          return n > 1 and all(n % d for d in range(2, int(n ** 0.5) + 1))
+      assert adalah_prima(2)
+      assert adalah_prima(97)
+      assert not adalah_prima(1)
+      assert not adalah_prima(0)
+      assert not adalah_prima(91)
+      assert not adalah_prima(-7)
+      print("OK")
+  - id: py-l3-rata
+    type: write
+    title: Kasus Tepi Rata-rata
+    difficulty: 1
+    prompt: Lengkapi rata2(daftar) sampai semua assert lolos, termasuk kasus list kosong.
+    starter: |
+      def rata2(daftar):
+          return sum(daftar) / len(daftar)
+      assert rata2([2, 4]) == 3
+      assert rata2([5]) == 5
+      assert rata2([]) == 0
+      print("OK")
+    hints: |
+      Apa yang terjadi kalau len(daftar) == 0?
+      Tangani list kosong secara khusus.
+      if not daftar: return 0
+    solution: |
+      def rata2(daftar):
+          if not daftar:
+              return 0
+          return sum(daftar) / len(daftar)
+      assert rata2([2, 4]) == 3
+      assert rata2([5]) == 5
+      assert rata2([]) == 0
+      print("OK")
+  - id: py-l3-predict
+    type: predict
+    title: Laporan Penguji
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      def tes(nama, hasil, harapan):
+          print(nama, "LOLOS" if hasil == harapan else "GAGAL")
+      tes("tambah", 2 + 2, 4)
+      tes("bagi", 7 // 2, 3.5)
+      tes("upper", "a".upper(), "A")
+    hints: |
+      Bandingkan hasil dan harapan untuk tiap tes.
+      7 // 2 adalah 3, bukan 3.5.
+      Hanya satu tes yang gagal.
+    solution: x
+  - id: py-l3-bug-range
+    type: bughunt
+    title: Tes Menangkap Iblis
+    difficulty: 1
+    prompt: Tes membuktikan jumlah_sampai(n) salah, karena seharusnya menjumlah 1 sampai n. Temukan bug-nya sampai OK tercetak.
+    starter: |
+      def jumlah_sampai(n):
+          return sum(range(n))
+      assert jumlah_sampai(1) == 1
+      assert jumlah_sampai(4) == 10
+      print("OK")
+    bug_line: 2
+    hints: |
+      range(n) berhenti sebelum n.
+      n sendiri tidak ikut dijumlah.
+      sum(range(1, n + 1))
+    solution: |
+      def jumlah_sampai(n):
+          return sum(range(1, n + 1))
+      assert jumlah_sampai(1) == 1
+      assert jumlah_sampai(4) == 10
+      print("OK")
+  - id: py-l3-hitung-kata
+    type: write
+    title: Penghitung Kata Teruji
+    difficulty: 2
+    prompt: Lengkapi hitung_kata(s) yang mengembalikan dict kata ke jumlahnya (tidak membedakan huruf besar/kecil, abaikan spasi berlebih) sampai semua assert lolos.
+    starter: |
+      def hitung_kata(s):
+          pass  # lengkapi
+      assert hitung_kata("") == {}
+      assert hitung_kata("Kaa kaa") == {"kaa": 2}
+      assert hitung_kata("  air   api air ") == {"air": 2, "api": 1}
+      print("OK")
+    hints: |
+      split() tanpa argumen sudah mengabaikan spasi berlebih.
+      lower() setiap kata.
+      d[k] = d.get(k, 0) + 1
+    solution: |
+      def hitung_kata(s):
+          d = {}
+          for k in s.lower().split():
+              d[k] = d.get(k, 0) + 1
+          return d
+      assert hitung_kata("") == {}
+      assert hitung_kata("Kaa kaa") == {"kaa": 2}
+      assert hitung_kata("  air   api air ") == {"air": 2, "api": 1}
+      print("OK")

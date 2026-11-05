@@ -1,0 +1,148 @@
+lesson:
+  - text: JS modern punya banyak idiom ringkas. Ada destructuring (const { nama, umur = 0 } = obj), spread untuk menyalin dan menggabung, optional chaining (a?.b), nullish coalescing (x ?? default), dan rantai map, filter, serta reduce sebagai pengganti loop manual.
+    code: |
+      const s = { nama: "Giyu", rank: "Hashira", misi: { lokasi: "Natagumo" } }
+      const { nama, umur = 21, misi: { lokasi } } = s
+      console.log(nama, umur, lokasi, s.pedang?.warna ?? "biru")
+      console.log({ ...s, rank: "Pilar Air" }.rank)
+  - text: Object.entries dan Object.fromEntries mengubah objek menjadi pasangan dan sebaliknya. Array.from({ length - n }) membuat array berisi n item. Prinsipnya, kode yang jelas lebih penting daripada kode yang paling pendek.
+    code: |
+      const skor = { Tanjiro: 90, Zenitsu: 75 }
+      const naik = Object.fromEntries(Object.entries(skor).map(([k, v]) => [k, v + 5]))
+      console.log(naik, Array.from({ length: 4 }, (_, i) => i * i))
+exercises:
+  - id: js-p2-destructuring
+    type: write
+    title: Bongkar Laporan
+    difficulty: 1
+    prompt: 'Input berupa JSON objek slayer, misalnya {"nama":"Tanjiro","misi":{"lokasi":"Natagumo"}}. Dengan destructuring, cetak "<nama> di <lokasi> (rank <rank>)". rank default "Mizunoto", dan lokasi default "markas" jika misi tidak ada.'
+    tests: ['{"nama":"Tanjiro","misi":{"lokasi":"Natagumo"}}', '{"nama":"Giyu","rank":"Hashira"}']
+    hints: |
+      const { nama, rank = "Mizunoto", misi } = data
+      misi?.lokasi ?? "markas"
+      Gabungkan dengan template literal.
+    solution: |
+      const { nama, rank = "Mizunoto", misi } = JSON.parse(readline())
+      console.log(`${nama} di ${misi?.lokasi ?? "markas"} (rank ${rank})`)
+  - id: js-p2-papan
+    type: write
+    title: Papan Skor
+    difficulty: 2
+    prompt: 'Baris 1 berisi nama-nama, baris 2 berisi skor masing-masing. Cetak "<nama>: <skor>" urut dari skor tertinggi. Jika seri, urut menurut nama.'
+    tests: ["Tanjiro Zenitsu Inosuke\n90 75 90", "A\n1"]
+    hints: |
+      Pasangkan nama dan skor dengan map((n, i) => [n, skor[i]]).
+      sort dengan b[1] - a[1] || a[0].localeCompare(b[0]).
+      forEach untuk mencetak.
+    solution: |
+      const nama = readline().split(" ")
+      const skor = readline().split(" ").map(Number)
+      nama.map((n, i) => [n, skor[i]])
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .forEach(([n, s]) => console.log(`${n}: ${s}`))
+  - id: js-p2-predict
+    type: predict
+    title: Idiom Modern
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      const [a, , b = 9, ...sisa] = [1, 2, undefined, 4, 5]
+      console.log(a, b, sisa)
+      console.log(0 ?? "x", 0 || "x", null?.y)
+      console.log(Object.fromEntries([["k", 1]]), [..."aba"].length)
+    hints: |
+      Elemen kosong di destructuring dilewati, dan default dipakai saat nilainya undefined.
+      ?? hanya mengganti null atau undefined, sedangkan || mengganti semua yang falsy.
+      null?.y menghasilkan undefined tanpa error.
+    solution: x
+  - id: js-p2-parsons
+    type: parsons
+    title: Akumulasi Poin
+    difficulty: 2
+    prompt: Baris pertama berisi n, lalu n baris "nama poin". Susun program yang menjumlahkan poin per nama dan mencetaknya urut menurut nama.
+    tests: ["4\nTanjiro 5\nZenitsu 3\nTanjiro 2\nInosuke 4", "1\nA 1"]
+    hints: |
+      Siapkan object kosong sebelum loop.
+      ?? 0 untuk nama yang belum ada.
+      Cetak setelah semua dibaca.
+    solution: |
+      const n = Number(readline())
+      const skor = {}
+      for (let i = 0; i < n; i++) {
+        const [nama, poin] = readline().split(" ")
+        skor[nama] = (skor[nama] ?? 0) + Number(poin)
+      }
+      for (const [nama, total] of Object.entries(skor).sort()) console.log(nama, total)
+  - id: js-p2-kelompok
+    type: write
+    title: Rantai Data
+    difficulty: 2
+    prompt: 'Input berupa JSON array slayer {nama, rank, misi}. Cetak setiap rank (urut abjad) dengan format "<rank>: <total misi> misi (<nama-nama urut abjad, dipisah koma>)". Selesaikan dengan reduce dan method array.'
+    tests: ['[{"nama":"Tanjiro","rank":"Kanoe","misi":12},{"nama":"Giyu","rank":"Hashira","misi":80},{"nama":"Zenitsu","rank":"Kanoe","misi":9}]', '[]']
+    hints: |
+      reduce ke object rank → { misi, nama: [] }.
+      Object.keys(...).sort() untuk urutan rank.
+      nama.sort().join(",")
+    solution: |
+      const data = JSON.parse(readline())
+      const g = data.reduce((acc, s) => {
+        acc[s.rank] ??= { misi: 0, nama: [] }
+        acc[s.rank].misi += s.misi
+        acc[s.rank].nama.push(s.nama)
+        return acc
+      }, {})
+      for (const r of Object.keys(g).sort()) console.log(`${r}: ${g[r].misi} misi (${g[r].nama.sort().join(",")})`)
+      if (!data.length) console.log("(tidak ada data)")
+  - id: js-p2-refactor-rantai
+    type: refactor
+    title: Refactor ke Rantai Array
+    difficulty: 2
+    prompt: Ganti loop manual ini dengan filter, map, dan reduce. Output harus tetap sama.
+    starter: |
+      const a = readline().split(" ").map(Number)
+      let total = 0
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] % 2 === 0) {
+          total += a[i] * a[i]
+        }
+      }
+      console.log(total)
+    rules:
+      - text: Tanpa loop for
+        forbid: '\bfor\s*\('
+      - text: Memakai filter dan reduce
+        require: 'filter\([\s\S]*reduce\('
+    tests: ["1 2 3 4", "1 3", "10"]
+    hints: |
+      filter(x => x % 2 === 0)
+      map(x => x * x)
+      reduce((s, x) => s + x, 0)
+    solution: |
+      const a = readline().split(" ").map(Number)
+      console.log(a.filter(x => x % 2 === 0).map(x => x * x).reduce((s, x) => s + x, 0))
+  - id: js-p2-refactor-destructuring
+    type: refactor
+    title: Refactor dengan Destructuring
+    difficulty: 1
+    prompt: Ringkas dengan destructuring dan template literal. Output harus tetap sama.
+    starter: |
+      const p = JSON.parse(readline())
+      const nama = p.nama
+      const rank = p.rank
+      const umur = p.umur
+      console.log(nama + " (" + rank + ", " + umur + ")")
+    rules:
+      - text: Memakai destructuring const { ... }
+        require: 'const\s*\{'
+      - text: Memakai template literal
+        require: '`'
+      - text: Maksimal 2 baris kode
+        max_lines: 2
+    tests: ['{"nama":"Giyu","rank":"Hashira","umur":21}', '{"nama":"Kanao","rank":"Tsuguko","umur":16}']
+    hints: |
+      const { nama, rank, umur } = JSON.parse(readline())
+      Template literal memakai backtick dan ${}.
+      Dua baris sudah cukup.
+    solution: |
+      const { nama, rank, umur } = JSON.parse(readline())
+      console.log(`${nama} (${rank}, ${umur})`)

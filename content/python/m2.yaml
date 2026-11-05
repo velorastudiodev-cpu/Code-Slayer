@@ -1,0 +1,121 @@
+lesson:
+  - text: String adalah urutan karakter. Indeks dan slicing berlaku sama seperti list, misalnya s[0], s[-1], s[1:4], dan s[::-1]. String tidak bisa diubah, jadi setiap method menghasilkan string baru.
+    code: |
+      s = "Kimetsu"
+      print(s[0], s[-1], s[1:4], s[::-1], len(s))
+      print(s.upper(), s.lower(), s.replace("tsu", "TSU"))
+  - text: split() memecah string menjadi list, dan "pemisah".join(list) menggabungkannya kembali. strip() membuang spasi di tepi. Kamu juga bisa mengulang setiap karakter dengan for dan memeriksanya dengan isdigit(), isalpha(), atau in.
+    code: |
+      kata = "  air api petir  ".strip().split()
+      print(kata, "-".join(kata))
+      print(sum(1 for c in "Nezuko" if c in "aiueo"))
+exercises:
+  - id: py-m2-vokal
+    type: write
+    title: Napas Vokal
+    difficulty: 1
+    prompt: Baca satu baris teks. Cetak banyaknya huruf vokal (a, i, u, e, o), tanpa membedakan huruf besar dan kecil.
+    tests: ["Kamado Tanjiro", "xyz", "AIUEO aiueo"]
+    hints: |
+      Ubah ke huruf kecil dulu dengan lower().
+      Ulangi setiap karakter dan periksa apakah ada di "aiueo".
+      sum(1 for c in s.lower() if c in "aiueo")
+    solution: |
+      s = input().lower()
+      print(sum(1 for c in s if c in "aiueo"))
+  - id: py-m2-kapital
+    type: write
+    title: Nama Resmi
+    difficulty: 1
+    prompt: Baca nama lengkap (huruf kecil semua). Cetak dengan huruf pertama setiap kata dikapitalkan.
+    tests: ["kamado tanjiro", "agatsuma zenitsu", "nezuko"]
+    hints: |
+      Pecah menjadi kata dengan split().
+      capitalize() mengkapitalkan huruf pertama.
+      " ".join(k.capitalize() for k in kata)
+    solution: print(" ".join(k.capitalize() for k in input().split()))
+  - id: py-m2-predict
+    type: predict
+    title: Membedah Kimetsu
+    difficulty: 2
+    prompt: Tulis output persis dari kode berikut.
+    code: |
+      s = "Kimetsu"
+      print(s[0], s[-1], s[2:5], s[::-1])
+    hints: |
+      Indeks dimulai dari 0.
+      s[2:5] mengambil indeks 2, 3, 4.
+      [::-1] membalik string.
+    solution: x
+  - id: py-m2-bug-palindrom
+    type: bughunt
+    title: Cermin Retak
+    difficulty: 2
+    prompt: Program memeriksa palindrom tanpa membedakan huruf besar/kecil, tapi "Kodok" dianggap bukan palindrom. Temukan bug-nya.
+    starter: |
+      s = input()
+      t = s.lower()
+      print("ya" if s == t[::-1] else "tidak")
+    bug_line: 3
+    tests: ["Kodok", "abc", "Ana"]
+    hints: |
+      Variabel mana yang sudah huruf kecil?
+      s masih punya huruf besar.
+      Bandingkan t dengan t[::-1].
+    solution: |
+      s = input()
+      t = s.lower()
+      print("ya" if t == t[::-1] else "tidak")
+  - id: py-m2-rle
+    type: write
+    title: Sandi Gagak
+    difficulty: 3
+    prompt: 'Kompres string dengan run-length encoding: setiap kelompok huruf sama berurutan ditulis sebagai huruf diikuti jumlahnya. Contoh: aaabcc menjadi a3b1c2.'
+    tests: ["aaabcc", "a", "zzzzzz", "abab"]
+    hints: |
+      Lacak huruf saat ini dan berapa kali ia muncul berturut-turut.
+      Saat huruf berganti, simpan pasangan sebelumnya.
+      Jangan lupa menyimpan kelompok terakhir setelah loop selesai.
+    solution: |
+      s = input()
+      hasil = ""
+      i = 0
+      while i < len(s):
+          j = i
+          while j < len(s) and s[j] == s[i]:
+              j += 1
+          hasil += s[i] + str(j - i)
+          i = j
+      print(hasil)
+  - id: py-m2-parsons
+    type: parsons
+    title: Kalimat Terbalik
+    difficulty: 1
+    prompt: Susun program yang mencetak banyaknya kata, lalu kalimat dengan urutan kata dibalik.
+    tests: ["air api petir", "satu", "a b c d"]
+    hints: |
+      Bersihkan dan pecah kalimat menjadi kata dulu.
+      Jumlah kata dicetak lebih dulu.
+      reversed() membalik urutan.
+    solution: |
+      kalimat = input().strip()
+      kata = kalimat.split()
+      print(len(kata))
+      print(" ".join(reversed(kata)))
+  - id: py-m2-translate
+    type: translate
+    title: Terjemahkan Penghitung Vokal
+    difficulty: 2
+    prompt: Tulis ulang program JavaScript ini dalam Python (tidak membedakan huruf besar/kecil).
+    from_lang: javascript
+    from_code: |
+      const s = readline()
+      console.log((s.match(/[aiueo]/gi) ?? []).length)
+    tests: ["Kamado Tanjiro", "xyz", "AIUEO"]
+    hints: |
+      Regex gi berarti semua kemunculan, tanpa membedakan besar/kecil.
+      Di Python, ubah ke lower() lalu hitung karakter yang ada di "aiueo".
+      sum(1 for c in s.lower() if c in "aiueo")
+    solution: |
+      s = input()
+      print(sum(1 for c in s.lower() if c in "aiueo"))

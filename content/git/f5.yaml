@@ -1,0 +1,120 @@
+lesson:
+- text: git merge nama menggabungkan branch lain ke branch aktif. Kalau main tidak punya commit baru sejak branch dibuat, Git cukup menggeser penunjuk main ke depan (fast-forward). Kalau keduanya punya
+    commit baru, Git membuat merge commit dengan dua parent.
+  code: |
+    mkdir proyek && cd proyek && git init -q
+    printf "Tanjiro\nZenitsu\nInosuke\n" > regu.txt
+    git add regu.txt
+    git commit -q -m "Bentuk regu"
+    git switch -q -c latihan
+    echo "Kanao" >> regu.txt
+    git commit -q -am "Tambah Kanao"
+    git switch -q main
+    echo "lokasi: Gunung Natagumo" > misi.txt
+    git add misi.txt
+    git commit -q -m "Catat lokasi"
+    git merge latihan -m "Gabungkan latihan"
+    git log --format=%s --first-parent
+    cat regu.txt
+- text: Merge commit menyimpan sejarah bahwa dua jalur kerja pernah bertemu. --no-ff memaksa merge commit walau fast-forward bisa dilakukan.
+exercises:
+- id: git-f5-ff
+  type: write
+  title: Maju Lurus
+  difficulty: 1
+  prompt: Branch fitur punya dua commit baru, main tidak. Gabungkan fitur ke main (fast-forward), dan pastikan kamu berada di main.
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    echo "Kaa!" > misi.txt
+    git add misi.txt
+    git commit -q -m "Misi pertama"
+    git switch -q -c fitur
+    echo 2 >> misi.txt
+    git commit -q -am "Langkah dua"
+    echo 3 >> misi.txt
+    git commit -q -am "Langkah tiga"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Pindah ke branch tujuan dulu.
+    Lalu merge branch sumbernya.
+    git switch main lalu git merge fitur
+  solution: |
+    git switch main
+    git merge fitur
+- id: git-f5-3way
+  type: write
+  title: Dua Jalur Bertemu
+  difficulty: 2
+  prompt: main dan latihan sama-sama punya commit baru. Dari main, gabungkan latihan dengan pesan merge "Gabungkan latihan".
+  starter: |
+    # ketik perintah git di sini, satu per baris
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    printf "Tanjiro\nZenitsu\nInosuke\n" > regu.txt
+    git add regu.txt
+    git commit -q -m "Bentuk regu"
+    git switch -q -c latihan
+    echo "Kanao" >> regu.txt
+    git commit -q -am "Tambah Kanao"
+    git switch -q main
+    echo "lokasi: Gunung Natagumo" > misi.txt
+    git add misi.txt
+    git commit -q -m "Catat lokasi"
+  quiet: true
+  after: |
+    echo "HEAD: $(git branch --show-current)"
+    for b in $(git branch --format='%(refname:short)'); do echo "$b: $(git log --first-parent --format=%s $b | tr '\n' '<') $(git rev-list --count $b)"; done
+    git status --short
+  hints: |
+    Kamu sudah di main.
+    Merge akan membuat merge commit.
+    git merge latihan -m "Gabungkan latihan"
+  solution: |
+    git merge latihan -m "Gabungkan latihan"
+- id: git-f5-ffq
+  type: quiz
+  title: Kapan Fast-forward?
+  difficulty: 2
+  prompt: Kapan git merge fitur dari main bisa dilakukan secara fast-forward?
+  options:
+  - Kalau main tidak punya commit baru sejak fitur dibuat
+  - Kalau fitur hanya punya satu commit
+  - Kalau tidak ada konflik
+  - Kalau memakai --no-ff
+  explain: Fast-forward hanya menggeser penunjuk main ke ujung fitur, dan itu mungkin hanya bila commit terakhir main adalah leluhur fitur.
+  hints: |
+    Fast-forward = menggeser penunjuk.
+    main harus "ketinggalan" saja, bukan bercabang.
+    main tidak boleh punya commit sendiri.
+- id: git-f5-hitung
+  type: predict
+  title: Menghitung Commit
+  difficulty: 2
+  prompt: Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.
+  code: |
+    git merge -q latihan -m gabung
+    git rev-list --count main
+    git log --format=%s --merges
+  pre: |
+    mkdir proyek && cd proyek && git init -q
+    printf "Tanjiro\nZenitsu\nInosuke\n" > regu.txt
+    git add regu.txt
+    git commit -q -m "Bentuk regu"
+    git switch -q -c latihan
+    echo "Kanao" >> regu.txt
+    git commit -q -am "Tambah Kanao"
+    git switch -q main
+    echo "lokasi: Gunung Natagumo" > misi.txt
+    git add misi.txt
+    git commit -q -m "Catat lokasi"
+  hints: |
+    Sebelum merge: main punya 2 commit, latihan punya 2 (satu sama).
+    Merge menambah 1 merge commit.
+    Commit unik: Bentuk regu, Tambah Kanao, Catat lokasi, gabung.
+  solution: x

@@ -1,0 +1,114 @@
+lesson:
+- text: 'Aksesibilitas membuat halaman bisa dipakai semua orang: gambar punya alt, input punya label, tombol memakai <button> (bukan <div> yang bisa diklik), urutan heading masuk akal, dan halaman punya
+    lang. Uji dengan keyboard: semua bisa dijangkau dengan Tab.'
+  code: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <button type="button">Kirim gagak</button>
+      <img src="gagak.png" alt="Gagak Kasugai terbang">
+    </body>
+    </html>
+exercises:
+- id: web-m4-perbaiki
+  type: write
+  title: Halaman Ramah Semua
+  difficulty: 2
+  prompt: 'Perbaiki halaman ini: beri alt yang bermakna untuk KEDUA gambar, dan ganti div yang dipakai sebagai tombol menjadi <button type="button"> dengan teks yang sama.'
+  starter: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <img src="tanjiro.png">
+      <img src="nezuko.png" alt="">
+      <div onclick="kirim()">Kirim laporan</div>
+    </body>
+    </html>
+  checks:
+  - sel: img
+    alt: true
+  - sel: img
+    count: 2
+  - sel: button[type=button]
+    text: Kirim laporan
+  - sel: div[onclick]
+    count: 0
+  hints: |
+    Setiap gambar butuh alt yang menjelaskan isinya.
+    div tidak bisa difokus keyboard.
+    <button type="button">Kirim laporan</button>
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <head>
+      <meta charset="utf-8">
+      <title>Korps</title>
+    </head>
+    <body>
+      <img src="tanjiro.png" alt="Tanjiro memegang pedang">
+      <img src="nezuko.png" alt="Nezuko dengan bambu di mulut">
+      <button type="button">Kirim laporan</button>
+    </body>
+    </html>
+- id: web-m4-form
+  type: write
+  title: Formulir yang Bisa Dibaca
+  difficulty: 2
+  prompt: 'Setiap input di form pendaftaran harus punya label. Tambahkan label "Nama" untuk #nama dan "Umur" untuk #umur, dan beri html atribut lang="id".'
+  starter: |
+    <!doctype html>
+    <html>
+    <body>
+      <form>
+        <input id="nama" placeholder="Nama">
+        <input id="umur" type="number" placeholder="Umur">
+      </form>
+    </body>
+    </html>
+  checks:
+  - sel: input
+    label: true
+  - sel: html
+    attr: lang
+    value: id
+  - sel: label[for=umur]
+    text: Umur
+  hints: |
+    label for="id-input".
+    Atribut lang ada di tag html.
+    Teks label: Nama dan Umur.
+  solution: |
+    <!doctype html>
+    <html lang="id">
+    <body>
+      <form>
+        <label for="nama">Nama</label>
+        <input id="nama">
+        <label for="umur">Umur</label>
+        <input id="umur" type="number">
+      </form>
+    </body>
+    </html>
+- id: web-m4-placeholder
+  type: quiz
+  title: Placeholder Bukan Label
+  difficulty: 2
+  prompt: Mengapa placeholder tidak cukup sebagai pengganti <label>?
+  options:
+  - Placeholder hilang saat mengetik dan tidak selalu dibaca screen reader
+  - Placeholder tidak bisa diberi warna
+  - Placeholder membuat form lebih lambat
+  - Placeholder hanya berfungsi di HP
+  explain: Saat pengguna mulai mengetik, placeholder lenyap sehingga mereka lupa field itu untuk apa. Label tetap terlihat dan terhubung dengan input.
+  hints: |
+    Apa yang terjadi saat mulai mengetik?
+    Pengguna bisa lupa isi field.
+    Label tetap terlihat.

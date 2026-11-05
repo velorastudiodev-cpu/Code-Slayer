@@ -1,0 +1,123 @@
+lesson:
+  - text: Scanner membaca input per token, misalnya next() untuk kata, nextInt() dan nextLong() untuk bilangan, dan nextLine() untuk satu baris penuh. hasNextInt() memeriksa apakah masih ada bilangan, sehingga cocok untuk membaca sampai input habis.
+    code: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner("3 1 4 1 5");
+              int total = 0;
+              while (in.hasNextInt()) total += in.nextInt();
+              System.out.println(total);
+          }
+      }
+  - text: Untuk input besar (di soal kompetisi), Scanner terlalu lambat. Gunakan BufferedReader dengan readLine() lalu pecah barisnya dengan split(" "). Output banyak sebaiknya dikumpulkan di StringBuilder lalu dicetak sekali.
+    code: |
+      import java.io.*;
+
+      public class Main {
+          public static void main(String[] args) throws IOException {
+              BufferedReader br = new BufferedReader(new StringReader("10 20 30"));
+              int s = 0;
+              for (String t : br.readLine().split(" ")) s += Integer.parseInt(t);
+              System.out.println(s);
+          }
+      }
+exercises:
+  - id: java-f4-jumlah
+    type: write
+    title: Menjumlah Dua Bilah
+    difficulty: 1
+    prompt: Baca dua bilangan bulat, cetak jumlahnya.
+    tests: ["3 4", "10 -2", "0 0"]
+    hints: |
+      Scanner in = new Scanner(System.in);
+      in.nextInt() dua kali.
+      System.out.println(a + b);
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int a = in.nextInt(), b = in.nextInt();
+              System.out.println(a + b);
+          }
+      }
+  - id: java-f4-eof
+    type: write
+    title: Sampai Gulungan Habis
+    difficulty: 2
+    prompt: Input berisi bilangan bulat yang banyaknya tidak diketahui. Cetak banyaknya dan rata-ratanya (2 desimal).
+    tests: ["1 2 3 4", "10", "5\n6\n7"]
+    hints: |
+      while (in.hasNextInt())
+      Simpan total di long.
+      System.out.printf("%d %.2f%n", n, (double) total / n);
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              long total = 0;
+              int n = 0;
+              while (in.hasNextInt()) { total += in.nextInt(); n++; }
+              System.out.printf("%d %.2f%n", n, (double) total / n);
+          }
+      }
+  - id: java-f4-baris
+    type: write
+    title: Baris Berspasi
+    difficulty: 2
+    prompt: 'Baris 1 berisi umur, baris 2 berisi nama lengkap (berspasi). Cetak "<nama> (<umur>)".'
+    tests: ["21\nIguro Obanai", "16\nTsuyuri Kanao"]
+    hints: |
+      Setelah nextInt(), sisa baris pertama ("\n") belum terbaca.
+      Panggil nextLine() sekali untuk membuangnya.
+      Baru panggil nextLine() lagi untuk nama.
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int umur = in.nextInt();
+              in.nextLine();
+              String nama = in.nextLine();
+              System.out.println(nama + " (" + umur + ")");
+          }
+      }
+  - id: java-f4-bug
+    type: bughunt
+    title: Satu Bilangan Terlewat
+    difficulty: 2
+    prompt: Baris 1 berisi n, baris 2 berisi n bilangan. Program harus mencetak jumlahnya, tapi bilangan pertama selalu hilang. Temukan bug-nya.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int n = in.nextInt(), total = 0;
+              for (int i = 1; i < n; i++) total += in.nextInt();
+              System.out.println(total);
+          }
+      }
+    bug_line: 7
+    tests: ["3\n1 2 3", "1\n5", "4\n10 20 30 40"]
+    hints: |
+      Berapa kali loop berjalan untuk n = 3?
+      Dimulai dari 1 dengan syarat < n berarti hanya n - 1 kali.
+      for (int i = 0; i < n; i++)
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              int n = in.nextInt(), total = 0;
+              for (int i = 0; i < n; i++) total += in.nextInt();
+              System.out.println(total);
+          }
+      }

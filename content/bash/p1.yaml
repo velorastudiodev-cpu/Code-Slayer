@@ -1,0 +1,48 @@
+lesson:
+- text: 'Alat CLI yang baik: punya --help, membaca stdin bila tidak ada file, menulis hasil ke stdout dan pesan ke stderr, serta mengembalikan status yang benar (0 sukses).'
+  code: |
+    usage() { echo "Pakai: hitung [file]" >&2; }
+    [ "${1:-}" = "--help" ] && { usage; exit 0; }
+    wc -l < "${1:-/dev/stdin}"
+exercises:
+- id: bash-p1-stdin
+  type: write
+  title: Alat Ramah Pipa
+  difficulty: 2
+  prompt: 'Buat fungsi hitung_kata yang menghitung kata dari stdin. Lalu cetak hasil hitung_kata untuk input yang diberikan dalam format "kata: N".'
+  starter: |
+    # tulis perintahmu di sini
+  tests:
+  - |
+    satu dua tiga
+    empat
+  - |
+    Kaa
+  hints: |
+    wc -w menghitung kata.
+    tr -d " " membuang spasi.
+    Tangkap output fungsi dengan $().
+  solution: |
+    hitung_kata() {
+      wc -w | tr -d " "
+    }
+    echo "kata: $(hitung_kata)"
+- id: bash-p1-stderr
+  type: write
+  title: Pesan ke Stderr
+  difficulty: 2
+  prompt: 'Buat fungsi cek yang mencetak "ERROR: kosong" ke STDERR dan mengembalikan status 1 jika argumennya kosong, atau mencetak "OK: <arg>" bila tidak. Panggil cek "" lalu cek Nezuko, dan cetak status
+    masing-masing ("status 1", "status 0"). Hanya stdout yang dinilai.'
+  starter: |
+    # tulis perintahmu di sini
+  hints: |
+    >&2 mengirim ke stderr.
+    return 1 untuk gagal.
+    $? menyimpan status terakhir.
+  solution: |
+    cek() {
+      if [ -z "$1" ]; then echo "ERROR: kosong" >&2; return 1; fi
+      echo "OK: $1"
+    }
+    cek "" 2>/dev/null; echo "status $?"
+    cek Nezuko; echo "status $?"

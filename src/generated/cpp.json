@@ -1,0 +1,1091 @@
+{
+ "hash": "4797c5664602",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "C++ dibangun di atas C dengan pustaka standar yang jauh lebih kaya. Output memakai std::cout dengan operator <<, dan baris baru ditulis \"\\n\" atau std::endl. Program tetap dimulai dari main, dan kodenya dikompilasi sebelum dijalankan.",
+     "code": "#include <iostream>\n\nint main() {\n    std::cout << \"Halo, Slayer!\\n\";\n    std::cout << \"Napas Kabut, bentuk \" << 7 << \"\\n\";\n}\n"
+    },
+    {
+     "text": "using namespace std; membuat kita bisa menulis cout tanpa std::. Ini umum di kode kompetisi, tapi sebaiknya dihindari di proyek besar. Untuk angka desimal, fixed dan setprecision(n) dari <iomanip> mengatur banyaknya digit.",
+     "code": "#include <iomanip>\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << fixed << setprecision(2) << 3.14159 << \" \" << 10.0 / 4 << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-halo",
+     "type": "write",
+     "title": "Salam Napas Kabut",
+     "difficulty": 1,
+     "prompt": "Cetak tepat satu baris \"Halo, Slayer!\".",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nint main() {\n    // tulis kodemu di sini\n}\n",
+     "tests": [
+      {
+       "expected": "Halo, Slayer!\n"
+      }
+     ],
+     "hints": [
+      "std::cout << ...",
+      "Akhiri dengan \"\\n\".",
+      "std::cout << \"Halo, Slayer!\\n\";"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    std::cout << \"Halo, Slayer!\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cpp-f1-presisi",
+     "type": "write",
+     "title": "Presisi Kabut",
+     "difficulty": 1,
+     "prompt": "Cetak nilai 22.0 / 7 dengan tepat 3 angka di belakang koma.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "expected": "3.143\n"
+      }
+     ],
+     "hints": [
+      "#include <iomanip>",
+      "std::fixed << std::setprecision(3)",
+      "std::cout << std::fixed << std::setprecision(3) << 22.0 / 7 << \"\\n\";"
+     ],
+     "solutions": [
+      "#include <iomanip>\n#include <iostream>\n\nint main() {\n    std::cout << std::fixed << std::setprecision(3) << 22.0 / 7 << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cpp-f1-predict",
+     "type": "predict",
+     "title": "Aliran Keluaran",
+     "difficulty": 1,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n\nint main() {\n    std::cout << \"A\" << 1 + 2 << \"B\";\n    std::cout << \"\\n\" << 7 / 2 << \" \" << 7 % 2 << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "expected": "A3B\n3 1\n"
+      }
+     ],
+     "hints": [
+      "<< menyambung semua bagian tanpa spasi.",
+      "1 + 2 dihitung dulu menjadi 3.",
+      "7 / 2 dengan int menghasilkan 3."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cpp-f1-bug",
+     "type": "bughunt",
+     "title": "Namespace yang Hilang",
+     "difficulty": 1,
+     "prompt": "Program gagal dikompilasi dengan pesan \"cout was not declared\". Temukan baris yang salah.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nint main() {\n    cout << \"Kaa!\\n\";\n}\n",
+     "bug_line": 4,
+     "tests": [
+      {
+       "expected": "Kaa!\n"
+      }
+     ],
+     "hints": [
+      "cout berada di namespace std.",
+      "Tulis nama lengkapnya.",
+      "std::cout << \"Kaa!\\n\";"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    std::cout << \"Kaa!\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f1"
+    },
+    {
+     "id": "cpp-f1-typing",
+     "type": "typing",
+     "title": "Ketik Program C++ Pertama",
+     "difficulty": 1,
+     "prompt": "Ketik ulang program C++ berikut. Akurasi minimal 95%.",
+     "lang": "cpp",
+     "code": "#include <iostream>\nint main() {\n    std::cout << \"Halo!\\n\";\n}\n",
+     "tests": [],
+     "hints": [],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "Tipe dasar C++ sama dengan C (int, long long, double, char, bool), ditambah std::string untuk teks. auto membiarkan compiler menyimpulkan tipe. Tipe bool mencetak 1 atau 0, kecuali kamu memakai std::boolalpha.",
+     "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string nama = \"Muichiro\";\n    auto umur = 14;\n    bool hashira = true;\n    std::cout << nama << \" \" << umur << \" \" << hashira << \" \" << std::boolalpha << hashira << \"\\n\";\n    std::cout << nama.size() << \" huruf\\n\";\n}\n"
+    },
+    {
+     "text": "std::cin >> x membaca satu token (dipisah spasi) ke x. Untuk membaca satu baris penuh, pakai std::getline(std::cin, s). Seperti di C, pembagian dua int menghasilkan int, dan int bisa overflow, jadi pakai long long untuk angka besar.",
+     "code": "#include <iostream>\n\nint main() {\n    long long besar = 3000000000LL * 3;\n    std::cout << besar << \" \" << 7 / 2 << \" \" << 7.0 / 2 << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-f2-baca",
+     "type": "write",
+     "title": "Kartu Identitas",
+     "difficulty": 1,
+     "prompt": "Baca nama (satu kata) dan umur. Cetak \"<nama> akan berumur <umur+1> tahun\".",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "Muichiro 14",
+       "expected": "Muichiro akan berumur 15 tahun\n"
+      },
+      {
+       "input": "Gyomei 27",
+       "expected": "Gyomei akan berumur 28 tahun\n"
+      }
+     ],
+     "hints": [
+      "std::string nama; int umur;",
+      "std::cin >> nama >> umur;",
+      "Cetak dengan <<."
+     ],
+     "solutions": [
+      "#include <iostream>\n#include <string>\n\nint main() {\n    std::string nama;\n    int umur;\n    std::cin >> nama >> umur;\n    std::cout << nama << \" akan berumur \" << umur + 1 << \" tahun\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cpp-f2-getline",
+     "type": "write",
+     "title": "Kalimat Utuh",
+     "difficulty": 2,
+     "prompt": "Baris pertama berisi nama lengkap (boleh berspasi). Cetak \"Nama: <nama>\" lalu banyak karakternya.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "Tokito Muichiro",
+       "expected": "Nama: Tokito Muichiro\n15\n"
+      },
+      {
+       "input": "Kanroji Mitsuri",
+       "expected": "Nama: Kanroji Mitsuri\n15\n"
+      },
+      {
+       "input": "Ai",
+       "expected": "Nama: Ai\n2\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "cin >> hanya membaca sampai spasi.",
+      "std::getline(std::cin, s) membaca satu baris penuh.",
+      "s.size() memberi panjangnya."
+     ],
+     "solutions": [
+      "#include <iostream>\n#include <string>\n\nint main() {\n    std::string s;\n    std::getline(std::cin, s);\n    std::cout << \"Nama: \" << s << \"\\n\" << s.size() << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cpp-f2-predict",
+     "type": "predict",
+     "title": "Tipe yang Menyamar",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string a = \"12\";\n    std::string b = a + \"3\";\n    int c = std::stoi(b) + 1;\n    bool d = c > 100;\n    std::cout << b << \" \" << c << \" \" << d << \" \" << std::boolalpha << d << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "expected": "123 124 1 true\n"
+      }
+     ],
+     "hints": [
+      "+ pada string berarti digabung.",
+      "std::stoi mengubah string menjadi int.",
+      "bool tercetak 1 sebelum boolalpha, dan true sesudahnya."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cpp-f2-bug",
+     "type": "bughunt",
+     "title": "Kekuatan Meluap",
+     "difficulty": 2,
+     "prompt": "Program menghitung a * b untuk a dan b sampai 2 miliar, tapi hasilnya negatif untuk angka besar. Temukan bug-nya.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << 1LL * a * b << \"\\n\" << a * b << \"\\n\";\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "12\n12\n"
+      },
+      {
+       "input": "2000000000 2",
+       "expected": "4000000000\n4000000000\n"
+      }
+     ],
+     "hints": [
+      "Program mencetak dua kali, dan baris kedua meluap.",
+      "a * b dengan dua int meluap sebelum dicetak.",
+      "std::cout << 1LL * a * b << \"\\n\" << 1LL * a * b << \"\\n\";"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << 1LL * a * b << \"\\n\" << 1LL * a * b << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f2"
+    },
+    {
+     "id": "cpp-f2-readerror",
+     "type": "readerror",
+     "title": "Teks Masuk ke int",
+     "difficulty": 1,
+     "prompt": "Program ini gagal dikompilasi. Baca pesan compiler-nya.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n\nint main() {\n    int umur = \"15\";\n    std::cout << umur + 1 << \"\\n\";\n}\n",
+     "tests": [],
+     "hints": [
+      "Baca kata \"invalid conversion\" di pesan.",
+      "Apa tipe \"15\" dengan tanda kutip?",
+      "Tanpa tanda kutip, 15 adalah int."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "error": "Gagal kompilasi:\nmain.cpp: In function 'int main()':\nmain.cpp:4:16: error: invalid conversion from 'const char*' to 'int' [-fpermissive]\n    4 |     int umur = \"15\";\n      |                ^~~~\n      |                |\n      |                const char*",
+     "options": [
+      "\"15\" adalah teks (const char*), bukan int. Tulis int umur = 15; atau konversi dengan std::stoi.",
+      "std::cout tidak bisa mencetak hasil penjumlahan.",
+      "int harus ditulis Int.",
+      "Program C++ wajib diakhiri return 0."
+     ],
+     "explain": "C++ bertipe ketat, sehingga literal string tidak bisa diubah otomatis menjadi int.",
+     "track": "cpp",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "Operator C++ sama dengan C, yaitu + - * / %, ++ --, perbandingan, dan logika && || !. std::abs, std::max, dan std::min (dari <algorithm> dan <cstdlib>) sering dipakai. std::pow dari <cmath> menghasilkan double.",
+     "code": "#include <algorithm>\n#include <cmath>\n#include <iostream>\n\nint main() {\n    std::cout << std::max(3, 9) << \" \" << std::abs(-7) << \" \" << std::pow(2, 10) << \"\\n\";\n}\n"
+    },
+    {
+     "text": "Hati-hati dengan % pada bilangan negatif, karena hasilnya mengikuti tanda pembilang, -7 % 3 adalah -1. Untuk modulo yang selalu positif, pakai ((a % m) + m) % m. Pola ini sering muncul di soal kompetisi.",
+     "code": "#include <iostream>\n\nint main() {\n    int a = -7, m = 3;\n    std::cout << a % m << \" \" << ((a % m) + m) % m << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-f3-detik",
+     "type": "write",
+     "title": "Jam Pertarungan",
+     "difficulty": 2,
+     "prompt": "Baca total detik. Cetak dalam format J:M:D tanpa nol di depan. Contoh: 3725 menjadi 1:2:5.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "3725",
+       "expected": "1:2:5\n"
+      },
+      {
+       "input": "59",
+       "expected": "0:0:59\n"
+      },
+      {
+       "input": "86399",
+       "expected": "23:59:59\n",
+       "hidden": true
+      },
+      {
+       "input": "0",
+       "expected": "0:0:0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Jam adalah t / 3600.",
+      "Menit adalah t % 3600 / 60.",
+      "Detik adalah t % 60."
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    int t;\n    std::cin >> t;\n    std::cout << t / 3600 << \":\" << t % 3600 / 60 << \":\" << t % 60 << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f3"
+    },
+    {
+     "id": "cpp-f3-modulo",
+     "type": "write",
+     "title": "Jam Melingkar",
+     "difficulty": 2,
+     "prompt": "Sekarang jam h (0-23). Baca h dan k (k boleh negatif atau sangat besar). Cetak jam setelah k jam berlalu (0-23).",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "10 5",
+       "expected": "15\n"
+      },
+      {
+       "input": "22 3",
+       "expected": "1\n"
+      },
+      {
+       "input": "1 -3",
+       "expected": "22\n",
+       "hidden": true
+      },
+      {
+       "input": "0 -49",
+       "expected": "23\n",
+       "hidden": true
+      },
+      {
+       "input": "5 1000000",
+       "expected": "21\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Jam berputar setiap 24.",
+      "% bisa negatif di C++.",
+      "((h + k) % 24 + 24) % 24"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    long long h, k;\n    std::cin >> h >> k;\n    std::cout << ((h + k) % 24 + 24) % 24 << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f3"
+    },
+    {
+     "id": "cpp-f3-predict",
+     "type": "predict",
+     "title": "Tanda Sisa Bagi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <algorithm>\n#include <iostream>\n\nint main() {\n    int x = 5;\n    std::cout << -7 % 3 << \" \" << 7 % -3 << \" \" << std::min(x++, 4) << \" \" << x << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "expected": "-1 1 4 6\n"
+      }
+     ],
+     "hints": [
+      "Tanda hasil % mengikuti pembilang (bilangan yang dibagi).",
+      "x++ memberi nilai lama (5) ke std::min.",
+      "Setelah itu x sudah menjadi 6."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f3"
+    },
+    {
+     "id": "cpp-f3-bug",
+     "type": "bughunt",
+     "title": "Rata-rata Terpotong",
+     "difficulty": 1,
+     "prompt": "Rata-rata dua bilangan bulat harus dicetak dengan 1 desimal, tapi desimalnya selalu .0. Temukan bug-nya.",
+     "lang": "cpp",
+     "starter": "#include <iomanip>\n#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    double r = (a + b) / 2;\n    std::cout << std::fixed << std::setprecision(1) << r << \"\\n\";\n}\n",
+     "bug_line": 7,
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "3.5\n"
+      },
+      {
+       "input": "1 2",
+       "expected": "1.5\n"
+      },
+      {
+       "input": "6 6",
+       "expected": "6.0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "(a + b) / 2 adalah pembagian int.",
+      "Desimal hilang sebelum disimpan ke double.",
+      "(a + b) / 2.0"
+     ],
+     "solutions": [
+      "#include <iomanip>\n#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    double r = (a + b) / 2.0;\n    std::cout << std::fixed << std::setprecision(1) << r << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "std::cin >> x membaca token berikutnya dan bernilai false saat input habis atau formatnya salah. Karena itu while (std::cin >> x) adalah cara membaca sampai EOF. Di kompetisi, baris ios::sync_with_stdio(false); cin.tie(nullptr); mempercepat input yang besar.",
+     "code": "#include <iostream>\n#include <sstream>\n\nint main() {\n    std::istringstream in(\"3 1 4 1 5\");\n    int x, total = 0;\n    while (in >> x) total += x;\n    std::cout << total << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-f4-jumlah",
+     "type": "write",
+     "title": "Menjumlah Dua Bilah",
+     "difficulty": 1,
+     "prompt": "Baca dua bilangan bulat, cetak jumlahnya.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "3 4",
+       "expected": "7\n"
+      },
+      {
+       "input": "10 -2",
+       "expected": "8\n"
+      },
+      {
+       "input": "0 0",
+       "expected": "0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "int a, b;",
+      "std::cin >> a >> b;",
+      "std::cout << a + b << \"\\n\";"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << a + b << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f4"
+    },
+    {
+     "id": "cpp-f4-eof",
+     "type": "write",
+     "title": "Sampai Gulungan Habis",
+     "difficulty": 2,
+     "prompt": "Input berisi bilangan bulat yang banyaknya tidak diketahui. Cetak banyaknya, terkecil, dan terbesar, dipisah spasi.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "3 1 4 1 5",
+       "expected": "5 1 5\n"
+      },
+      {
+       "input": "7",
+       "expected": "1 7 7\n"
+      },
+      {
+       "input": "-2\n-9\n0",
+       "expected": "3 -9 0\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "while (std::cin >> x) membaca sampai habis.",
+      "Inisialisasi terkecil dan terbesar dari bilangan pertama.",
+      "std::min dan std::max."
+     ],
+     "solutions": [
+      "#include <algorithm>\n#include <iostream>\n\nint main() {\n    long long x, n = 0, lo = 0, hi = 0;\n    while (std::cin >> x) {\n        if (n == 0) lo = hi = x;\n        lo = std::min(lo, x);\n        hi = std::max(hi, x);\n        n++;\n    }\n    std::cout << n << \" \" << lo << \" \" << hi << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f4"
+    },
+    {
+     "id": "cpp-f4-predict",
+     "type": "predict",
+     "title": "Token demi Token",
+     "difficulty": 2,
+     "prompt": "Dengan input di bawah, tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string a, b;\n    int n;\n    std::cin >> a >> n >> b;\n    std::cout << b << \"-\" << n * 2 << \"-\" << a << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "input": "Muichiro 7 Kabut",
+       "expected": "Kabut-14-Muichiro\n"
+      }
+     ],
+     "hints": [
+      "cin >> membaca dipisah spasi.",
+      "a mendapat token pertama, n token kedua, b token ketiga.",
+      "Urutan cetak berbeda dengan urutan baca."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f4"
+    },
+    {
+     "id": "cpp-f4-bug",
+     "type": "bughunt",
+     "title": "Baris yang Tertelan",
+     "difficulty": 3,
+     "prompt": "Baris 1 berisi umur, baris 2 berisi nama lengkap (berspasi). Program harus mencetak \"<nama> (<umur>)\", tapi nama selalu kosong. Temukan bug-nya.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n#include <string>\n\nint main() {\n    int umur;\n    std::string nama;\n    std::cin >> umur;\n    std::getline(std::cin, nama);\n    std::cout << nama << \" (\" << umur << \")\\n\";\n}\n",
+     "bug_line": 8,
+     "tests": [
+      {
+       "input": "14\nTokito Muichiro",
+       "expected": "Tokito Muichiro (14)\n"
+      },
+      {
+       "input": "27\nHimejima Gyomei",
+       "expected": "Himejima Gyomei (27)\n"
+      }
+     ],
+     "hints": [
+      "Setelah cin >> umur, karakter \"\\n\" di akhir baris pertama masih tersisa.",
+      "getline langsung membaca sisa baris itu, yang kosong.",
+      "std::getline(std::cin >> std::ws, nama);"
+     ],
+     "solutions": [
+      "#include <iostream>\n#include <string>\n\nint main() {\n    int umur;\n    std::string nama;\n    std::cin >> umur;\n    std::getline(std::cin >> std::ws, nama);\n    std::cout << nama << \" (\" << umur << \")\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 30,
+     "track": "cpp",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "if, else if, else, switch, dan ternary bekerja sama seperti di C. Perbedaan C++ adalah tipe bool (true/false) dan perbandingan std::string bisa langsung memakai == atau < (urutan kamus).",
+     "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string napas = \"kabut\";\n    if (napas == \"kabut\") std::cout << \"Muichiro\\n\";\n    std::cout << (std::string(\"api\") < \"kabut\" ? \"api duluan\" : \"kabut duluan\") << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-f5-nilai",
+     "type": "write",
+     "title": "Rapor Kisatsutai",
+     "difficulty": 1,
+     "prompt": "Baca nilai (0-100). Cetak A jika ≥ 85, B jika ≥ 70, C jika ≥ 55, selain itu D.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "90",
+       "expected": "A\n"
+      },
+      {
+       "input": "85",
+       "expected": "A\n"
+      },
+      {
+       "input": "70",
+       "expected": "B\n",
+       "hidden": true
+      },
+      {
+       "input": "69",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "55",
+       "expected": "C\n",
+       "hidden": true
+      },
+      {
+       "input": "10",
+       "expected": "D\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Periksa dari syarat tertinggi.",
+      "Rantai if / else if / else.",
+      "std::cout << \"A\\n\";"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    if (n >= 85) std::cout << \"A\\n\";\n    else if (n >= 70) std::cout << \"B\\n\";\n    else if (n >= 55) std::cout << \"C\\n\";\n    else std::cout << \"D\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f5"
+    },
+    {
+     "id": "cpp-f5-urut3",
+     "type": "write",
+     "title": "Barisan Tiga Pedang",
+     "difficulty": 2,
+     "prompt": "Baca tiga bilangan. Cetak ketiganya dari kecil ke besar, dipisah spasi, hanya dengan if dan pertukaran (tanpa sort).",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "3 1 2",
+       "expected": "1 2 3\n"
+      },
+      {
+       "input": "5 5 1",
+       "expected": "1 5 5\n"
+      },
+      {
+       "input": "-1 -7 -3",
+       "expected": "-7 -3 -1\n",
+       "hidden": true
+      },
+      {
+       "input": "1 2 3",
+       "expected": "1 2 3\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Kalau a > b, tukar. Lakukan hal yang sama untuk b > c, lalu a > b lagi.",
+      "std::swap(a, b) menukar dua variabel.",
+      "Tiga perbandingan sudah cukup."
+     ],
+     "solutions": [
+      "#include <iostream>\n#include <utility>\n\nint main() {\n    int a, b, c;\n    std::cin >> a >> b >> c;\n    if (a > b) std::swap(a, b);\n    if (b > c) std::swap(b, c);\n    if (a > b) std::swap(a, b);\n    std::cout << a << \" \" << b << \" \" << c << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f5"
+    },
+    {
+     "id": "cpp-f5-predict",
+     "type": "predict",
+     "title": "Urutan Kamus",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n#include <string>\n\nint main() {\n    std::string a = \"Zenitsu\", b = \"inosuke\", c = \"10\", d = \"9\";\n    std::cout << (a < b) << (c < d) << (std::stoi(c) < std::stoi(d)) << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "expected": "110\n"
+      }
+     ],
+     "hints": [
+      "Perbandingan string memakai kode karakter, dan huruf besar lebih kecil dari huruf kecil.",
+      "\"10\" < \"9\" karena '1' < '9'.",
+      "Setelah stoi, perbandingannya menjadi numerik."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f5"
+    },
+    {
+     "id": "cpp-f5-bug",
+     "type": "bughunt",
+     "title": "Kabisat yang Keliru",
+     "difficulty": 2,
+     "prompt": "Program menentukan tahun kabisat (habis dibagi 400, atau habis dibagi 4 tapi tidak habis dibagi 100), tapi 1900 dianggap kabisat. Temukan bug-nya.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nint main() {\n    int t;\n    std::cin >> t;\n    bool kabisat = t % 4 == 0 || t % 100 != 0 && t % 400 == 0;\n    std::cout << (kabisat ? \"kabisat\" : \"bukan\") << \"\\n\";\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "2024",
+       "expected": "kabisat\n"
+      },
+      {
+       "input": "1900",
+       "expected": "bukan\n"
+      },
+      {
+       "input": "2000",
+       "expected": "kabisat\n",
+       "hidden": true
+      },
+      {
+       "input": "2023",
+       "expected": "bukan\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "&& dikerjakan sebelum ||.",
+      "Syaratnya adalah (habis 4 DAN tidak habis 100) ATAU habis 400.",
+      "t % 400 == 0 || (t % 4 == 0 && t % 100 != 0)"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    int t;\n    std::cin >> t;\n    bool kabisat = t % 400 == 0 || (t % 4 == 0 && t % 100 != 0);\n    std::cout << (kabisat ? \"kabisat\" : \"bukan\") << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "Selain for, while, dan do-while ala C, C++ punya range-based for, yaitu for (auto x - wadah) untuk mengulang setiap elemen. Gunakan auto& kalau ingin mengubah elemen aslinya, bukan salinannya.",
+     "code": "#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> v = {3, 1, 4};\n    for (auto& x : v) x *= 10;\n    for (int x : v) std::cout << x << \" \";\n    std::cout << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-f6-segitiga",
+     "type": "write",
+     "title": "Formasi Segitiga",
+     "difficulty": 2,
+     "prompt": "Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "3",
+       "expected": "*\n**\n***\n"
+      },
+      {
+       "input": "1",
+       "expected": "*\n"
+      },
+      {
+       "input": "5",
+       "expected": "*\n**\n***\n****\n*****\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "std::string(i, '*') membuat i bintang.",
+      "Atau gunakan loop bersarang.",
+      "std::cout << std::string(i, '*') << \"\\n\";"
+     ],
+     "solutions": [
+      "#include <iostream>\n#include <string>\n\nint main() {\n    int n;\n    std::cin >> n;\n    for (int i = 1; i <= n; i++) std::cout << std::string(i, '*') << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cpp-f6-digit",
+     "type": "write",
+     "title": "Jumlah Digit",
+     "difficulty": 2,
+     "prompt": "Baca bilangan bulat non-negatif n (sampai 10^18). Cetak jumlah digitnya.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "12345",
+       "expected": "15\n"
+      },
+      {
+       "input": "0",
+       "expected": "0\n"
+      },
+      {
+       "input": "999999999999999999",
+       "expected": "162\n",
+       "hidden": true
+      },
+      {
+       "input": "1000000000000000000",
+       "expected": "1\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "n % 10 adalah digit terakhir.",
+      "n /= 10 membuang digit terakhir.",
+      "Pakai long long dan ulangi selama n > 0."
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    long long n;\n    std::cin >> n;\n    int s = 0;\n    while (n > 0) { s += n % 10; n /= 10; }\n    std::cout << s << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cpp-f6-predict",
+     "type": "predict",
+     "title": "Salinan dalam Loop",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> v = {1, 2, 3};\n    for (auto x : v) x *= 2;\n    for (auto& x : v) x += 1;\n    for (int x : v) std::cout << x;\n    std::cout << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "expected": "234\n"
+      }
+     ],
+     "hints": [
+      "auto x adalah SALINAN, jadi mengubahnya tidak mengubah v.",
+      "auto& x adalah referensi ke elemen asli.",
+      "Hanya loop kedua yang mengubah v."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cpp-f6-bug",
+     "type": "bughunt",
+     "title": "Hitung Mundur Tak Berujung",
+     "difficulty": 2,
+     "prompt": "Program harus mencetak n sampai 0 lalu \"Serang!\", tapi setelah 0 muncul angka raksasa (4294967295) sebelum pengaman break menghentikannya. Temukan bug-nya.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nint main() {\n    unsigned int n;\n    std::cin >> n;\n    for (unsigned int i = n; i >= 0; i--) {\n        std::cout << i << \"\\n\";\n        if (i > n) break; // pengaman\n    }\n    std::cout << \"Serang!\\n\";\n}\n",
+     "bug_line": 6,
+     "tests": [
+      {
+       "input": "3",
+       "expected": "3\n2\n1\n0\nSerang!\n"
+      },
+      {
+       "input": "0",
+       "expected": "0\nSerang!\n"
+      }
+     ],
+     "hints": [
+      "unsigned tidak pernah negatif, jadi i >= 0 selalu benar.",
+      "Setelah 0, i-- membungkus ke angka sangat besar.",
+      "Pakai int: for (int i = n; i >= 0; i--)"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nint main() {\n    unsigned int n;\n    std::cin >> n;\n    for (int i = n; i >= 0; i--) {\n        std::cout << i << \"\\n\";\n        if (i > (int)n) break; // pengaman\n    }\n    std::cout << \"Serang!\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f6"
+    },
+    {
+     "id": "cpp-f6-translate",
+     "type": "translate",
+     "title": "Terjemahkan Pembalik Kata",
+     "difficulty": 2,
+     "prompt": "Tulis ulang program Python ini dalam C++.",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "air api petir",
+       "expected": "petir api air\n"
+      },
+      {
+       "input": "satu",
+       "expected": "satu\n"
+      },
+      {
+       "input": "a b c d",
+       "expected": "d c b a\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "Baca kata satu per satu dengan while (std::cin >> s) ke vector<string>.",
+      "std::reverse membalik vector.",
+      "Cetak dengan spasi di antara kata, tanpa spasi di akhir."
+     ],
+     "solutions": [
+      "#include <algorithm>\n#include <iostream>\n#include <string>\n#include <vector>\n\nint main() {\n    std::vector<std::string> v;\n    std::string s;\n    while (std::cin >> s) v.push_back(s);\n    std::reverse(v.begin(), v.end());\n    for (size_t i = 0; i < v.size(); i++) std::cout << (i ? \" \" : \"\") << v[i];\n    std::cout << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "from_lang": "python",
+     "from_code": "kata = input().split()\nprint(\" \".join(reversed(kata)))\n",
+     "track": "cpp",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Fungsi C++ bisa menerima parameter BY REFERENCE dengan &, sehingga fungsi bisa mengubah variabel pemanggil tanpa pointer. const & dipakai untuk objek besar seperti string atau vector supaya tidak disalin. Fungsi juga bisa di-overload, yaitu nama sama dengan parameter berbeda.",
+     "code": "#include <iostream>\n#include <string>\n\nvoid naik(int& x) { x++; }\nint luas(int s) { return s * s; }\nint luas(int p, int l) { return p * l; }\nint panjang(const std::string& s) { return s.size(); }\n\nint main() {\n    int a = 1;\n    naik(a);\n    std::cout << a << \" \" << luas(3) << \" \" << luas(2, 5) << \" \" << panjang(\"Kabut\") << \"\\n\";\n}\n"
+    },
+    {
+     "text": "Lambda adalah fungsi tanpa nama, ditulis [tangkap](parameter) { isi }. Lambda sering dipakai bersama algoritma STL seperti sort.",
+     "code": "#include <algorithm>\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::vector<int> v = {5, 2, 9, 1};\n    std::sort(v.begin(), v.end(), [](int a, int b) { return a > b; });\n    for (int x : v) std::cout << x << \" \";\n    std::cout << \"\\n\";\n}\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "cpp-f7-fpb",
+     "type": "write",
+     "title": "FPB dan KPK",
+     "difficulty": 2,
+     "prompt": "Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan positif, cetak FPB dan KPK-nya (KPK bisa sampai 10^18).",
+     "lang": "cpp",
+     "tests": [
+      {
+       "input": "12 18",
+       "expected": "6 36\n"
+      },
+      {
+       "input": "7 13",
+       "expected": "1 91\n"
+      },
+      {
+       "input": "1000000000 999999999",
+       "expected": "1 999999999000000000\n",
+       "hidden": true
+      }
+     ],
+     "hints": [
+      "KPK = a / fpb * b, jadi bagi dulu sebelum dikali supaya tidak overflow.",
+      "Pakai long long.",
+      "long long fpb(long long a, long long b) { return b ? fpb(b, a % b) : a; }"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nlong long fpb(long long a, long long b) { return b ? fpb(b, a % b) : a; }\n\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    std::cout << fpb(a, b) << \" \" << a / fpb(a, b) * b << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f7"
+    },
+    {
+     "id": "cpp-f7-ref",
+     "type": "write",
+     "title": "Tukar dengan Referensi",
+     "difficulty": 1,
+     "prompt": "Lengkapi fungsi tukar(int& a, int& b) sehingga nilai dua variabel benar-benar tertukar.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nvoid tukar(int& a, int& b) {\n    // lengkapi\n}\n\nint main() {\n    int x, y;\n    std::cin >> x >> y;\n    tukar(x, y);\n    std::cout << x << \" \" << y << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "input": "1 2",
+       "expected": "2 1\n"
+      },
+      {
+       "input": "5 -5",
+       "expected": "-5 5\n"
+      }
+     ],
+     "hints": [
+      "a dan b adalah alias untuk x dan y.",
+      "Pakai variabel sementara.",
+      "int t = a; a = b; b = t;"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nvoid tukar(int& a, int& b) {\n    int t = a;\n    a = b;\n    b = t;\n}\n\nint main() {\n    int x, y;\n    std::cin >> x >> y;\n    tukar(x, y);\n    std::cout << x << \" \" << y << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "cpp",
+     "chapter": "f7"
+    },
+    {
+     "id": "cpp-f7-predict",
+     "type": "predict",
+     "title": "Overload dan Referensi",
+     "difficulty": 2,
+     "prompt": "Tulis output persis dari program berikut.",
+     "lang": "cpp",
+     "code": "#include <iostream>\n\nint f(int x) { return x + 1; }\ndouble f(double x) { return x * 2; }\nvoid g(int x) { x = 100; }\nvoid h(int& x) { x = 100; }\n\nint main() {\n    int a = 1, b = 1;\n    g(a);\n    h(b);\n    std::cout << f(3) << \" \" << f(3.0) << \" \" << a << \" \" << b << \"\\n\";\n}\n",
+     "tests": [
+      {
+       "expected": "4 6 1 100\n"
+      }
+     ],
+     "hints": [
+      "f(3) memanggil versi int, f(3.0) memanggil versi double.",
+      "g menerima salinan, sedangkan h menerima referensi.",
+      "Hanya b yang berubah."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f7"
+    },
+    {
+     "id": "cpp-f7-bug",
+     "type": "bughunt",
+     "title": "Penghitung yang Lupa",
+     "difficulty": 2,
+     "prompt": "Fungsi tambahSkor seharusnya menambah skor pemanggil, tapi skor tetap 0. Temukan bug-nya.",
+     "lang": "cpp",
+     "starter": "#include <iostream>\n\nvoid tambahSkor(int skor, int poin) {\n    skor += poin;\n}\n\nint main() {\n    int skor = 0, n, p;\n    std::cin >> n;\n    while (n--) { std::cin >> p; tambahSkor(skor, p); }\n    std::cout << skor << \"\\n\";\n}\n",
+     "bug_line": 3,
+     "tests": [
+      {
+       "input": "3\n10 20 5",
+       "expected": "35\n"
+      },
+      {
+       "input": "1\n7",
+       "expected": "7\n"
+      }
+     ],
+     "hints": [
+      "Parameter skor adalah SALINAN.",
+      "Pakai referensi supaya perubahan sampai ke pemanggil.",
+      "void tambahSkor(int& skor, int poin)"
+     ],
+     "solutions": [
+      "#include <iostream>\n\nvoid tambahSkor(int& skor, int poin) {\n    skor += poin;\n}\n\nint main() {\n    int skor = 0, n, p;\n    std::cin >> n;\n    while (n--) { std::cin >> p; tambahSkor(skor, p); }\n    std::cout << skor << \"\\n\";\n}\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "cpp",
+     "chapter": "f7"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,168 @@
+lesson:
+- text: 'Fungsi ditulis fn nama(param: Tipe) -> TipeKembali { }. Baris terakhir tanpa titik koma adalah nilai yang dikembalikan, jadi return jarang diperlukan.'
+  code: |
+    fn bagi(a: i32, b: i32) -> (i32, i32) {
+        (a / b, a % b)
+    }
+
+    fn main() {
+        let (h, s) = bagi(17, 5);
+        println!("{} {}", h, s);
+    }
+- text: 'Angka dikirim sebagai salinan. Untuk mengubah variabel pemanggil, pinjam secara mutable: parameter &mut i32, panggil dengan &mut x, lalu ubah lewat *p.'
+  code: |
+    fn gandakan(p: &mut i32) {
+        *p *= 2;
+    }
+
+    fn main() {
+        let mut x = 21;
+        gandakan(&mut x);
+        println!("{}", x);
+    }
+exercises:
+- id: rs-f7-fpb
+  type: write
+  title: FPB Dua Klan
+  difficulty: 2
+  prompt: Tulis fungsi fpb(a, b) dengan algoritma Euclid. Baca dua bilangan, cetak FPB-nya.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - 12 18
+  - 7 13
+  - 100 75
+  - 0 5
+  hints: |
+    fpb(a, 0) = a.
+    fpb(a, b) = fpb(b, a % b).
+    Bisa rekursif atau dengan loop.
+  solution: |
+    use std::io::{self, Read};
+
+    fn fpb(a: i64, b: i64) -> i64 {
+        if b == 0 { a } else { fpb(b, a % b) }
+    }
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a: i64 = it.next().unwrap().parse().unwrap();
+        let b: i64 = it.next().unwrap().parse().unwrap();
+        println!("{}", fpb(a, b));
+    }
+- id: rs-f7-faktorial
+  type: write
+  title: Faktorial Pernapasan
+  difficulty: 2
+  prompt: Tulis fungsi faktorial(n) yang rekursif. Baca n (0 ≤ n ≤ 20), cetak n!.
+  starter: |
+    use std::io::{self, Read};
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        // tulis kodemu di sini
+    }
+  tests:
+  - '5'
+  - '0'
+  - '20'
+  hints: |
+    0! = 1 adalah base case.
+    n! = n × (n-1)!.
+    20! melebihi 32-bit: pakai 64-bit.
+  solution: |
+    use std::io::{self, Read};
+
+    fn faktorial(n: u64) -> u64 {
+        if n == 0 { 1 } else { n * faktorial(n - 1) }
+    }
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let n: u64 = it.next().unwrap().parse().unwrap();
+        println!("{}", faktorial(n));
+    }
+- id: rs-f7-predict
+  type: predict
+  title: Salinan atau Asli?
+  difficulty: 2
+  prompt: Tulis output persis dari program berikut.
+  code: |
+    fn latih(mut x: i32) -> i32 {
+        x = x * 10;
+        x + 1
+    }
+
+    fn main() {
+        let a = 3;
+        let b = latih(a);
+        println!("{} {}", a, b);
+        latih(b);
+        println!("{}", b);
+    }
+  hints: |
+    Argumen bilangan dikirim sebagai salinan.
+    Mengubah salinan tidak mengubah variabel pemanggil.
+    Nilai yang dikembalikan lain cerita.
+  solution: x
+- id: rs-f7-bug
+  type: bughunt
+  title: Rekursi Tanpa Ujung
+  difficulty: 2
+  prompt: pangkat(a, n) seharusnya menghitung a^n secara rekursif, tapi program tidak pernah selesai (stack overflow). Temukan baris yang salah.
+  starter: |
+    use std::io::{self, Read};
+
+    fn pangkat(a: i64, n: i64) -> i64 {
+        if n == -1 {
+            return 1;
+        }
+        a * pangkat(a, n - 1)
+    }
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a: i64 = it.next().unwrap().parse().unwrap();
+        let n: i64 = it.next().unwrap().parse().unwrap();
+        println!("{}", pangkat(a, n));
+    }
+  bug_line: 4
+  tests:
+  - 2 10
+  - 3 0
+  - 5 3
+  hints: |
+    Setiap rekursi butuh base case.
+    Kapan rekursi harus berhenti?
+    Saat n == 0, kembalikan 1.
+  solution: |
+    use std::io::{self, Read};
+
+    fn pangkat(a: i64, n: i64) -> i64 {
+        if n == 0 {
+            return 1;
+        }
+        a * pangkat(a, n - 1)
+    }
+
+    fn main() {
+        let mut input = String::new();
+        io::stdin().read_to_string(&mut input).unwrap();
+        let mut it = input.split_whitespace();
+        let a: i64 = it.next().unwrap().parse().unwrap();
+        let n: i64 = it.next().unwrap().parse().unwrap();
+        println!("{}", pangkat(a, n));
+    }

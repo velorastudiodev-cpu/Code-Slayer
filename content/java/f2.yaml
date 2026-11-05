@@ -1,0 +1,122 @@
+lesson:
+  - text: Java bertipe statis, jadi setiap variabel punya tipe yang tetap. Tipe primitifnya antara lain int, long, double, boolean, dan char. String adalah objek untuk teks. var (Java 10+) membiarkan compiler menyimpulkan tipenya. Konstanta ditandai final.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int umur = 21;
+              double tinggi = 162.5;
+              boolean hashira = true;
+              char inisial = 'O';
+              var nama = "Obanai";
+              final long besar = 9_000_000_000L;
+              System.out.println(nama + " " + umur + " " + tinggi + " " + hashira + " " + inisial + " " + besar);
+          }
+      }
+  - text: Konversi dari String ke angka memakai Integer.parseInt atau Double.parseDouble, dan sebaliknya String.valueOf. Casting (int) 3.9 membuang desimal. Pembagian dua int menghasilkan int, dan int (maksimal sekitar 2,1 miliar) bisa meluap, jadi pakai long untuk angka besar.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int a = Integer.parseInt("7");
+              System.out.println(a / 2 + " " + a / 2.0 + " " + (int) 3.9 + " " + Integer.MAX_VALUE);
+          }
+      }
+exercises:
+  - id: java-f2-baca
+    type: write
+    title: Kartu Identitas
+    difficulty: 1
+    prompt: 'Baca nama (satu kata) dan umur. Cetak "<nama> akan berumur <umur+1> tahun".'
+    tests: ["Obanai 21", "Kanao 16"]
+    hints: |
+      Scanner in = new Scanner(System.in);
+      in.next() untuk kata, in.nextInt() untuk int.
+      Jangan lupa import java.util.Scanner;
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              String nama = in.next();
+              int umur = in.nextInt();
+              System.out.println(nama + " akan berumur " + (umur + 1) + " tahun");
+          }
+      }
+  - id: java-f2-long
+    type: write
+    title: Jarak Antar Bintang
+    difficulty: 2
+    prompt: Baca dua bilangan a dan b (masing-masing sampai 2 miliar). Cetak a * b. Hasilnya bisa melebihi batas int.
+    tests: ["3 4", "2000000000 2000000000", "-5 100000"]
+    hints: |
+      int maksimal sekitar 2,1 miliar.
+      Pakai long dan in.nextLong().
+      System.out.println(a * b);
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              long a = in.nextLong(), b = in.nextLong();
+              System.out.println(a * b);
+          }
+      }
+  - id: java-f2-predict
+    type: predict
+    title: Casting dan Pembagian
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      public class Main {
+          public static void main(String[] args) {
+              int a = 7, b = 2;
+              double c = a / b;
+              System.out.println(a / b + " " + c + " " + (double) a / b + " " + (int) 9.99);
+          }
+      }
+    hints: |
+      a / b dengan dua int menghasilkan int.
+      c menyimpan 3 sebagai double, sehingga tercetak 3.0.
+      (int) membuang desimal, bukan membulatkan.
+    solution: x
+  - id: java-f2-bug
+    type: bughunt
+    title: Teks yang Dijumlah
+    difficulty: 1
+    prompt: Program membaca dua angka (sebagai teks) dan harus mencetak jumlahnya, tapi hasilnya angka yang menempel. Temukan bug-nya.
+    starter: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              String a = in.next(), b = in.next();
+              System.out.println(a + b);
+          }
+      }
+    bug_line: 7
+    tests: ["3 4", "10 -2"]
+    hints: |
+      + pada String berarti digabung.
+      Ubah teks ke int dulu.
+      System.out.println(Integer.parseInt(a) + Integer.parseInt(b));
+    solution: |
+      import java.util.Scanner;
+
+      public class Main {
+          public static void main(String[] args) {
+              Scanner in = new Scanner(System.in);
+              String a = in.next(), b = in.next();
+              System.out.println(Integer.parseInt(a) + Integer.parseInt(b));
+          }
+      }
+  - id: java-f2-typing
+    type: typing
+    title: Ketik Deklarasi Java
+    difficulty: 1
+    prompt: Ketik ulang potongan kode berikut. Akurasi minimal 95%.
+    code: |
+      int umur = 21;
+      String nama = "Obanai";
+      System.out.println(nama + " " + umur);

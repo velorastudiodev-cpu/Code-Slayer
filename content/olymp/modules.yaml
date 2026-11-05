@@ -1,0 +1,77 @@
+stages:
+  - { id: kabupaten, name: Kabupaten, level: OSN-K, desc: Soal objektif (logika, aritmetika, algoritmika) + pemrograman dasar. Python diizinkan. }
+  - { id: provinsi, name: Provinsi, level: OSN-P, desc: "Greedy, sorting, prefix sum, binary search, rekursi. Python diizinkan, C++ disarankan." }
+  - { id: nasional, name: Nasional, level: OSN, desc: "DP, graf (BFS/DFS, shortest path, MST, DSU), teori bilangan, kombinatorika." }
+  - { id: pelatnas, name: Pelatnas, level: TOKI, desc: "Segment tree, Fenwick, DP bitmask & pohon, KMP, hashing, geometri." }
+  - { id: internasional, name: Internasional, level: IOI, desc: "Soal IOI asli (di TLX) dan soal orisinal dengan penilaian subtask." }
+
+topics:
+  - { id: implementasi, name: Implementasi & tipe data }
+  - { id: hash-map, name: Hash map & counting }
+  - { id: fast-io, name: Fast I/O }
+  - { id: bilangan, name: Bilangan & sieve }
+  - { id: prefix-sum, name: Prefix sum }
+  - { id: sorting, name: Sorting }
+  - { id: greedy, name: Greedy }
+  - { id: binary-search, name: Binary search }
+  - { id: two-pointers, name: Two pointers }
+  - { id: rekursi, name: Rekursi }
+  - { id: dp, name: Dynamic programming }
+  - { id: graph, name: Graf (BFS/DFS) }
+  - { id: shortest-path, name: Shortest path }
+  - { id: mst, name: MST }
+  - { id: dsu, name: Disjoint Set Union }
+  - { id: teori-bilangan, name: Teori bilangan }
+  - { id: kombinatorika, name: Kombinatorika }
+  - { id: fenwick-tree, name: Fenwick tree }
+  - { id: segment-tree, name: Segment tree }
+  - { id: dp-bitmask, name: DP bitmask }
+  - { id: dp-pohon, name: DP pohon }
+  - { id: string, name: String (KMP, hashing) }
+  - { id: geometri, name: Geometri }
+  - { id: lca, name: LCA & binary lifting }
+  - { id: stl, name: STL C++ }
+
+cp_lessons:
+  - title: Template kompetisi
+    text: Hampir semua peserta OSN/IOI memakai C++ karena cepat dan STL-nya lengkap. Mulai setiap soal dari template yang sama supaya fokus ke algoritma, bukan ke boilerplate.
+    code: |
+      #include <bits/stdc++.h>   // semua header standar sekaligus (GCC)
+      using namespace std;
+      typedef long long ll;
+
+      int main() {
+          ios::sync_with_stdio(false);  // I/O cepat
+          cin.tie(nullptr);
+          int n; cin >> n;
+          vector<ll> a(n);
+          for (auto &x : a) cin >> x;
+          cout << accumulate(a.begin(), a.end(), 0LL) << '\n';  // '\n', bukan endl (endl mem-flush tiap baris)
+      }
+  - title: Berapa operasi per detik?
+    text: "Aturan praktis: komputer juri menjalankan sekitar 10^8 operasi sederhana per detik. N ≤ 10^5–2·10^5 berarti butuh O(N log N); N ≤ 5000 masih aman untuk O(N²); N ≤ 20 mengizinkan O(2^N); N ≤ 10 mengizinkan O(N!). Baca batasan dulu, baru pilih algoritma."
+  - title: STL yang wajib dikuasai
+    text: "vector (array dinamis), sort / lower_bound / unique, pair & tuple, set / map (pohon seimbang, O(log N)), unordered_map (hash, rata-rata O(1)), priority_queue (heap), deque, stack/queue, bitset."
+    code: |
+      vector<int> v = {5, 1, 4};
+      sort(v.begin(), v.end());                       // 1 4 5
+      int pos = lower_bound(v.begin(), v.end(), 4) - v.begin(); // 1
+      set<int> s = {3, 1, 2};  auto it = s.lower_bound(2);     // *it == 2
+      map<string, int> cnt;  cnt["air"]++;
+      priority_queue<int, vector<int>, greater<int>> pq;       // min-heap
+  - title: Jebakan klasik
+    text: "Overflow int (pakai long long bila nilai bisa > 2·10^9), lupa modulo setelah perkalian, rekursi terlalu dalam (≥ 10^5 tingkat bisa stack overflow — pakai iteratif), dan membandingkan double dengan ==."
+
+stei:
+  roadmap:
+    - title: Kuasai fondasi
+      text: Selesaikan track Python atau C++ sampai rank Kinoe dan bab DSA Fondasi (itulah syarat Hashira Trial).
+    - title: OSN-K → OSN-P → OSN
+      text: Latih soal objektif dan pemrograman bertahap. Medali OSN tingkat nasional adalah prestasi yang diakui luas.
+    - title: Pelatnas & IOI
+      text: Peraih medali OSN terbaik mengikuti pelatihan nasional (Pelatnas TOKI) untuk seleksi tim IOI.
+    - title: Prestasi untuk seleksi masuk
+      text: Prestasi olimpiade bisa menjadi nilai tambah di jalur seleksi berbasis prestasi di banyak kampus, termasuk ITB. Aturan, kuota, dan jalurnya berubah dari tahun ke tahun.
+  disclaimer: Informasi ini bersifat umum. Selalu cek aturan seleksi terbaru di situs resmi ITB (itb.ac.id) dan SNPMB (snpmb.id) sebelum mengambil keputusan.
+  readiness:
+    weights: { objektif: 0.3, problem: 0.4, diskrit: 0.3 }

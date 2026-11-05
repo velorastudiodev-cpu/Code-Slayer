@@ -1,0 +1,133 @@
+# Solution Gallery JavaScript (lihat content/python/_gallery.yaml untuk format).
+js-f5-kabisat:
+  - style: readable
+    note: if/else bertingkat. Lebih panjang daripada operator ternary, tapi urutan aturannya (400 → 100 → 4) terbaca jelas.
+    code: |
+      const t = Number(readline())
+      if (t % 400 === 0) console.log("kabisat")
+      else if (t % 100 === 0) console.log("bukan")
+      else if (t % 4 === 0) console.log("kabisat")
+      else console.log("bukan")
+  - style: idiomatic
+    note: Biarkan Date yang tahu kalender. 29 Februari di tahun bukan kabisat "meluber" ke 1 Maret. setFullYear dipakai karena new Date(t, …) mengubah tahun 0–99 menjadi 1900-an.
+    code: |
+      const t = Number(readline())
+      const d = new Date(0)
+      d.setFullYear(t, 1, 29)
+      console.log(d.getMonth() === 1 ? "kabisat" : "bukan")
+js-f6-segitiga:
+  - style: fastest
+    note: Susun semua baris dalam array lalu satu console.log. Di Node, setiap console.log adalah satu penulisan ke stdout.
+    code: |
+      const n = Number(readline())
+      console.log(Array.from({ length: n }, (_, i) => "*".repeat(i + 1)).join("\n"))
+js-f6-faktor:
+  - style: idiomatic
+    note: Array.from + filter menulis "bilangan 1..n yang membagi n" secara deklaratif.
+    code: |
+      const n = Number(readline())
+      console.log(Array.from({ length: n }, (_, i) => i + 1).filter(d => n % d === 0).join(" "))
+  - style: fastest
+    note: Cek sampai √n saja dan simpan pasangannya (n / i). O(√n) dibanding O(n).
+    code: |
+      const n = Number(readline())
+      const kecil = [], besar = []
+      for (let i = 1; i * i <= n; i++) {
+        if (n % i === 0) {
+          kecil.push(i)
+          if (i !== n / i) besar.push(n / i)
+        }
+      }
+      console.log([...kecil, ...besar.reverse()].join(" "))
+js-f7-fpb:
+  - style: fastest
+    note: Versi iteratif tidak menumpuk call stack. Untuk angka biasa rekursi juga aman, karena Euclid hanya butuh O(log n) langkah.
+    code: |
+      function fpb(a, b) {
+        while (b !== 0) [a, b] = [b, a % b]
+        return a
+      }
+      const [a, b] = readline().split(" ").map(Number)
+      console.log(fpb(a, b))
+js-f7-palindrom:
+  - style: fastest
+    note: Dua penunjuk tanpa membuat array dan string baru. Berhenti di perbedaan pertama.
+    code: |
+      function palindrom(s) {
+        for (let i = 0, j = s.length - 1; i < j; i++, j--) if (s[i] !== s[j]) return false
+        return true
+      }
+      console.log(palindrom(readline()) ? "ya" : "tidak")
+js-f7-fib:
+  - style: readable
+    note: Rekursi sesuai definisi plus memo (Map). Tanpa memo, fib(50) butuh puluhan miliar panggilan; dengan memo hanya 50.
+    code: |
+      const memo = new Map()
+      function fib(n) {
+        if (n < 2) return n
+        if (!memo.has(n)) memo.set(n, fib(n - 1) + fib(n - 2))
+        return memo.get(n)
+      }
+      console.log(fib(Number(readline())))
+js-l3-prima:
+  - style: fastest
+    note: Setelah 2 dan 3, semua prima berbentuk 6k ± 1. Jumlah pembagi yang dicek jadi sepertiganya. Masih O(√n), tapi konstantanya lebih kecil.
+    code: |
+      function adalahPrima(n) {
+        if (n <= 3) return n > 1
+        if (n % 2 === 0 || n % 3 === 0) return false
+        for (let d = 5; d * d <= n; d += 6) if (n % d === 0 || n % (d + 2) === 0) return false
+        return true
+      }
+      const cek = (nama, hasil, harap) => console.log(hasil === harap ? "LOLOS" : "GAGAL", nama)
+      cek("2", adalahPrima(2), true)
+      cek("97", adalahPrima(97), true)
+      cek("1", adalahPrima(1), false)
+      cek("91", adalahPrima(91), false)
+      cek("-7", adalahPrima(-7), false)
+js-m1-frekuensi:
+  - style: idiomatic
+    note: reduce ke objek biasa juga umum. Tapi hati-hati, objek menaruh kunci yang mirip angka ("10", "2") di depan. Map selalu menjaga urutan sisip, jadi lebih aman.
+    code: |
+      const hitung = readline().split(" ").reduce((m, k) => ({ ...m, [k]: (m[k] ?? 0) + 1 }), {})
+      for (const [k, v] of Object.entries(hitung)) console.log(k, v)
+js-m1-genap-kali:
+  - style: fastest
+    note: Satu loop tanpa array perantara. filter/map/reduce masing-masing membuat array baru; pada data besar, satu lintasan lebih hemat memori.
+    code: |
+      let total = 0
+      for (const x of readline().split(" ").map(Number)) if (x % 2 === 0) total += x * 3
+      console.log(total)
+js-m2-vokal:
+  - style: readable
+    note: Tanpa regex, untuk yang belum akrab dengan /…/gi. includes mengecek apakah huruf ada di string vokal.
+    code: |
+      let n = 0
+      for (const c of readline().toLowerCase()) if ("aiueo".includes(c)) n++
+      console.log(n)
+js-m2-rle:
+  - style: readable
+    note: Loop dengan penghitung, tanpa regex backreference. Lebih panjang, tapi setiap langkah terlihat.
+    code: |
+      const s = readline()
+      let hasil = ""
+      let n = 1
+      for (let i = 1; i <= s.length; i++) {
+        if (s[i] === s[i - 1]) n++
+        else { hasil += s[i - 1] + n; n = 1 }
+      }
+      console.log(hasil)
+js-l5-pasangan:
+  - style: readable
+    note: Urutkan lalu dua penunjuk dari kiri dan kanan. O(n log n), tanpa memori tambahan untuk Set. Sedikit lebih lambat daripada Set yang O(n), tapi tetap jauh dari O(n²).
+    code: |
+      const [n, target] = readline().split(" ").map(Number)
+      const a = readline().split(" ").map(Number).sort((x, y) => x - y)
+      let i = 0, j = a.length - 1, ada = false
+      while (i < j) {
+        const s = a[i] + a[j]
+        if (s === target) { ada = true; break }
+        if (s < target) i++
+        else j--
+      }
+      console.log(ada ? "ya" : "tidak")

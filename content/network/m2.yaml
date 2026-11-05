@@ -1,0 +1,81 @@
+lesson:
+- text: 'Router memilih jalur dengan tabel routing: daftar prefix tujuan dan next hop. Kalau beberapa prefix cocok, yang dipilih adalah yang PALING SPESIFIK (prefix terpanjang). Route 0.0.0.0/0 adalah default
+    gateway: dipakai kalau tidak ada yang lain cocok.'
+exercises:
+- id: net-m2-lpm
+  type: write
+  title: Jalur Terpanjang
+  difficulty: 3
+  prompt: Baris pertama n, lalu n baris route "prefix/len nexthop". Baris berikutnya q, lalu q alamat IP. Untuk setiap IP cetak nexthop dari route yang cocok dengan prefix TERPANJANG, atau "tidak ada rute".
+  starter: |
+    import sys
+
+    # tulis kodemu di sini
+  tests:
+  - |-
+    3
+    0.0.0.0/0 gerbang
+    10.0.0.0/8 markas
+    10.1.0.0/16 desa
+    3
+    10.1.2.3
+    10.2.0.1
+    8.8.8.8
+  - |-
+    2
+    192.168.1.0/24 lan
+    192.168.1.128/25 lab
+    2
+    192.168.1.200
+    192.168.2.1
+  hints: |
+    Ubah IP dan prefix menjadi bilangan 32-bit.
+    IP cocok kalau (ip & mask) == jaringan prefix.
+    Dari yang cocok, ambil panjang prefix terbesar.
+  solution: |
+    def angka(ip):
+        n = 0
+        for x in ip.split("."):
+            n = n * 256 + int(x)
+        return n
+
+    rute = []
+    for _ in range(int(input())):
+        cidr, hop = input().split()
+        p, k = cidr.split("/")
+        k = int(k)
+        mask = (0xFFFFFFFF << (32 - k)) & 0xFFFFFFFF
+        rute.append((k, angka(p) & mask, mask, hop))
+    for _ in range(int(input())):
+        ip = angka(input().strip())
+        cocok = [r for r in rute if ip & r[2] == r[1]]
+        print(max(cocok)[3] if cocok else "tidak ada rute")
+- id: net-m2-gateway
+  type: quiz
+  title: Gerbang Keluar Desa
+  difficulty: 1
+  prompt: Laptop di jaringan 192.168.1.0/24 mengirim paket ke 8.8.8.8. Paket itu pertama kali dikirim ke...
+  options:
+  - Default gateway (router) jaringan lokal
+  - Langsung ke 8.8.8.8 lewat switch
+  - Server DNS lokal
+  - Broadcast ke semua perangkat
+  explain: 8.8.8.8 bukan bagian dari subnet lokal, jadi paket dikirim ke default gateway yang akan meneruskannya.
+  hints: |
+    Apakah 8.8.8.8 ada di 192.168.1.0/24?
+    Alamat di luar subnet butuh perantara.
+    Perantaranya adalah router.
+- id: net-m2-trace
+  type: answer
+  title: Melacak Jejak
+  difficulty: 1
+  prompt: Nama perintah (Linux/macOS) untuk melihat daftar router yang dilewati paket menuju sebuah tujuan adalah...
+  accept:
+  - traceroute
+  - tracert
+  - tracepath
+  explain: 'traceroute (di Windows: tracert) memanfaatkan TTL yang dinaikkan satu per satu untuk memunculkan setiap hop.'
+  hints: |
+    Melacak rute.
+    trace...
+    traceroute

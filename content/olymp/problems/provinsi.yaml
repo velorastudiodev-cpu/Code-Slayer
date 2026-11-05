@@ -1,0 +1,533 @@
+# Soal orisinal setara OSN-P: greedy, sorting, prefix sum, binary search, rekursi, two pointers.
+- id: ol-p-rentang
+  title: Jumlah Rentang Gulungan
+  stage: provinsi
+  topics: [prefix-sum]
+  tl: 1000
+  statement: |
+    Gagak Kasugai menyimpan N gulungan berisi nilai A_1 … A_N. Ada Q pertanyaan: berapa jumlah A_l + A_{l+1} + … + A_r?
+  input: |
+    Baris pertama N dan Q. Baris kedua A_1 … A_N. Q baris berikutnya berisi l dan r.
+  output: |
+    Untuk setiap pertanyaan, cetak jawabannya dalam satu baris. Agar output kecil, cetak saja JUMLAH semua jawaban (dalam satu baris).
+  constraints: |
+    1 ≤ N, Q ≤ 200.000, |A_i| ≤ 10^9, 1 ≤ l ≤ r ≤ N
+  samples: ["5 3\n1 2 3 4 5\n1 5\n2 3\n4 4\n"]
+  subtasks:
+    - points: 30
+      desc: "N, Q ≤ 1000"
+      tests: [{gen: "const n=1000,q=1000;let s=n+' '+q+'\\n'+R.arr(n,-1e9,1e9).join(' ')+'\\n';for(let i=0;i<q;i++){const l=R.int(1,n),r=R.int(l,n);s+=l+' '+r+'\\n'}return s", seed: 11}, "1 1\n-7\n1 1\n"]
+    - points: 70
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,q=200000;let s=n+' '+q+'\\n'+R.arr(n,-1e9,1e9).join(' ')+'\\n';const L=[];for(let i=0;i<q;i++){L.push(1+' '+n)}return s+L.join('\\n')", seed: 12}, {gen: "const n=200000,q=200000;let s=n+' '+q+'\\n'+R.arr(n,1,1e9).join(' ')+'\\n';const L=[];for(let i=0;i<q;i++){const l=R.int(1,n);L.push(l+' '+R.int(l,n))}return s+L.join('\\n')", seed: 13}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n, q; scanf("%d %d", &n, &q);
+        vector<long long> pre(n + 1, 0);
+        for (int i = 1; i <= n; i++) { long long a; scanf("%lld", &a); pre[i] = pre[i - 1] + a; }
+        __int128 total = 0;
+        while (q--) { int l, r; scanf("%d %d", &l, &r); total += pre[r] - pre[l - 1]; }
+        // cetak __int128
+        bool neg = total < 0; if (neg) total = -total;
+        string s; do { s += char('0' + (int)(total % 10)); total /= 10; } while (total > 0);
+        if (neg) s += '-';
+        reverse(s.begin(), s.end());
+        printf("%s\n", s.c_str());
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n, q; scanf("%d %d", &n, &q);
+          vector<long long> a(n + 1);
+          for (int i = 1; i <= n; i++) scanf("%lld", &a[i]);
+          __int128 total = 0;
+          while (q--) { int l, r; scanf("%d %d", &l, &r); for (int i = l; i <= r; i++) total += a[i]; }
+          bool neg = total < 0; if (neg) total = -total;
+          string s; do { s += char('0' + (int)(total % 10)); total /= 10; } while (total > 0);
+          if (neg) s += '-';
+          reverse(s.begin(), s.end());
+          printf("%s\n", s.c_str());
+      }
+  editorial:
+    hint: Menjumlahkan ulang dari l sampai r untuk setiap pertanyaan bisa butuh N×Q langkah.
+    idea: "Prefix sum: P[i] = A_1 + … + A_i, sehingga jumlah l..r = P[r] − P[l−1] dalam O(1)."
+    solution: Hitung P sekali, jawab setiap pertanyaan dalam O(1). Total jawaban bisa melebihi long long (hingga ~4·10^19), jadi gunakan __int128 (atau int Python).
+    complexity: O(N + Q)
+
+- id: ol-p-jadwal
+  title: Jadwal Misi Terbanyak
+  stage: provinsi
+  topics: [greedy, sorting]
+  tl: 1000
+  statement: |
+    Ada N misi; misi ke-i berlangsung dari waktu S_i sampai E_i (tidak termasuk E_i). Seorang slayer hanya bisa menjalankan satu misi pada satu waktu.
+    Berapa banyak misi maksimum yang bisa ia selesaikan? Misi yang berakhir di waktu t boleh disambung misi yang mulai di t.
+  input: |
+    Baris pertama N. N baris berikutnya berisi S_i dan E_i.
+  output: |
+    Banyak misi maksimum.
+  constraints: |
+    1 ≤ N ≤ 200.000, 0 ≤ S_i < E_i ≤ 10^9
+  samples: ["4\n1 3\n2 5\n3 4\n4 7\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 15"
+      tests: [{gen: "const n=15;let s=n+'\\n';for(let i=0;i<n;i++){const a=R.int(0,40);s+=a+' '+(a+R.int(1,10))+'\\n'}return s", seed: 21}, {gen: "const n=12;let s=n+'\\n';for(let i=0;i<n;i++){const a=R.int(0,20);s+=a+' '+(a+R.int(1,5))+'\\n'}return s", seed: 22}, "1\n0 1\n"]
+    - points: 70
+      desc: "N ≤ 200.000"
+      tests: [{gen: "const n=200000;let s=n+'\\n';for(let i=0;i<n;i++){const a=R.int(0,1e9-100);s+=a+' '+(a+R.int(1,100))+'\\n'}return s", seed: 23}, {gen: "const n=200000;let s=n+'\\n';for(let i=0;i<n;i++){const a=R.int(0,5e8);s+=a+' '+(a+R.int(1,5e8))+'\\n'}return s", seed: 24}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; scanf("%d", &n);
+        vector<pair<int,int>> m(n); // (selesai, mulai)
+        for (auto &x : m) scanf("%d %d", &x.second, &x.first);
+        sort(m.begin(), m.end());
+        int hasil = 0; long long akhir = -1;
+        for (auto [e, s] : m) if (s >= akhir) { hasil++; akhir = e; }
+        printf("%d\n", hasil);
+    }
+  python: |
+    import sys
+    d = sys.stdin.buffer.read().split()
+    n = int(d[0])
+    m = sorted(zip(map(int, d[2::2]), map(int, d[1::2])))
+    hasil, akhir = 0, -1
+    for e, s in m:
+        if s >= akhir:
+            hasil += 1
+            akhir = e
+    print(hasil)
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n; scanf("%d", &n);
+          vector<int> s(n), e(n);
+          for (int i = 0; i < n; i++) scanf("%d %d", &s[i], &e[i]);
+          int best = 0;
+          for (long long mask = 0; mask < (1LL << n); mask++) {
+              vector<pair<int,int>> p;
+              for (int i = 0; i < n; i++) if (mask >> i & 1) p.push_back({s[i], e[i]});
+              sort(p.begin(), p.end());
+              bool ok = true;
+              for (size_t i = 1; i < p.size(); i++) if (p[i].first < p[i - 1].second) ok = false;
+              if (ok) best = max(best, (int)p.size());
+          }
+          printf("%d\n", best);
+      }
+  editorial:
+    hint: Kalau kamu harus memilih satu misi pertama, misi mana yang paling "menguntungkan" untuk sisa waktumu?
+    idea: Pilih misi yang SELESAI paling awal. Itu menyisakan waktu paling banyak, dan argumen tukar (exchange argument) menunjukkan pilihan ini tidak pernah merugikan.
+    solution: Urutkan misi berdasarkan waktu selesai; ambil misi jika mulainya ≥ waktu selesai misi terakhir yang diambil.
+    complexity: O(N log N)
+
+- id: ol-p-terdekat
+  title: Pedang Terdekat
+  stage: provinsi
+  topics: [binary-search, sorting]
+  tl: 1000
+  statement: |
+    Haganezuka punya N pedang dengan panjang A_i. Ada Q pemesan; pemesan ke-j menginginkan panjang X_j.
+    Untuk setiap pemesan, cari selisih terkecil |A_i − X_j|. Cetak JUMLAH semua selisih terkecil tersebut.
+  input: |
+    Baris pertama N dan Q. Baris kedua A_1 … A_N. Baris ketiga X_1 … X_Q.
+  output: |
+    Jumlah selisih terkecil untuk semua pemesan.
+  constraints: |
+    1 ≤ N, Q ≤ 200.000, 0 ≤ A_i, X_j ≤ 10^9
+  samples: ["3 3\n10 20 30\n12 25 100\n"]
+  subtasks:
+    - points: 40
+      desc: "N, Q ≤ 2000"
+      tests: [{gen: "const n=2000,q=2000;return n+' '+q+'\\n'+R.arr(n,0,1e6).join(' ')+'\\n'+R.arr(q,0,1e6).join(' ')", seed: 31}, "1 1\n5\n5\n"]
+    - points: 60
+      desc: "N, Q ≤ 200.000"
+      tests: [{gen: "const n=200000,q=200000;return n+' '+q+'\\n'+R.arr(n,0,1e9).join(' ')+'\\n'+R.arr(q,0,1e9).join(' ')", seed: 32}, {gen: "const n=200000,q=200000;return n+' '+q+'\\n'+R.arr(n,0,100).join(' ')+'\\n'+R.arr(q,0,1e9).join(' ')", seed: 33}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n, q; scanf("%d %d", &n, &q);
+        vector<long long> a(n);
+        for (auto &x : a) scanf("%lld", &x);
+        sort(a.begin(), a.end());
+        long long total = 0;
+        while (q--) {
+            long long x; scanf("%lld", &x);
+            auto it = lower_bound(a.begin(), a.end(), x);
+            long long best = LLONG_MAX;
+            if (it != a.end()) best = *it - x;
+            if (it != a.begin()) best = min(best, x - *prev(it));
+            total += best;
+        }
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n, q; scanf("%d %d", &n, &q);
+          vector<long long> a(n);
+          for (auto &x : a) scanf("%lld", &x);
+          long long total = 0;
+          while (q--) { long long x; scanf("%lld", &x); long long b = LLONG_MAX; for (auto v : a) b = min(b, llabs(v - x)); total += b; }
+          printf("%lld\n", total);
+      }
+  editorial:
+    hint: Kalau panjang pedang sudah terurut, di mana letak kandidat terbaik untuk X?
+    idea: Setelah diurutkan, pedang terdekat pasti salah satu dari dua tetangga posisi sisip X (lower_bound).
+    solution: Urutkan A sekali, lalu untuk setiap X cari lower_bound dan bandingkan dengan elemen sebelumnya.
+    complexity: O((N + Q) log N)
+
+- id: ol-p-gagak
+  title: Beban Gagak Pengantar
+  stage: provinsi
+  topics: [binary-search, greedy]
+  tl: 1000
+  statement: |
+    Ada N surat berurutan dengan berat W_1 … W_N, diantar oleh K gagak. Setiap gagak membawa beberapa surat yang BERURUTAN,
+    dan setiap surat dibawa tepat satu gagak. Beban seekor gagak = jumlah berat suratnya.
+    Bagi surat-surat itu agar beban gagak terberat sekecil mungkin. Cetak beban terberat minimum tersebut.
+  input: |
+    Baris pertama N dan K. Baris kedua W_1 … W_N.
+  output: |
+    Beban terberat minimum.
+  constraints: |
+    1 ≤ K ≤ N ≤ 200.000, 1 ≤ W_i ≤ 10^9
+  samples: ["5 2\n7 2 5 10 8\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 100, W_i ≤ 100"
+      tests: [{gen: "const n=100;return n+' '+R.int(1,n)+'\\n'+R.arr(n,1,100).join(' ')", seed: 41}, "1 1\n9\n", "4 4\n1 2 3 4\n"]
+    - points: 70
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000;return n+' '+R.int(1,50)+'\\n'+R.arr(n,1,1e9).join(' ')", seed: 42}, {gen: "const n=200000;return n+' 3\\n'+R.arr(n,1e9-10,1e9).join(' ')", seed: 43}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int n, k; vector<long long> w;
+    bool bisa(long long batas) { // greedy: isi gagak sampai penuh
+        int gagak = 1; long long beban = 0;
+        for (long long x : w) {
+            if (x > batas) return false;
+            if (beban + x > batas) { gagak++; beban = 0; }
+            beban += x;
+        }
+        return gagak <= k;
+    }
+    int main() {
+        scanf("%d %d", &n, &k); w.resize(n);
+        for (auto &x : w) scanf("%lld", &x);
+        long long lo = 1, hi = 0; for (auto x : w) hi += x;
+        while (lo < hi) { long long mid = (lo + hi) / 2; if (bisa(mid)) hi = mid; else lo = mid + 1; }
+        printf("%lld\n", lo);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int n, k; vector<long long> w;
+      bool bisa(long long batas) { int g = 1; long long b = 0; for (auto x : w) { if (x > batas) return false; if (b + x > batas) { g++; b = 0; } b += x; } return g <= k; }
+      int main() {
+          scanf("%d %d", &n, &k); w.resize(n);
+          for (auto &x : w) scanf("%lld", &x);
+          long long t = 1; while (!bisa(t)) t++; // coba satu per satu
+          printf("%lld\n", t);
+      }
+  editorial:
+    hint: Pertanyaan "apakah beban maksimum ≤ T bisa dicapai?" jauh lebih mudah dijawab daripada mencari T terkecil langsung.
+    idea: Cek untuk T tertentu bisa dilakukan greedy (isi gagak sampai T, lalu pakai gagak baru). Jawabannya monoton terhadap T, jadi binary search pada jawaban.
+    solution: Binary search T di [1, total berat]; setiap cek greedy O(N).
+    complexity: O(N log(ΣW))
+
+- id: ol-p-pangkat
+  title: Pangkat Kilat
+  stage: provinsi
+  topics: [rekursi, matematika]
+  tl: 1000
+  statement: |
+    Zenitsu melatih Napas Petir: setiap latihan melipatgandakan kecepatannya A kali. Setelah B latihan kecepatannya A^B.
+    Hitung A^B mod M.
+  input: |
+    Satu baris berisi A, B, dan M.
+  output: |
+    A^B mod M.
+  constraints: |
+    0 ≤ A ≤ 10^9, 0 ≤ B ≤ 10^18, 1 ≤ M ≤ 10^9
+  samples: ["2 10 1000\n"]
+  subtasks:
+    - points: 30
+      desc: "B ≤ 10^6"
+      tests: ["3 1000000 1000000007\n", "0 0 7\n", "5 0 1\n", "123456789 999999 998244353\n"]
+    - points: 70
+      desc: "B ≤ 10^18"
+      tests: ["2 1000000000000000000 1000000007\n", "999999999 123456789012345678 999999937\n", "7 999999999999999999 1\n"]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    long long pangkat(long long a, long long b, long long m) {
+        if (b == 0) return 1 % m;
+        long long h = pangkat(a, b / 2, m);
+        h = h * h % m;
+        return b % 2 ? h * (a % m) % m : h;
+    }
+    int main() { long long a, b, m; scanf("%lld %lld %lld", &a, &b, &m); printf("%lld\n", pangkat(a, b, m)); }
+  python: |
+    a, b, m = map(int, input().split())
+    print(pow(a, b, m))
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      int main() { long long a, b, m; scanf("%lld %lld %lld", &a, &b, &m); long long r = 1 % m; for (long long i = 0; i < b; i++) r = r * (a % m) % m; printf("%lld\n", r); }
+  editorial:
+    hint: A^B = (A^(B/2))² bila B genap.
+    idea: Exponentiation by squaring memecah B menjadi setengahnya di setiap langkah rekursi, jadi hanya butuh ~log₂B perkalian.
+    solution: Rekursi pangkat(a, b) = pangkat(a, b/2)² × (a jika b ganjil), semua dalam modulo M. Ingat kasus M = 1 (jawaban 0).
+    complexity: O(log B)
+
+- id: ol-p-subarray
+  title: Barisan Latihan Terpanjang
+  stage: provinsi
+  topics: [two-pointers]
+  tl: 1000
+  statement: |
+    Inosuke punya N sesi latihan berurutan; sesi ke-i membutuhkan T_i menit. Ia ingin memilih sesi-sesi yang BERURUTAN
+    dengan total waktu tidak lebih dari S menit. Berapa banyak sesi maksimum yang bisa ia pilih?
+  input: |
+    Baris pertama N dan S. Baris kedua T_1 … T_N.
+  output: |
+    Panjang maksimum (bisa 0).
+  constraints: |
+    1 ≤ N ≤ 200.000, 1 ≤ T_i ≤ 10^9, 1 ≤ S ≤ 10^15
+  samples: ["5 7\n2 1 3 5 1\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 3000"
+      tests: [{gen: "const n=3000;return n+' 5000\\n'+R.arr(n,1,10).join(' ')", seed: 51}, "1 1\n5\n"]
+    - points: 60
+      desc: "N ≤ 200.000"
+      tests: [{gen: "const n=200000;return n+' 100000000000000\\n'+R.arr(n,1,1e9).join(' ')", seed: 52}, {gen: "const n=200000;return n+' 150000\\n'+R.arr(n,1,2).join(' ')", seed: 53}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; long long s; scanf("%d %lld", &n, &s);
+        vector<long long> t(n); for (auto &x : t) scanf("%lld", &x);
+        long long jumlah = 0; int kiri = 0, best = 0;
+        for (int kanan = 0; kanan < n; kanan++) {
+            jumlah += t[kanan];
+            while (jumlah > s) jumlah -= t[kiri++];
+            best = max(best, kanan - kiri + 1);
+        }
+        printf("%d\n", best);
+    }
+  python: |
+    import sys
+    d = sys.stdin.buffer.read().split()
+    n, s = int(d[0]), int(d[1])
+    t = list(map(int, d[2:2 + n]))
+    jumlah = kiri = best = 0
+    for kanan, x in enumerate(t):
+        jumlah += x
+        while jumlah > s:
+            jumlah -= t[kiri]
+            kiri += 1
+        if kanan - kiri + 1 > best:
+            best = kanan - kiri + 1
+    print(best)
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n; long long s; scanf("%d %lld", &n, &s);
+          vector<long long> t(n); for (auto &x : t) scanf("%lld", &x);
+          int best = 0;
+          for (int i = 0; i < n; i++) { long long j2 = 0; for (int j = i; j < n; j++) { j2 += t[j]; if (j2 > s) break; best = max(best, j - i + 1); } }
+          printf("%d\n", best);
+      }
+  editorial:
+    hint: Semua T_i positif. Kalau jendela [kiri, kanan] terlalu berat, apakah memperpanjangnya ke kanan bisa membantu?
+    idea: Two pointers. Geser kanan satu per satu; selama total melebihi S, geser kiri. Setiap pointer bergerak paling banyak N kali.
+    solution: Simpan jumlah jendela, perbarui jawaban dengan panjang jendela setelah kiri disesuaikan.
+    complexity: O(N)
+
+- id: ol-p-tumpukan
+  title: Menggabung Tumpukan Besi
+  stage: provinsi
+  topics: [greedy, priority-queue]
+  tl: 1000
+  statement: |
+    Di Desa Penempa ada N tumpukan besi dengan berat B_1 … B_N. Menggabungkan dua tumpukan berbobot x dan y memakan tenaga x + y
+    dan menghasilkan satu tumpukan berbobot x + y. Gabungkan semuanya menjadi satu tumpukan dengan total tenaga minimum.
+  input: |
+    Baris pertama N. Baris kedua B_1 … B_N.
+  output: |
+    Total tenaga minimum.
+  constraints: |
+    1 ≤ N ≤ 200.000, 1 ≤ B_i ≤ 10^9
+  samples: ["4\n4 3 2 6\n"]
+  subtasks:
+    - points: 30
+      desc: "N ≤ 2000"
+      tests: [{gen: "const n=2000;return n+'\\n'+R.arr(n,1,1e9).join(' ')", seed: 61}, "1\n5\n", "2\n1 1\n"]
+    - points: 70
+      desc: "N ≤ 200.000"
+      tests: [{gen: "const n=200000;return n+'\\n'+R.arr(n,1,1e9).join(' ')", seed: 62}, {gen: "const n=200000;return n+'\\n'+R.arr(n,1,3).join(' ')", seed: 63}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; scanf("%d", &n);
+        priority_queue<long long, vector<long long>, greater<long long>> pq;
+        for (int i = 0; i < n; i++) { long long b; scanf("%lld", &b); pq.push(b); }
+        long long total = 0;
+        while (pq.size() > 1) {
+            long long x = pq.top(); pq.pop();
+            long long y = pq.top(); pq.pop();
+            total += x + y; pq.push(x + y);
+        }
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n; scanf("%d", &n);
+          vector<long long> b(n); for (auto &x : b) scanf("%lld", &x);
+          long long total = 0;
+          while (b.size() > 1) {
+              sort(b.begin(), b.end()); // urutkan ulang setiap langkah: O(N² log N)
+              long long g = b[0] + b[1]; total += g;
+              b.erase(b.begin(), b.begin() + 2); b.push_back(g);
+          }
+          printf("%lld\n", total);
+      }
+  editorial:
+    hint: Tumpukan yang digabung lebih awal beratnya ikut terhitung berkali-kali. Tumpukan mana yang sebaiknya digabung pertama?
+    idea: Selalu gabungkan dua tumpukan TERINGAN (seperti kode Huffman). Struktur min-heap memberi dua terkecil dengan cepat.
+    solution: Masukkan semua ke priority_queue min; ambil dua teratas, jumlahkan ke total, masukkan hasilnya kembali.
+    complexity: O(N log N)
+
+- id: ol-p-selisih
+  title: Pasangan Berdekatan
+  stage: provinsi
+  topics: [sorting, two-pointers]
+  tl: 1000
+  statement: |
+    Ada N slayer dengan tingkat kekuatan A_i. Dua slayer berbeda bisa berlatih bersama jika selisih kekuatannya paling banyak D.
+    Hitung banyak pasangan (tanpa urutan) yang bisa berlatih bersama.
+  input: |
+    Baris pertama N dan D. Baris kedua A_1 … A_N.
+  output: |
+    Banyak pasangan.
+  constraints: |
+    1 ≤ N ≤ 200.000, 0 ≤ D, A_i ≤ 10^9
+  samples: ["4 2\n1 5 3 4\n"]
+  subtasks:
+    - points: 40
+      desc: "N ≤ 3000"
+      tests: [{gen: "const n=3000;return n+' '+R.int(0,1000)+'\\n'+R.arr(n,0,1e5).join(' ')", seed: 71}, "1 0\n4\n"]
+    - points: 60
+      desc: "N ≤ 200.000"
+      tests: [{gen: "const n=200000;return n+' 1000000\\n'+R.arr(n,0,1e9).join(' ')", seed: 72}, {gen: "const n=200000;return n+' 0\\n'+R.arr(n,0,10).join(' ')", seed: 73}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        int n; long long d; scanf("%d %lld", &n, &d);
+        vector<long long> a(n); for (auto &x : a) scanf("%lld", &x);
+        sort(a.begin(), a.end());
+        long long hasil = 0; int kiri = 0;
+        for (int kanan = 0; kanan < n; kanan++) {
+            while (a[kanan] - a[kiri] > d) kiri++;
+            hasil += kanan - kiri;
+        }
+        printf("%lld\n", hasil);
+    }
+  naive:
+    score: 40
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          int n; long long d; scanf("%d %lld", &n, &d);
+          vector<long long> a(n); for (auto &x : a) scanf("%lld", &x);
+          long long h = 0;
+          for (int i = 0; i < n; i++) for (int j = i + 1; j < n; j++) if (llabs(a[i] - a[j]) <= d) h++;
+          printf("%lld\n", h);
+      }
+  editorial:
+    hint: Urutan slayer tidak penting. Setelah diurutkan, pasangan yang valid untuk A[kanan] membentuk rentang apa?
+    idea: Pada array terurut, semua i di [kiri, kanan) dengan A[kanan] − A[i] ≤ D valid; kiri hanya bergerak maju.
+    solution: Urutkan, lalu two pointers; tambahkan (kanan − kiri) ke jawaban untuk setiap kanan.
+    complexity: O(N log N)
+
+- id: ol-p-huruf
+  title: Hitung Napas di Gulungan
+  stage: provinsi
+  topics: [prefix-sum, string]
+  tl: 1000
+  statement: |
+    Gulungan rahasia berisi string S (huruf kecil). Ada Q pertanyaan (l, r, c): berapa kali huruf c muncul di S[l..r] (indeks mulai 1)?
+    Cetak jumlah semua jawaban.
+  input: |
+    Baris pertama S. Baris kedua Q. Q baris berikutnya berisi l, r, dan c.
+  output: |
+    Jumlah semua jawaban.
+  constraints: |
+    1 ≤ |S| ≤ 200.000, 1 ≤ Q ≤ 200.000
+  samples: ["abacaba\n3\n1 7 a\n2 4 b\n3 3 z\n"]
+  subtasks:
+    - points: 30
+      desc: "|S|, Q ≤ 1000"
+      tests: [{gen: "const n=1000,q=1000;let s=R.str(n,'abc')+'\\n'+q+'\\n';for(let i=0;i<q;i++){const l=R.int(1,n);s+=l+' '+R.int(l,n)+' '+R.pick(['a','b','c','d'])+'\\n'}return s", seed: 81}]
+    - points: 70
+      desc: Tanpa batasan tambahan
+      tests: [{gen: "const n=200000,q=200000;let s=R.str(n)+'\\n'+q+'\\n';const L=[];for(let i=0;i<q;i++){L.push('1 '+n+' '+R.str(1))}return s+L.join('\\n')", seed: 82}, {gen: "const n=200000,q=200000;let s=R.str(n,'ab')+'\\n'+q+'\\n';const L=[];for(let i=0;i<q;i++){const l=R.int(1,n);L.push(l+' '+R.int(l,n)+' a')}return s+L.join('\\n')", seed: 83}]
+  solution: |
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main() {
+        static char buf[200005]; scanf("%s", buf);
+        int n = strlen(buf);
+        vector<array<int,26>> pre(n + 1);
+        pre[0].fill(0);
+        for (int i = 0; i < n; i++) { pre[i + 1] = pre[i]; pre[i + 1][buf[i] - 'a']++; }
+        int q; scanf("%d", &q);
+        long long total = 0;
+        while (q--) { int l, r; char c; scanf("%d %d %c", &l, &r, &c); total += pre[r][c - 'a'] - pre[l - 1][c - 'a']; }
+        printf("%lld\n", total);
+    }
+  naive:
+    score: 30
+    code: |
+      #include <bits/stdc++.h>
+      using namespace std;
+      int main() {
+          static char s[200005]; scanf("%s", s);
+          int q; scanf("%d", &q); long long t = 0;
+          while (q--) { int l, r; char c; scanf("%d %d %c", &l, &r, &c); for (int i = l - 1; i < r; i++) t += s[i] == c; }
+          printf("%lld\n", t);
+      }
+  editorial:
+    hint: Pertanyaannya hanya tentang 26 huruf. Bisakah kita menyiapkan jawaban untuk setiap huruf?
+    idea: Simpan prefix count per huruf, pre[i][c] = banyak huruf c di S[1..i].
+    solution: Jawaban (l, r, c) = pre[r][c] − pre[l−1][c].
+    complexity: O(26·|S| + Q)

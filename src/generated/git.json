@@ -1,0 +1,1289 @@
+{
+ "hash": "78424fe0ce52",
+ "chapters": {
+  "f1": {
+   "lesson": [
+    {
+     "text": "Git mencatat riwayat proyek. git init membuat repo (folder .git). Perubahan melewati tiga tempat: working tree (file yang kamu edit) → staging area (git add) → riwayat (git commit). Pisahkan \"memilih perubahan\" dan \"menyimpannya\".",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit status --short\ngit add misi.txt\ngit status --short\ngit commit -m \"Misi pertama\"\ngit log --format=\"%s\"\n"
+    },
+    {
+     "text": "Pesan commit yang baik singkat, memakai kalimat perintah, dan menjelaskan APA yang berubah: \"Tambah halaman login\", bukan \"update\" atau \"fix\"."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f1-pertama",
+     "type": "write",
+     "title": "Commit Pertama",
+     "difficulty": 1,
+     "prompt": "Folder proyek sudah berisi misi.txt tapi belum menjadi repo. Buat repo, stage misi.txt, lalu commit dengan pesan \"Misi pertama\". (Contoh output = state target yang diperiksa.)",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek\necho \"Kaa!\" > misi.txt\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Misi pertama< 1\n"
+      }
+     ],
+     "hints": [
+      "Mulai dengan git init.",
+      "git add memasukkan file ke staging area.",
+      "git commit -m \"pesan\""
+     ],
+     "solutions": [
+      "git init\ngit add misi.txt\ngit commit -m \"Misi pertama\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f1"
+    },
+    {
+     "id": "git-f1-staging",
+     "type": "quiz",
+     "title": "Ruang Tunggu Commit",
+     "difficulty": 1,
+     "prompt": "Kamu mengubah 3 file, tapi hanya ingin menyimpan perubahan di 1 file ke commit berikutnya. Fitur Git yang memungkinkan ini adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Git punya tahap di antara edit dan commit.",
+      "git add memilih file.",
+      "commit -a mengambil semuanya."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Staging area (git add file itu saja)",
+      "Branch baru untuk setiap file",
+      "git commit -a",
+      "Menghapus 2 file lainnya"
+     ],
+     "explain": "Staging area memisahkan \"apa yang akan di-commit\" dari \"apa yang sudah berubah\". git commit -a justru mengambil SEMUA file yang dilacak.",
+     "track": "git",
+     "chapter": "f1"
+    },
+    {
+     "id": "git-f1-addall",
+     "type": "answer",
+     "title": "Stage Semuanya",
+     "difficulty": 1,
+     "prompt": "Perintah untuk memasukkan SEMUA perubahan di folder saat ini (termasuk file baru) ke staging area adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Pakai git add.",
+      "Titik berarti direktori saat ini.",
+      "git add ."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "git add .",
+      "git add -A",
+      "git add --all"
+     ],
+     "explain": "git add . menambahkan semua perubahan di direktori saat ini dan subdirektorinya. git add -A melakukan hal yang sama untuk seluruh repo.",
+     "track": "git",
+     "chapter": "f1"
+    },
+    {
+     "id": "git-f1-urut",
+     "type": "parsons",
+     "title": "Susun Ritual Commit",
+     "difficulty": 1,
+     "prompt": "Susun perintah untuk membuat repo baru, membuat halo.txt, lalu meng-commit-nya dengan pesan \"Halo dunia\".",
+     "lang": "bash",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Halo dunia< 1\n"
+      }
+     ],
+     "hints": [
+      "Folder dibuat dan dimasuki dulu.",
+      "File harus ada sebelum di-add.",
+      "commit paling akhir."
+     ],
+     "solutions": [
+      "mkdir proyek\ncd proyek\ngit init\necho \"Halo\" > halo.txt\ngit add halo.txt\ngit commit -m \"Halo dunia\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f1"
+    }
+   ]
+  },
+  "f2": {
+   "lesson": [
+    {
+     "text": "git status menunjukkan keadaan file. Versi ringkas git status --short memakai dua kolom: kolom kiri = staging area, kolom kanan = working tree. \"A \" file baru di-stage, \"M \" diubah & di-stage, \" M\" diubah belum di-stage, \"??\" belum dilacak.",
+     "code": "mkdir proyek && cd proyek && git init -q\necho a > a.txt\ngit add a.txt\ngit commit -q -m awal\necho ubah >> a.txt\necho baru > b.txt\ngit status --short\ngit add a.txt\ngit status --short\n"
+    },
+    {
+     "text": "git diff memperlihatkan perubahan yang BELUM di-stage; git diff --staged memperlihatkan yang SUDAH di-stage (yang akan masuk commit)."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f2-status",
+     "type": "predict",
+     "title": "Membaca Dua Kolom",
+     "difficulty": 2,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "echo ubah >> a.txt\necho baru > c.txt\ngit add a.txt\necho lagi >> b.txt\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho a > a.txt\necho b > b.txt\ngit add .\ngit commit -q -m awal\n",
+     "tests": [
+      {
+       "expected": "M  a.txt\n M b.txt\n?? c.txt\n"
+      }
+     ],
+     "hints": [
+      "a.txt diubah lalu di-stage: kolom kiri.",
+      "b.txt diubah tapi belum di-stage: kolom kanan.",
+      "File baru yang belum di-add ditandai ??."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f2"
+    },
+    {
+     "id": "git-f2-pilih",
+     "type": "write",
+     "title": "Pilih yang Dikirim",
+     "difficulty": 1,
+     "prompt": "a.txt dan b.txt sama-sama sudah diubah. Stage HANYA a.txt (jangan commit dulu).",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho a > a.txt\necho b > b.txt\ngit add .\ngit commit -q -m awal\necho a2 >> a.txt\necho b2 >> b.txt\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: awal< 1\nM  a.txt\n M b.txt\n"
+      }
+     ],
+     "hints": [
+      "Stage satu file saja.",
+      "Jangan pakai git add .",
+      "git add a.txt"
+     ],
+     "solutions": [
+      "git add a.txt\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f2"
+    },
+    {
+     "id": "git-f2-tanda",
+     "type": "quiz",
+     "title": "Tanda Tanya Ganda",
+     "difficulty": 1,
+     "prompt": "Arti \"?? catatan.txt\" di git status --short adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "File baru yang belum pernah di-add.",
+      "Konflik ditandai UU.",
+      "Untracked."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "catatan.txt belum dilacak Git (untracked)",
+      "catatan.txt mengalami konflik",
+      "catatan.txt sudah di-stage",
+      "catatan.txt sudah dihapus"
+     ],
+     "explain": "\"??\" berarti Git belum pernah melacak file itu. Jalankan git add agar mulai dilacak.",
+     "track": "git",
+     "chapter": "f2"
+    },
+    {
+     "id": "git-f2-staged",
+     "type": "answer",
+     "title": "Mengintip Isi Commit",
+     "difficulty": 2,
+     "prompt": "Opsi git diff untuk melihat perubahan yang SUDAH di-stage adalah... (tulis opsinya saja)",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Tanpa opsi, git diff menampilkan yang belum di-stage.",
+      "Opsinya diawali --.",
+      "--staged"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "accept": [
+      "--staged",
+      "--cached",
+      "git diff --staged",
+      "git diff --cached"
+     ],
+     "explain": "git diff --staged (sinonim --cached) membandingkan staging area dengan commit terakhir.",
+     "track": "git",
+     "chapter": "f2"
+    }
+   ]
+  },
+  "f3": {
+   "lesson": [
+    {
+     "text": "git log menampilkan riwayat, terbaru di atas. --oneline meringkas jadi satu baris, --format=%s hanya menampilkan pesan. HEAD menunjuk commit yang sedang kamu pakai; HEAD~1 = satu commit sebelumnya.",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho \"Kaa! Kaa!\" >> misi.txt\ngit commit -q -am \"Tambah teriakan\"\ngit log --format=\"%s\"\ngit log --oneline | wc -l\n"
+    },
+    {
+     "text": "git commit --amend mengganti commit TERAKHIR (pesan dan/atau isinya). Aman untuk commit yang belum di-push; jangan dipakai untuk commit yang sudah dibagikan ke orang lain."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f3-amend",
+     "type": "write",
+     "title": "Salah Ketik",
+     "difficulty": 1,
+     "prompt": "Commit terakhir berpesan \"Tmabah peta\" (salah ketik). Perbaiki pesannya menjadi \"Tambah peta\" tanpa membuat commit baru.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho \"peta\" > peta.txt\ngit add peta.txt\ngit commit -q -m \"Tmabah peta\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Tambah peta<Misi pertama< 2\n"
+      }
+     ],
+     "hints": [
+      "Commit terakhir bisa diganti.",
+      "Opsi --amend.",
+      "git commit --amend -m \"pesan baru\""
+     ],
+     "solutions": [
+      "git commit --amend -m \"Tambah peta\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f3"
+    },
+    {
+     "id": "git-f3-log",
+     "type": "predict",
+     "title": "Riwayat Terbalik",
+     "difficulty": 1,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "echo 2 >> misi.txt\ngit commit -q -am \"Kedua\"\necho 3 >> misi.txt\ngit commit -q -am \"Ketiga\"\ngit log --format=%s\ngit log --format=%s HEAD~1 | head -1\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\n",
+     "tests": [
+      {
+       "expected": "Ketiga\nKedua\nMisi pertama\nKedua\n"
+      }
+     ],
+     "hints": [
+      "git log menampilkan yang terbaru di atas.",
+      "HEAD~1 = satu commit sebelum HEAD.",
+      "Commit pertama bernama \"Misi pertama\"."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f3"
+    },
+    {
+     "id": "git-f3-head",
+     "type": "quiz",
+     "title": "Di Mana HEAD?",
+     "difficulty": 2,
+     "prompt": "Riwayat: A ← B ← C (HEAD). Apa yang ditunjuk HEAD~2?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "~1 = satu langkah ke belakang.",
+      "Mundur dua kali dari C.",
+      "C → B → A."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "A",
+      "B",
+      "C",
+      "Commit setelah C"
+     ],
+     "explain": "~n berarti mundur n kali lewat parent pertama: HEAD~1 = B, HEAD~2 = A.",
+     "track": "git",
+     "chapter": "f3"
+    },
+    {
+     "id": "git-f3-oneline",
+     "type": "answer",
+     "title": "Riwayat Ringkas",
+     "difficulty": 1,
+     "prompt": "Opsi git log yang menampilkan setiap commit dalam SATU baris (hash pendek + pesan) adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Satu baris.",
+      "Satu kata, diawali --.",
+      "--oneline"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "--oneline",
+      "git log --oneline"
+     ],
+     "explain": "git log --oneline cocok untuk melihat riwayat panjang dengan cepat.",
+     "track": "git",
+     "chapter": "f3"
+    }
+   ]
+  },
+  "f4": {
+   "lesson": [
+    {
+     "text": "Branch adalah penanda bergerak yang menunjuk sebuah commit. Membuat branch untuk setiap fitur menjaga main tetap stabil. git switch -c nama membuat branch baru sekaligus pindah ke sana (sama dengan git checkout -b nama).",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\ngit switch -c fitur-peta\necho \"peta\" > peta.txt\ngit add peta.txt\ngit commit -q -m \"Tambah peta\"\ngit branch\ngit switch main\nls\n"
+    },
+    {
+     "text": "git branch tanpa argumen menampilkan daftar branch (* = branch aktif). git branch -d nama menghapus branch yang sudah digabung."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f4-buat",
+     "type": "write",
+     "title": "Jalan Fitur Baru",
+     "difficulty": 1,
+     "prompt": "Buat branch fitur-login dari main, pindah ke sana, buat file login.txt berisi \"form login\", lalu commit dengan pesan \"Tambah login\".",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: fitur-login\nfitur-login: Tambah login<Misi pertama< 2\nmain: Misi pertama< 1\n"
+      }
+     ],
+     "hints": [
+      "Buat dan pindah branch sekaligus.",
+      "git switch -c nama",
+      "Lalu buat file, add, commit."
+     ],
+     "solutions": [
+      "git switch -c fitur-login\necho \"form login\" > login.txt\ngit add login.txt\ngit commit -m \"Tambah login\"\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f4"
+    },
+    {
+     "id": "git-f4-predict",
+     "type": "predict",
+     "title": "Commit di Branch Mana?",
+     "difficulty": 2,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "git branch fitur\necho 2 >> misi.txt\ngit commit -q -am \"Kerja di main\"\ngit switch -q fitur\necho x > x.txt\ngit add x.txt\ngit commit -q -m \"Kerja di fitur\"\ngit log --format=%s main | head -1\ngit log --format=%s fitur | head -1\ngit rev-list --count fitur\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\n",
+     "tests": [
+      {
+       "expected": "Kerja di main\nKerja di fitur\n2\n"
+      }
+     ],
+     "hints": [
+      "git branch hanya membuat branch, TIDAK pindah.",
+      "Commit \"Kerja di main\" terjadi sebelum pindah.",
+      "fitur bercabang dari \"Misi pertama\"."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f4"
+    },
+    {
+     "id": "git-f4-bug",
+     "type": "bughunt",
+     "title": "Commit Nyasar",
+     "difficulty": 2,
+     "prompt": "Perintah ini dimaksudkan untuk membuat commit \"Tambah peta\" di branch fitur-peta, tapi commit-nya malah masuk ke main. Temukan baris yang salah.",
+     "lang": "bash",
+     "starter": "git branch fitur-peta\necho \"peta\" > peta.txt\ngit add peta.txt\ngit commit -m \"Tambah peta\"\n",
+     "bug_line": 1,
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: fitur-peta\nfitur-peta: Tambah peta<Misi pertama< 2\nmain: Misi pertama< 1\n"
+      }
+     ],
+     "hints": [
+      "git branch hanya membuat branch.",
+      "Setelah membuat, kita masih di main.",
+      "Pakai git switch -c untuk membuat sekaligus pindah."
+     ],
+     "solutions": [
+      "git switch -c fitur-peta\necho \"peta\" > peta.txt\ngit add peta.txt\ngit commit -m \"Tambah peta\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f4"
+    },
+    {
+     "id": "git-f4-switch",
+     "type": "quiz",
+     "title": "Membuat dan Pindah",
+     "difficulty": 1,
+     "prompt": "Perintah yang membuat branch baru bernama latihan DAN langsung pindah ke sana adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Satu perintah, dua efek.",
+      "-c = create.",
+      "git switch -c"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "git switch -c latihan",
+      "git branch latihan",
+      "git switch latihan",
+      "git merge latihan"
+     ],
+     "explain": "git switch -c (atau git checkout -b) membuat lalu pindah. git branch latihan hanya membuat; git switch latihan hanya pindah ke branch yang sudah ada.",
+     "track": "git",
+     "chapter": "f4"
+    }
+   ]
+  },
+  "f5": {
+   "lesson": [
+    {
+     "text": "git merge nama menggabungkan branch lain ke branch aktif. Kalau main tidak punya commit baru sejak branch dibuat, Git cukup menggeser penunjuk main ke depan (fast-forward). Kalau keduanya punya commit baru, Git membuat merge commit dengan dua parent.",
+     "code": "mkdir proyek && cd proyek && git init -q\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > regu.txt\ngit add regu.txt\ngit commit -q -m \"Bentuk regu\"\ngit switch -q -c latihan\necho \"Kanao\" >> regu.txt\ngit commit -q -am \"Tambah Kanao\"\ngit switch -q main\necho \"lokasi: Gunung Natagumo\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Catat lokasi\"\ngit merge latihan -m \"Gabungkan latihan\"\ngit log --format=%s --first-parent\ncat regu.txt\n"
+    },
+    {
+     "text": "Merge commit menyimpan sejarah bahwa dua jalur kerja pernah bertemu. --no-ff memaksa merge commit walau fast-forward bisa dilakukan."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f5-ff",
+     "type": "write",
+     "title": "Maju Lurus",
+     "difficulty": 1,
+     "prompt": "Branch fitur punya dua commit baru, main tidak. Gabungkan fitur ke main (fast-forward), dan pastikan kamu berada di main.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\ngit switch -q -c fitur\necho 2 >> misi.txt\ngit commit -q -am \"Langkah dua\"\necho 3 >> misi.txt\ngit commit -q -am \"Langkah tiga\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nfitur: Langkah tiga<Langkah dua<Misi pertama< 3\nmain: Langkah tiga<Langkah dua<Misi pertama< 3\n"
+      }
+     ],
+     "hints": [
+      "Pindah ke branch tujuan dulu.",
+      "Lalu merge branch sumbernya.",
+      "git switch main lalu git merge fitur"
+     ],
+     "solutions": [
+      "git switch main\ngit merge fitur\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f5"
+    },
+    {
+     "id": "git-f5-3way",
+     "type": "write",
+     "title": "Dua Jalur Bertemu",
+     "difficulty": 2,
+     "prompt": "main dan latihan sama-sama punya commit baru. Dari main, gabungkan latihan dengan pesan merge \"Gabungkan latihan\".",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > regu.txt\ngit add regu.txt\ngit commit -q -m \"Bentuk regu\"\ngit switch -q -c latihan\necho \"Kanao\" >> regu.txt\ngit commit -q -am \"Tambah Kanao\"\ngit switch -q main\necho \"lokasi: Gunung Natagumo\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Catat lokasi\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nlatihan: Tambah Kanao<Bentuk regu< 2\nmain: Gabungkan latihan<Catat lokasi<Bentuk regu< 4\n"
+      }
+     ],
+     "hints": [
+      "Kamu sudah di main.",
+      "Merge akan membuat merge commit.",
+      "git merge latihan -m \"Gabungkan latihan\""
+     ],
+     "solutions": [
+      "git merge latihan -m \"Gabungkan latihan\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f5"
+    },
+    {
+     "id": "git-f5-ffq",
+     "type": "quiz",
+     "title": "Kapan Fast-forward?",
+     "difficulty": 2,
+     "prompt": "Kapan git merge fitur dari main bisa dilakukan secara fast-forward?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Fast-forward = menggeser penunjuk.",
+      "main harus \"ketinggalan\" saja, bukan bercabang.",
+      "main tidak boleh punya commit sendiri."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Kalau main tidak punya commit baru sejak fitur dibuat",
+      "Kalau fitur hanya punya satu commit",
+      "Kalau tidak ada konflik",
+      "Kalau memakai --no-ff"
+     ],
+     "explain": "Fast-forward hanya menggeser penunjuk main ke ujung fitur, dan itu mungkin hanya bila commit terakhir main adalah leluhur fitur.",
+     "track": "git",
+     "chapter": "f5"
+    },
+    {
+     "id": "git-f5-hitung",
+     "type": "predict",
+     "title": "Menghitung Commit",
+     "difficulty": 2,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "git merge -q latihan -m gabung\ngit rev-list --count main\ngit log --format=%s --merges\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > regu.txt\ngit add regu.txt\ngit commit -q -m \"Bentuk regu\"\ngit switch -q -c latihan\necho \"Kanao\" >> regu.txt\ngit commit -q -am \"Tambah Kanao\"\ngit switch -q main\necho \"lokasi: Gunung Natagumo\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Catat lokasi\"\n",
+     "tests": [
+      {
+       "expected": "4\ngabung\n"
+      }
+     ],
+     "hints": [
+      "Sebelum merge: main punya 2 commit, latihan punya 2 (satu sama).",
+      "Merge menambah 1 merge commit.",
+      "Commit unik: Bentuk regu, Tambah Kanao, Catat lokasi, gabung."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f5"
+    }
+   ]
+  },
+  "f6": {
+   "lesson": [
+    {
+     "text": "Konflik terjadi kalau dua branch mengubah baris yang sama. Git menandai bagian itu:\n<<<<<<< HEAD (versimu), ======= (pemisah), >>>>>>> nama-branch (versi yang di-merge). Edit file sampai sesuai yang diinginkan, hapus penandanya, lalu git add dan git commit.",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"napas: air\" > jurus.txt\ngit add jurus.txt\ngit commit -q -m awal\ngit switch -q -c petir\necho \"napas: petir\" > jurus.txt\ngit commit -q -am \"Ganti ke petir\"\ngit switch -q main\necho \"napas: api\" > jurus.txt\ngit commit -q -am \"Ganti ke api\"\ngit merge petir\ncat jurus.txt\ngit status --short\n"
+    },
+    {
+     "text": "Kalau ingin membatalkan merge yang berkonflik dan kembali ke keadaan sebelum merge, gunakan git merge --abort."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f6-selesai",
+     "type": "write",
+     "title": "Damai di Jurus",
+     "difficulty": 2,
+     "prompt": "Merge petir ke main berkonflik di jurus.txt. Selesaikan: isi jurus.txt menjadi tepat \"napas: api dan petir\", tandai selesai, lalu commit dengan pesan \"Gabungkan petir\".",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"napas: air\" > jurus.txt\ngit add jurus.txt\ngit commit -q -m awal\ngit switch -q -c petir\necho \"napas: petir\" > jurus.txt\ngit commit -q -am \"Ganti ke petir\"\ngit switch -q main\necho \"napas: api\" > jurus.txt\ngit commit -q -am \"Ganti ke api\"\ngit merge petir\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Gabungkan petir<Ganti ke api<awal< 4\npetir: Ganti ke petir<awal< 2\n"
+      }
+     ],
+     "hints": [
+      "Tulis ulang isi file tanpa penanda konflik.",
+      "git add menandai konflik selesai.",
+      "Akhiri dengan git commit."
+     ],
+     "solutions": [
+      "echo \"napas: api dan petir\" > jurus.txt\ngit add jurus.txt\ngit commit -m \"Gabungkan petir\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f6"
+    },
+    {
+     "id": "git-f6-penanda",
+     "type": "predict",
+     "title": "Membaca Penanda",
+     "difficulty": 2,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "cat jurus.txt\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"napas: air\" > jurus.txt\ngit add jurus.txt\ngit commit -q -m awal\ngit switch -q -c petir\necho \"napas: petir\" > jurus.txt\ngit commit -q -am \"Ganti ke petir\"\ngit switch -q main\necho \"napas: api\" > jurus.txt\ngit commit -q -am \"Ganti ke api\"\ngit merge petir\n",
+     "tests": [
+      {
+       "expected": "<<<<<<< HEAD\nnapas: api\n=======\nnapas: petir\n>>>>>>> petir\n"
+      }
+     ],
+     "hints": [
+      "Bagian atas (HEAD) = versi branch aktif (main).",
+      "Bagian bawah = versi branch petir.",
+      "Ada tiga baris penanda."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f6"
+    },
+    {
+     "id": "git-f6-arti",
+     "type": "quiz",
+     "title": "Antara Dua Garis",
+     "difficulty": 1,
+     "prompt": "Di dalam penanda konflik, teks di antara <<<<<<< HEAD dan ======= adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "HEAD = di mana kamu berada.",
+      "Bagian bawah diberi label nama branch lain.",
+      "Atas = versimu."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "Versi dari branch yang sedang aktif",
+      "Versi dari branch yang di-merge",
+      "Versi leluhur bersama",
+      "Pesan error Git"
+     ],
+     "explain": "Bagian atas = HEAD (branch aktif), bagian bawah sampai >>>>>>> = branch yang sedang digabungkan.",
+     "track": "git",
+     "chapter": "f6"
+    },
+    {
+     "id": "git-f6-abort",
+     "type": "write",
+     "title": "Mundur Teratur",
+     "difficulty": 1,
+     "prompt": "Merge petir berkonflik dan kamu belum siap menyelesaikannya. Batalkan merge-nya sehingga main kembali bersih.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"napas: air\" > jurus.txt\ngit add jurus.txt\ngit commit -q -m awal\ngit switch -q -c petir\necho \"napas: petir\" > jurus.txt\ngit commit -q -am \"Ganti ke petir\"\ngit switch -q main\necho \"napas: api\" > jurus.txt\ngit commit -q -am \"Ganti ke api\"\ngit merge petir\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Ganti ke api<awal< 2\npetir: Ganti ke petir<awal< 2\n"
+      }
+     ],
+     "hints": [
+      "Ada opsi untuk membatalkan merge.",
+      "Opsinya diberikan ke git merge.",
+      "git merge --abort"
+     ],
+     "solutions": [
+      "git merge --abort\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "f6"
+    }
+   ]
+  },
+  "f7": {
+   "lesson": [
+    {
+     "text": "Remote adalah salinan repo di tempat lain (misalnya GitHub). git remote add origin <url> mendaftarkannya, git push mengirim commit, git pull mengambil commit baru lalu menggabungkannya, git clone menyalin repo lengkap.",
+     "code": "git init -q --bare pusat.git\nmkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\ngit remote add origin ../pusat.git\ngit push -u origin main\ngit remote -v\n"
+    },
+    {
+     "text": "Di terminal simulasi, \"server\" adalah repo bare di folder lain (git init --bare). Di dunia nyata alamatnya URL seperti https://github.com/korps/proyek.git, tapi perintahnya sama."
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-f7-push",
+     "type": "write",
+     "title": "Kirim ke Markas",
+     "difficulty": 2,
+     "prompt": "Repo bare ../pusat.git sudah ada. Daftarkan sebagai remote bernama origin, lalu push branch main ke sana (dengan upstream).",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "cd ../pusat.git\necho \"pusat: $(git log --format=%s main | tr '\\n' '<')\"\n",
+     "pre": "git init -q --bare pusat.git\nmkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "pusat: Misi pertama<\n"
+      }
+     ],
+     "hints": [
+      "Daftarkan remote dulu.",
+      "git remote add origin <alamat>",
+      "git push -u origin main"
+     ],
+     "solutions": [
+      "git remote add origin ../pusat.git\ngit push -u origin main\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f7"
+    },
+    {
+     "id": "git-f7-clone",
+     "type": "write",
+     "title": "Salinan Regu Lain",
+     "difficulty": 2,
+     "prompt": "Repo pusat.git sudah berisi \"Misi pertama\". Dari folder induk (cd ..), clone menjadi folder salinan, tambahkan file laporan.txt berisi \"aman\" dengan commit \"Laporan\", lalu push ke origin main.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "cd ../pusat.git\necho \"pusat: $(git log --format=%s main | tr '\\n' '<')\"\n",
+     "pre": "git init -q --bare pusat.git\nmkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\ngit remote add origin ../pusat.git\ngit push -q -u origin main\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "pusat: Laporan<Misi pertama<\n"
+      }
+     ],
+     "hints": [
+      "git clone alamat nama-folder",
+      "Masuk ke folder hasil clone.",
+      "Commit lalu git push origin main."
+     ],
+     "solutions": [
+      "cd ..\ngit clone pusat.git salinan\ncd salinan\necho \"aman\" > laporan.txt\ngit add laporan.txt\ngit commit -m \"Laporan\"\ngit push origin main\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "f7"
+    },
+    {
+     "id": "git-f7-pull",
+     "type": "quiz",
+     "title": "Mengambil Kabar",
+     "difficulty": 1,
+     "prompt": "git pull pada dasarnya adalah gabungan dua perintah. Yang mana?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Ambil dulu, lalu gabungkan.",
+      "fetch tidak mengubah branch-mu.",
+      "fetch + merge."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "options": [
+      "git fetch lalu git merge",
+      "git clone lalu git push",
+      "git add lalu git commit",
+      "git fetch lalu git push"
+     ],
+     "explain": "git pull = git fetch (ambil commit dari remote) + git merge (gabungkan ke branch aktif).",
+     "track": "git",
+     "chapter": "f7"
+    },
+    {
+     "id": "git-f7-remote",
+     "type": "answer",
+     "title": "Daftar Markas",
+     "difficulty": 1,
+     "prompt": "Perintah untuk melihat daftar remote beserta alamatnya adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "git remote ...",
+      "Opsi verbose.",
+      "git remote -v"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "git remote -v",
+      "git remote --verbose"
+     ],
+     "explain": "git remote -v menampilkan nama dan URL fetch/push setiap remote.",
+     "track": "git",
+     "chapter": "f7"
+    }
+   ]
+  },
+  "m1": {
+   "lesson": [
+    {
+     "text": "git rebase main memindahkan commit-commit branch-mu seolah dibuat di atas ujung main terbaru. Hasilnya riwayat lurus tanpa merge commit. Aturan emas: jangan rebase commit yang sudah di-push dan dipakai orang lain.",
+     "code": "mkdir proyek && cd proyek && git init -q\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > regu.txt\ngit add regu.txt\ngit commit -q -m \"Bentuk regu\"\ngit switch -q -c latihan\necho \"Kanao\" >> regu.txt\ngit commit -q -am \"Tambah Kanao\"\ngit switch -q main\necho \"lokasi: Gunung Natagumo\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Catat lokasi\"\ngit switch -q latihan\ngit rebase main\ngit log --format=%s\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-m1-rebase",
+     "type": "write",
+     "title": "Meluruskan Jalan",
+     "difficulty": 2,
+     "prompt": "Kamu di main; branch latihan bercabang sebelum commit \"Catat lokasi\". Pindah ke latihan, lalu rebase ke atas main.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > regu.txt\ngit add regu.txt\ngit commit -q -m \"Bentuk regu\"\ngit switch -q -c latihan\necho \"Kanao\" >> regu.txt\ngit commit -q -am \"Tambah Kanao\"\ngit switch -q main\necho \"lokasi: Gunung Natagumo\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Catat lokasi\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: latihan\nlatihan: Tambah Kanao<Catat lokasi<Bentuk regu< 3\nmain: Catat lokasi<Bentuk regu< 2\n"
+      }
+     ],
+     "hints": [
+      "Rebase dijalankan DARI branch yang ingin dipindahkan.",
+      "git switch latihan dulu.",
+      "git rebase main"
+     ],
+     "solutions": [
+      "git switch latihan\ngit rebase main\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m1"
+    },
+    {
+     "id": "git-m1-log",
+     "type": "predict",
+     "title": "Riwayat Setelah Rebase",
+     "difficulty": 2,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "git switch -q latihan\ngit rebase -q main\ngit log --format=%s\ngit log --merges --format=%s | wc -l\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\nprintf \"Tanjiro\\nZenitsu\\nInosuke\\n\" > regu.txt\ngit add regu.txt\ngit commit -q -m \"Bentuk regu\"\ngit switch -q -c latihan\necho \"Kanao\" >> regu.txt\ngit commit -q -am \"Tambah Kanao\"\ngit switch -q main\necho \"lokasi: Gunung Natagumo\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Catat lokasi\"\n",
+     "tests": [
+      {
+       "expected": "Tambah Kanao\nCatat lokasi\nBentuk regu\n0\n"
+      }
+     ],
+     "hints": [
+      "Commit latihan dipindah ke atas ujung main.",
+      "Rebase tidak membuat merge commit.",
+      "Urutan: terbaru di atas."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m1"
+    },
+    {
+     "id": "git-m1-beda",
+     "type": "quiz",
+     "title": "Merge atau Rebase?",
+     "difficulty": 2,
+     "prompt": "Perbedaan utama hasil rebase dibanding merge adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Perhatikan bentuk riwayatnya.",
+      "Commit yang di-rebase mendapat hash baru.",
+      "Lurus vs bercabang."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Riwayat menjadi lurus, commit lama diganti salinan baru",
+      "Rebase tidak pernah konflik",
+      "Rebase menghapus commit milik branch lain",
+      "Rebase hanya bisa dilakukan di main"
+     ],
+     "explain": "Rebase membuat ulang commit (hash baru) di atas basis baru sehingga riwayat lurus. Merge mempertahankan commit asli dan menambah merge commit.",
+     "track": "git",
+     "chapter": "m1"
+    }
+   ]
+  },
+  "m2": {
+   "lesson": [
+    {
+     "text": "git reset memindahkan branch ke commit lain. --soft: perubahan tetap di staging; --mixed (bawaan): perubahan kembali ke working tree; --hard: perubahan DIBUANG. git revert membuat commit baru yang membatalkan commit lama, aman untuk riwayat yang sudah dibagikan.",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho rahasia > kunci.txt\ngit add kunci.txt\ngit commit -q -m \"Tambah kunci\"\ngit reset --soft HEAD~1\ngit status --short\ngit log --format=%s\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-m2-soft",
+     "type": "write",
+     "title": "Tarik Kembali, Simpan Perubahan",
+     "difficulty": 2,
+     "prompt": "Commit terakhir \"Tambah kunci\" ternyata terlalu cepat. Batalkan commit itu, tapi perubahannya tetap di staging area.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho rahasia > kunci.txt\ngit add kunci.txt\ngit commit -q -m \"Tambah kunci\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Misi pertama< 1\nA  kunci.txt\n"
+      }
+     ],
+     "hints": [
+      "Pindahkan branch satu commit ke belakang.",
+      "Mode yang menjaga staging area.",
+      "git reset --soft HEAD~1"
+     ],
+     "solutions": [
+      "git reset --soft HEAD~1\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m2"
+    },
+    {
+     "id": "git-m2-revert",
+     "type": "write",
+     "title": "Batalkan dengan Jejak",
+     "difficulty": 2,
+     "prompt": "Commit \"Hapus peringatan\" (commit terakhir) sudah di-push dan merusak sesuatu. Batalkan efeknya dengan commit baru (pesan bawaan Git), tanpa menulis ulang riwayat.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho \"AWAS IBLIS\" > peringatan.txt\ngit add peringatan.txt\ngit commit -q -m \"Tambah peringatan\"\ngit rm -q peringatan.txt\ngit commit -q -m \"Hapus peringatan\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Revert \"Hapus peringatan\"<Hapus peringatan<Tambah peringatan<Misi pertama< 4\n"
+      }
+     ],
+     "hints": [
+      "Jangan reset: riwayat sudah dibagikan.",
+      "Buat commit kebalikan.",
+      "git revert HEAD --no-edit"
+     ],
+     "solutions": [
+      "git revert HEAD --no-edit\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m2"
+    },
+    {
+     "id": "git-m2-hard",
+     "type": "quiz",
+     "title": "Pedang Bermata Dua",
+     "difficulty": 2,
+     "prompt": "Kamu punya perubahan yang BELUM di-commit lalu menjalankan git reset --hard HEAD. Apa yang terjadi pada perubahan itu?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "--hard menimpa working tree.",
+      "Git hanya bisa mengembalikan yang pernah dicatat.",
+      "Belum di-commit = belum tercatat."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Hilang, dan tidak bisa dikembalikan lewat Git",
+      "Pindah ke stash otomatis",
+      "Tetap ada di working tree",
+      "Menjadi commit baru"
+     ],
+     "explain": "--hard menyamakan working tree dan staging dengan commit tujuan. Perubahan yang belum pernah di-commit tidak tercatat di mana pun.",
+     "track": "git",
+     "chapter": "m2"
+    }
+   ]
+  },
+  "m3": {
+   "lesson": [
+    {
+     "text": "git stash menyimpan perubahan yang belum di-commit ke tumpukan sementara dan membersihkan working tree. Berguna saat harus pindah branch mendadak. git stash pop mengembalikan perubahan terakhir dan menghapusnya dari tumpukan.",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho \"setengah jadi\" >> misi.txt\ngit stash\ncat misi.txt\ngit stash pop\ncat misi.txt\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-m3-darurat",
+     "type": "write",
+     "title": "Panggilan Darurat",
+     "difficulty": 2,
+     "prompt": "Kamu sedang mengubah misi.txt di main (belum di-commit) saat ada tugas darurat. Simpan perubahan itu ke stash, buat branch darurat dan commit file darurat.txt berisi \"segera\" dengan pesan \"Tangani darurat\". Biarkan perubahan tetap di stash.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\ngit stash list | wc -l\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho \"catatan rahasia\" >> misi.txt\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: darurat\ndarurat: Tangani darurat<Misi pertama< 2\nmain: Misi pertama< 1\n1\n"
+      }
+     ],
+     "hints": [
+      "Simpan dulu perubahanmu.",
+      "git stash membersihkan working tree.",
+      "Lalu buat branch dan commit seperti biasa."
+     ],
+     "solutions": [
+      "git stash\ngit switch -c darurat\necho \"segera\" > darurat.txt\ngit add darurat.txt\ngit commit -m \"Tangani darurat\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m3"
+    },
+    {
+     "id": "git-m3-pop",
+     "type": "predict",
+     "title": "Kembali dari Tumpukan",
+     "difficulty": 2,
+     "prompt": "Perintah persiapan sudah dijalankan. Tulis output persis dari skrip berikut.",
+     "lang": "bash",
+     "code": "echo \"draf\" >> misi.txt\ngit stash -q\ncat misi.txt\ngit stash pop -q\ncat misi.txt\ngit stash list | wc -l\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\n",
+     "tests": [
+      {
+       "expected": "Kaa!\nKaa!\ndraf\n0\n"
+      }
+     ],
+     "hints": [
+      "Setelah stash, file kembali ke isi commit terakhir.",
+      "pop mengembalikan perubahan.",
+      "pop juga menghapus entri dari tumpukan."
+     ],
+     "solutions": [
+      "x"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m3"
+    },
+    {
+     "id": "git-m3-list",
+     "type": "answer",
+     "title": "Isi Tumpukan",
+     "difficulty": 1,
+     "prompt": "Perintah untuk melihat daftar semua stash yang tersimpan adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "git stash ...",
+      "Daftar.",
+      "git stash list"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "git stash list"
+     ],
+     "explain": "git stash list menampilkan stash@{0}, stash@{1}, dst. Yang terbaru di atas.",
+     "track": "git",
+     "chapter": "m3"
+    }
+   ]
+  },
+  "m4": {
+   "lesson": [
+    {
+     "text": "Tag memberi nama permanen pada commit, biasanya untuk rilis: git tag v1.0. Tanpa argumen commit, tag menunjuk HEAD; tag juga bisa ditaruh di commit lama: git tag v0.9 HEAD~2.",
+     "code": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho 2 >> misi.txt\ngit commit -q -am \"Fitur dua\"\ngit tag v1.0\ngit tag v0.1 HEAD~1\ngit tag\ngit log --format=%s v0.1\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-m4-tag",
+     "type": "write",
+     "title": "Menandai Rilis",
+     "difficulty": 1,
+     "prompt": "Beri tag v1.0 pada commit terakhir dan tag v0.9 pada commit SEBELUMNYA.",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "git tag\necho \"v0.9: $(git log -1 --format=%s v0.9)\"\necho \"v1.0: $(git log -1 --format=%s v1.0)\"\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho \"Kaa!\" > misi.txt\ngit add misi.txt\ngit commit -q -m \"Misi pertama\"\necho 2 >> misi.txt\ngit commit -q -am \"Fitur dua\"\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "v0.9\nv1.0\nv0.9: Misi pertama\nv1.0: Fitur dua\n"
+      }
+     ],
+     "hints": [
+      "git tag nama = di HEAD.",
+      "Tag bisa diberi target commit.",
+      "git tag v0.9 HEAD~1"
+     ],
+     "solutions": [
+      "git tag v1.0\ngit tag v0.9 HEAD~1\n"
+     ],
+     "concepts": [],
+     "xp": 10,
+     "track": "git",
+     "chapter": "m4"
+    },
+    {
+     "id": "git-m4-beda",
+     "type": "quiz",
+     "title": "Tag atau Branch?",
+     "difficulty": 2,
+     "prompt": "Perbedaan tag dan branch adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Apa yang terjadi saat commit baru dibuat?",
+      "Rilis v1.0 tidak boleh berubah.",
+      "Tag diam, branch bergerak."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Tag tetap menunjuk commit yang sama; branch bergerak setiap ada commit baru",
+      "Tag hanya bisa dibuat di main",
+      "Branch tidak bisa dihapus",
+      "Tag menyalin seluruh file"
+     ],
+     "explain": "Branch adalah penanda yang ikut maju saat kamu commit; tag adalah penanda diam untuk menandai titik penting seperti rilis.",
+     "track": "git",
+     "chapter": "m4"
+    },
+    {
+     "id": "git-m4-list",
+     "type": "answer",
+     "title": "Daftar Rilis",
+     "difficulty": 1,
+     "prompt": "Perintah untuk menampilkan semua tag di repo adalah...",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      "Paling sederhana.",
+      "Tanpa argumen.",
+      "git tag"
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 10,
+     "accept": [
+      "git tag",
+      "git tag -l",
+      "git tag --list"
+     ],
+     "explain": "git tag tanpa argumen menampilkan daftar tag.",
+     "track": "git",
+     "chapter": "m4"
+    }
+   ]
+  },
+  "m5": {
+   "lesson": [
+    {
+     "text": ".gitignore berisi pola file yang tidak perlu dilacak: hasil build, log, dependensi, rahasia. Satu pola per baris: *.log, build/ (folder), dan !penting.log untuk pengecualian. File yang SUDAH dilacak tetap dilacak walau ditambahkan ke .gitignore.",
+     "code": "mkdir proyek && cd proyek && git init -q\nprintf \"*.log\\nbuild/\\n\" > .gitignore\necho x > app.log\nmkdir build && echo y > build/out\necho k > kode.py\ngit status --short\n"
+    }
+   ],
+   "exercises": [
+    {
+     "id": "git-m5-ignore",
+     "type": "write",
+     "title": "Abaikan Sampah",
+     "difficulty": 2,
+     "prompt": "Buat .gitignore yang mengabaikan semua file .log dan folder build/, lalu commit .gitignore dan kode.py saja dengan pesan \"Awal proyek\" (pakai git add .).",
+     "lang": "bash",
+     "starter": "# ketik perintah git di sini, satu per baris\n",
+     "after": "echo \"HEAD: $(git branch --show-current)\"\nfor b in $(git branch --format='%(refname:short)'); do echo \"$b: $(git log --first-parent --format=%s $b | tr '\\n' '<') $(git rev-list --count $b)\"; done\ngit status --short\ngit ls-files\n",
+     "pre": "mkdir proyek && cd proyek && git init -q\necho x > app.log\nmkdir build && echo y > build/out\necho k > kode.py\n",
+     "quiet": true,
+     "tests": [
+      {
+       "expected": "HEAD: main\nmain: Awal proyek< 1\n.gitignore\nkode.py\n"
+      }
+     ],
+     "hints": [
+      "Satu pola per baris.",
+      "*.log untuk semua file log, build/ untuk folder.",
+      "Setelah itu git add . tidak akan mengambil file yang diabaikan."
+     ],
+     "solutions": [
+      "printf \"*.log\\nbuild/\\n\" > .gitignore\ngit add .\ngit commit -m \"Awal proyek\"\n"
+     ],
+     "concepts": [],
+     "xp": 20,
+     "track": "git",
+     "chapter": "m5"
+    },
+    {
+     "id": "git-m5-sudah",
+     "type": "quiz",
+     "title": "Terlambat Diabaikan",
+     "difficulty": 2,
+     "prompt": "kunci.env sudah ter-commit, lalu kamu menambahkan kunci.env ke .gitignore. Apa yang terjadi?",
+     "lang": "bash",
+     "tests": [],
+     "hints": [
+      ".gitignore tidak berlaku surut.",
+      "File yang sudah dilacak tetap dilacak.",
+      "git rm --cached berhenti melacak tanpa menghapus file."
+     ],
+     "solutions": [],
+     "concepts": [],
+     "xp": 20,
+     "options": [
+      "Git tetap melacaknya; hapus dari index dengan git rm --cached kunci.env",
+      "Git otomatis menghapusnya dari riwayat",
+      "File langsung terhapus dari disk",
+      "Commit lama ikut berubah"
+     ],
+     "explain": ".gitignore hanya berlaku untuk file yang belum dilacak. Rahasia yang sudah ter-commit tetap ada di riwayat, jadi ganti juga rahasianya.",
+     "track": "git",
+     "chapter": "m5"
+    }
+   ]
+  }
+ }
+}

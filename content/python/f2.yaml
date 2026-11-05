@@ -1,0 +1,97 @@
+lesson:
+  - text: Variabel adalah nama untuk menyimpan nilai, dibuat dengan tanda =. Tipe dasar Python adalah int (bilangan bulat), float (desimal), str (teks), dan bool (True/False). Fungsi type() memberi tahu tipe sebuah nilai.
+    code: |
+      nama = "Tanjiro"
+      umur = 15
+      tinggi = 165.5
+      print(nama, umur, tinggi)
+      print(type(umur), type(tinggi), type(nama))
+  - text: Tipe bisa diubah dengan int(), float(), dan str(). f-string, yaitu string berawalan f, menyisipkan nilai variabel lewat kurung kurawal. Ini cara paling rapi menggabung teks dan angka.
+    code: |
+      umur = 15
+      print("Umur: " + str(umur))
+      print(f"Tahun depan {umur + 1} tahun")
+      print(int("42") + 1, float("2.5") * 2)
+exercises:
+  - id: py-f2-tukar
+    type: write
+    title: Tukar Posisi
+    difficulty: 1
+    prompt: Input berisi dua baris teks a dan b. Cetak b di baris pertama, lalu a di baris kedua.
+    starter: |
+      a = input()
+      b = input()
+    tests: ["x\ny", "Tanjiro\nNezuko", "Gagak\nKaa"]
+    hints: [Kamu sudah punya a dan b., Urutan print menentukan urutan baris., print(b) lalu print(a)]
+    solution: |
+      a = input()
+      b = input()
+      print(b)
+      print(a)
+  - id: py-f2-fstring
+    type: write
+    title: Kartu Identitas Slayer
+    difficulty: 1
+    prompt: 'Baris pertama berisi nama, baris kedua umur. Cetak "Nama: <nama>, umur <umur> tahun".'
+    tests: ["Tanjiro\n15", "Rengoku\n20", "Kanao\n16"]
+    hints: [Baca dua baris dengan dua kali input()., Pakai f-string supaya rapi., 'print(f"Nama: {nama}, umur {umur} tahun")']
+    solution: |
+      nama = input()
+      umur = input()
+      print(f"Nama: {nama}, umur {umur} tahun")
+  - id: py-f2-tipe
+    type: predict
+    title: Mengenali Wujud Iblis
+    difficulty: 1
+    prompt: Tulis output persis dari kode berikut.
+    code: print(type(7), type(7.0), type("7"), type(True))
+    hints: |
+      Angka tanpa titik adalah int.
+      Angka dengan titik adalah float.
+      Nilai di dalam kutip adalah str, True adalah bool.
+    solution: x
+  - id: py-f2-bug-umur
+    type: bughunt
+    title: Umur yang Tidak Bisa Bertambah
+    difficulty: 1
+    prompt: Program membaca umur lalu mencetak umur tahun depan. Temukan bug-nya.
+    starter: |
+      umur = input()
+      print("Tahun depan:", umur + 1)
+    bug_line: 1
+    tests: ["15", "0", "99"]
+    hints: [Apa tipe hasil input()?, String tidak bisa ditambah dengan angka., umur = int(input())]
+    solution: |
+      umur = int(input())
+      print("Tahun depan:", umur + 1)
+  - id: py-f2-konversi
+    type: write
+    title: Memotong Desimal
+    difficulty: 2
+    prompt: Input berupa satu bilangan desimal positif. Cetak bagian bulatnya di baris pertama dan hasil pembulatannya (round) di baris kedua.
+    tests: ["3.7", "10.2", "7.9", "0.4"]
+    hints: [Ubah input ke float dulu., int(x) membuang bagian desimal., round(x) membulatkan ke bilangan terdekat.]
+    solution: |
+      x = float(input())
+      print(int(x))
+      print(round(x))
+  - id: py-f2-parsons
+    type: parsons
+    title: Menghitung Huruf Nama
+    difficulty: 1
+    prompt: Susun program yang membaca sebuah nama lalu mencetak "<nama> punya <n> huruf".
+    tests: ["Tanjiro", "Rengoku", "Ai"]
+    hints: [Baca nama terlebih dahulu., len() menghitung panjang string., print ada di baris terakhir.]
+    solution: |
+      nama = input()
+      panjang = len(nama)
+      print(nama, "punya", panjang, "huruf")
+  - id: py-f2-typing
+    type: typing
+    title: Ketik Variabel
+    difficulty: 1
+    prompt: Ketik ulang kode berikut, termasuk f-string-nya. Akurasi minimal 95%.
+    code: |
+      nama = "Tanjiro"
+      umur = 15
+      print(f"{nama} berumur {umur}")

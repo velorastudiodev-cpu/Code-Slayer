@@ -1,0 +1,153 @@
+lesson:
+  - text: 'for (inisialisasi; kondisi; langkah) adalah loop paling umum di C. while (kondisi) mengulang selama kondisinya benar, dan do...while menjalankan isinya minimal sekali. break keluar dari loop, continue lompat ke putaran berikutnya.'
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          int total = 0;
+          for (int i = 1; i <= 5; i++) total += i;
+          printf("%d\n", total);
+          int n = 3;
+          while (n > 0) printf("tebasan %d\n", n--);
+          return 0;
+      }
+  - text: Loop bersarang dipakai untuk pola dua dimensi seperti tabel atau segitiga. Perhatikan batas loop, karena kesalahan satu angka (off-by-one) adalah bug paling umum.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          for (int i = 1; i <= 3; i++) {
+              for (int j = 1; j <= i; j++) printf("*");
+              printf("\n");
+          }
+          return 0;
+      }
+exercises:
+  - id: c-f6-segitiga
+    type: write
+    title: Formasi Segitiga
+    difficulty: 2
+    prompt: Baca n, cetak segitiga bintang n baris. Baris ke-i berisi i tanda *.
+    tests: ["3", "1", "5"]
+    hints: |
+      Loop luar untuk baris, loop dalam untuk bintang.
+      Loop dalam berjalan i kali.
+      printf("\n") setelah loop dalam.
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n;
+          scanf("%d", &n);
+          for (int i = 1; i <= n; i++) {
+              for (int j = 0; j < i; j++) printf("*");
+              printf("\n");
+          }
+          return 0;
+      }
+  - id: c-f6-prima
+    type: write
+    title: Uji Bilangan Prima
+    difficulty: 2
+    prompt: Baca n (n ≤ 10^9). Cetak "prima" atau "bukan". Cukup periksa pembagi sampai akar n.
+    tests: ["7", "1", "91", "2", "999999937", "1000000000"]
+    hints: |
+      Bilangan ≤ 1 bukan prima.
+      Periksa d selama d * d <= n.
+      Pakai long long untuk d * d supaya tidak overflow.
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          long long n;
+          scanf("%lld", &n);
+          int prima = n > 1;
+          for (long long d = 2; d * d <= n; d++)
+              if (n % d == 0) { prima = 0; break; }
+          printf("%s\n", prima ? "prima" : "bukan");
+          return 0;
+      }
+  - id: c-f6-predict
+    type: predict
+    title: Loop Berlapis
+    difficulty: 2
+    prompt: Tulis output persis dari program berikut.
+    code: |
+      #include <stdio.h>
+
+      int main(void) {
+          for (int i = 0; i < 4; i++) {
+              if (i == 1) continue;
+              if (i == 3) break;
+              printf("%d ", i);
+          }
+          int n = 0;
+          do { n++; } while (n < 0);
+          printf("| %d\n", n);
+          return 0;
+      }
+    hints: |
+      continue melewati i == 1.
+      break berhenti saat i == 3, sebelum mencetak.
+      do...while menjalankan isinya minimal sekali.
+    solution: x
+  - id: c-f6-bug
+    type: bughunt
+    title: Satu Tebasan Hilang
+    difficulty: 1
+    prompt: Program harus mencetak jumlah 1 + 2 + ... + n, tapi hasilnya selalu kurang. Temukan bug-nya.
+    starter: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n, total = 0;
+          scanf("%d", &n);
+          for (int i = 1; i < n; i++) total += i;
+          printf("%d\n", total);
+          return 0;
+      }
+    bug_line: 6
+    tests: ["3", "10", "1"]
+    hints: |
+      Apakah n sendiri ikut dijumlah?
+      i < n berhenti sebelum n.
+      i <= n
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          int n, total = 0;
+          scanf("%d", &n);
+          for (int i = 1; i <= n; i++) total += i;
+          printf("%d\n", total);
+          return 0;
+      }
+  - id: c-f6-translate
+    type: translate
+    title: Terjemahkan Jumlah Digit
+    difficulty: 2
+    prompt: Tulis ulang program Python ini dalam C.
+    from_lang: python
+    from_code: |
+      n = int(input())
+      s = 0
+      while n > 0:
+          s += n % 10
+          n //= 10
+      print(s)
+    tests: ["12345", "0", "999999999"]
+    hints: |
+      Pakai long long untuk n.
+      // di Python sama dengan / untuk bilangan bulat positif di C.
+      printf("%d\n", s);
+    solution: |
+      #include <stdio.h>
+
+      int main(void) {
+          long long n;
+          int s = 0;
+          scanf("%lld", &n);
+          while (n > 0) { s += n % 10; n /= 10; }
+          printf("%d\n", s);
+          return 0;
+      }
