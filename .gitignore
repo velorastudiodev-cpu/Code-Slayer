@@ -28,7 +28,9 @@ public/pyodide
 test-results/
 playwright-report/
 
-# Local Python cache and signing keys
+# Konfigurasi deploy lokal
+.env
+
 __pycache__/
 *.pyc
 *.jks

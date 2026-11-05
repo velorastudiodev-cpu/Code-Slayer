@@ -1,0 +1,28 @@
+# Deploy ke VPS (Docker + akses root/privileged untuk sandbox Piston), dengan HTTPS otomatis via Caddy.
+#   cp .env.example .env            # isi DOMAIN (domain/subdomain yang A-record-nya sudah mengarah ke IP VPS)
+#   docker compose -f docker-compose.yml -f docker-compose.vps.yml up -d --build
+#   docker compose run --rm piston-setup    # sekali: pasang compiler C/C++/Java/Go/Rust/C#/Kotlin di Piston
+# Hasil: https://DOMAIN (aplikasi web) dan https://DOMAIN/api (server eksekusi untuk APK).
+services:
+  app:
+    environment:
+      TRUST_PROXY: "1"
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+  caddy:
+    image: caddy:2.8.4
+    restart: unless-stopped
+    depends_on: [app]
+    environment:
+      DOMAIN: ${DOMAIN:?isi DOMAIN di file .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

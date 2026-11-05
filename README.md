@@ -57,7 +57,7 @@ cd android && ./gradlew assembleDebug   # → android/app/build/outputs/apk/debu
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-  Supaya C/C++/Java/Go/Rust/C#/Kotlin jalan di APK, build web dengan `VITE_API_URL=https://server-kamu/api` (server eksekusi di-deploy terpisah). Tanpa itu, bahasa compiled berlabel "butuh koneksi" dan semua fitur offline tetap jalan.
+  Supaya C/C++/Java/Go/Rust/C#/Kotlin jalan di APK: deploy server eksekusi ke VPS (lihat **[DEPLOY.md](DEPLOY.md)**, HTTPS otomatis), lalu `npm run apk -- https://domain-server-kamu`. Tanpa server, bahasa compiled berlabel "butuh koneksi" dan semua fitur offline tetap jalan.
 - **Ikon**: `python3 scripts/make-icons.py` (pixel art 16×16 → favicon, ikon PWA, ikon launcher & splash Android).
 
 ## Test

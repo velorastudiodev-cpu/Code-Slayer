@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { runCompiled } from './compiled'
 import { runPiston } from './piston'
-import { build } from './index'
+import { allowedOrigins, build } from './index'
 
 const C_SUM = '#include <stdio.h>\nint main(){int a,b;scanf("%d %d",&a,&b);printf("%d\\n",a+b);}'
 
@@ -62,3 +62,17 @@ it('compiler baru: Go, Rust, C#, Kotlin membaca stdin & melapor gagal kompilasi'
     expect(e.stderr, lang).toMatch(/Gagal kompilasi/)
   }
 }, 240_000)
+
+it('CORS: APK (Capacitor) & origin dari ALLOWED_ORIGINS boleh, origin lain tidak', async () => {
+  expect(allowedOrigins('https://slayer.contoh, https://web.contoh/')).toEqual(expect.arrayContaining(['https://localhost', 'capacitor://localhost', 'https://slayer.contoh', 'https://web.contoh']))
+  const app = build()
+  const pre = await app.inject({ method: 'OPTIONS', url: '/api/run', headers: { origin: 'https://localhost', 'access-control-request-method': 'POST', 'access-control-request-headers': 'content-type' } })
+  expect(pre.headers['access-control-allow-origin']).toBe('https://localhost')
+  const ok = await app.inject({ method: 'GET', url: '/api/health', headers: { origin: 'capacitor://localhost' } })
+  expect(ok.headers['access-control-allow-origin']).toBe('capacitor://localhost')
+  const bad = await app.inject({ method: 'GET', url: '/api/health', headers: { origin: 'https://situs-lain.contoh' } })
+  expect(bad.headers['access-control-allow-origin']).toBeUndefined()
+  const same = await app.inject({ method: 'GET', url: '/api/health' })
+  expect(same.statusCode).toBe(200)
+  await app.close()
+})

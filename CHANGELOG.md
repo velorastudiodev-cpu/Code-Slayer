@@ -1,5 +1,22 @@
 # Changelog
 
+## Pasca-M12 — Siap deploy: bahasa compiled di APK
+Sebelumnya APK tidak bisa memakai server eksekusi jarak jauh: server belum mengizinkan CORS, dan compose hanya mendengarkan 127.0.0.1. Perbaikannya:
+- **CORS dengan allowlist** (`@fastify/cors`):
+  - Origin APK (`https://localhost`, `capacitor://localhost`, iOS) otomatis diizinkan. Origin lain lewat `ALLOWED_ORIGINS`; origin asing tetap ditolak.
+  - Diuji di browser asli: frontend di origin lain memanggil `/api` lewat URL absolut. Origin asing diblokir (`Failed to fetch`), origin yang diizinkan mendapat 200 dan soal C dinilai server.
+- **Deploy VPS**:
+  - `docker-compose.vps.yml` + `deploy/Caddyfile` memasang HTTPS otomatis (Let's Encrypt) di depan aplikasi.
+  - `TRUST_PROXY=1` membuat rate limit memakai IP asli user.
+  - Ditambah `.env.example` dan panduan **DEPLOY.md**.
+- **`npm run apk -- https://domain`**: mengecek `/api/health` & CORS server, build web dengan alamat server, `cap sync`, lalu `assembleDebug`. URL non-https ditolak (Android memblokir http biasa).
+- `.dockerignore` mengecualikan hasil build Android.
+- Test server 6/6 (termasuk CORS positif/negatif).
+
+### Catatan jujur
+- Deploy ke VPS belum dicoba di sesi ini: tidak ada daemon Docker di container dan tidak ada VPS. `docker compose config` untuk kedua file sudah valid, dan compose menolak jalan bila `DOMAIN` kosong.
+- Caddyfile (3 baris `reverse_proxy` standar) belum divalidasi dengan binary Caddy. Pengunduhan binary-nya ditolak oleh pengaman sesi, jadi tidak saya paksa.
+
 ## M8 — Track Cyber (etika, lab sandbox, OWASP mini apps, CTF Arena) + terminal simulasi + track Bash/Linux
 Acceptance: semua lab berjalan di sandbox internal; flag tervalidasi. (Dikerjakan setelah M9–M12, melanjutkan interpreter Bash yang sudah ada.)
 
