@@ -162,7 +162,7 @@ function StageView({ p, k, initial, passedBefore, onPin, onNext }: { p: Project;
       <Editor key={base.ver} value={base.code} lang={lang} onChange={setCode} label={`Editor project ${p.title}`} />
       <div className="row-actions">
         <button className="btn-ghost" onClick={reset}>Reset</button>
-        <button className="btn-primary" disabled={!!status || server === 'offline' || server === 'checking'} onClick={run}>{status || 'Tempa! Jalankan tes'}</button>
+        <button className="btn-primary" disabled={!!status || ['offline', 'checking', 'none'].includes(server)} onClick={run}>{status || 'Tempa! Jalankan tes'}</button>
       </div>
       {results && <Results results={results} predict={false} track={p.track} />}
       {results && k > 0 && p.regression !== false && <p className="muted small">Tes {st.tests.length + 1} dst. adalah tes regresi tahap sebelumnya.</p>}

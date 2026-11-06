@@ -44,7 +44,7 @@ export function ProblemView({ p, run, closed }: { p: Problem; run?: number; clos
   const [status, setStatus] = useState('')
   const [res, setRes] = useState<Judged | null>(null)
   const [edLevel, setEdLevel] = useState(0)
-  const server = useServerStatus(lang)
+  const server = useServerStatus(lang, false)
   useEffect(() => { setCode(null) }, [lang])
   if (draft === undefined) return null
   const initial = draft ?? (lang === 'cpp' ? CPP_TEMPLATE : PY_TEMPLATE)
@@ -92,7 +92,7 @@ export function ProblemView({ p, run, closed }: { p: Problem; run?: number; clos
           {lang === 'cpp' && <ServerBanner status={server} />}
           <Editor key={`${p.id}:${lang}`} value={initial} lang={lang} onChange={setCode} label={`Editor ${p.title}`} />
           <div className="row-actions">
-            <button className="btn-primary" disabled={!!status || (lang === 'cpp' && (server === 'offline' || server === 'checking'))} onClick={submit}>{status || 'Kirim ke juri'}</button>
+            <button className="btn-primary" disabled={!!status || (lang === 'cpp' && (['offline', 'checking', 'none'].includes(server)))} onClick={submit}>{status || 'Kirim ke juri'}</button>
           </div>
         </>
       )}

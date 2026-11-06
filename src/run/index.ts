@@ -1,8 +1,26 @@
 import { NEEDS_SERVER, norm, type Lang, type Run } from './exec'
 import type { Req } from './worker'
+import { runWandbox, wandboxSupports } from './wandbox'
 
 export type { Lang, Run }
 export { NEEDS_SERVER }
+// Alamat server eksekusi (bahasa compiled). Urutan: diatur user di Profil → saat build (VITE_API_URL) →
+// '/api' di server yang sama (web). Di APK tanpa pengaturan: belum ada server sama sekali (null).
+const isNative = () => typeof window !== 'undefined' && !!(window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.()
+let userApi: string | null = null
+export const setUserApi = (url: string | null) => { userApi = url }
+// Cadangan layanan publik (wandbox.org) bila belum ada server sendiri. Bawaan: nyala; bisa dimatikan di Profil.
+let publicOk = true
+export const setPublicCompiler = (on: boolean) => { publicOk = on }
+/** Tanpa server sendiri, apakah bahasa ini bisa dijalankan lewat layanan publik? */
+export const usesPublic = (lang: Lang) => publicOk && wandboxSupports(lang)
+export const normalizeApi = (url: string) => { const u = url.trim().replace(/\/+$/, ''); return u ? (u.endsWith('/api') ? u : `${u}/api`) : '' }
+export function apiBase(): string | null {
+  if (userApi) return userApi
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL
+  return isNative() ? null : '/api'
+}
+/** @deprecated pakai apiBase() */
 export const API = import.meta.env.VITE_API_URL ?? '/api'
 export type Test = { input?: string; expected: string; hidden?: boolean }
 // label/note: hasil jenis latihan non-test (pilihan, tabel, ketikan, aturan refactor).
@@ -15,12 +33,20 @@ let seq = 0
 
 const fail = (msg: string, timeout = false): Run => ({ stdout: '', stderr: msg, ok: false, timeout })
 
-const OFFLINE = 'Butuh koneksi: bahasa ini dikompilasi di server eksekusi, dan server tidak bisa dihubungi.\n'
+const OFFLINE = 'Server eksekusi tidak bisa dihubungi. Bahasa ini di-compile di server, bukan di HP. Periksa internet atau alamat server di Profil → Server eksekusi.\n'
+const NO_PUBLIC_JUDGE = 'Juri olimpiade butuh server eksekusi sendiri (batas waktu ketat & input besar tidak cocok untuk layanan publik). Atur di Profil → Server eksekusi.\n'
+const NO_SERVER = 'Belum ada server eksekusi. Bahasa ini di-compile di server (bukan di HP), dan aplikasi ini belum diatur ke server mana pun. Ini bukan masalah internetmu: atur di Profil → Server eksekusi.\n'
 
 async function runServer(lang: Lang, code: string, inputs: string[], onStart?: () => void, timeLimitMs?: number): Promise<Run[]> {
   onStart?.()
+  const api = apiBase()
+  if (!api) {
+    // Juri olimpiade (timeLimitMs) tetap butuh server sendiri: batas waktu Wandbox berbeda dan input bisa berukuran MB.
+    if (usesPublic(lang) && !timeLimitMs) return runWandbox(lang, code, inputs)
+    return inputs.map(() => ({ ...fail(timeLimitMs && usesPublic(lang) ? NO_PUBLIC_JUDGE : NO_SERVER), offline: true }))
+  }
   try {
-    const res = await fetch(`${API}/run`, {
+    const res = await fetch(`${api}/run`, {
       method: 'POST', headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ lang, code, inputs, ...(timeLimitMs ? { timeLimitMs } : {}) }), signal: AbortSignal.timeout(120_000),
     })

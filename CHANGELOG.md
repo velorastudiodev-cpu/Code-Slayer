@@ -1,5 +1,60 @@
 # Changelog
 
+## Bahasa compiled jalan tanpa server sendiri: cadangan wandbox.org
+- **Pilihan pemilik aplikasi ("opsi 2")**: bila belum ada server eksekusi sendiri, C, C++, Java, Go, Rust, dan C# dikirim ke **wandbox.org**, layanan compiler publik gratis, untuk di-compile dan dijalankan.
+  - Compiler: GCC 13.2 (C, C++20), OpenJDK 21, Go 1.23, Rust 1.82, Mono 6.12. Bila nama compiler suatu saat hilang dari Wandbox, penggantinya dicari otomatis dari daftar resmi `list.json`.
+  - Satu request per tes, paling banyak 2 sekaligus.
+- **Transparan ke pengguna**:
+  - Banner "🌐 Dijalankan di wandbox.org … Kodemu dikirim ke sana" muncul di setiap halaman yang menjalankan bahasa compiled.
+  - Profil → Server eksekusi punya sakelar "Pakai layanan publik wandbox.org" (bawaan: nyala) dengan penjelasan bahwa kode dan input dikirim ke pihak ketiga.
+  - Server sendiri tetap diutamakan bila sudah diatur.
+- **Tetap butuh server sendiri**:
+  - **Kotlin**: tidak tersedia di Wandbox.
+  - **Juri Hashira Trial (C++)**: batas waktu ketat dan input sampai MB tidak cocok untuk layanan publik. Soal olimpiade dengan Python tetap jalan di HP.
+- Pesan galat dibedakan: Wandbox sibuk (429), tidak bisa dihubungi, gagal kompilasi, dan waktu habis.
+- Tes:
+  - Unit 259/259, termasuk 3 tes klien Wandbox dengan respons tiruan.
+  - Playwright 16/16. Tes baru mensimulasikan APK tanpa server dengan Wandbox tiruan: banner tampil, soal C++ dikirim dengan compiler `gcc-13.2.0` dan lulus, Kotlin tetap menampilkan "Belum ada server eksekusi".
+
+### Catatan jujur
+- **Belum diuji ke wandbox.org sungguhan.** Pengaman sesi pengembangan menolak mengirim kode ke layanan pihak ketiga, jadi format request dan respons mengikuti dokumentasi API Wandbox dan diuji dengan respons tiruan. Mohon dicoba di HP.
+- Dua asumsi perlu dikonfirmasi saat uji nyata:
+  1. **Java**: Wandbox menyimpan sumber sebagai `prog.java`. Kelas `public class Main` dijadikan non-public dan ditambah peluncur `class prog`.
+  2. **Rust**: memakai edisi bawaan compiler Wandbox.
+- Wandbox adalah layanan gratis milik pihak lain. Tidak ada jaminan ketersediaan, batas permintaannya bisa berubah, dan kode yang dikirim keluar dari HP. Untuk pemakaian serius, tetap disarankan server sendiri (DEPLOY.md).
+
+## "Butuh koneksi" padahal internet nyala → pesan jelas + pengaturan server di aplikasi
+- **Masalah**: di APK, bahasa compiled (C, C++, Java, Go, Rust, C#, Kotlin) berlabel "butuh koneksi" walau internet nyala. Penyebab sebenarnya: APK belum diatur ke server eksekusi mana pun. Kode bahasa ini di-compile di server, bukan di HP.
+- **Pesan dibedakan**:
+  - "Belum ada server eksekusi … ini bukan masalah internetmu" (APK tanpa server).
+  - "Server eksekusi tidak bisa dihubungi" (server diatur tapi tak terjangkau).
+  - Keduanya menautkan ke pengaturan. Label "butuh koneksi" diganti "butuh server".
+- **Profil → Server eksekusi**: isi alamat server (https), tombol "Tes & simpan" memeriksa `/api/health` lalu menyimpannya. APK bisa memakai server tanpa build ulang. Urutan alamat: pengaturan user → `VITE_API_URL` saat build → `/api` server yang sama (web).
+- Diuji dengan simulasi APK (Capacitor native, tanpa server):
+  1. Pesan "belum ada server" muncul dan tombol jalankan nonaktif.
+  2. Alamat salah ditolak dengan pesan jelas.
+  3. Alamat benar → terhubung → soal C dinilai server.
+- Unit 256/256, Playwright 15/15.
+
+### Catatan jujur
+- Tanpa server, bahasa compiled tetap tidak bisa jalan; yang berubah adalah kejelasan pesan dan kemudahan mengatur server. Menjalankan compiler C/C++/Java/Go/Rust/C#/Kotlin langsung di HP tidak praktis.
+- Layanan compiler publik pihak ketiga (mis. Wandbox) belum dipakai. Mengirim kode user ke layanan pihak ketiga perlu persetujuan pemilik aplikasi, dan pengujiannya ditolak pengaman sesi.
+
+## Perbaikan dari uji di Android: layar bisa digeser & sesi belajar kurang menarik
+- **Bug layar bisa digeser/ditarik setelah input salah (diperbaiki)**:
+  - Penyebab: kotak "Diharapkan vs Output kodemu" dan pesan error melebar mengikuti teks terpanjang (grid `1fr` memakai lebar minimum konten), sehingga seluruh halaman termasuk tab bawah lebih lebar dari layar.
+  - Perbaikan: kolom `minmax(0, 1fr)`, error membungkus kata panjang, diff bertumpuk satu kolom di layar < 520 px, dropdown Playground tidak melebihi layar.
+  - Pengaman: halaman tidak bisa digulir ke samping (`overflow-x: clip`); efek tarik/pantul dimatikan di APK (`overscroll-behavior`, hanya saat berjalan di Capacitor).
+  - Detektor otomatis di 360 px (halaman utama + 7 kondisi input salah: output panjang, SyntaxError, exception, error kompilasi C, JS, Bash, SQL, predict) melaporkan nol overflow. Dijadikan tes Playwright permanen.
+- **Sesi belajar baru — "Gulungan Pelajaran"** (menggantikan kartu teks biasa):
+  - Mentor track (mis. Tanjiro/Giyu, Rengoku, Inosuke, Shinobu; fallback companion) membawakan materi kalimat demi kalimat di balon dialog pixel. Ketuk untuk lanjut, dengan ekspresi yang berganti.
+  - Istilah kode di teks otomatis disorot (yang muncul di contoh + pola khas kode). Kata di komentar & string diabaikan.
+  - **Tebak dulu, baru jalankan**: tebakan output dibandingkan dengan hasil sebenarnya. **Ubah & coba**: contoh bisa diedit lalu dijalankan di tempat. Contoh HTML punya preview langsung.
+  - **Cek pemahaman** di akhir: kuis/jawaban singkat bab itu, atau soal tebak output bila tidak ada kuis.
+  - Bilah progres per langkah, posisi terakhir diingat, selebrasi + **+10 XP** sekali per bab.
+  - Mode "tampilkan semua sekaligus" untuk yang suka membaca langsung.
+- Test: unit 256/256, Playwright 15/15 (+2 tes HP: tidak bisa digeser setelah input salah; gulungan sampai tuntas), axe 0 pelanggaran di 29 halaman × 2 tema.
+
 ## Pasca-M12 — Siap deploy: bahasa compiled di APK
 Sebelumnya APK tidak bisa memakai server eksekusi jarak jauh: server belum mengizinkan CORS, dan compose hanya mendengarkan 127.0.0.1. Perbaikannya:
 - **CORS dengan allowlist** (`@fastify/cors`):

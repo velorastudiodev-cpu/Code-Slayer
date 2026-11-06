@@ -1,33 +1,12 @@
-import { useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useAttempts, useProgress } from '../db'
-import { TYPE_LABEL, useTrackContent, type Lesson } from '../data/content'
+import { TYPE_LABEL, useTrackContent } from '../data/content'
 import { canTakeExam, isOpen, nodesOf } from '../data/curriculum'
 import { trackById } from '../data/tracks'
-import { runMany, type Lang, type Run } from '../run'
-import { HtmlPreview } from '../components/HtmlPreview'
+import type { Lang } from '../run'
 import { ServerBanner, useServerStatus } from '../run/status'
 import { ALGOS } from '../data/visual'
-
-// Kartu konsep: 3–5 kalimat + contoh yang bisa langsung dijalankan.
-function LessonCard({ l, lang, setup, blocked }: { l: Lesson; lang: Lang; setup: string; blocked: boolean }) {
-  const [out, setOut] = useState<Run | null>(null)
-  const [busy, setBusy] = useState(false)
-  return (
-    <section className="card lesson">
-      <p>{l.text}</p>
-      {l.code && (
-        <>
-          <pre className="code">{l.code.trimEnd()}</pre>
-          {lang === 'html' ? <HtmlPreview code={l.code} /> : <button className="btn-ghost" disabled={busy || blocked} onClick={async () => { setBusy(true); setOut((await runMany(lang, l.code!, [setup], { header: true }))[0]); setBusy(false) }}>
-            {busy ? 'Menjalankan…' : '▶ Jalankan contoh'}
-          </button>}
-          {out && <pre className="code out">{out.stdout}{out.stderr && <span className="stderr-inline">{out.stderr}</span>}</pre>}
-        </>
-      )}
-    </section>
-  )
-}
+import { LessonPlayer } from '../components/LessonPlayer'
 
 export default function ChapterPage() {
   const { track = '', chapter = '' } = useParams()
@@ -57,9 +36,12 @@ export default function ChapterPage() {
       {track === 'dsa' && ALGOS.some(a => a.chapter === chapter) && (
         <div className="row-actions start">{ALGOS.filter(a => a.chapter === chapter).map(a => <Link key={a.id} className="btn-ghost" to={`/visual/${a.id}`}>▶ Visualisasi {a.name}</Link>)}</div>
       )}
-      {ch?.lesson.map((l, i) => <LessonCard key={i} l={l} lang={lang} setup={exercises[0]?.setup ?? ''} blocked={server === 'offline' || server === 'checking'} />)}
+      {ch && ch.lesson.length > 0 && (
+        <LessonPlayer track={track} chapter={chapter} lessons={ch.lesson} lang={lang} setup={exercises[0]?.setup ?? ''} blocked={['offline', 'checking', 'none'].includes(server)}
+          checks={exercises} mentor={t.mentor} nextHref={nextEx ? `/latihan/${track}/${nextEx.id}` : undefined} nextLabel={nextEx ? `Latihan: ${nextEx.title}` : undefined} />
+      )}
       {!ch && <p className="muted">Materi bab ini belum tersedia.</p>}
-      {nextEx && <Link className="btn-primary" to={`/latihan/${track}/${nextEx.id}`}>Latihan: {nextEx.title}</Link>}
+      {nextEx && !ch?.lesson.length && <Link className="btn-primary" to={`/latihan/${track}/${nextEx.id}`}>Latihan: {nextEx.title}</Link>}
       {exercises.length > 0 && (
         <section>
           <h2>Latihan ({exercises.filter(e => solved.has(e.id)).length}/{exercises.length})</h2>

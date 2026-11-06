@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { saveSettings, useSettings, type Settings } from '../db'
 import { Icon } from '../pixel'
 import { FREEZE_MAX, activityDays, freezeDays, freezePrice, heatmap, streakState } from '../data/economy'
 import { NotEnoughKoban, buy, useEconomy } from '../wallet'
 import { setSoundEnabled, sfx } from '../sfx'
+import { normalizeApi, setPublicCompiler, setUserApi } from '../run'
 
 const THEMES: [Settings['theme'], string][] = [['system', 'Ikuti sistem'], ['dark', 'Malam'], ['light', 'Siang']]
 const DAYS = ['Sen', '', 'Rab', '', 'Jum', '', 'Min']
@@ -26,6 +27,8 @@ function Heatmap({ frozen }: { frozen: string[] }) {
 }
 
 export default function Profile() {
+  // Tautan dari banner "Atur server eksekusi" (/profil#server) langsung menggulir ke bagiannya.
+  useEffect(() => { if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView() }, [])
   const s = useSettings()
   const { level, xp, streak, koban, ach } = useEconomy()
   const [msg, setMsg] = useState('')
@@ -61,6 +64,7 @@ export default function Profile() {
       <Link className="card link" to="/karakter">Karakter & Companion →</Link>
       <Link className="card link" to="/gacha"><Icon name="coin" size={20} /> Gacha & Lemari Kosmetik →</Link>
       <Link className="card link" to="/jalur">Ubah jalur belajar →</Link>
+      <ServerSettings />
       <MentorSettings />
       <section className="card">
         <h2>Tema</h2>
@@ -108,6 +112,49 @@ function MentorSettings() {
         </div>
       )}
       {s.mentor && !s.mentorKey && <p className="feedback">Isi API key dulu. Buat di console.anthropic.com.</p>}
+    </section>
+  )
+}
+
+// Server eksekusi untuk bahasa compiled (C, C++, Java, Go, Rust, C#, Kotlin). Tanpa ini, bahasa lain tetap jalan offline.
+function ServerSettings() {
+  const s = useSettings()
+  const [url, setUrl] = useState<string | null>(null)
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
+  const [busy, setBusy] = useState(false)
+  const value = url ?? (s.execServer ?? '').replace(/\/api$/, '')
+  async function test() {
+    const api = normalizeApi(value)
+    if (!/^https?:\/\//.test(api)) return setMsg({ ok: false, text: 'Tulis alamat lengkap, mis. https://slayer.domainmu.com' })
+    setBusy(true); setMsg(null)
+    try {
+      const r = await fetch(`${api}/health`, { signal: AbortSignal.timeout(10000) })
+      const j = await r.json()
+      if (!j.ok) throw new Error('respons tidak dikenal')
+      await saveSettings({ execServer: api })
+      setUserApi(api); setUrl(null)
+      setMsg({ ok: true, text: `Terhubung (${(j.langs ?? []).join(', ')}). Bahasa compiled sekarang bisa dijalankan.` })
+    } catch (e) {
+      setMsg({ ok: false, text: `Gagal terhubung ke ${api}: ${(e as Error).message}. Pastikan server sudah di-deploy (lihat DEPLOY.md) dan memakai https.` })
+    }
+    setBusy(false)
+  }
+  return (
+    <section className="card" id="server">
+      <h2>🖥️ Server eksekusi</h2>
+      <p className="muted small">C, C++, Java, Go, Rust, C#, dan Kotlin harus di-compile di server, karena HP/browser tidak bisa menjalankannya langsung. Python, JS, SQL, HTML, Bash, Git, materi, kuis, lab Cyber, dan CTF tetap jalan tanpa server.</p>
+      <p className="small">Status: {s.execServer ? <b>{s.execServer}</b> : <span className="muted">{(window as unknown as { Capacitor?: unknown }).Capacitor ? ((s.publicCompiler ?? true) ? 'belum diatur, sementara memakai wandbox.org (kecuali Kotlin)' : 'belum diatur') : 'server bawaan (alamat yang sama dengan aplikasi web ini)'}</span>}</p>
+      <div className="row-actions">
+        <input className="grow mono" type="url" inputMode="url" autoCapitalize="off" spellCheck={false} placeholder="https://slayer.domainmu.com" aria-label="Alamat server eksekusi" value={value} onChange={e => setUrl(e.target.value)} />
+        <button className="btn-primary" disabled={busy || !value.trim()} onClick={test}>{busy ? 'Menguji…' : 'Tes & simpan'}</button>
+        {s.execServer && <button className="btn-ghost" onClick={() => { saveSettings({ execServer: undefined }); setUserApi(null); setUrl(null); setMsg(null) }}>Hapus</button>}
+      </div>
+      {msg && <p className={`feedback ${msg.ok ? '' : 'wrong'}`}>{msg.text}</p>}
+      <label className="check">
+        <input type="checkbox" checked={s.publicCompiler ?? true} onChange={e => { saveSettings({ publicCompiler: e.target.checked }); setPublicCompiler(e.target.checked) }} />
+        Pakai layanan publik wandbox.org bila belum ada server sendiri
+      </label>
+      <p className="muted small">Untuk C, C++, Java, Go, Rust, dan C#: kodemu dan inputnya dikirim ke wandbox.org (layanan gratis pihak ketiga) untuk di-compile. Jangan tulis data pribadi di kode. Kotlin dan juri Hashira Trial tetap butuh server sendiri.</p>
     </section>
   )
 }

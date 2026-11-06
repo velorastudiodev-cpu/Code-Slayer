@@ -4,18 +4,20 @@ Aplikasi belajar ngoding bertema Demon Slayer (penggunaan pribadi, non-komersial
 
 ## Download APK Android
 
-[**⬇ Download Code-Slayer.apk**](https://github.com/velorastudiodev-cpu/Code-Slayer/releases/latest/download/Code-Slayer.apk)
+[**⬇ Download Code-Slayer.apk terbaru**](https://github.com/velorastudiodev-cpu/Code-Slayer/releases/latest/download/Code-Slayer.apk)
 
-Klik tombol di atas untuk langsung mengunduh APK, lalu buka file di Android dan izinkan pemasangan dari browser jika diminta. Membutuhkan Android 7.0 atau lebih baru. APK ini adalah build debug yang sudah ditandatangani dan dapat dipasang langsung tanpa Android Studio.
+Versi **1.1.0**, Android 7.0 atau lebih baru. Unduh APK lalu buka untuk memasang atau memperbarui aplikasi. Build debug ini ditandatangani dengan kunci yang sama seperti versi 1.0.
 
-[Lihat semua rilis](https://github.com/velorastudiodev-cpu/Code-Slayer/releases). Untuk C/C++/Java/Go/Rust/C#/Kotlin, diperlukan server eksekusi terpisah seperti dijelaskan di bawah. Rilis ini belum menyertakan alamat server tersebut.
+C/C++/Java/Go/Rust/C# dapat memakai layanan publik **wandbox.org** melalui internet bila belum ada server sendiri. Kode dikirim ke layanan itu; opsi ini bisa dimatikan di Profil. Kotlin dan juri olimpiade tetap memerlukan server sendiri. Alamat server dapat diatur di Profil → Server eksekusi.
+
+[Lihat semua rilis](https://github.com/velorastudiodev-cpu/Code-Slayer/releases).
 
 ```bash
 npm install
 npm run dev
 ```
 
-C, C++, Java butuh server eksekusi:
+Server eksekusi sendiri untuk pengembangan:
 
 ```bash
 npm run server    # backend lokal (gcc/g++/javac) di :8787, Vite mem-proxy /api
@@ -57,7 +59,7 @@ cd android && ./gradlew assembleDebug   # → android/app/build/outputs/apk/debu
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-  Supaya C/C++/Java/Go/Rust/C#/Kotlin jalan di APK: deploy server eksekusi ke VPS (lihat **[DEPLOY.md](DEPLOY.md)**, HTTPS otomatis), lalu `npm run apk -- https://domain-server-kamu`. Tanpa server, bahasa compiled berlabel "butuh koneksi" dan semua fitur offline tetap jalan.
+  Supaya C/C++/Java/Go/Rust/C#/Kotlin jalan di APK: deploy server eksekusi ke VPS (lihat **[DEPLOY.md](DEPLOY.md)**, HTTPS otomatis), lalu `npm run apk -- https://domain-server-kamu`. Tanpa server sendiri, C/C++/Java/Go/Rust/C# dapat memakai Wandbox melalui internet; Kotlin dan juri olimpiade tetap memerlukan server sendiri. Semua fitur offline tetap jalan.
 - **Ikon**: `python3 scripts/make-icons.py` (pixel art 16×16 → favicon, ikon PWA, ikon launcher & splash Android).
 
 ## Test

@@ -6,7 +6,7 @@ import { runMany, type Lang, type Run } from '../run'
 import { ServerBanner, useServerStatus } from '../run/status'
 import { Debugger } from '../Debugger'
 
-const LANGS: [Lang, string][] = [['python', 'Python'], ['javascript', 'JavaScript'], ['typescript', 'TypeScript'], ['sql', 'SQL'], ['c', 'C (butuh koneksi)'], ['cpp', 'C++ (butuh koneksi)'], ['java', 'Java (butuh koneksi)'], ['go', 'Go (butuh koneksi)'], ['rust', 'Rust (butuh koneksi)'], ['csharp', 'C# (butuh koneksi)'], ['kotlin', 'Kotlin (butuh koneksi)'], ['bash', 'Bash (terminal simulasi)'], ['html', 'HTML / CSS']]
+const LANGS: [Lang, string][] = [['python', 'Python'], ['javascript', 'JavaScript'], ['typescript', 'TypeScript'], ['sql', 'SQL'], ['c', 'C (butuh server)'], ['cpp', 'C++ (butuh server)'], ['java', 'Java (butuh server)'], ['go', 'Go (butuh server)'], ['rust', 'Rust (butuh server)'], ['csharp', 'C# (butuh server)'], ['kotlin', 'Kotlin (butuh server)'], ['bash', 'Bash (terminal simulasi)'], ['html', 'HTML / CSS']]
 const SAMPLE: Record<Lang, [code: string, stdin: string]> = {
   python: ['nama = input()\nprint(f"Halo, {nama}!")\n', 'Tanjiro'],
   javascript: ['const nama = readline()\nconsole.log(`Halo, ${nama}!`)\n', 'Zenitsu'],
@@ -67,7 +67,7 @@ export default function Playground() {
       <ServerBanner status={server} />
       <div className="row-actions">
         {lang === 'python' && <button className="btn-ghost" onClick={() => setDebug([code, stdin])}>🐞 Debug</button>}
-        {lang !== 'html' && <button className="btn-primary" disabled={!!status || server === 'offline' || server === 'checking'} onClick={run}>{status || 'Jalankan'}</button>}
+        {lang !== 'html' && <button className="btn-primary" disabled={!!status || ['offline', 'checking', 'none'].includes(server)} onClick={run}>{status || 'Jalankan'}</button>}
       </div>
       {debug && lang === 'python' && <Debugger key={debug.join('\u0000')} code={debug[0]} stdin={debug[1]} onClose={() => setDebug(null)} />}
       {out && (

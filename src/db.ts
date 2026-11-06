@@ -16,6 +16,8 @@ export type Settings = {
   mentor?: boolean
   mentorKey?: string
   sound?: boolean // efek suara chiptune (bawaan: nyala)
+  publicCompiler?: boolean // cadangan wandbox.org bila belum ada server sendiri (bawaan: nyala)
+  execServer?: string // alamat server eksekusi untuk bahasa compiled (mis. https://slayer.domainku.com/api)
 }
 
 export type Profile = {
@@ -34,7 +36,7 @@ export type Attempt = {
   id?: number
   track: string
   node: string
-  kind: 'placement' | 'exam' | 'exercise' | 'kata' | 'castle' | 'raid' | 'timeattack' | 'bugrush' | 'project' | 'review' | 'olymp' | 'contest' | 'arsip' | 'ctf'
+  kind: 'placement' | 'exam' | 'exercise' | 'kata' | 'castle' | 'raid' | 'timeattack' | 'bugrush' | 'project' | 'review' | 'olymp' | 'contest' | 'arsip' | 'ctf' | 'lesson'
   date: string // ISO
   correct: number
   total: number

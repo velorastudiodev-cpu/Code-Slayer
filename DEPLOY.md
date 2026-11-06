@@ -2,6 +2,8 @@
 
 Tanpa server, aplikasi tetap jalan penuh untuk Python, JS/TS, SQL, HTML/CSS, Bash, Git, materi, kuis, game, lab Cyber, dan CTF Arena. Hanya bahasa **compiled** yang perlu server, karena kodenya di-compile di sana (sandbox Piston: tanpa jaringan, ada batas waktu & memori).
 
+**Tanpa server pun**, APK memakai layanan publik **wandbox.org** untuk C, C++, Java, Go, Rust, dan C#. Kode user dikirim ke sana, dan bisa dimatikan di Profil → Server eksekusi. Server sendiri tetap dibutuhkan untuk **Kotlin**, **juri Hashira Trial (C++)**, dan bila tidak ingin bergantung pada layanan pihak ketiga.
+
 ## 1. Siapkan VPS
 
 - VPS Linux (Ubuntu/Debian) dengan **RAM minimal 2 GB**. Compiler Java & Kotlin cukup berat.

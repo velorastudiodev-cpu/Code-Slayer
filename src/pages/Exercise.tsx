@@ -150,7 +150,7 @@ export function Task({ ex, onResult, onMood, once }: { ex: Exercise; onResult: (
     // Refactor: benar saja tidak cukup, aturan kebersihan kode juga harus terpenuhi.
     done([...r, ...(ex.rules ?? []).map(rule => verdict(ruleOk(rule, code), `Aturan: ${rule.text}`))], code)
   }
-  const work = { ex, status: locked ? ('running' as Status) : status, onRun: run, label: once ? 'Serahkan jawaban' : undefined, blocked: server === 'offline' || server === 'checking' }
+  const work = { ex, status: locked ? ('running' as Status) : status, onRun: run, label: once ? 'Serahkan jawaban' : undefined, blocked: ['offline', 'checking', 'none'].includes(server) }
 
   const samples = ex.tests.filter(t => !t.hidden)
   return (

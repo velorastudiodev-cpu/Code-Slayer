@@ -109,6 +109,7 @@ export function earnings(attempts: Attempt[]): Earning[] {
     if (a.kind === 'review' && a.passed && once(`rev:${a.node}:${day}`)) e(a, 5, 5, 'Review Butterfly Mansion')
     if (a.kind === 'olymp' && a.passed && once(`olymp:${a.node}`)) e(a, 80, 80, 'Soal Hashira Trial skor 100')
     if (a.kind === 'arsip' && a.passed && once(`arsip:${a.node}`)) e(a, 30, 30, 'Soal arsip asli Accepted di TLX')
+    if (a.kind === 'lesson' && a.passed && once(`lesson:${a.track}:${a.node}`)) e(a, 5, 10, 'Gulungan pelajaran tuntas')
     if (a.kind === 'ctf' && a.passed && once(`ctf:${a.node}`)) e(a, Math.round(a.total / 2), a.total, 'Flag CTF tervalidasi')
     if (a.kind === 'contest' && a.passed && a.meta?.type && once(`contest:${a.node}:${a.meta.type}`)) { const k = { emas: 300, perak: 200, perunggu: 100 }[a.meta.type] ?? 0; e(a, k, k, `Medali ${a.meta.type} virtual contest`) }
     if (a.kind === 'castle' || a.kind === 'timeattack' || a.kind === 'bugrush') keep(`${a.kind}:${day}`, a)

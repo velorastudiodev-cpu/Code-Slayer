@@ -4,6 +4,7 @@ import { useProfile, useSettings } from './db'
 import { Icon } from './pixel'
 import { useCompanion, useEconomy } from './wallet'
 import { AchievementToast } from './Toast'
+import { setPublicCompiler, setUserApi } from './run'
 import Home from './pages/Home'
 import Learn from './pages/Learn'
 import Track from './pages/Track'
@@ -73,6 +74,8 @@ export default function App() {
     root.style.setProperty('--accent', companion.accent)
     root.style.setProperty('--editor-font', `${s.editorFont}px`)
   }, [s.theme, s.reduceMotion, companion.accent, s.editorFont])
+  useEffect(() => { setUserApi(s.execServer || null) }, [s.execServer])
+  useEffect(() => { setPublicCompiler(s.publicCompiler ?? true) }, [s.publicCompiler])
 
   if (profile === undefined) return null
   const onboarding = pathname === '/mulai'
